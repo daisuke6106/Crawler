@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project default="all" basedir=".">
+	
+	<!-- プロパティファイル読み込み -->
+	<property file="./build.properties"/>
+	
+    <!-- 共通タスク読み込み -->
+	<import file="${commons.antxml.path}"/>
+	
+</project>

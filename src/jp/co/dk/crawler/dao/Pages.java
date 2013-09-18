@@ -3,7 +3,7 @@ package jp.co.dk.crawler.dao;
 import jp.co.dk.datastoremanager.DataAccessObject;
 
 /**
- * Pages‚ÍAPAGESƒe[ƒuƒ‹‚É‘Î‚µ‚Ä‚Ì§Œä‚ğs‚¤DAOƒCƒ“ƒXƒ^ƒ“ƒX‚ªÀ‘•‚·‚éƒCƒ“ƒ^[ƒtƒF[ƒXB
+ * Pagesã¯ã€PAGESãƒ†ãƒ¼ãƒ–ãƒ«ã«å¯¾ã—ã¦ã®åˆ¶å¾¡ã‚’è¡Œã†DAOã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒå®Ÿè£…ã™ã‚‹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã€‚
  * 
  * @version 1.0
  * @author D.Kanno

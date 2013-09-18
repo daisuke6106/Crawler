@@ -9,38 +9,38 @@ import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
 /**
- * PagesRecord‚ÍAPAGESƒe[ƒuƒ‹‚Ì’Pˆê‚ÌƒŒƒR[ƒh‚ğ•\‚·ƒNƒ‰ƒXB
+ * PagesRecordã¯ã€PAGESãƒ†ãƒ¼ãƒ–ãƒ«ã®å˜ä¸€ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹ã€‚
  * 
  * @version 1.0
  * @author D.Kanno
  */
 public class PagesRecord implements DataConvertable{
 	
-	/** ƒvƒƒgƒRƒ‹ */
+	/** ãƒ—ãƒ­ãƒˆã‚³ãƒ« */
 	protected String protocol;
 	
-	/** ƒzƒXƒg–¼ */
+	/** ãƒ›ã‚¹ãƒˆå */
 	protected String host;
 	
-	/** ƒpƒX */
+	/** ãƒ‘ã‚¹ */
 	protected String path;
 	
-	/** ƒpƒ‰ƒ[ƒ^ */
+	/** ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ */
 	protected Map<String, String> parameter; 
 	
-	/** ƒŠƒNƒGƒXƒgƒwƒbƒ_[ */
+	/** ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ˜ãƒƒãƒ€ãƒ¼ */
 	protected Map<String, String> requestHeader;
 	
-	/** ƒŒƒXƒ|ƒ“ƒXƒwƒbƒ_[ */
+	/** ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€ãƒ¼ */
 	protected Map<String, String> responceHeader;
 	
-	/** ƒRƒ“ƒeƒ“ƒc */
+	/** ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ */
 	protected byte[] contents;
 	
-	/** ì¬“ú */
+	/** ä½œæˆæ—¥æ™‚ */
 	protected Date createDate;
 	
-	/** XV“ú */
+	/** æ›´æ–°æ—¥æ™‚ */
 	protected Date updateDate;
 	
 	@Override

@@ -1,0 +1,61 @@
+Starting audit...
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/Crawler.java:3: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/Crawler.java:6: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/Crawler.java:11: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/Crawler.java:11:1: File contains tab characters (this is the first instance).
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/Crawler.java:12: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/Crawler.java:16: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/Crawler.java:17: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/Pages.java:5: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/Pages.java:7: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/Pages.java:11:48: '{' の前にホワイトスペースがありません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/Pages.java:12: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/Pages.java:12:1: File contains tab characters (this is the first instance).
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/package-info.java:0: ファイルが新しい行で終了していません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:11: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:13: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:17:52: '{' の前にホワイトスペースがありません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:18: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:18:1: File contains tab characters (this is the first instance).
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:19: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:20:26: 変数 'protocol' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:21: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:22: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:23:26: 変数 'host' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:24: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:25: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:26:26: 変数 'path' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:27: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:28: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:29: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:29:39: 変数 'parameter' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:30: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:31: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:32:39: 変数 'requestHeader' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:33: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:34: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:35:39: 変数 'responceHeader' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:36: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:37: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:38:26: 変数 'contents' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:39: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:40: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:41:24: 変数 'createDate' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:42: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:43: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:44:24: 変数 'updateDate' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:45: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:46:9: メソッド 'convert' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:47: 行が 80 文字を超えています。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:47:40: Parameter arg0 should be final.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:47:72: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:51:9: メソッド 'convert' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:52: 行が 80 文字を超えています。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:52:40: Parameter arg0 should be final.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java:52:64: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/package-info.java:0: ファイルが新しい行で終了していません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/dao/record/package-info.java:2: Line has trailing spaces.
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/package-info.java:0: ファイルが新しい行で終了していません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/property/package-info.java:0: ファイルが新しい行で終了していません。
+/home/dk/projects/Crawler/src/jp/co/dk/crawler/property/package-info.java:2: Line has trailing spaces.
+Audit done.

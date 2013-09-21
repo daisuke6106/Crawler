@@ -1,6 +1,5 @@
 package jp.co.dk.crawler;
 
-import static org.junit.Assert.*;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
 

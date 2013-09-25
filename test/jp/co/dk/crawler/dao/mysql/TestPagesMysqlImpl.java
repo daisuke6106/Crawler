@@ -12,7 +12,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 	@Test
 	public void createTable() {
 		try {
-			Pages pages = new PagesMysqlImple(super.getAccessableDataBaseAccessParameter());
+			Pages pages = new PagesMysqlImpl(super.getAccessableDataBaseAccessParameter());
 			pages.createTable();
 			pages.dropTable();
 		} catch (DataStoreManagerException e) {

@@ -8,17 +8,17 @@ import jp.co.dk.datastoremanager.database.DataBaseDriverConstants;
 import jp.co.dk.datastoremanager.database.Sql;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
-public class PagesMysqlImple extends AbstractDataBaseAccessObject implements Pages{
+public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Pages{
 	
-	public PagesMysqlImple(DataBaseAccessParameter parameter) throws DataStoreManagerException {
+	public PagesMysqlImpl(DataBaseAccessParameter parameter) throws DataStoreManagerException {
 		super(parameter);
 	}
 	
-	public PagesMysqlImple(DataBaseDriverConstants driver, String url,String sid, String user, String password) throws DataStoreManagerException {
+	public PagesMysqlImpl(DataBaseDriverConstants driver, String url,String sid, String user, String password) throws DataStoreManagerException {
 		super(driver, url, sid, user, password);
 	}
 	
-	public PagesMysqlImple(DataStore datastore) throws DataStoreManagerException {
+	public PagesMysqlImpl(DataStore datastore) throws DataStoreManagerException {
 		super(datastore);
 	}
 

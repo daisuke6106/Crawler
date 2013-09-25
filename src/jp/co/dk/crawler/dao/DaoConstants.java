@@ -1,6 +1,6 @@
 package jp.co.dk.crawler.dao;
 
-import jp.co.dk.crawler.dao.mysql.PagesImple;
+import jp.co.dk.crawler.dao.mysql.PagesMysqlImple;
 import jp.co.dk.datastoremanager.DataAccessObject;
 import jp.co.dk.datastoremanager.DataAccessObjectFactory;
 import jp.co.dk.datastoremanager.DataStore;
@@ -19,7 +19,7 @@ public enum DaoConstants implements jp.co.dk.datastoremanager.DaoConstants{
 			case ORACLE:
 				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());
 			case MYSQL:
-				return new PagesImple(dataStore);
+				return new PagesMysqlImple(dataStore);
 			case POSTGRESQL:
 				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());
 			case CSV:

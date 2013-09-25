@@ -16,7 +16,7 @@ public class CrawlerException extends AbstractMessageException{
 	/**
 	 * シリアルバージョンID
 	 */
-	private static final long serialVersionUID = -4527895480395409945L;
+	private static final long serialVersionUID = 7430639691716421728L;	
 
 	/**
 	 * コンストラクタ<p>

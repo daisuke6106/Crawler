@@ -18,4 +18,12 @@ public interface Pages extends DataAccessObject{
 	 * @throws DataStoreManagerException テーブル作成に失敗した場合
 	 */
 	public void createTable() throws DataStoreManagerException;
+	
+	/**
+	 * PAGESテーブルを削除する。<p/>
+	 * テーブル削除に失敗した場合、例外が送出される。
+	 * 
+	 * @throws DataStoreManagerException テーブル作成に失敗した場合
+	 */
+	public void dropTable() throws DataStoreManagerException;
 }

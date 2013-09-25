@@ -10,7 +10,7 @@ import org.junit.Test;
 public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 
 	@Test
-	public void createTable() {
+	public void createTable_dropTable() {
 		try {
 			Pages pages = new PagesMysqlImpl(super.getAccessableDataBaseAccessParameter());
 			pages.createTable();

@@ -1,6 +1,11 @@
 package jp.co.dk.crawler.dao;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import jp.co.dk.crawler.dao.record.PagesRecord;
+import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataAccessObject;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
@@ -32,12 +37,24 @@ public interface Pages extends DataAccessObject{
 	public PagesRecord select(String protocol, String hostname, int h_path, int param)throws DataStoreManagerException;
 	
 	/**
-	 * PAGESテーブルから指定の１レコードを登録する。
+	 * PAGESテーブルから指定の１レコードを登録する。<p/>
+	 * 必須パラメータが設定されていない場合、例外を送出します。<br/>
+	 * <br/>
+	 * pathと、parameterに限り設定されていない場合（nullの場合）、空のリスト、マップインスタンスで置き換えます。<br/>
 	 * 
-	 * @param record レコードオブジェクト
-	 * @return 登録したレコードオブジェクト
+	 * @param protcol        プロトコル文字列（必須）
+	 * @param host           ホスト名（必須）
+	 * @param path           パスリスト（設定されていない場合、空のリストで置き換え）
+	 * @param parameter      パラメータマップ（設定されていない場合、空のマップで置き換え）
+	 * @param requestHeader  リクエストヘッダ
+	 * @param responceHeader レスポンスヘッダ
+	 * @param contents       コンテンツデータ（バイト配列）
+	 * @param createDate     登録日付
+	 * @param updateDate     更新日付
+	 * @throws DataStoreManagerException 登録に失敗した場合
+	 * @throws CrawlerException          必須パラメータが設定されていない場合
 	 */
-	public void insert(PagesRecord record)throws DataStoreManagerException;
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, String> responceHeader, byte[] contents, Date createDate, Date updateDate )throws DataStoreManagerException, CrawlerException ;
 	
 	/**
 	 * PAGESテーブルを削除する。<p/>

@@ -1,7 +1,16 @@
 package jp.co.dk.crawler.dao.mysql;
 
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.record.PagesRecord;
+import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStore;
 import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
 import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
@@ -62,12 +71,24 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	}
 
 	@Override
-	public void insert(PagesRecord record) throws DataStoreManagerException {
-		StringBuilder sb = new StringBuilder("INSERT INTO PAGES VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		Sql sql = new Sql(sb.toString());
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, String> responceHeader, byte[] contents, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
+		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
+		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
+		if (path == null) path = new ArrayList<String>();
+		if (parameter == null) parameter = new HashMap<String, String>();
+		Sql sql = new Sql("INSERT INTO PAGES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sql.setParameter(protcol);
+		sql.setParameter(host);
+		sql.setParameter(path.hashCode());
+		sql.setParameter(parameter.hashCode());
+		sql.setParameter();
+		sql.setParameter();
+		sql.setParameter();
+		sql.setParameter();
+		sql.setParameter();
 		
-		this.insert(sql);
-		
+		sql.setParameter();
+		sql.setParameter();
 	}
 
 }

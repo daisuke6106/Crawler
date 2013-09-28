@@ -81,14 +81,15 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sql.setParameter(host);
 		sql.setParameter(path.hashCode());
 		sql.setParameter(parameter.hashCode());
-		sql.setParameter();
-		sql.setParameter();
-		sql.setParameter();
-		sql.setParameter();
-		sql.setParameter();
-		
-		sql.setParameter();
-		sql.setParameter();
+		sql.setParameterConvertToBytes(path);
+		sql.setParameterConvertToBytes(parameter);
+		sql.setParameterConvertToBytes(requestHeader);
+		sql.setParameterConvertToBytes(responceHeader);
+		sql.setParameter(contents);
+		sql.setParameter(createDate);
+		sql.setParameter(updateDate);
+		this.insert(sql);
+		super.dataStore.finishTransaction();
 	}
 
 }

@@ -186,11 +186,22 @@ public class PagesRecord implements DataConvertable{
 		return pagesRecord;
 	}
 	
+	/**
+	 * 指定のバイト配列をインスタンスに変換して返却します。<p/>
+	 * 入出力例外が発生した、バイト配列がインスタンスでなくクラスの変換に失敗した場合、例外を送出します。
+	 * 
+	 * @param bytes バイト配列
+	 * @return インスタンス
+	 * @throws CrawlerException 入出力例外が発生した、クラスの変換に失敗した場合
+	 */
 	protected Object convertBytesToObject(byte[] bytes) throws CrawlerException {
 		try {
 			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 			ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-			return objectInputStream.readObject();
+			Object object = objectInputStream.readObject();
+			objectInputStream.close();
+			byteArrayInputStream.close();
+			return object;
 		} catch (IOException e) {
 			throw new CrawlerException(FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY, e);
 		} catch (ClassNotFoundException e) {

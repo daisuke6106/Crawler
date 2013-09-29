@@ -1,8 +1,9 @@
 package jp.co.dk.crawler.dao.record;
 
-import java.util.ArrayList;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,17 +29,23 @@ public class PagesRecord implements DataConvertable{
 	/** ホスト名 */
 	protected String host;
 	
+	/** パス-ハッシュ値 */
+	protected int h_path;
+	
+	/** パラメータ-ハッシュ値 */
+	protected int h_parameter;
+	
 	/** パス */
-	protected List<String> path;
+	protected byte[] path;
 	
 	/** パラメータ */
-	protected Map<String, String> parameter; 
+	protected byte[] parameter; 
 	
 	/** リクエストヘッダー */
-	protected Map<String, String> requestHeader;
+	protected byte[] requestHeader;
 	
 	/** レスポンスヘッダー */
-	protected Map<String, String> responceHeader;
+	protected byte[] responceHeader;
 	
 	/** コンテンツ */
 	protected byte[] contents;
@@ -49,14 +56,145 @@ public class PagesRecord implements DataConvertable{
 	/** 更新日時 */
 	protected Date updateDate;
 	
+	/**
+	 * プロトコル名を取得する。
+	 * @return プロトコル名
+	 */
+	public String getProtocol() {
+		return protocol;
+	}
+	
+	/**
+	 * ホスト名を取得する。
+	 * @return ホスト名
+	 */
+	public String getHost() {
+		return host;
+	}
+	
+	/**
+	 * パスリストのハッシュ値を取得する。
+	 * @return パスリストのハッシュ値
+	 */
+	public int getH_path() {
+		return h_path;
+	}
+	
+	/**
+	 * パラメータのハッシュ値を取得する。
+	 * @return パラメータのハッシュ値
+	 */
+	public int getH_parameter() {
+		return h_parameter;
+	}
+	
+	/**
+	 * パスリストを取得する。
+	 * @return パスリスト
+	 * @throws CrawlerException バイト配列からパスリストへ変換に失敗した場合
+	 */
+	@SuppressWarnings("unchecked")
+	public List<String> getPath() throws CrawlerException {
+		return (List<String>)this.convertBytesToObject(path);
+	}
+
+	/**
+	 * パラメータマップを取得する。
+	 * @return パラメータマップ
+	 * @throws CrawlerException バイト配列からパラメータマップへ変換に失敗した場合
+	 */
+	@SuppressWarnings("unchecked")
+	public Map<String, String> getParameter() throws CrawlerException {
+		return (Map<String, String>)this.convertBytesToObject(parameter);
+	}
+	
+	/**
+	 * リクエストヘッダーマップを取得する。
+	 * @return リクエストヘッダーマップ
+	 * @throws CrawlerException バイト配列からリクエストヘッダーマップへ変換に失敗した場合
+	 */
+	@SuppressWarnings("unchecked")
+	public Map<String, String> getRequestHeader() throws CrawlerException {
+		return (Map<String, String>)this.convertBytesToObject(requestHeader);
+	}
+	
+	/**
+	 * レスポンスヘッダーマップを取得する。
+	 * @return レスポンスヘッダーマップ
+	 * @throws CrawlerException バイト配列からレスポンスヘッダーマップへ変換に失敗した場合
+	 */
+	@SuppressWarnings("unchecked")
+	public Map<String, String> getResponceHeader() throws CrawlerException {
+		return (Map<String, String>)this.convertBytesToObject(responceHeader);
+	}
+	
+	/**
+	 * コンテンツデータを取得する。
+	 * @return コンテンツデータ
+	 */
+	public byte[] getContents() {
+		return contents;
+	}
+	
+	/**
+	 * 登録日時を取得する。
+	 * @return 登録日時
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
+	
+	/**
+	 * 更新日時を取得する。
+	 * @return 更新日時
+	 */
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	
 	@Override
-	public DataConvertable convert(DataBaseRecord arg0)	throws DataStoreManagerException {
-		return null;
+	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {
+		PagesRecord pagesRecord    = new PagesRecord();
+		pagesRecord.protocol       = record.getString("PROTOCOL");
+		pagesRecord.host           = record.getString("HOSTNAME");
+		pagesRecord.h_path         = record.getInt("H_PATH");
+		pagesRecord.h_parameter    = record.getInt("H_PARAM");
+		pagesRecord.path           = record.getBytes("PATH");
+		pagesRecord.parameter      = record.getBytes("PARAMETER");
+		pagesRecord.requestHeader  = record.getBytes("REQUEST_HEADER");
+		pagesRecord.responceHeader = record.getBytes("RESPONCE_HEADER");
+		pagesRecord.contents       = record.getBytes("DATA");
+		pagesRecord.createDate     = record.getDate("CREATE_DATE");
+		pagesRecord.updateDate     = record.getDate("UPDATE_DATE");
+		return pagesRecord;
 	}
 
 	@Override
-	public DataConvertable convert(Record arg0)	throws DataStoreManagerException {
-		return null;
+	public DataConvertable convert(Record record)	throws DataStoreManagerException {
+		PagesRecord pagesRecord    = new PagesRecord();
+		pagesRecord.protocol       = record.getString(1);
+		pagesRecord.host           = record.getString(2);
+		pagesRecord.h_path         = record.getInt(3);
+		pagesRecord.h_parameter    = record.getInt(4);
+		pagesRecord.path           = record.getBytes(5);
+		pagesRecord.parameter      = record.getBytes(6);
+		pagesRecord.requestHeader  = record.getBytes(7);
+		pagesRecord.responceHeader = record.getBytes(8);
+		pagesRecord.contents       = record.getBytes(9);
+		pagesRecord.createDate     = record.getDate(10);
+		pagesRecord.updateDate     = record.getDate(11);
+		return pagesRecord;
 	}
-
+	
+	protected Object convertBytesToObject(byte[] bytes) throws CrawlerException {
+		try {
+			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+			ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+			return objectInputStream.readObject();
+		} catch (IOException e) {
+			throw new CrawlerException(FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY, e);
+		} catch (ClassNotFoundException e) {
+			throw new CrawlerException(FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY, e);
+		}
+	}
 }

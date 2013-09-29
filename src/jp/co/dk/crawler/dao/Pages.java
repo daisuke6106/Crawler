@@ -28,13 +28,13 @@ public interface Pages extends DataAccessObject{
 	/**
 	 * PAGESテーブルから特定の１レコードを取得する。
 	 * 
-	 * @param protocol プロトコル名
-	 * @param hostname ホスト名
-	 * @param h_path   パスのハッシュ値
-	 * @param param    パラメータのハッシュ値
+	 * @param protocol  プロトコル名
+	 * @param hostname  ホスト名
+	 * @param path      パスのハッシュ値
+	 * @param parameter パラメータのハッシュ値
 	 * @return 取得したレコードオブジェクト
 	 */
-	public PagesRecord select(String protocol, String hostname, int h_path, int param)throws DataStoreManagerException;
+	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter)throws DataStoreManagerException;
 	
 	/**
 	 * PAGESテーブルから指定の１レコードを登録する。<p/>

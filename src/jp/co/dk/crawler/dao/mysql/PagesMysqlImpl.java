@@ -45,8 +45,8 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sb.append("REQUEST_HEADER  LONGBLOB,");
 		sb.append("RESPONCE_HEADER LONGBLOB,");
 		sb.append("DATA            LONGBLOB, ");
-		sb.append("CREATE_DATE     DATE, ");
-		sb.append("UPDATE_DATE     DATE, ");
+		sb.append("CREATE_DATE     DATETIME, ");
+		sb.append("UPDATE_DATE     DATETIME, ");
 		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_PARAM))");
 		Sql sql = new Sql(sb.toString());
 		this.createTable(sql);
@@ -60,13 +60,15 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	}
 
 	@Override
-	public PagesRecord select(String protocol, String hostname, int h_path, int param) throws DataStoreManagerException {
+	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
+		if (path == null) path = new ArrayList<String>();
+		if (parameter == null) parameter = new HashMap<String, String>();
 		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");
 		Sql sql = new Sql(sb.toString());
-		sql.setParameter(protocol);
-		sql.setParameter(hostname);
-		sql.setParameter(h_path);
-		sql.setParameter(param);
+		sql.setParameter(protcol);
+		sql.setParameter(host);
+		sql.setParameter(path.hashCode());
+		sql.setParameter(parameter.hashCode());
 		return this.selectSingle(sql, new PagesRecord());
 	}
 
@@ -89,7 +91,6 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sql.setParameter(createDate);
 		sql.setParameter(updateDate);
 		this.insert(sql);
-		super.dataStore.finishTransaction();
 	}
 
 }

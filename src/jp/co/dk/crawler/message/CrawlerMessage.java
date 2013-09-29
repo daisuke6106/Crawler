@@ -16,6 +16,9 @@ public class CrawlerMessage extends AbstractMessage{
 	/** レコードインスタンスの生成に失敗しました。必須パラメータが設定されていません。PARAM=[{0}] */
 	public static final CrawlerMessage PARAMETER_IS_NOT_SET = new CrawlerMessage("E002");
 	
+	/** バイト配列からオブジェクトのインスタンスへの変換に失敗しました。PARAM=[{0}] */
+	public static final CrawlerMessage FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY = new CrawlerMessage("E003");
+	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);
 	}

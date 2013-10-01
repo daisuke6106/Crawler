@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.dk.crawler.dao.record.PagesRecord;
+import jp.co.dk.crawler.dao.record.LinksRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataAccessObject;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
@@ -34,7 +34,7 @@ public interface Links extends DataAccessObject {
 	 * @param parameter パラメータのハッシュ値
 	 * @return 取得したレコードオブジェクト
 	 */
-	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter)throws DataStoreManagerException;
+	public LinksRecord select(String protcol, String host, List<String> path, Map<String, String> parameter)throws DataStoreManagerException;
 	
 	/**
 	 * INKSテーブルから指定の１レコードを登録する。<p/>
@@ -50,10 +50,12 @@ public interface Links extends DataAccessObject {
 	 * @param to_host        ホスト名（必須）
 	 * @param to_path        パスリスト（設定されていない場合、空のリストで置き換え）
 	 * @param to_parameter   パラメータマップ（設定されていない場合、空のマップで置き換え）
+	 * @param createDate     登録日付
+	 * @param updateDate     更新日付
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 * @throws CrawlerException 必須パラメータが設定されていない場合
 	 */
-	public void insert(String from_protcol, String from_host, List<String> from_path, Map<String, String> from_parameter, String to_protcol, String to_host, List<String> to_path, Map<String, String> to_parameter)throws DataStoreManagerException, CrawlerException ;
+	public void insert(String from_protcol, String from_host, List<String> from_path, Map<String, String> from_parameter, String to_protcol, String to_host, List<String> to_path, Map<String, String> to_parameter, Date createDate, Date updateDate)throws DataStoreManagerException, CrawlerException ;
 	
 	/**
 	 * LINKSテーブルを削除する。<p/>

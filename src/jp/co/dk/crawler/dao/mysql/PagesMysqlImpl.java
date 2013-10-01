@@ -2,6 +2,7 @@ package jp.co.dk.crawler.dao.mysql;
 
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	public void dropTable() throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("DROP TABLE PAGES ");
 		Sql sql = new Sql(sb.toString());
-		this.createTable(sql);
+		this.dropTable(sql);
 	}
 
 	@Override
@@ -88,8 +89,8 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sql.setParameterConvertToBytes(requestHeader);
 		sql.setParameterConvertToBytes(responceHeader);
 		sql.setParameter(contents);
-		sql.setParameter(createDate);
-		sql.setParameter(updateDate);
+		sql.setParameter(new Timestamp(createDate.getTime()));
+		sql.setParameter(new Timestamp(updateDate.getTime()));
 		this.insert(sql);
 	}
 

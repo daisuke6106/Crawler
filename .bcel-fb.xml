@@ -1,116 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<BugCollection version="2.0.2" sequence="0" timestamp="1379428818406" analysisTimestamp="1379428818457" release="">
+<BugCollection version="2.0.2" sequence="0" timestamp="1380650540429" analysisTimestamp="1380650540464" release="">
   <Project projectName="">
     <Jar>/home/dk/projects/Crawler/crawler.jar</Jar>
     <AuxClasspathEntry>/home/dk/projects/Crawler/lib/browzer_all.jar</AuxClasspathEntry>
     <AuxClasspathEntry>/home/dk/projects/Crawler/lib/datastoremanager_all.jar</AuxClasspathEntry>
     <AuxClasspathEntry>/home/dk/projects/Crawler/lib/message_all.jar</AuxClasspathEntry>
     <AuxClasspathEntry>/home/dk/projects/Crawler/lib/property_all.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/home/dk/projects/Crawler/lib/test/jmockit-coverage.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/home/dk/projects/Crawler/lib/test/jmockit.jar</AuxClasspathEntry>
     <AuxClasspathEntry>/home/dk/projects/Crawler/lib/test/testtemplate_all.jar</AuxClasspathEntry>
     <SrcDir>/home/dk/projects/Crawler/src</SrcDir>
   </Project>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
-    <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
+  <BugInstance type="DLS_DEAD_LOCAL_STORE" priority="1" abbrev="DLS" category="STYLE">
+    <Class classname="jp.co.dk.crawler.Crawler">
+      <SourceLine classname="jp.co.dk.crawler.Crawler" start="29" end="46" sourcefile="Crawler.java" sourcepath="jp/co/dk/crawler/Crawler.java"/>
     </Class>
+    <Method classname="jp.co.dk.crawler.Crawler" name="save" signature="(Ljava/lang/String;)V" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.Crawler" start="45" end="46" startBytecode="0" endBytecode="5" sourcefile="Crawler.java" sourcepath="jp/co/dk/crawler/Crawler.java"/>
+    </Method>
+    <LocalVariable name="page" register="2" pc="9" role="LOCAL_VARIABLE_NAMED"/>
+    <SourceLine classname="jp.co.dk.crawler.Crawler" start="45" end="45" startBytecode="8" endBytecode="8" sourcefile="Crawler.java" sourcepath="jp/co/dk/crawler/Crawler.java"/>
+    <Property name="edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.METHOD_RESULT" value="true"/>
+    <Property name="edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.LOCAL_NAME" value="page"/>
+    <Property name="edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.DEAD_OBJECT_STORE" value="true"/>
+  </BugInstance>
+  <BugInstance type="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UrF" category="STYLE">
+    <Class classname="jp.co.dk.crawler.Crawler">
+      <SourceLine classname="jp.co.dk.crawler.Crawler" start="29" end="46" sourcefile="Crawler.java" sourcepath="jp/co/dk/crawler/Crawler.java"/>
+    </Class>
+    <Field classname="jp.co.dk.crawler.Crawler" name="dsm" signature="Ljp/co/dk/datastoremanager/DataStoreManager;" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.Crawler" sourcefile="Crawler.java" sourcepath="jp/co/dk/crawler/Crawler.java"/>
+    </Field>
+    <SourceLine classname="jp.co.dk.crawler.Crawler" start="41" end="41" startBytecode="13" endBytecode="13" sourcefile="Crawler.java" sourcepath="jp/co/dk/crawler/Crawler.java"/>
+  </BugInstance>
+  <BugInstance type="NM_SAME_SIMPLE_NAME_AS_INTERFACE" priority="2" abbrev="Nm" category="BAD_PRACTICE">
+    <Class classname="jp.co.dk.crawler.dao.DaoConstants">
+      <SourceLine classname="jp.co.dk.crawler.dao.DaoConstants" start="12" end="53" sourcefile="DaoConstants.java" sourcepath="jp/co/dk/crawler/dao/DaoConstants.java"/>
+    </Class>
+    <Class classname="jp.co.dk.datastoremanager.DaoConstants">
+      <SourceLine classname="jp.co.dk.datastoremanager.DaoConstants" sourcefile="DaoConstants.java" sourcepath="jp/co/dk/datastoremanager/DaoConstants.java"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE">
+    <Class classname="jp.co.dk.crawler.dao.record.LinksRecord">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.LinksRecord" start="16" end="157" sourcefile="LinksRecord.java" sourcepath="jp/co/dk/crawler/dao/record/LinksRecord.java"/>
+    </Class>
+    <Method classname="jp.co.dk.crawler.dao.record.LinksRecord" name="getCreateDate" signature="()Ljava/util/Date;" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.LinksRecord" start="117" end="117" startBytecode="0" endBytecode="46" sourcefile="LinksRecord.java" sourcepath="jp/co/dk/crawler/dao/record/LinksRecord.java"/>
+    </Method>
+    <Field classname="jp.co.dk.crawler.dao.record.LinksRecord" name="createDate" signature="Ljava/util/Date;" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.LinksRecord" sourcefile="LinksRecord.java" sourcepath="jp/co/dk/crawler/dao/record/LinksRecord.java"/>
+    </Field>
+    <SourceLine classname="jp.co.dk.crawler.dao.record.LinksRecord" start="117" end="117" startBytecode="4" endBytecode="4" sourcefile="LinksRecord.java" sourcepath="jp/co/dk/crawler/dao/record/LinksRecord.java"/>
+  </BugInstance>
+  <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE">
+    <Class classname="jp.co.dk.crawler.dao.record.LinksRecord">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.LinksRecord" start="16" end="157" sourcefile="LinksRecord.java" sourcepath="jp/co/dk/crawler/dao/record/LinksRecord.java"/>
+    </Class>
+    <Method classname="jp.co.dk.crawler.dao.record.LinksRecord" name="getUpdateDate" signature="()Ljava/util/Date;" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.LinksRecord" start="125" end="125" startBytecode="0" endBytecode="46" sourcefile="LinksRecord.java" sourcepath="jp/co/dk/crawler/dao/record/LinksRecord.java"/>
+    </Method>
+    <Field classname="jp.co.dk.crawler.dao.record.LinksRecord" name="updateDate" signature="Ljava/util/Date;" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.LinksRecord" sourcefile="LinksRecord.java" sourcepath="jp/co/dk/crawler/dao/record/LinksRecord.java"/>
+    </Field>
+    <SourceLine classname="jp.co.dk.crawler.dao.record.LinksRecord" start="125" end="125" startBytecode="4" endBytecode="4" sourcefile="LinksRecord.java" sourcepath="jp/co/dk/crawler/dao/record/LinksRecord.java"/>
+  </BugInstance>
+  <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE">
+    <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="24" end="208" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
+    </Class>
+    <Method classname="jp.co.dk.crawler.dao.record.PagesRecord" name="getContents" signature="()[B" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="136" end="136" startBytecode="0" endBytecode="46" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
+    </Method>
     <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="contents" signature="[B" isStatic="false">
       <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
     </Field>
+    <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="136" end="136" startBytecode="4" endBytecode="4" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
   </BugInstance>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
+  <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE">
     <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
+      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="24" end="208" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
     </Class>
+    <Method classname="jp.co.dk.crawler.dao.record.PagesRecord" name="getCreateDate" signature="()Ljava/util/Date;" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="144" end="144" startBytecode="0" endBytecode="46" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
+    </Method>
     <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="createDate" signature="Ljava/util/Date;" isStatic="false">
       <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
     </Field>
+    <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="144" end="144" startBytecode="4" endBytecode="4" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
   </BugInstance>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
+  <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE">
     <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
+      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="24" end="208" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
     </Class>
-    <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="host" signature="Ljava/lang/String;" isStatic="false">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Field>
-  </BugInstance>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
-    <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Class>
-    <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="parameter" signature="Ljava/util/Map;" isStatic="false">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Field>
-  </BugInstance>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
-    <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Class>
-    <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="path" signature="Ljava/lang/String;" isStatic="false">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Field>
-  </BugInstance>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
-    <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Class>
-    <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="protocol" signature="Ljava/lang/String;" isStatic="false">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Field>
-  </BugInstance>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
-    <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Class>
-    <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="requestHeader" signature="Ljava/util/Map;" isStatic="false">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Field>
-  </BugInstance>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
-    <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Class>
-    <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="responceHeader" signature="Ljava/util/Map;" isStatic="false">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Field>
-  </BugInstance>
-  <BugInstance type="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" priority="2" abbrev="UuF" category="STYLE">
-    <Class classname="jp.co.dk.crawler.dao.record.PagesRecord">
-      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="17" end="53" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
-    </Class>
+    <Method classname="jp.co.dk.crawler.dao.record.PagesRecord" name="getUpdateDate" signature="()Ljava/util/Date;" isStatic="false">
+      <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="152" end="152" startBytecode="0" endBytecode="46" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
+    </Method>
     <Field classname="jp.co.dk.crawler.dao.record.PagesRecord" name="updateDate" signature="Ljava/util/Date;" isStatic="false">
       <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
     </Field>
+    <SourceLine classname="jp.co.dk.crawler.dao.record.PagesRecord" start="152" end="152" startBytecode="4" endBytecode="4" sourcefile="PagesRecord.java" sourcepath="jp/co/dk/crawler/dao/record/PagesRecord.java"/>
   </BugInstance>
   <Errors errors="0" missingClasses="0"></Errors>
-  <FindBugsSummary timestamp="Tue, 17 Sep 2013 23:40:18 +0900" total_classes="7" referenced_classes="18" total_bugs="9" total_size="25" num_packages="4" vm_version="22.0-b10" cpu_seconds="5.62" clock_seconds="3.46" peak_mbytes="81.82" alloc_mbytes="780.50" gc_seconds="0.05" priority_2="9">
-    <PackageStats package="jp.co.dk.crawler" total_bugs="0" total_types="2" total_size="5">
-      <ClassStats class="jp.co.dk.crawler.Crawler" sourceFile="Crawler.java" interface="false" size="4" bugs="0"/>
+  <FindBugsSummary timestamp="Wed, 2 Oct 2013 03:02:20 +0900" total_classes="17" referenced_classes="88" total_bugs="8" total_size="351" num_packages="7" vm_version="22.0-b10" cpu_seconds="15.75" clock_seconds="10.65" peak_mbytes="119.22" alloc_mbytes="780.50" gc_seconds="0.13" priority_2="7" priority_1="1">
+    <PackageStats package="jp.co.dk.crawler" total_bugs="2" total_types="2" total_size="13" priority_2="1" priority_1="1">
+      <ClassStats class="jp.co.dk.crawler.Crawler" sourceFile="Crawler.java" interface="false" size="12" bugs="2" priority_2="1" priority_1="1"/>
       <ClassStats class="jp.co.dk.crawler.package-info" sourceFile="package-info.java" interface="true" size="1" bugs="0"/>
     </PackageStats>
-    <PackageStats package="jp.co.dk.crawler.dao" total_bugs="0" total_types="2" total_size="2">
-      <ClassStats class="jp.co.dk.crawler.dao.Pages" sourceFile="Pages.java" interface="true" size="1" bugs="0"/>
+    <PackageStats package="jp.co.dk.crawler.dao" total_bugs="1" total_types="6" total_size="44" priority_2="1">
+      <ClassStats class="jp.co.dk.crawler.dao.DaoConstants" sourceFile="DaoConstants.java" interface="false" size="19" bugs="1" priority_2="1"/>
+      <ClassStats class="jp.co.dk.crawler.dao.DaoConstants$1" sourceFile="DaoConstants.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="jp.co.dk.crawler.dao.DaoConstants$2" sourceFile="DaoConstants.java" interface="false" size="4" bugs="0"/>
+      <ClassStats class="jp.co.dk.crawler.dao.Links" sourceFile="Links.java" interface="true" size="5" bugs="0"/>
+      <ClassStats class="jp.co.dk.crawler.dao.Pages" sourceFile="Pages.java" interface="true" size="5" bugs="0"/>
       <ClassStats class="jp.co.dk.crawler.dao.package-info" sourceFile="package-info.java" interface="true" size="1" bugs="0"/>
     </PackageStats>
-    <PackageStats package="jp.co.dk.crawler.dao.record" total_bugs="9" total_types="2" total_size="17" priority_2="9">
-      <ClassStats class="jp.co.dk.crawler.dao.record.PagesRecord" sourceFile="PagesRecord.java" interface="false" size="16" bugs="9" priority_2="9"/>
+    <PackageStats package="jp.co.dk.crawler.dao.mysql" total_bugs="0" total_types="2" total_size="126">
+      <ClassStats class="jp.co.dk.crawler.dao.mysql.LinksMysqlImpl" sourceFile="LinksMysqlImpl.java" interface="false" size="64" bugs="0"/>
+      <ClassStats class="jp.co.dk.crawler.dao.mysql.PagesMysqlImpl" sourceFile="PagesMysqlImpl.java" interface="false" size="62" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="jp.co.dk.crawler.dao.record" total_bugs="5" total_types="3" total_size="135" priority_2="5">
+      <ClassStats class="jp.co.dk.crawler.dao.record.LinksRecord" sourceFile="LinksRecord.java" interface="false" size="59" bugs="2" priority_2="2"/>
+      <ClassStats class="jp.co.dk.crawler.dao.record.PagesRecord" sourceFile="PagesRecord.java" interface="false" size="75" bugs="3" priority_2="3"/>
       <ClassStats class="jp.co.dk.crawler.dao.record.package-info" sourceFile="package-info.java" interface="true" size="1" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="jp.co.dk.crawler.exception" total_bugs="0" total_types="2" total_size="21">
+      <ClassStats class="jp.co.dk.crawler.exception.CrawlerException" sourceFile="CrawlerException.java" interface="false" size="20" bugs="0"/>
+      <ClassStats class="jp.co.dk.crawler.exception.package-info" sourceFile="package-info.java" interface="true" size="1" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="jp.co.dk.crawler.message" total_bugs="0" total_types="1" total_size="11">
+      <ClassStats class="jp.co.dk.crawler.message.CrawlerMessage" sourceFile="CrawlerMessage.java" interface="false" size="11" bugs="0"/>
     </PackageStats>
     <PackageStats package="jp.co.dk.crawler.property" total_bugs="0" total_types="1" total_size="1">
       <ClassStats class="jp.co.dk.crawler.property.package-info" sourceFile="package-info.java" interface="true" size="1" bugs="0"/>
     </PackageStats>
     <FindBugsProfile>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="663" invocations="298" avgMicrosecondsPerInvocation="2225" maxMicrosecondsPerInvocation="49650" standardDeviationMircosecondsPerInvocation="5586"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.impl.ZipCodeBaseFactory" totalMilliseconds="322" invocations="19" avgMicrosecondsPerInvocation="16952" maxMicrosecondsPerInvocation="309450" standardDeviationMircosecondsPerInvocation="68958"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="176" invocations="18" avgMicrosecondsPerInvocation="9812" maxMicrosecondsPerInvocation="69754" standardDeviationMircosecondsPerInvocation="19738"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="114" invocations="18" avgMicrosecondsPerInvocation="6349" maxMicrosecondsPerInvocation="45786" standardDeviationMircosecondsPerInvocation="11872"/>
-      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="111" invocations="267" avgMicrosecondsPerInvocation="416" maxMicrosecondsPerInvocation="7868" standardDeviationMircosecondsPerInvocation="1013"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="98" invocations="4" avgMicrosecondsPerInvocation="24559" maxMicrosecondsPerInvocation="97948" standardDeviationMircosecondsPerInvocation="42371"/>
-      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="69" invocations="33" avgMicrosecondsPerInvocation="2093" maxMicrosecondsPerInvocation="9798" standardDeviationMircosecondsPerInvocation="2780"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.ReflectiveClasses" totalMilliseconds="67" invocations="18" avgMicrosecondsPerInvocation="3752" maxMicrosecondsPerInvocation="25374" standardDeviationMircosecondsPerInvocation="7629"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="51" invocations="18" avgMicrosecondsPerInvocation="2875" maxMicrosecondsPerInvocation="32388" standardDeviationMircosecondsPerInvocation="7475"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.FunctionsThatMightBeMistakenForProcedures" totalMilliseconds="51" invocations="18" avgMicrosecondsPerInvocation="2845" maxMicrosecondsPerInvocation="21444" standardDeviationMircosecondsPerInvocation="5919"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="42" invocations="22" avgMicrosecondsPerInvocation="1927" maxMicrosecondsPerInvocation="29983" standardDeviationMircosecondsPerInvocation="6219"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="1328" invocations="585" avgMicrosecondsPerInvocation="2270" maxMicrosecondsPerInvocation="86471" standardDeviationMircosecondsPerInvocation="6862"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="849" invocations="88" avgMicrosecondsPerInvocation="9657" maxMicrosecondsPerInvocation="142844" standardDeviationMircosecondsPerInvocation="23500"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="561" invocations="88" avgMicrosecondsPerInvocation="6382" maxMicrosecondsPerInvocation="158761" standardDeviationMircosecondsPerInvocation="18644"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="392" invocations="277" avgMicrosecondsPerInvocation="1416" maxMicrosecondsPerInvocation="33165" standardDeviationMircosecondsPerInvocation="3353"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="326" invocations="62" avgMicrosecondsPerInvocation="5265" maxMicrosecondsPerInvocation="41514" standardDeviationMircosecondsPerInvocation="8917"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.impl.ZipCodeBaseFactory" totalMilliseconds="325" invocations="21" avgMicrosecondsPerInvocation="15512" maxMicrosecondsPerInvocation="316479" standardDeviationMircosecondsPerInvocation="67305"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="258" invocations="62" avgMicrosecondsPerInvocation="4164" maxMicrosecondsPerInvocation="43597" standardDeviationMircosecondsPerInvocation="8064"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CalledMethods" totalMilliseconds="221" invocations="88" avgMicrosecondsPerInvocation="2514" maxMicrosecondsPerInvocation="98175" standardDeviationMircosecondsPerInvocation="10674"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="211" invocations="63" avgMicrosecondsPerInvocation="3353" maxMicrosecondsPerInvocation="38722" standardDeviationMircosecondsPerInvocation="5995"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="206" invocations="62" avgMicrosecondsPerInvocation="3322" maxMicrosecondsPerInvocation="26343" standardDeviationMircosecondsPerInvocation="4861"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="199" invocations="63" avgMicrosecondsPerInvocation="3160" maxMicrosecondsPerInvocation="24563" standardDeviationMircosecondsPerInvocation="4861"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="185" invocations="105" avgMicrosecondsPerInvocation="1771" maxMicrosecondsPerInvocation="45899" standardDeviationMircosecondsPerInvocation="5914"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="185" invocations="62" avgMicrosecondsPerInvocation="2988" maxMicrosecondsPerInvocation="33767" standardDeviationMircosecondsPerInvocation="6151"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="183" invocations="544" avgMicrosecondsPerInvocation="337" maxMicrosecondsPerInvocation="16283" standardDeviationMircosecondsPerInvocation="1205"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildObligationPolicyDatabase" totalMilliseconds="182" invocations="88" avgMicrosecondsPerInvocation="2073" maxMicrosecondsPerInvocation="21857" standardDeviationMircosecondsPerInvocation="3665"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison$SpecialTypeAnalysis" totalMilliseconds="162" invocations="43" avgMicrosecondsPerInvocation="3789" maxMicrosecondsPerInvocation="19244" standardDeviationMircosecondsPerInvocation="5420"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="141" invocations="88" avgMicrosecondsPerInvocation="1608" maxMicrosecondsPerInvocation="24144" standardDeviationMircosecondsPerInvocation="4243"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="138" invocations="588" avgMicrosecondsPerInvocation="236" maxMicrosecondsPerInvocation="31482" standardDeviationMircosecondsPerInvocation="1396"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="135" invocations="70" avgMicrosecondsPerInvocation="1935" maxMicrosecondsPerInvocation="113606" standardDeviationMircosecondsPerInvocation="13457"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FunctionsThatMightBeMistakenForProcedures" totalMilliseconds="134" invocations="88" avgMicrosecondsPerInvocation="1532" maxMicrosecondsPerInvocation="20423" standardDeviationMircosecondsPerInvocation="3962"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ReflectiveClasses" totalMilliseconds="120" invocations="88" avgMicrosecondsPerInvocation="1367" maxMicrosecondsPerInvocation="34861" standardDeviationMircosecondsPerInvocation="4598"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.EqualsOperandShouldHaveClassCompatibleWithThis" totalMilliseconds="109" invocations="88" avgMicrosecondsPerInvocation="1248" maxMicrosecondsPerInvocation="23536" standardDeviationMircosecondsPerInvocation="3607"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ExplicitSerialization" totalMilliseconds="102" invocations="88" avgMicrosecondsPerInvocation="1163" maxMicrosecondsPerInvocation="36514" standardDeviationMircosecondsPerInvocation="5279"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ConstantDataflowFactory" totalMilliseconds="96" invocations="62" avgMicrosecondsPerInvocation="1551" maxMicrosecondsPerInvocation="21978" standardDeviationMircosecondsPerInvocation="3508"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindInconsistentSync2" totalMilliseconds="64" invocations="17" avgMicrosecondsPerInvocation="3783" maxMicrosecondsPerInvocation="17778" standardDeviationMircosecondsPerInvocation="6131"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.LiveLocalStoreDataflowFactory" totalMilliseconds="55" invocations="62" avgMicrosecondsPerInvocation="898" maxMicrosecondsPerInvocation="6136" standardDeviationMircosecondsPerInvocation="1368"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindDeadLocalStores" totalMilliseconds="54" invocations="17" avgMicrosecondsPerInvocation="3218" maxMicrosecondsPerInvocation="15914" standardDeviationMircosecondsPerInvocation="4650"/>
     </FindBugsProfile>
   </FindBugsSummary>
   <ClassFeatures></ClassFeatures>

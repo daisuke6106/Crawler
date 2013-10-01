@@ -1,5 +1,7 @@
 package jp.co.dk.crawler.dao.record;
 
+import java.util.Date;
+
 import jp.co.dk.datastoremanager.DataConvertable;
 import jp.co.dk.datastoremanager.Record;
 import jp.co.dk.datastoremanager.database.DataBaseRecord;
@@ -37,7 +39,92 @@ public class LinksRecord implements DataConvertable {
 	/** リンク先−パラメータ-ハッシュ値 */
 	protected int toH_parameter;
 	
-
+	/** 作成日時 */
+	protected Date createDate;
+	
+	/** 更新日時 */
+	protected Date updateDate;
+	
+	/**
+	 * リンク元−プロトコルを取得します。
+	 * @return リンク元−プロトコル
+	 */
+	public String getFromProtocol() {
+		return fromProtocol;
+	}
+	
+	/**
+	 * リンク元−ホスト名を取得します。
+	 * @return リンク元−ホスト名
+	 */
+	public String getFromHost() {
+		return fromHost;
+	}
+	
+	/**
+	 * リンク元−パス-ハッシュ値を取得します。
+	 * @return リンク元−パス-ハッシュ値
+	 */
+	public int getFromH_path() {
+		return fromH_path;
+	}
+	
+	/**
+	 * リンク元−パス-ハッシュ値を取得します。
+	 * @return リンク元−パス-ハッシュ値
+	 */
+	public int getFromH_parameter() {
+		return fromH_parameter;
+	}
+	
+	/**
+	 * リンク先−プロトコルを取得します。
+	 * @return リンク先−プロトコル
+	 */
+	public String getToProtocol() {
+		return toProtocol;
+	}
+	
+	/**
+	 * リンク先−ホスト名を取得します。
+	 * @return リンク先−ホスト名
+	 */
+	public String getToHost() {
+		return toHost;
+	}
+	
+	/**
+	 * リンク先−パス-ハッシュ値を取得します。
+	 * @return リンク先−パス-ハッシュ値
+	 */
+	public int getToH_path() {
+		return toH_path;
+	}
+	
+	/**
+	 * リンク先−パラメータ-ハッシュ値を取得します。
+	 * @return リンク先−パラメータ-ハッシュ値
+	 */
+	public int getToH_parameter() {
+		return toH_parameter;
+	}
+	
+	/**
+	 * 登録日時を取得する。
+	 * @return 登録日時
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
+	
+	/**
+	 * 更新日時を取得する。
+	 * @return 更新日時
+	 */
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	
 	@Override
 	public DataConvertable convert(DataBaseRecord record) throws DataStoreManagerException {
 		LinksRecord linksRecord = new LinksRecord();
@@ -49,6 +136,8 @@ public class LinksRecord implements DataConvertable {
 		linksRecord.toHost          = record.getString("TO_HOSTNAME");
 		linksRecord.toH_path        = record.getInt("TO_H_PATH");
 		linksRecord.toH_parameter   = record.getInt("TO_H_PARAM");
+		linksRecord.createDate      = record.getTimestamp("CREATE_DATE");
+		linksRecord.updateDate      = record.getTimestamp("UPDATE_DATE");
 		return linksRecord;
 	}
 
@@ -63,6 +152,8 @@ public class LinksRecord implements DataConvertable {
 		linksRecord.toHost          = record.getString(6);
 		linksRecord.toH_path        = record.getInt(7);
 		linksRecord.toH_parameter   = record.getInt(8);
+		linksRecord.createDate      = record.getTimestamp(9);
+		linksRecord.updateDate      = record.getTimestamp(10);
 		return linksRecord;
 	}
 }

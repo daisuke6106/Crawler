@@ -164,8 +164,8 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.requestHeader  = record.getBytes("REQUEST_HEADER");
 		pagesRecord.responceHeader = record.getBytes("RESPONCE_HEADER");
 		pagesRecord.contents       = record.getBytes("DATA");
-		pagesRecord.createDate     = record.getDate("CREATE_DATE");
-		pagesRecord.updateDate     = record.getDate("UPDATE_DATE");
+		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");
+		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");
 		return pagesRecord;
 	}
 

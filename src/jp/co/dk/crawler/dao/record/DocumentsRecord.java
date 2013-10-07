@@ -103,12 +103,13 @@ public class DocumentsRecord implements DataConvertable{
 	@Override
 	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {
 		DocumentsRecord pagesRecord    = new DocumentsRecord();
-		pagesRecord.fileId     = record.getLong("FILEID");
-		pagesRecord.filename   = record.getString("FILENAME");
-		pagesRecord.extention  = record.getString("EXTENTION");
-		pagesRecord.data       = record.getBytes("DATA");
-		pagesRecord.createDate = record.getTimestamp("CREATE_DATE");
-		pagesRecord.updateDate = record.getTimestamp("UPDATE_DATE");
+		pagesRecord.fileId         = record.getLong("FILEID");
+		pagesRecord.filename       = record.getString("FILENAME");
+		pagesRecord.extention      = record.getString("EXTENTION");
+		pagesRecord.lastUpdateDate = record.getTimestamp("LASTUPDATE_DATE");
+		pagesRecord.data           = record.getBytes("DATA");
+		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");
+		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");
 		return pagesRecord;
 	}
 
@@ -118,9 +119,10 @@ public class DocumentsRecord implements DataConvertable{
 		pagesRecord.fileId     = record.getLong(1);
 		pagesRecord.filename   = record.getString(2);
 		pagesRecord.extention  = record.getString(3);
-		pagesRecord.data       = record.getBytes(4);
-		pagesRecord.createDate = record.getTimestamp(5);
-		pagesRecord.updateDate = record.getTimestamp(6);
+		pagesRecord.lastUpdateDate = record.getTimestamp(4);
+		pagesRecord.data       = record.getBytes(5);
+		pagesRecord.createDate = record.getTimestamp(6);
+		pagesRecord.updateDate = record.getTimestamp(7);
 		return pagesRecord;
 	}
 }

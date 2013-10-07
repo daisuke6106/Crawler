@@ -1,11 +1,8 @@
 package jp.co.dk.crawler.dao;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
-import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataAccessObject;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
@@ -28,26 +25,26 @@ public interface Documents extends DataAccessObject {
 	/**
 	 * DOCUMENTSテーブルから特定の１レコードを取得する。
 	 * 
-	 * @param protcol    プロトコル文字列（必須）
-	 * @param host       ホスト名（必須）
-	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
-	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
+	 * @param fileId ファイルID
+	 * @param timeId タイムID
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 */
-	public DocumentsRecord select(long fileId) throws DataStoreManagerException;
+	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException;
 	
 	/**
 	 * DOCUMENTSテーブルから指定の１レコードを登録する。<p/>
 	 * 
-	 * @param fileId     ファイルID
-	 * @param filename   ファイル名
-	 * @param extention  拡張子
-	 * @param data       データ本体
-	 * @param createDate 登録日付
-	 * @param updateDate 更新日付
+	 * @param fileId         ファイルID
+	 * @param timeId         タイムID
+	 * @param filename       ファイル名
+	 * @param extention      拡張子
+	 * @param lastUpdateDate 最終更新日時
+	 * @param data           データ本体
+	 * @param createDate     登録日付
+	 * @param updateDate     更新日付
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 */
-	public void insert(long fileId, String filename, String extention, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException;
+	public void insert(long fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException;
 	
 	/**
 	 * DOCUMENTSテーブルを削除する。<p/>

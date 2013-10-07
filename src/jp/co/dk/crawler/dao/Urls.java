@@ -47,12 +47,13 @@ public interface Urls extends DataAccessObject {
 	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
 	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param url        URL文字列
+	 * @param fileid     ファイルID
 	 * @param createDate 登録日付
 	 * @param updateDate 更新日付
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 * @throws CrawlerException 必須パラメータが設定されていない場合
 	 */
-	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException;
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException;
 	
 	/**
 	 * URLSテーブルを削除する。<p/>

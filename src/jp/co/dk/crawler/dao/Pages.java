@@ -48,13 +48,14 @@ public interface Pages extends DataAccessObject{
 	 * @param parameter      パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param requestHeader  リクエストヘッダ
 	 * @param responceHeader レスポンスヘッダ
-	 * @param contents       コンテンツデータ（バイト配列）
+	 * @param fileid         ファイルID
+	 * @param timeid         タイムID
 	 * @param createDate     登録日付
 	 * @param updateDate     更新日付
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 * @throws CrawlerException          必須パラメータが設定されていない場合
 	 */
-	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, String> responceHeader, byte[] contents, Date createDate, Date updateDate )throws DataStoreManagerException, CrawlerException ;
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, String> responceHeader, long fileid, long timeid, Date createDate, Date updateDate )throws DataStoreManagerException, CrawlerException ;
 	
 	/**
 	 * PAGESテーブルを削除する。<p/>

@@ -38,8 +38,14 @@ public class PagesRecord implements DataConvertable{
 	/** パス */
 	protected byte[] path;
 	
+	/** パスカウント */
+	protected int pathCount;
+	
 	/** パラメータ */
-	protected byte[] parameter; 
+	protected byte[] parameter;
+	
+	/** パラメータカウント */
+	protected int parameterCount;
 	
 	/** リクエストヘッダー */
 	protected byte[] requestHeader;
@@ -47,8 +53,11 @@ public class PagesRecord implements DataConvertable{
 	/** レスポンスヘッダー */
 	protected byte[] responceHeader;
 	
-	/** コンテンツ */
-	protected byte[] contents;
+	/** ファイルID */
+	protected long fileid;
+	
+	/** タイムID */
+	protected long timeid;
 	
 	/** 作成日時 */
 	protected Date createDate;
@@ -97,7 +106,15 @@ public class PagesRecord implements DataConvertable{
 	public List<String> getPath() throws CrawlerException {
 		return (List<String>)this.convertBytesToObject(path);
 	}
-
+	
+	/**
+	 * パスカウントを取得する。
+	 * @return パスカウント
+	 */
+	public int getPathCount() {
+		return pathCount;
+	}
+	
 	/**
 	 * パラメータマップを取得する。
 	 * @return パラメータマップ
@@ -106,6 +123,14 @@ public class PagesRecord implements DataConvertable{
 	@SuppressWarnings("unchecked")
 	public Map<String, String> getParameter() throws CrawlerException {
 		return (Map<String, String>)this.convertBytesToObject(parameter);
+	}
+	
+	/**
+	 * パスカウントを取得する。
+	 * @return パスカウント
+	 */
+	public int getParameterCount() {
+		return parameterCount;
 	}
 	
 	/**
@@ -129,11 +154,19 @@ public class PagesRecord implements DataConvertable{
 	}
 	
 	/**
-	 * コンテンツデータを取得する。
-	 * @return コンテンツデータ
+	 * ファイルIDを取得する。
+	 * @return ファイルID
 	 */
-	public byte[] getContents() {
-		return contents;
+	public long getFileId() {
+		return fileid;
+	}
+	
+	/**
+	 * タイムIDを取得する。
+	 * @return タイムID
+	 */
+	public long getTimeId() {
+		return timeid;
 	}
 	
 	/**
@@ -160,10 +193,13 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.h_path         = record.getInt("H_PATH");
 		pagesRecord.h_parameter    = record.getInt("H_PARAM");
 		pagesRecord.path           = record.getBytes("PATH");
+		pagesRecord.pathCount      = record.getInt("PATH_COUNT");
 		pagesRecord.parameter      = record.getBytes("PARAMETER");
+		pagesRecord.parameterCount = record.getInt("PARAMETER_COUNT");
 		pagesRecord.requestHeader  = record.getBytes("REQUEST_HEADER");
 		pagesRecord.responceHeader = record.getBytes("RESPONCE_HEADER");
-		pagesRecord.contents       = record.getBytes("DATA");
+		pagesRecord.fileid         = record.getLong("FILEID");
+		pagesRecord.timeid         = record.getLong("TIMEID");
 		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");
 		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");
 		return pagesRecord;
@@ -177,12 +213,15 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.h_path         = record.getInt(3);
 		pagesRecord.h_parameter    = record.getInt(4);
 		pagesRecord.path           = record.getBytes(5);
-		pagesRecord.parameter      = record.getBytes(6);
-		pagesRecord.requestHeader  = record.getBytes(7);
-		pagesRecord.responceHeader = record.getBytes(8);
-		pagesRecord.contents       = record.getBytes(9);
-		pagesRecord.createDate     = record.getDate(10);
-		pagesRecord.updateDate     = record.getDate(11);
+		pagesRecord.pathCount      = record.getInt(6);
+		pagesRecord.parameter      = record.getBytes(7);
+		pagesRecord.parameterCount = record.getInt(8);
+		pagesRecord.requestHeader  = record.getBytes(9);
+		pagesRecord.responceHeader = record.getBytes(10);
+		pagesRecord.fileid         = record.getLong(11);
+		pagesRecord.timeid         = record.getLong(12);
+		pagesRecord.createDate     = record.getDate(13);
+		pagesRecord.updateDate     = record.getDate(14);
 		return pagesRecord;
 	}
 	

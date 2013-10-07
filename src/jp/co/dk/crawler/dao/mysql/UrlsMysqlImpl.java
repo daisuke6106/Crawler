@@ -42,6 +42,7 @@ public class UrlsMysqlImpl extends AbstractDataBaseAccessObject implements Urls{
 		sb.append("H_PATH          INT            NOT NULL,");
 		sb.append("H_PARAM         INT            NOT NULL,");
 		sb.append("URL             TEXT           NOT NULL,");
+		sb.append("FILEID          BIGINT(8)      NOT NULL,");
 		sb.append("CREATE_DATE     DATETIME, ");
 		sb.append("UPDATE_DATE     DATETIME, ");
 		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_PARAM))");
@@ -70,17 +71,18 @@ public class UrlsMysqlImpl extends AbstractDataBaseAccessObject implements Urls{
 	}
 
 	@Override
-	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
 		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
 		if (path == null) path = new ArrayList<String>();
 		if (parameter == null) parameter = new HashMap<String, String>();
-		Sql sql = new Sql("INSERT INTO URLS VALUES (?, ?, ?, ?, ?, ?, ?)");
+		Sql sql = new Sql("INSERT INTO URLS VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		sql.setParameter(protcol);
 		sql.setParameter(host);
 		sql.setParameter(path.hashCode());
 		sql.setParameter(parameter.hashCode());
 		sql.setParameter(url);
+		sql.setParameter(fileid);
 		sql.setParameter(new Timestamp(createDate.getTime()));
 		sql.setParameter(new Timestamp(updateDate.getTime()));
 		this.insert(sql);

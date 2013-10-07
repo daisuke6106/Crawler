@@ -26,6 +26,9 @@ public class DocumentsRecord implements DataConvertable{
 	/** ファイルID */
 	protected long fileId;
 	
+	/** タイムID */
+	protected long timeId;
+	
 	/** ファイル名 */
 	protected String filename;
 	
@@ -50,6 +53,14 @@ public class DocumentsRecord implements DataConvertable{
 	 */
 	public long getFileId() {
 		return fileId;
+	}
+	
+	/**
+	 * タイムIDを取得する。
+	 * @return タイムID
+	 */
+	public long getTimeId() {
+		return timeId;
 	}
 	
 	/**
@@ -104,6 +115,7 @@ public class DocumentsRecord implements DataConvertable{
 	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {
 		DocumentsRecord pagesRecord    = new DocumentsRecord();
 		pagesRecord.fileId         = record.getLong("FILEID");
+		pagesRecord.timeId         = record.getLong("TIMEID");
 		pagesRecord.filename       = record.getString("FILENAME");
 		pagesRecord.extention      = record.getString("EXTENTION");
 		pagesRecord.lastUpdateDate = record.getTimestamp("LASTUPDATE_DATE");
@@ -117,12 +129,13 @@ public class DocumentsRecord implements DataConvertable{
 	public DataConvertable convert(Record record)	throws DataStoreManagerException {
 		DocumentsRecord pagesRecord    = new DocumentsRecord();
 		pagesRecord.fileId     = record.getLong(1);
-		pagesRecord.filename   = record.getString(2);
-		pagesRecord.extention  = record.getString(3);
-		pagesRecord.lastUpdateDate = record.getTimestamp(4);
-		pagesRecord.data       = record.getBytes(5);
-		pagesRecord.createDate = record.getTimestamp(6);
-		pagesRecord.updateDate = record.getTimestamp(7);
+		pagesRecord.timeId     = record.getLong(2);
+		pagesRecord.filename   = record.getString(3);
+		pagesRecord.extention  = record.getString(4);
+		pagesRecord.lastUpdateDate = record.getTimestamp(5);
+		pagesRecord.data       = record.getBytes(6);
+		pagesRecord.createDate = record.getTimestamp(7);
+		pagesRecord.updateDate = record.getTimestamp(8);
 		return pagesRecord;
 	}
 }

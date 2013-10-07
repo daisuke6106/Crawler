@@ -1,19 +1,11 @@
 package jp.co.dk.crawler.dao.record;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataConvertable;
 import jp.co.dk.datastoremanager.Record;
 import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-
-import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
  * PagesRecordは、PAGESテーブルの単一のレコードを表すクラス。

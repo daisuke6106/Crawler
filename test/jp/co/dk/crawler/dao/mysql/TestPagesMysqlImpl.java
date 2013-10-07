@@ -236,7 +236,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に取得できること。
 		try {
 			// 登録処理を実行
-			PagesRecord record = pages.select(protcol, host, null, null);
+			pages.select(protcol, host, null, null);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);

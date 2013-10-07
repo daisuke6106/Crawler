@@ -1,17 +1,6 @@
 package jp.co.dk.crawler.dao.record;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import jp.co.dk.crawler.TestCrawlerFoundation;
-import jp.co.dk.crawler.exception.CrawlerException;
-
-import org.junit.Test;
-
-import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 // 実装を変えたため、本試験は不要
 

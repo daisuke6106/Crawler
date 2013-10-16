@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JMockit Coverage Report - PagesRecord.java</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../../coverage.js'></script>
+  <script type='text/javascript' src='../../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption>Crawler/src/jp/co/dk/crawler/dao/record/PagesRecord.java</caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package jp.co.dk.crawler.dao.record;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.datastoremanager.DataConvertable;
+import jp.co.dk.datastoremanager.Record;
+import jp.co.dk.datastoremanager.database.DataBaseRecord;
+import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
+</div><span>import ...</span></pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>/**
+ * PagesRecordは、PAGESテーブルの単一のレコードを表すクラス。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */</div><span>/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>24</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l24s0'>public class PagesRecord implements DataConvertable{</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>26</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** プロトコル */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>27</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected String <span class='instance uncovered' title='Reads: 1 Writes: 2'>protocol</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>29</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** ホスト名 */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>30</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected String <span class='instance uncovered' title='Reads: 1 Writes: 2'>host</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>32</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** パス-ハッシュ値 */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>33</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 1 Writes: 2'>h_path</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>35</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** パラメータ-ハッシュ値 */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>36</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 1 Writes: 2'>h_parameter</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>38</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** パス */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>39</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected byte[] <span class='instance uncovered' title='Reads: 1 Writes: 2'>path</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>41</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** パスカウント */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 1 Writes: 2'>pathCount</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>44</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** パラメータ */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>45</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected byte[] <span class='instance uncovered' title='Reads: 1 Writes: 2'>parameter</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>47</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** パラメータカウント */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 1 Writes: 2'>parameterCount</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>50</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** リクエストヘッダー */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>51</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected byte[] <span class='instance uncovered' title='Reads: 1 Writes: 2'>requestHeader</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>53</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** レスポンスヘッダー */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>54</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected byte[] <span class='instance uncovered' title='Reads: 1 Writes: 2'>responceHeader</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>56</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** ファイルID */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>57</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected long <span class='instance uncovered' title='Reads: 1 Writes: 2'>fileid</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>59</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** タイムID */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected long <span class='instance uncovered' title='Reads: 1 Writes: 2'>timeid</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>62</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** 作成日時 */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 1 Writes: 2'>createDate</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>65</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** 更新日時 */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 1 Writes: 2'>updateDate</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * プロトコル名を取得する。
+	 * @return プロトコル名
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public String getProtocol() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>73</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l73s0'>		return protocol;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>74</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * ホスト名を取得する。
+	 * @return ホスト名
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>80</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public String getHost() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>81</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l81s0'>		return host;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>82</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * パスリストのハッシュ値を取得する。
+	 * @return パスリストのハッシュ値
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>88</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int getH_path() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>89</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l89s0'>		return h_path;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>90</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * パラメータのハッシュ値を取得する。
+	 * @return パラメータのハッシュ値
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>96</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int getH_parameter() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>97</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l97s0'>		return h_parameter;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>98</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * パスリストを取得する。
+	 * @return パスリスト
+	 * @throws CrawlerException バイト配列からパスリストへ変換に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>105</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@SuppressWarnings("unchecked")</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>106</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public List&lt;String> getPath() throws CrawlerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>107</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l107s0'>		return (List&lt;String>)this.convertBytesToObject(path);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>108</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * パスカウントを取得する。
+	 * @return パスカウント
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>114</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int getPathCount() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>115</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l115s0'>		return pathCount;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>116</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * パラメータマップを取得する。
+	 * @return パラメータマップ
+	 * @throws CrawlerException バイト配列からパラメータマップへ変換に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>123</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@SuppressWarnings("unchecked")</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>124</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Map&lt;String, String> getParameter() throws CrawlerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>125</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l125s0'>		return (Map&lt;String, String>)this.convertBytesToObject(parameter);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>126</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * パスカウントを取得する。
+	 * @return パスカウント
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>132</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int getParameterCount() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>133</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l133s0'>		return parameterCount;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>134</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * リクエストヘッダーマップを取得する。
+	 * @return リクエストヘッダーマップ
+	 * @throws CrawlerException バイト配列からリクエストヘッダーマップへ変換に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>141</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@SuppressWarnings("unchecked")</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>142</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Map&lt;String, String> getRequestHeader() throws CrawlerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>143</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l143s0'>		return (Map&lt;String, String>)this.convertBytesToObject(requestHeader);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>144</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * レスポンスヘッダーマップを取得する。
+	 * @return レスポンスヘッダーマップ
+	 * @throws CrawlerException バイト配列からレスポンスヘッダーマップへ変換に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>151</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@SuppressWarnings("unchecked")</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>152</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Map&lt;String, String> getResponceHeader() throws CrawlerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>153</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l153s0'>		return (Map&lt;String, String>)this.convertBytesToObject(responceHeader);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>154</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * ファイルIDを取得する。
+	 * @return ファイルID
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>160</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public long getFileId() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>161</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l161s0'>		return fileid;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>162</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * タイムIDを取得する。
+	 * @return タイムID
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>168</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public long getTimeId() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>169</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l169s0'>		return timeid;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>170</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * 登録日時を取得する。
+	 * @return 登録日時
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>176</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Date getCreateDate() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>177</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l177s0'>		return createDate;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>178</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * 更新日時を取得する。
+	 * @return 更新日時
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>184</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Date getUpdateDate() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>185</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l185s0'>		return updateDate;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>186</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>188</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>189</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>190</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l190s0'>		PagesRecord pagesRecord    = new PagesRecord();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>191</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l191s0'>		pagesRecord.protocol       = record.getString("PROTOCOL");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>192</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l192s0'>		pagesRecord.host           = record.getString("HOSTNAME");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>193</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l193s0'>		pagesRecord.h_path         = record.getInt("H_PATH");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>194</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l194s0'>		pagesRecord.h_parameter    = record.getInt("H_PARAM");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>195</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l195s0'>		pagesRecord.path           = record.getBytes("PATH");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>196</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l196s0'>		pagesRecord.pathCount      = record.getInt("PATH_COUNT");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>197</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l197s0'>		pagesRecord.parameter      = record.getBytes("PARAMETER");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>198</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l198s0'>		pagesRecord.parameterCount = record.getInt("PARAMETER_COUNT");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>199</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l199s0'>		pagesRecord.requestHeader  = record.getBytes("REQUEST_HEADER");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>200</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l200s0'>		pagesRecord.responceHeader = record.getBytes("RESPONCE_HEADER");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>201</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l201s0'>		pagesRecord.fileid         = record.getLong("FILEID");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>202</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l202s0'>		pagesRecord.timeid         = record.getLong("TIMEID");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>203</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l203s0'>		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>204</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l204s0'>		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>205</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l205s0'>		return pagesRecord;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>206</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>208</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>209</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public DataConvertable convert(Record record)	throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>210</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l210s0'>		PagesRecord pagesRecord    = new PagesRecord();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>211</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l211s0'>		pagesRecord.protocol       = record.getString(1);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>212</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l212s0'>		pagesRecord.host           = record.getString(2);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>213</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l213s0'>		pagesRecord.h_path         = record.getInt(3);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>214</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l214s0'>		pagesRecord.h_parameter    = record.getInt(4);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>215</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l215s0'>		pagesRecord.path           = record.getBytes(5);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>216</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l216s0'>		pagesRecord.pathCount      = record.getInt(6);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>217</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l217s0'>		pagesRecord.parameter      = record.getBytes(7);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>218</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l218s0'>		pagesRecord.parameterCount = record.getInt(8);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>219</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l219s0'>		pagesRecord.requestHeader  = record.getBytes(9);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>220</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l220s0'>		pagesRecord.responceHeader = record.getBytes(10);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>221</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l221s0'>		pagesRecord.fileid         = record.getLong(11);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>222</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l222s0'>		pagesRecord.timeid         = record.getLong(12);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>223</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l223s0'>		pagesRecord.createDate     = record.getDate(13);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>224</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l224s0'>		pagesRecord.updateDate     = record.getDate(14);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>225</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l225s0'>		return pagesRecord;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>226</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * 指定のバイト配列をインスタンスに変換して返却します。&lt;p/>
+	 * 入出力例外が発生した、バイト配列がインスタンスでなくクラスの変換に失敗した場合、例外を送出します。
+	 * 
+	 * @param bytes バイト配列
+	 * @return インスタンス
+	 * @throws CrawlerException 入出力例外が発生した、クラスの変換に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>236</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected Object convertBytesToObject(byte[] bytes) throws CrawlerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>237</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		try {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>238</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l238s0'>			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>239</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l239s0'>			ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>240</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l240s0'>			Object object = objectInputStream.readObject();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>241</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l241s0'>			objectInputStream.close();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>242</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l242s0'>			byteArrayInputStream.close();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>243</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l243s0'>			return object;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>244</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l244s0'>		} catch (IOException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>245</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l245s0'>			throw new CrawlerException(FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY, e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>246</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l246s0'>		} catch (ClassNotFoundException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>247</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l247s0'>			throw new CrawlerException(FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY, e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>248</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>249</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>250</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JMockit Coverage Report - Urls.java</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../coverage.js'></script>
+  <script type='text/javascript' src='../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption>Crawler/src/jp/co/dk/crawler/dao/Urls.java</caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package jp.co.dk.crawler.dao;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import jp.co.dk.crawler.dao.record.UrlsRecord;
+import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.datastoremanager.DataAccessObject;
+import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+</div><span>import ...</span></pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>/**
+ * Urlsは、URLSテーブルに対しての制御を行うDAOインスタンスが実装するインターフェース。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */</div><span>/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>18</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>public interface Urls extends DataAccessObject {</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * URLSテーブルを作成する。&lt;p/>
+	 * テーブル作成に失敗した場合、例外が送出される。
+	 * 
+	 * @throws DataStoreManagerException テーブル作成に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>26</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void createTable() throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * URLSテーブルから特定の１レコードを取得する。
+	 * 
+	 * @param protcol    プロトコル文字列（必須）
+	 * @param host       ホスト名（必須）
+	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
+	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
+	 * @throws DataStoreManagerException 登録に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public UrlsRecord select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter)throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * URLSテーブルから指定の１レコードを登録する。&lt;p/>
+	 * 必須パラメータが設定されていない場合、例外を送出します。&lt;br/>
+	 * &lt;br/>
+	 * pathと、parameterに限り設定されていない場合（nullの場合）、空のリスト、マップインスタンスで置き換えます。&lt;br/>
+	 * 
+	 * @param protcol    プロトコル文字列（必須）
+	 * @param host       ホスト名（必須）
+	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
+	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
+	 * @param url        URL文字列
+	 * @param fileid     ファイルID
+	 * @param createDate 登録日付
+	 * @param updateDate 更新日付
+	 * @throws DataStoreManagerException 登録に失敗した場合
+	 * @throws CrawlerException 必須パラメータが設定されていない場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>56</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * URLSテーブルを削除する。&lt;p/>
+	 * テーブル削除に失敗した場合、例外が送出される。
+	 * 
+	 * @throws DataStoreManagerException テーブル作成に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

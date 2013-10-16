@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JMockit Coverage Report - Links.java</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../coverage.js'></script>
+  <script type='text/javascript' src='../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption>Crawler/src/jp/co/dk/crawler/dao/Links.java</caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package jp.co.dk.crawler.dao;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import jp.co.dk.crawler.dao.record.LinksRecord;
+import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.datastoremanager.DataAccessObject;
+import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+</div><span>import ...</span></pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>/**
+ * Linksは、LINKSテーブルに対しての制御を行うDAOインスタンスが実装するインターフェース。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */</div><span>/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>18</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>public interface Links extends DataAccessObject {</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * LINKSテーブルを作成する。&lt;p/>
+	 * テーブル作成に失敗した場合、例外が送出される。
+	 * 
+	 * @throws DataStoreManagerException テーブル作成に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>26</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void createTable() throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * LINKSテーブルから特定の１レコードを取得する。
+	 * 
+	 * @param protocol  プロトコル名
+	 * @param hostname  ホスト名
+	 * @param path      パスのハッシュ値
+	 * @param parameter パラメータのハッシュ値
+	 * @return 取得したレコードオブジェクト
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public LinksRecord select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter)throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * INKSテーブルから指定の１レコードを登録する。&lt;p/>
+	 * 必須パラメータが設定されていない場合、例外を送出します。&lt;br/>
+	 * &lt;br/>
+	 * pathと、parameterに限り設定されていない場合（nullの場合）、空のリスト、マップインスタンスで置き換えます。&lt;br/>
+	 * 
+	 * @param from_protcol   プロトコル文字列（必須）
+	 * @param from_host      ホスト名（必須）
+	 * @param from_path      パスリスト（設定されていない場合、空のリストで置き換え）
+	 * @param from_parameter パラメータマップ（設定されていない場合、空のマップで置き換え）
+	 * @param to_protcol     プロトコル文字列（必須）
+	 * @param to_host        ホスト名（必須）
+	 * @param to_path        パスリスト（設定されていない場合、空のリストで置き換え）
+	 * @param to_parameter   パラメータマップ（設定されていない場合、空のマップで置き換え）
+	 * @param createDate     登録日付
+	 * @param updateDate     更新日付
+	 * @throws DataStoreManagerException 登録に失敗した場合
+	 * @throws CrawlerException 必須パラメータが設定されていない場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void insert(String from_protcol, String from_host, List&lt;String> from_path, Map&lt;String, String> from_parameter, String to_protcol, String to_host, List&lt;String> to_path, Map&lt;String, String> to_parameter, Date createDate, Date updateDate)throws DataStoreManagerException, CrawlerException ;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * LINKSテーブルを削除する。&lt;p/>
+	 * テーブル削除に失敗した場合、例外が送出される。
+	 * 
+	 * @throws DataStoreManagerException テーブル作成に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

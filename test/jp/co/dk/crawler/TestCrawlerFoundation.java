@@ -16,7 +16,7 @@ public class TestCrawlerFoundation extends TestCaseTemplate{
 	 */
 	
 	protected DataBaseAccessParameter getAccessableDataBaseAccessParameter() throws DataStoreManagerException {
-		return new DataBaseAccessParameter(DataStoreKind.MYSQL, DataBaseDriverConstants.MYSQL, "192.168.11.13:3306", "test_db", "test_user", "123456");
+		return new DataBaseAccessParameter(DataStoreKind.MYSQL, DataBaseDriverConstants.MYSQL, "192.168.11.101:3306", "test_db", "test_user", "123456");
 	}
 	
 	/**

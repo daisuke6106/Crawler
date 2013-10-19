@@ -1,8 +1,5 @@
 package jp.co.dk.crawler.dao.record;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +9,6 @@ import jp.co.dk.datastoremanager.DataConvertable;
 import jp.co.dk.datastoremanager.Record;
 import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-
-import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
  * PagesRecordは、PAGESテーブルの単一のレコードを表すクラス。
@@ -36,22 +31,22 @@ public class PagesRecord implements DataConvertable{
 	protected int h_parameter;
 	
 	/** パス */
-	protected byte[] path;
+	protected List<String> path;
 	
 	/** パスカウント */
 	protected int pathCount;
 	
 	/** パラメータ */
-	protected byte[] parameter;
+	protected Map<String,String> parameter;
 	
 	/** パラメータカウント */
 	protected int parameterCount;
 	
 	/** リクエストヘッダー */
-	protected byte[] requestHeader;
+	protected Map<String, String> requestHeader;
 	
 	/** レスポンスヘッダー */
-	protected byte[] responceHeader;
+	protected Map<String, String> responceHeader;
 	
 	/** ファイルID */
 	protected long fileid;
@@ -102,9 +97,8 @@ public class PagesRecord implements DataConvertable{
 	 * @return パスリスト
 	 * @throws CrawlerException バイト配列からパスリストへ変換に失敗した場合
 	 */
-	@SuppressWarnings("unchecked")
 	public List<String> getPath() throws CrawlerException {
-		return (List<String>)this.convertBytesToObject(path);
+		return this.path;
 	}
 	
 	/**
@@ -120,9 +114,8 @@ public class PagesRecord implements DataConvertable{
 	 * @return パラメータマップ
 	 * @throws CrawlerException バイト配列からパラメータマップへ変換に失敗した場合
 	 */
-	@SuppressWarnings("unchecked")
 	public Map<String, String> getParameter() throws CrawlerException {
-		return (Map<String, String>)this.convertBytesToObject(parameter);
+		return this.parameter;
 	}
 	
 	/**
@@ -138,9 +131,8 @@ public class PagesRecord implements DataConvertable{
 	 * @return リクエストヘッダーマップ
 	 * @throws CrawlerException バイト配列からリクエストヘッダーマップへ変換に失敗した場合
 	 */
-	@SuppressWarnings("unchecked")
 	public Map<String, String> getRequestHeader() throws CrawlerException {
-		return (Map<String, String>)this.convertBytesToObject(requestHeader);
+		return this.requestHeader;
 	}
 	
 	/**
@@ -148,9 +140,8 @@ public class PagesRecord implements DataConvertable{
 	 * @return レスポンスヘッダーマップ
 	 * @throws CrawlerException バイト配列からレスポンスヘッダーマップへ変換に失敗した場合
 	 */
-	@SuppressWarnings("unchecked")
 	public Map<String, String> getResponceHeader() throws CrawlerException {
-		return (Map<String, String>)this.convertBytesToObject(responceHeader);
+		return this.responceHeader;
 	}
 	
 	/**
@@ -185,6 +176,7 @@ public class PagesRecord implements DataConvertable{
 		return updateDate;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {
 		PagesRecord pagesRecord    = new PagesRecord();
@@ -192,19 +184,20 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.host           = record.getString("HOSTNAME");
 		pagesRecord.h_path         = record.getInt("H_PATH");
 		pagesRecord.h_parameter    = record.getInt("H_PARAM");
-		pagesRecord.path           = record.getBytes("PATH");
+		pagesRecord.path           = (List<String>) record.getObject("PATH");
 		pagesRecord.pathCount      = record.getInt("PATH_COUNT");
-		pagesRecord.parameter      = record.getBytes("PARAMETER");
+		pagesRecord.parameter      = (Map<String,String>) record.getObject("PARAMETER");
 		pagesRecord.parameterCount = record.getInt("PARAMETER_COUNT");
-		pagesRecord.requestHeader  = record.getBytes("REQUEST_HEADER");
-		pagesRecord.responceHeader = record.getBytes("RESPONCE_HEADER");
+		pagesRecord.requestHeader  = (Map<String,String>) record.getObject("REQUEST_HEADER");
+		pagesRecord.responceHeader = (Map<String,String>) record.getObject("RESPONCE_HEADER");
 		pagesRecord.fileid         = record.getLong("FILEID");
 		pagesRecord.timeid         = record.getLong("TIMEID");
 		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");
 		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");
 		return pagesRecord;
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public DataConvertable convert(Record record)	throws DataStoreManagerException {
 		PagesRecord pagesRecord    = new PagesRecord();
@@ -212,39 +205,16 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.host           = record.getString(2);
 		pagesRecord.h_path         = record.getInt(3);
 		pagesRecord.h_parameter    = record.getInt(4);
-		pagesRecord.path           = record.getBytes(5);
+		pagesRecord.path           = (List<String>) record.getObject(5);
 		pagesRecord.pathCount      = record.getInt(6);
-		pagesRecord.parameter      = record.getBytes(7);
+		pagesRecord.parameter      = (Map<String,String>) record.getObject(7);
 		pagesRecord.parameterCount = record.getInt(8);
-		pagesRecord.requestHeader  = record.getBytes(9);
-		pagesRecord.responceHeader = record.getBytes(10);
+		pagesRecord.requestHeader  = (Map<String,String>) record.getObject(9);
+		pagesRecord.responceHeader = (Map<String,String>) record.getObject(10);
 		pagesRecord.fileid         = record.getLong(11);
 		pagesRecord.timeid         = record.getLong(12);
 		pagesRecord.createDate     = record.getDate(13);
 		pagesRecord.updateDate     = record.getDate(14);
 		return pagesRecord;
-	}
-	
-	/**
-	 * 指定のバイト配列をインスタンスに変換して返却します。<p/>
-	 * 入出力例外が発生した、バイト配列がインスタンスでなくクラスの変換に失敗した場合、例外を送出します。
-	 * 
-	 * @param bytes バイト配列
-	 * @return インスタンス
-	 * @throws CrawlerException 入出力例外が発生した、クラスの変換に失敗した場合
-	 */
-	protected Object convertBytesToObject(byte[] bytes) throws CrawlerException {
-		try {
-			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-			ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-			Object object = objectInputStream.readObject();
-			objectInputStream.close();
-			byteArrayInputStream.close();
-			return object;
-		} catch (IOException e) {
-			throw new CrawlerException(FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY, e);
-		} catch (ClassNotFoundException e) {
-			throw new CrawlerException(FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY, e);
-		}
 	}
 }

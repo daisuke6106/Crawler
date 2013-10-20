@@ -46,12 +46,28 @@ public class Page extends jp.co.dk.browzer.Page{
 	}
 	
 	public void save() throws CrawlerException, DataStoreManagerException {
-		Links     links     = (Links)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.LINKS);
 		Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		links.insert(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate)
+		urls.insert(protocol, host, path, parameter, url, fileid, createDate, updateDate);
+		
+		
 	}
+	
+	/**
+	 * このページを保存している履歴の個数を取得します。
+	 * 
+	 * @return 履歴を保持している個数
+	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 */
+//	public int getCount() throws DataStoreManagerException {
+//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+//		String protcol = super.protocol;
+//		String host    = super.host;
+//		List<String> pathList = super.pathList;
+//		Map<String, String> parameter = super.parameter;
+//		return pages.count(protcol, host, pathList, parameter);
+//	}
 	
 	/**
 	 * このページが既にデータストアに保存されているか判定します。<p/>
@@ -62,15 +78,10 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * @return 判定結果（true=保存済みである、false=未だに保存されていないページである）
 	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
 	 */
-	public boolean isSaved() throws DataStoreManagerException {
-		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-		String protcol = super.protocol;
-		String host    = super.host;
-		List<String> pathList = super.pathList;
-		Map<String, String> parameter = super.parameter;
-		if (pages.select(protcol, host, pathList, parameter) != null) return true;
-		return false;
-	}
+//	public boolean isSaved() throws DataStoreManagerException {
+//		if(getCount() != 0) return true;
+//		return false;
+//	}
 	
 	/**
 	 * このページをデータストアに保存されているものと比較して最新状態であるかどうかを判定します。<p/>
@@ -78,41 +89,35 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * @return 判定結果（true=最新である、false=最新でない、またはページが保存されていない）
 	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
 	 */
-	public boolean isLatest() throws DataStoreManagerException {
-		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-		String protcol = super.protocol;
-		String host    = super.host;
-		List<String> pathList = super.pathList;
-		Map<String, String> parameter = super.parameter;
-		int count = pages.count(protcol, host, pathList, parameter);
-		if (count == 0) return false; 
-		
-	}
+//	public boolean isLatest() throws DataStoreManagerException {
+//		if (!isSaved()) return false;
+//		super.header.getResponseRecord();
+//	}
 	
-	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {
-		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
-		String protcol = super.protocol;
-		String host    = super.host;
-		List<String> pathList = super.pathList;
-		Map<String, String> parameter = super.parameter;
-		return urls.select(protcol, host, pathList, parameter);
-	}
-	
-	protected PagesRecord getPagesRecord() throws DataStoreManagerException {
-		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-		String protcol = super.protocol;
-		String host    = super.host;
-		List<String> pathList = super.pathList;
-		Map<String, String> parameter = super.parameter;
-		return pages.select(protcol, host, pathList, parameter);
-	}
-	
-	protected DocumentsRecord getDocumentsRecord() throws DataStoreManagerException {
-		PagesRecord pagesRecord = getPagesRecord();
-		if (pagesRecord == null) return null;
-		long fileId = pagesRecord.getFileId();
-		long timeId = pagesRecord.getTimeId();
-		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		return documents.select(fileId, timeId);
-	}
+//	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {
+//		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
+//		String protcol = super.protocol;
+//		String host    = super.host;
+//		List<String> pathList = super.pathList;
+//		Map<String, String> parameter = super.parameter;
+//		return urls.select(protcol, host, pathList, parameter);
+//	}
+//	
+//	protected List<PagesRecord> getPagesRecord() throws DataStoreManagerException {
+//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+//		String protcol = super.protocol;
+//		String host    = super.host;
+//		List<String> pathList = super.pathList;
+//		Map<String, String> parameter = super.parameter;
+//		return pages.select(protcol, host, pathList, parameter);
+//	}
+//	
+//	protected DocumentsRecord getDocumentsRecord() throws DataStoreManagerException {
+//		PagesRecord pagesRecord = getPagesRecord();
+//		if (pagesRecord == null) return null;
+//		long fileId = pagesRecord.getFileId();
+//		long timeId = pagesRecord.getTimeId();
+//		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+//		return documents.select(fileId, timeId);
+//	}
 }

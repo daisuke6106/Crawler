@@ -1,5 +1,6 @@
 package jp.co.dk.crawler;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -133,6 +134,12 @@ public class Page extends jp.co.dk.browzer.Page{
 //	}
 	
 	protected long getFileId() {
-		
+		String protocol              = super.getProtocol();
+		String host                  = super.getHost();
+		List<String> pathList        = super.getPathList(super.getURLObject());
+		String filename              = super.getFileName();
+		Map<String,String> parameter = super.getParameter();
+		BigDecimal result = new BigDecimal(protocol.hashCode());
+		result.multiply(new BigDecimal(host.hashCode()));
 	}
 }

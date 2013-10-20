@@ -26,15 +26,26 @@ public interface Pages extends DataAccessObject{
 	public void createTable() throws DataStoreManagerException;
 	
 	/**
-	 * PAGESテーブルから特定の１レコードを取得する。
+	 * PAGESテーブルから指定の条件に合致するレコードの数を取得する。
 	 * 
 	 * @param protocol  プロトコル名
 	 * @param hostname  ホスト名
 	 * @param path      パスのハッシュ値
 	 * @param parameter パラメータのハッシュ値
-	 * @return 取得したレコードオブジェクト
+	 * @return カウント結果
 	 */
-	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter)throws DataStoreManagerException;
+	public int count(String protcol, String host, List<String> path, Map<String, String> parameter)throws DataStoreManagerException;
+	
+	/**
+	 * PAGESテーブルから指定の条件に合致するレコードを取得する。
+	 * 
+	 * @param protocol  プロトコル名
+	 * @param hostname  ホスト名
+	 * @param path      パスのハッシュ値
+	 * @param parameter パラメータのハッシュ値
+	 * @return 取得したレコードオブジェクトの一覧
+	 */
+	public List<PagesRecord> select(String protcol, String host, List<String> path, Map<String, String> parameter)throws DataStoreManagerException;
 	
 	/**
 	 * PAGESテーブルから指定の１レコードを登録する。<p/>

@@ -12,10 +12,13 @@ import java.util.Map;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.record.PagesRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.datastoremanager.DataConvertable;
 import jp.co.dk.datastoremanager.DataStore;
+import jp.co.dk.datastoremanager.Record;
 import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
 import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
 import jp.co.dk.datastoremanager.database.DataBaseDriverConstants;
+import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.database.Sql;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
@@ -41,17 +44,17 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sb.append("HOSTNAME        VARCHAR(256) NOT NULL,");
 		sb.append("H_PATH          INT          NOT NULL,");
 		sb.append("H_PARAM         INT          NOT NULL,");
+		sb.append("FILEID          BIGINT(8),   NOT NULL,");
+		sb.append("TIMEID          BIGINT(8),   NOT NULL,");
 		sb.append("PATH            LONGBLOB,");
 		sb.append("PATH_COUNT      INT,");
 		sb.append("PARAMETER       LONGBLOB,");
 		sb.append("PARAMETER_COUNT INT,");
 		sb.append("REQUEST_HEADER  LONGBLOB,");
 		sb.append("RESPONCE_HEADER LONGBLOB,");
-		sb.append("FILEID          BIGINT(8), ");
-		sb.append("TIMEID          BIGINT(8), ");
 		sb.append("CREATE_DATE     DATETIME, ");
 		sb.append("UPDATE_DATE     DATETIME, ");
-		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_PARAM))");
+		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_PARAM, FILEID, TIMEID))");
 		Sql sql = new Sql(sb.toString());
 		this.createTable(sql);
 	}
@@ -62,9 +65,34 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		Sql sql = new Sql(sb.toString());
 		this.dropTable(sql);
 	}
-
+	
 	@Override
-	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
+	public int count(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
+		if (path == null) path = new ArrayList<String>();
+		if (parameter == null) parameter = new HashMap<String, String>();
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");
+		Sql sql = new Sql(sb.toString());
+		sql.setParameter(protcol);
+		sql.setParameter(host);
+		sql.setParameter(path.hashCode());
+		sql.setParameter(parameter.hashCode());
+		return this.selectSingle(sql, new DataConvertable(){
+			private int count;
+			@Override
+			public DataConvertable convert(DataBaseRecord arg0)	throws DataStoreManagerException {
+				count = arg0.getInt("RESULT");
+				return this;
+			}
+			@Override
+			public DataConvertable convert(Record arg0)	throws DataStoreManagerException {
+				this.count = arg0.getInt(1);
+				return this;
+			}
+		}).count;
+	}
+	
+	@Override
+	public List<PagesRecord> select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
 		if (path == null) path = new ArrayList<String>();
 		if (parameter == null) parameter = new HashMap<String, String>();
 		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");
@@ -73,7 +101,7 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sql.setParameter(host);
 		sql.setParameter(path.hashCode());
 		sql.setParameter(parameter.hashCode());
-		return this.selectSingle(sql, new PagesRecord());
+		return this.selectMulti(sql, new PagesRecord());
 	}
 
 	@Override

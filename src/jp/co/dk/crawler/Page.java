@@ -49,10 +49,21 @@ public class Page extends jp.co.dk.browzer.Page{
 		Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+		
+		String url                   = super.getURL();
+		String protocol              = super.getProtocol();
+		String host                  = super.getHost();
+		List<String> pathList        = super.getPathList(super.getURLObject());
+		String filename              = super.getFileName();
+		Map<String,String> parameter = super.getParameter();
+		
+		long fileid = 
 		urls.insert(protocol, host, path, parameter, url, fileid, createDate, updateDate);
 		
 		
 	}
+	
+	
 	
 	/**
 	 * このページを保存している履歴の個数を取得します。
@@ -120,4 +131,8 @@ public class Page extends jp.co.dk.browzer.Page{
 //		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
 //		return documents.select(fileId, timeId);
 //	}
+	
+	protected long getFileId() {
+		
+	}
 }

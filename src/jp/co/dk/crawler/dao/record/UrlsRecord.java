@@ -24,6 +24,9 @@ public class UrlsRecord implements DataConvertable{
 	/** パス-ハッシュ値 */
 	protected int h_path;
 	
+	/** ファイル名-ハッシュ値 */
+	protected int h_filename;
+
 	/** パラメータ-ハッシュ値 */
 	protected int h_parameter;
 	
@@ -61,6 +64,14 @@ public class UrlsRecord implements DataConvertable{
 	 */
 	public int getH_path() {
 		return h_path;
+	}
+	
+	/**
+	 * ファイル名のハッシュ値を取得する。
+	 * @return ファイル名のハッシュ値
+	 */
+	public int getH_filename() {
+		return h_filename;
 	}
 	
 	/**
@@ -109,6 +120,7 @@ public class UrlsRecord implements DataConvertable{
 		urlsRecord.protocol       = record.getString("PROTOCOL");
 		urlsRecord.host           = record.getString("HOSTNAME");
 		urlsRecord.h_path         = record.getInt("H_PATH");
+		urlsRecord.h_filename     = record.getInt("H_FILENAME");
 		urlsRecord.h_parameter    = record.getInt("H_PARAM");
 		urlsRecord.url            = record.getString("URL");
 		urlsRecord.fileid         = record.getLong("FILEID");
@@ -123,11 +135,12 @@ public class UrlsRecord implements DataConvertable{
 		urlsRecord.protocol       = record.getString(1);
 		urlsRecord.host           = record.getString(2);
 		urlsRecord.h_path         = record.getInt(3);
-		urlsRecord.h_parameter    = record.getInt(4);
-		urlsRecord.url            = record.getString(5);
-		urlsRecord.fileid         = record.getLong(6);
-		urlsRecord.createDate     = record.getDate(7);
-		urlsRecord.updateDate     = record.getDate(8);
+		urlsRecord.h_filename     = record.getInt(4);
+		urlsRecord.h_parameter    = record.getInt(5);
+		urlsRecord.url            = record.getString(6);
+		urlsRecord.fileid         = record.getLong(7);
+		urlsRecord.createDate     = record.getDate(8);
+		urlsRecord.updateDate     = record.getDate(9);
 		return urlsRecord;
 	}
 	

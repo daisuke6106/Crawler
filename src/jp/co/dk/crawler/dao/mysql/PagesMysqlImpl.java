@@ -43,9 +43,10 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sb.append("PROTOCOL        VARCHAR(6)   NOT NULL,");
 		sb.append("HOSTNAME        VARCHAR(256) NOT NULL,");
 		sb.append("H_PATH          INT          NOT NULL,");
+		sb.append("H_FILENAME      INT          NOT NULL,");
 		sb.append("H_PARAM         INT          NOT NULL,");
-		sb.append("FILEID          BIGINT(8),   NOT NULL,");
-		sb.append("TIMEID          BIGINT(8),   NOT NULL,");
+		sb.append("FILEID          BIGINT(8)    NOT NULL,");
+		sb.append("TIMEID          BIGINT(8)    NOT NULL,");
 		sb.append("PATH            LONGBLOB,");
 		sb.append("PATH_COUNT      INT,");
 		sb.append("PARAMETER       LONGBLOB,");
@@ -54,7 +55,7 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sb.append("RESPONCE_HEADER LONGBLOB,");
 		sb.append("CREATE_DATE     DATETIME, ");
 		sb.append("UPDATE_DATE     DATETIME, ");
-		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_PARAM, FILEID, TIMEID))");
+		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_FILENAME, H_PARAM, FILEID, TIMEID))");
 		Sql sql = new Sql(sb.toString());
 		this.createTable(sql);
 	}
@@ -67,14 +68,16 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	}
 	
 	@Override
-	public int count(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
+	public int count(String protcol, String host, List<String> path, String filename, Map<String, String> parameter) throws DataStoreManagerException {
 		if (path == null) path = new ArrayList<String>();
 		if (parameter == null) parameter = new HashMap<String, String>();
-		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");
+		if (filename == null) filename = "";
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_FILENAME=? AND H_PARAM=?");
 		Sql sql = new Sql(sb.toString());
 		sql.setParameter(protcol);
 		sql.setParameter(host);
 		sql.setParameter(path.hashCode());
+		sql.setParameter(filename.hashCode());
 		sql.setParameter(parameter.hashCode());
 		return this.selectSingle(sql, new DataConvertable(){
 			private int count;
@@ -92,40 +95,62 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	}
 	
 	@Override
-	public List<PagesRecord> select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
+	public List<PagesRecord> select(String protcol, String host, List<String> path, String filename, Map<String, String> parameter) throws DataStoreManagerException {
 		if (path == null) path = new ArrayList<String>();
 		if (parameter == null) parameter = new HashMap<String, String>();
-		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");
+		if (filename == null) filename = "";
+		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_FILENAME=? AND H_PARAM=?");
 		Sql sql = new Sql(sb.toString());
 		sql.setParameter(protcol);
 		sql.setParameter(host);
 		sql.setParameter(path.hashCode());
+		sql.setParameter(filename.hashCode());
 		sql.setParameter(parameter.hashCode());
 		return this.selectMulti(sql, new PagesRecord());
 	}
+	
 
 	@Override
-	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, String> responceHeader, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
-		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
-		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
+	public PagesRecord select(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, long fileId, long timeId) throws DataStoreManagerException {
 		if (path == null) path = new ArrayList<String>();
 		if (parameter == null) parameter = new HashMap<String, String>();
-		Sql sql = new Sql("INSERT INTO PAGES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_FILENAME=? AND H_PARAM=? AND FILEID=? AND TIMEID=?");
+		Sql sql = new Sql(sb.toString());
 		sql.setParameter(protcol);
 		sql.setParameter(host);
 		sql.setParameter(path.hashCode());
+		sql.setParameter(filename.hashCode());
 		sql.setParameter(parameter.hashCode());
+		sql.setParameter(fileId);
+		sql.setParameter(timeId);
+		return this.selectSingle(sql, new PagesRecord());
+	}
+	
+	@Override
+	public void insert(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, String> responceHeader, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
+		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
+		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
+		if (path == null) path = new ArrayList<String>();
+		if (filename == null) filename = "";
+		if (parameter == null) parameter = new HashMap<String, String>();
+		Sql sql = new Sql("INSERT INTO PAGES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sql.setParameter(protcol);
+		sql.setParameter(host);
+		sql.setParameter(path.hashCode());
+		sql.setParameter(filename.hashCode());
+		sql.setParameter(parameter.hashCode());
+		sql.setParameter(fileid);
+		sql.setParameter(timeid);
 		sql.setParameterConvertToBytes(path);
 		sql.setParameter(path.size());
 		sql.setParameterConvertToBytes(parameter);
 		sql.setParameter(parameter.size());
 		sql.setParameterConvertToBytes(requestHeader);
 		sql.setParameterConvertToBytes(responceHeader);
-		sql.setParameter(fileid);
-		sql.setParameter(timeid);
 		sql.setParameter(new Timestamp(createDate.getTime()));
 		sql.setParameter(new Timestamp(updateDate.getTime()));
 		this.insert(sql);
 	}
+
 
 }

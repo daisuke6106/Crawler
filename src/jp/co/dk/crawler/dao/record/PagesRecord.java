@@ -17,7 +17,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
  * @author D.Kanno
  */
 public class PagesRecord implements DataConvertable{
-	
+
 	/** プロトコル */
 	protected String protocol;
 	
@@ -27,8 +27,17 @@ public class PagesRecord implements DataConvertable{
 	/** パス-ハッシュ値 */
 	protected int h_path;
 	
+	/** ファイル名-ハッシュ値 */
+	protected int h_filename;
+	
 	/** パラメータ-ハッシュ値 */
 	protected int h_parameter;
+	
+	/** ファイルID */
+	protected long fileid;
+	
+	/** タイムID */
+	protected long timeid;
 	
 	/** パス */
 	protected List<String> path;
@@ -47,12 +56,6 @@ public class PagesRecord implements DataConvertable{
 	
 	/** レスポンスヘッダー */
 	protected Map<String, String> responceHeader;
-	
-	/** ファイルID */
-	protected long fileid;
-	
-	/** タイムID */
-	protected long timeid;
 	
 	/** 作成日時 */
 	protected Date createDate;
@@ -85,11 +88,35 @@ public class PagesRecord implements DataConvertable{
 	}
 	
 	/**
+	 * ファイル名のハッシュ値を取得する。
+	 * @return ファイル名のハッシュ値
+	 */
+	public int getH_filename() {
+		return h_filename;
+	}
+	
+	/**
 	 * パラメータのハッシュ値を取得する。
 	 * @return パラメータのハッシュ値
 	 */
 	public int getH_parameter() {
 		return h_parameter;
+	}
+	
+	/**
+	 * ファイルIDを取得する。
+	 * @return ファイルID
+	 */
+	public long getFileid() {
+		return fileid;
+	}
+	
+	/**
+	 * タイムIDを取得する。
+	 * @return タイムID
+	 */
+	public long getTimeid() {
+		return timeid;
 	}
 	
 	/**
@@ -183,15 +210,16 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.protocol       = record.getString("PROTOCOL");
 		pagesRecord.host           = record.getString("HOSTNAME");
 		pagesRecord.h_path         = record.getInt("H_PATH");
+		pagesRecord.h_filename     = record.getInt("H_FILENAME");
 		pagesRecord.h_parameter    = record.getInt("H_PARAM");
+		pagesRecord.fileid         = record.getLong("FILEID");
+		pagesRecord.timeid         = record.getLong("TIMEID");
 		pagesRecord.path           = (List<String>) record.getObject("PATH");
 		pagesRecord.pathCount      = record.getInt("PATH_COUNT");
 		pagesRecord.parameter      = (Map<String,String>) record.getObject("PARAMETER");
 		pagesRecord.parameterCount = record.getInt("PARAMETER_COUNT");
 		pagesRecord.requestHeader  = (Map<String,String>) record.getObject("REQUEST_HEADER");
 		pagesRecord.responceHeader = (Map<String,String>) record.getObject("RESPONCE_HEADER");
-		pagesRecord.fileid         = record.getLong("FILEID");
-		pagesRecord.timeid         = record.getLong("TIMEID");
 		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");
 		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");
 		return pagesRecord;
@@ -204,17 +232,18 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.protocol       = record.getString(1);
 		pagesRecord.host           = record.getString(2);
 		pagesRecord.h_path         = record.getInt(3);
-		pagesRecord.h_parameter    = record.getInt(4);
-		pagesRecord.path           = (List<String>) record.getObject(5);
-		pagesRecord.pathCount      = record.getInt(6);
-		pagesRecord.parameter      = (Map<String,String>) record.getObject(7);
-		pagesRecord.parameterCount = record.getInt(8);
-		pagesRecord.requestHeader  = (Map<String,String>) record.getObject(9);
-		pagesRecord.responceHeader = (Map<String,String>) record.getObject(10);
-		pagesRecord.fileid         = record.getLong(11);
-		pagesRecord.timeid         = record.getLong(12);
-		pagesRecord.createDate     = record.getDate(13);
-		pagesRecord.updateDate     = record.getDate(14);
+		pagesRecord.h_filename     = record.getInt(4);
+		pagesRecord.h_parameter    = record.getInt(5);
+		pagesRecord.path           = (List<String>) record.getObject(6);
+		pagesRecord.pathCount      = record.getInt(7);
+		pagesRecord.parameter      = (Map<String,String>) record.getObject(8);
+		pagesRecord.parameterCount = record.getInt(9);
+		pagesRecord.requestHeader  = (Map<String,String>) record.getObject(10);
+		pagesRecord.responceHeader = (Map<String,String>) record.getObject(11);
+		pagesRecord.fileid         = record.getLong(12);
+		pagesRecord.timeid         = record.getLong(13);
+		pagesRecord.createDate     = record.getDate(14);
+		pagesRecord.updateDate     = record.getDate(15);
 		return pagesRecord;
 	}
 }

@@ -47,6 +47,8 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		path.add("finder");
 		path.add("2013");
 		path.add("All%20doodles");
+		// ファイル名
+		String filename = "filename.txt";
 		// パラメータマップ
 		Map<String, String> parameter = new HashMap<String,String>();
 		parameter.put("Parameter_key", "Parameter_value");
@@ -64,7 +66,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// 引数に正常値を渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, path, parameter, url, fileid, createDate, updateDate);
+			pages.insert(protcol, host, path, filename, parameter, url, fileid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -75,7 +77,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, new ArrayList<String>(), new HashMap<String, String>(), url, fileid, createDate, updateDate);
+			pages.insert(protcol, host, new ArrayList<String>(), "", new HashMap<String, String>(), url, fileid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -87,7 +89,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// すでにレコードが存在する場合、異常が発生すること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, path, parameter, url, fileid, createDate, updateDate);
+			pages.insert(protcol, host, path, filename, parameter, url, fileid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			assertEquals(e.getMessageObj(), DataStoreManagerMessage.FAILE_TO_EXECUTE_SQL);
@@ -98,7 +100,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// プロトコル名がnullの場合、例外が送出されること。
 		try {
 			// 登録処理を実行
-			pages.insert(null, host, path, parameter, url, fileid, createDate, updateDate);
+			pages.insert(null, host, path, filename, parameter, url, fileid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -109,7 +111,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// ホスト名がnullの場合、例外が送出されること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, null, path, parameter, url, fileid, createDate, updateDate);
+			pages.insert(protcol, null, path, filename, parameter, url, fileid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -120,7 +122,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// プロトコル名が空の場合、例外が送出されること。
 		try {
 			// 登録処理を実行
-			pages.insert("", host, path, parameter, url, fileid, createDate, updateDate);
+			pages.insert("", host, path, filename, parameter, url, fileid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -131,7 +133,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// ホスト名が空の場合、例外が送出されること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, "", path, parameter, url, fileid, createDate, updateDate);
+			pages.insert(protcol, "", path, filename, parameter, url, fileid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -161,6 +163,8 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		path.add("finder");
 		path.add("2013");
 		path.add("All%20doodles");
+		// ファイル名
+		String filename = "filename.txt";
 		// パラメータマップ
 		Map<String, String> parameter = new HashMap<String,String>();
 		parameter.put("Parameter_key", "Parameter_value");
@@ -176,7 +180,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// 引数に正常値を渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, path, parameter, url, fileid, createDate, updateDate);
+			pages.insert(protcol, host, path, filename, parameter, url, fileid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -187,7 +191,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, new ArrayList<String>(), new HashMap<String, String>(), url, fileid, createDate, updateDate);
+			pages.insert(protcol, host, new ArrayList<String>(), "", new HashMap<String, String>(), url, fileid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -199,10 +203,11 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// 引数に正常値を渡した場合、正常に取得できること。
 		try {
 			// 登録処理を実行
-			UrlsRecord record = pages.select(protcol, host, path, parameter);
+			UrlsRecord record = pages.select(protcol, host, path, filename, parameter);
 			assertEquals(record.getProtocol(), "http");
 			assertEquals(record.getHost(), "google.com");
 			assertEquals(record.getH_path(), path.hashCode());
+			assertEquals(record.getH_filename(), filename.hashCode());
 			assertEquals(record.getH_parameter(), parameter.hashCode());
 			assertEquals(record.getUrl(), url);
 			assertEquals(record.getFileId(), fileid);
@@ -215,7 +220,7 @@ public class TestUrlsMysqlImpl extends TestCrawlerFoundation{
 		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に取得できること。
 		try {
 			// 登録処理を実行
-			pages.select(protcol, host, null, null);
+			pages.select(protcol, host, null, null, null);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);

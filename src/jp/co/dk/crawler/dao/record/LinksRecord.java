@@ -24,6 +24,9 @@ public class LinksRecord implements DataConvertable {
 	/** リンク元−パス-ハッシュ値 */
 	protected int fromH_path;
 	
+	/** リンク元−ファイル名-ハッシュ値 */
+	protected int fromH_filename;
+	
 	/** リンク元−パラメータ-ハッシュ値 */
 	protected int fromH_parameter;
 	
@@ -36,6 +39,9 @@ public class LinksRecord implements DataConvertable {
 	/** リンク先−パス-ハッシュ値 */
 	protected int toH_path;
 	
+	/** リンク先−ファイル名-ハッシュ値 */
+	protected int toH_filename;
+
 	/** リンク先−パラメータ-ハッシュ値 */
 	protected int toH_parameter;
 	
@@ -70,6 +76,14 @@ public class LinksRecord implements DataConvertable {
 	}
 	
 	/**
+	 * リンク元−ファイル名-ハッシュ値を取得します。
+	 * @return リンク元−ファイル名-ハッシュ値
+	 */
+	public int getFromH_filename() {
+		return fromH_filename;
+	}
+
+	/**
 	 * リンク元−パス-ハッシュ値を取得します。
 	 * @return リンク元−パス-ハッシュ値
 	 */
@@ -102,6 +116,14 @@ public class LinksRecord implements DataConvertable {
 	}
 	
 	/**
+	 * リンク先−ファイル名-ハッシュ値を取得します。
+	 * @return リンク先−ファイル名-ハッシュ値
+	 */
+	public int getToH_filename() {
+		return toH_filename;
+	}
+	
+	/**
 	 * リンク先−パラメータ-ハッシュ値を取得します。
 	 * @return リンク先−パラメータ-ハッシュ値
 	 */
@@ -131,10 +153,12 @@ public class LinksRecord implements DataConvertable {
 		linksRecord.fromProtocol    = record.getString("FROM_PROTOCOL");
 		linksRecord.fromHost        = record.getString("FROM_HOSTNAME");
 		linksRecord.fromH_path      = record.getInt("FROM_H_PATH");
+		linksRecord.fromH_filename  = record.getInt("FROM_H_FILENAME");
 		linksRecord.fromH_parameter = record.getInt("FROM_H_PARAM");
 		linksRecord.toProtocol      = record.getString("TO_PROTOCOL");
 		linksRecord.toHost          = record.getString("TO_HOSTNAME");
 		linksRecord.toH_path        = record.getInt("TO_H_PATH");
+		linksRecord.toH_filename    = record.getInt("TO_H_FILENAME");
 		linksRecord.toH_parameter   = record.getInt("TO_H_PARAM");
 		linksRecord.createDate      = record.getTimestamp("CREATE_DATE");
 		linksRecord.updateDate      = record.getTimestamp("UPDATE_DATE");
@@ -147,13 +171,15 @@ public class LinksRecord implements DataConvertable {
 		linksRecord.fromProtocol    = record.getString(1);
 		linksRecord.fromHost        = record.getString(2);
 		linksRecord.fromH_path      = record.getInt(3);
-		linksRecord.fromH_parameter = record.getInt(4);
-		linksRecord.toProtocol      = record.getString(5);
-		linksRecord.toHost          = record.getString(6);
-		linksRecord.toH_path        = record.getInt(7);
-		linksRecord.toH_parameter   = record.getInt(8);
-		linksRecord.createDate      = record.getTimestamp(9);
-		linksRecord.updateDate      = record.getTimestamp(10);
+		linksRecord.fromH_filename  = record.getInt(4);
+		linksRecord.fromH_parameter = record.getInt(5);
+		linksRecord.toProtocol      = record.getString(6);
+		linksRecord.toHost          = record.getString(7);
+		linksRecord.toH_path        = record.getInt(8);
+		linksRecord.toH_filename    = record.getInt(9);
+		linksRecord.toH_parameter   = record.getInt(10);
+		linksRecord.createDate      = record.getTimestamp(11);
+		linksRecord.updateDate      = record.getTimestamp(12);
 		return linksRecord;
 	}
 }

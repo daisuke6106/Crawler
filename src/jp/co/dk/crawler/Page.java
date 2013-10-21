@@ -58,9 +58,11 @@ public class Page extends jp.co.dk.browzer.Page{
 		List<String> pathList        = super.getPathList(super.getURLObject());
 		String filename              = super.getFileName();
 		Map<String,String> parameter = super.getParameter();
-		
-//		long fileid = 
-//		urls.insert(protocol, host, path, parameter, url, fileid, createDate, updateDate);
+		long fileid = getFileId();
+		long timeid = getTimeId();
+		Date createDate = getCreateDate();
+		Date updateDate = getUpdateDate();
+//		pages.insert(protocol, host, pathList, filename, parameter, fileid, timeid, createDate, updateDate);
 		
 		
 	}
@@ -134,6 +136,18 @@ public class Page extends jp.co.dk.browzer.Page{
 //		return documents.select(fileId, timeId);
 //	}
 	
+	/**
+	 * このページのURLからページを一意に特定するためのファイルIDを算出し返却します。<p/>
+	 * 算出はこのページの<br/>
+	 * ・プロトコル<br/>
+	 * ・ホスト名<br/>
+	 * ・パス<br/>
+	 * ・ファイル名<br/>
+	 * ・パラメータ<br/>
+	 * のハッシュ値を上記の順で乗算した結果が返却されます。
+	 * 
+	 * @return ファイルID
+	 */
 	protected long getFileId() {
 		String protocol              = super.getProtocol();
 		String host                  = super.getHost();
@@ -148,7 +162,38 @@ public class Page extends jp.co.dk.browzer.Page{
 		return result.longValue();
 	}
 	
+	/**
+	 * この現在の時刻からファイルIDに付随する登録時刻であるタイムIDを算出し返却します。<p/>
+	 * デフォルトではJVMが稼働しているマシンの現在日付をlong値に変換した値が返却されます。<br/>
+	 * 変更する場合はオーバーライドを使用してください。
+	 * 
+	 * @return タイムID
+	 */
+	protected long getTimeId() {
+		return new Date().getTime();
+	}
+	
+	/**
+	 * 作成日付を生成し、返却します。<p/>
+	 * データストアに登録される際の作成日付を返却します。<br/>
+	 * デフォルトではJVMが稼働しているマシンの現在日付が返却されます。<br/>
+	 * 変更する場合はオーバーライドを使用してください。
+	 * 
+	 * @return 作成日付
+	 */
 	protected Date getCreateDate() {
+		return new Date();
+	}
+	
+	/**
+	 * 更新日付を生成し、返却します。<p/>
+	 * データストアに登録される際の更新日付を返却します。<br/>
+	 * デフォルトではJVMが稼働しているマシンの現在日付が返却されます。<br/>
+	 * 変更する場合はオーバーライドを使用してください。
+	 * 
+	 * @return 更新日付
+	 */
+	protected Date getUpdateDate() {
 		return new Date();
 	}
 }

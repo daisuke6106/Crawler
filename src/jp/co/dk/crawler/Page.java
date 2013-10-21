@@ -1,6 +1,7 @@
 package jp.co.dk.crawler;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,8 +59,8 @@ public class Page extends jp.co.dk.browzer.Page{
 		String filename              = super.getFileName();
 		Map<String,String> parameter = super.getParameter();
 		
-		long fileid = 
-		urls.insert(protocol, host, path, parameter, url, fileid, createDate, updateDate);
+//		long fileid = 
+//		urls.insert(protocol, host, path, parameter, url, fileid, createDate, updateDate);
 		
 		
 	}
@@ -140,6 +141,14 @@ public class Page extends jp.co.dk.browzer.Page{
 		String filename              = super.getFileName();
 		Map<String,String> parameter = super.getParameter();
 		BigDecimal result = new BigDecimal(protocol.hashCode());
-		result.multiply(new BigDecimal(host.hashCode()));
+		result = result.multiply(new BigDecimal(host.hashCode()));
+		result = result.multiply(new BigDecimal(pathList.hashCode()));
+		result = result.multiply(new BigDecimal(filename.hashCode()));
+		result = result.multiply(new BigDecimal(parameter.hashCode()));
+		return result.longValue();
+	}
+	
+	protected Date getCreateDate() {
+		return new Date();
 	}
 }

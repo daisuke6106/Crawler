@@ -61,16 +61,18 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * LINKSテーブルから特定の１レコードを取得する。
 	 * 
-	 * @param protocol  プロトコル名
-	 * @param hostname  ホスト名
-	 * @param path      パスのハッシュ値
-	 * @param parameter パラメータのハッシュ値
+	 * @param protcol   プロトコル名
+	 * @param host      ホスト名
+	 * @param path      パス
+	 * @param filename  ファイル名
+	 * @param parameter パラメータ
 	 * @return 取得したレコードオブジェクト
+	 * @throws DataStoreManagerException
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>37</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public LinksRecord select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter)throws DataStoreManagerException;</pre></td>
+      <td class='line'>39</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public LinksRecord select(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -79,15 +81,17 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * INKSテーブルから指定の１レコードを登録する。&lt;p/>
 	 * 必須パラメータが設定されていない場合、例外を送出します。&lt;br/>
 	 * &lt;br/>
-	 * pathと、parameterに限り設定されていない場合（nullの場合）、空のリスト、マップインスタンスで置き換えます。&lt;br/>
+	 * path、filenameと、parameterに限り設定されていない場合（nullの場合）、空のリスト、マップインスタンスで置き換えます。&lt;br/>
 	 * 
 	 * @param from_protcol   プロトコル文字列（必須）
 	 * @param from_host      ホスト名（必須）
 	 * @param from_path      パスリスト（設定されていない場合、空のリストで置き換え）
+	 * @param from_filename  ファイル名（設定されていない場合、空の文字列で置き換え）
 	 * @param from_parameter パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param to_protcol     プロトコル文字列（必須）
 	 * @param to_host        ホスト名（必須）
 	 * @param to_path        パスリスト（設定されていない場合、空のリストで置き換え）
+	 * @param to_filename    ファイル名（設定されていない場合、空の文字列で置き換え）
 	 * @param to_parameter   パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param createDate     登録日付
 	 * @param updateDate     更新日付
@@ -96,8 +100,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>58</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public void insert(String from_protcol, String from_host, List&lt;String> from_path, Map&lt;String, String> from_parameter, String to_protcol, String to_host, List&lt;String> to_path, Map&lt;String, String> to_parameter, Date createDate, Date updateDate)throws DataStoreManagerException, CrawlerException ;</pre></td>
+      <td class='line'>62</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void insert(String from_protcol, String from_host, List&lt;String> from_path, String from_filename, Map&lt;String, String> from_parameter, String to_protcol, String to_host, List&lt;String> to_path, String to_filename, Map&lt;String, String> to_parameter, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -110,11 +114,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>66</td><td>&nbsp;</td>
+      <td class='line'>70</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
     </tr>
     <tr>
-      <td class='line'>67</td><td>&nbsp;</td>
+      <td class='line'>71</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

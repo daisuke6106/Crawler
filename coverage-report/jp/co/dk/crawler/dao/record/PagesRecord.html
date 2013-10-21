@@ -39,7 +39,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
  */</div><span>/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>19</td><td class='count'>4</td>
+      <td class='line'>19</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l19s0'>public class PagesRecord implements DataConvertable{</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -49,7 +49,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>22</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected String <span class='instance uncovered' title='Reads: 1 Writes: 2'>protocol</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected String <span class='instance uncovered' title='Reads: 2 Writes: 3'>protocol</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -58,7 +58,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>25</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected String <span class='instance uncovered' title='Reads: 1 Writes: 2'>host</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected String <span class='instance uncovered' title='Reads: 2 Writes: 3'>host</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -67,106 +67,115 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>28</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 1 Writes: 2'>h_path</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 2 Writes: 3'>h_path</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>30</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** パラメータ-ハッシュ値 */</pre></td>
+      <td><pre class='comment'>	/** ファイル名-ハッシュ値 */</pre></td>
     </tr>
     <tr>
       <td class='line'>31</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 1 Writes: 2'>h_parameter</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 2 Writes: 3'>h_filename</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>33</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** パス */</pre></td>
+      <td><pre class='comment'>	/** パラメータ-ハッシュ値 */</pre></td>
     </tr>
     <tr>
       <td class='line'>34</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected List&lt;String> <span class='instance uncovered' title='Reads: 1 Writes: 2'>path</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 2 Writes: 3'>h_parameter</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>36</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** パスカウント */</pre></td>
+      <td><pre class='comment'>	/** ファイルID */</pre></td>
     </tr>
     <tr>
       <td class='line'>37</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 1 Writes: 2'>pathCount</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected long <span class='instance uncovered' title='Reads: 2 Writes: 3'>fileid</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>39</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** パラメータ */</pre></td>
+      <td><pre class='comment'>	/** タイムID */</pre></td>
     </tr>
     <tr>
       <td class='line'>40</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected Map&lt;String,String> <span class='instance uncovered' title='Reads: 1 Writes: 2'>parameter</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected long <span class='instance uncovered' title='Reads: 2 Writes: 3'>timeid</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>42</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** パラメータカウント */</pre></td>
+      <td><pre class='comment'>	/** パス */</pre></td>
     </tr>
     <tr>
       <td class='line'>43</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 1 Writes: 2'>parameterCount</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected List&lt;String> <span class='instance uncovered' title='Reads: 2 Writes: 3'>path</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>45</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** リクエストヘッダー */</pre></td>
+      <td><pre class='comment'>	/** パスカウント */</pre></td>
     </tr>
     <tr>
       <td class='line'>46</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected Map&lt;String, String> <span class='instance uncovered' title='Reads: 1 Writes: 2'>requestHeader</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 2 Writes: 3'>pathCount</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>48</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** レスポンスヘッダー */</pre></td>
+      <td><pre class='comment'>	/** パラメータ */</pre></td>
     </tr>
     <tr>
       <td class='line'>49</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected Map&lt;String, String> <span class='instance uncovered' title='Reads: 1 Writes: 2'>responceHeader</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected Map&lt;String,String> <span class='instance uncovered' title='Reads: 2 Writes: 3'>parameter</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>51</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** ファイルID */</pre></td>
+      <td><pre class='comment'>	/** パラメータカウント */</pre></td>
     </tr>
     <tr>
       <td class='line'>52</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected long <span class='instance uncovered' title='Reads: 1 Writes: 2'>fileid</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected int <span class='instance uncovered' title='Reads: 2 Writes: 3'>parameterCount</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>54</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** タイムID */</pre></td>
+      <td><pre class='comment'>	/** リクエストヘッダー */</pre></td>
     </tr>
     <tr>
       <td class='line'>55</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected long <span class='instance uncovered' title='Reads: 1 Writes: 2'>timeid</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected Map&lt;String, String> <span class='instance uncovered' title='Reads: 2 Writes: 3'>requestHeader</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>57</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** 作成日時 */</pre></td>
+      <td><pre class='comment'>	/** レスポンスヘッダー */</pre></td>
     </tr>
     <tr>
       <td class='line'>58</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 1 Writes: 2'>createDate</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected Map&lt;String, String> <span class='instance uncovered' title='Reads: 2 Writes: 3'>responceHeader</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'>60</td><td>&nbsp;</td>
-      <td><pre class='comment'>	/** 更新日時 */</pre></td>
+      <td><pre class='comment'>	/** 作成日時 */</pre></td>
     </tr>
     <tr>
       <td class='line'>61</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 1 Writes: 2'>updateDate</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 2 Writes: 3'>createDate</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>63</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** 更新日時 */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 2 Writes: 3'>updateDate</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -177,15 +186,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>67</td><td>&nbsp;</td>
+      <td class='line'>70</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public String getProtocol() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>68</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l68s0'>		return protocol;</pre></td>
+      <td class='line'>71</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l71s0'>		return protocol;</pre></td>
     </tr>
     <tr>
-      <td class='line'>69</td><td>&nbsp;</td>
+      <td class='line'>72</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -197,15 +206,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>75</td><td>&nbsp;</td>
+      <td class='line'>78</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public String getHost() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>76</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l76s0'>		return host;</pre></td>
+      <td class='line'>79</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l79s0'>		return host;</pre></td>
     </tr>
     <tr>
-      <td class='line'>77</td><td>&nbsp;</td>
+      <td class='line'>80</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -217,15 +226,35 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>83</td><td>&nbsp;</td>
+      <td class='line'>86</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public int getH_path() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>84</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l84s0'>		return h_path;</pre></td>
+      <td class='line'>87</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l87s0'>		return h_path;</pre></td>
     </tr>
     <tr>
-      <td class='line'>85</td><td>&nbsp;</td>
+      <td class='line'>88</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * ファイル名のハッシュ値を取得する。
+	 * @return ファイル名のハッシュ値
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>94</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int getH_filename() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>95</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l95s0'>		return h_filename;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>96</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -237,15 +266,55 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>91</td><td>&nbsp;</td>
+      <td class='line'>102</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public int getH_parameter() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>92</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l92s0'>		return h_parameter;</pre></td>
+      <td class='line'>103</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l103s0'>		return h_parameter;</pre></td>
     </tr>
     <tr>
-      <td class='line'>93</td><td>&nbsp;</td>
+      <td class='line'>104</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * ファイルIDを取得する。
+	 * @return ファイルID
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>110</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public long getFileid() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>111</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l111s0'>		return fileid;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>112</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * タイムIDを取得する。
+	 * @return タイムID
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>118</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public long getTimeid() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>119</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l119s0'>		return timeid;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>120</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -258,15 +327,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>100</td><td>&nbsp;</td>
+      <td class='line'>127</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public List&lt;String> getPath() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>101</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l101s0'>		return this.path;</pre></td>
+      <td class='line'>128</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l128s0'>		return this.path;</pre></td>
     </tr>
     <tr>
-      <td class='line'>102</td><td>&nbsp;</td>
+      <td class='line'>129</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -278,15 +347,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>108</td><td>&nbsp;</td>
+      <td class='line'>135</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public int getPathCount() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>109</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l109s0'>		return pathCount;</pre></td>
+      <td class='line'>136</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l136s0'>		return pathCount;</pre></td>
     </tr>
     <tr>
-      <td class='line'>110</td><td>&nbsp;</td>
+      <td class='line'>137</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -299,15 +368,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>117</td><td>&nbsp;</td>
+      <td class='line'>144</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Map&lt;String, String> getParameter() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>118</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l118s0'>		return this.parameter;</pre></td>
+      <td class='line'>145</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l145s0'>		return this.parameter;</pre></td>
     </tr>
     <tr>
-      <td class='line'>119</td><td>&nbsp;</td>
+      <td class='line'>146</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -319,15 +388,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>125</td><td>&nbsp;</td>
+      <td class='line'>152</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public int getParameterCount() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>126</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l126s0'>		return parameterCount;</pre></td>
+      <td class='line'>153</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l153s0'>		return parameterCount;</pre></td>
     </tr>
     <tr>
-      <td class='line'>127</td><td>&nbsp;</td>
+      <td class='line'>154</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -340,15 +409,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>134</td><td>&nbsp;</td>
+      <td class='line'>161</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Map&lt;String, String> getRequestHeader() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>135</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l135s0'>		return this.requestHeader;</pre></td>
+      <td class='line'>162</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l162s0'>		return this.requestHeader;</pre></td>
     </tr>
     <tr>
-      <td class='line'>136</td><td>&nbsp;</td>
+      <td class='line'>163</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -361,15 +430,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>143</td><td>&nbsp;</td>
+      <td class='line'>170</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Map&lt;String, String> getResponceHeader() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>144</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l144s0'>		return this.responceHeader;</pre></td>
+      <td class='line'>171</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l171s0'>		return this.responceHeader;</pre></td>
     </tr>
     <tr>
-      <td class='line'>145</td><td>&nbsp;</td>
+      <td class='line'>172</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -381,15 +450,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>151</td><td>&nbsp;</td>
+      <td class='line'>178</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public long getFileId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>152</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l152s0'>		return fileid;</pre></td>
+      <td class='line'>179</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l179s0'>		return fileid;</pre></td>
     </tr>
     <tr>
-      <td class='line'>153</td><td>&nbsp;</td>
+      <td class='line'>180</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -401,15 +470,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>159</td><td>&nbsp;</td>
+      <td class='line'>186</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public long getTimeId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>160</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l160s0'>		return timeid;</pre></td>
+      <td class='line'>187</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l187s0'>		return timeid;</pre></td>
     </tr>
     <tr>
-      <td class='line'>161</td><td>&nbsp;</td>
+      <td class='line'>188</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -421,15 +490,15 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>167</td><td>&nbsp;</td>
+      <td class='line'>194</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Date getCreateDate() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>168</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l168s0'>		return createDate;</pre></td>
+      <td class='line'>195</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l195s0'>		return createDate;</pre></td>
     </tr>
     <tr>
-      <td class='line'>169</td><td>&nbsp;</td>
+      <td class='line'>196</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -441,181 +510,189 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>175</td><td>&nbsp;</td>
+      <td class='line'>202</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Date getUpdateDate() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>176</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l176s0'>		return updateDate;</pre></td>
+      <td class='line'>203</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l203s0'>		return updateDate;</pre></td>
     </tr>
     <tr>
-      <td class='line'>177</td><td>&nbsp;</td>
+      <td class='line'>204</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>179</td><td>&nbsp;</td>
+      <td class='line'>206</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	@SuppressWarnings("unchecked")</pre></td>
     </tr>
     <tr>
-      <td class='line'>180</td><td>&nbsp;</td>
+      <td class='line'>207</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	@Override</pre></td>
     </tr>
     <tr>
-      <td class='line'>181</td><td>&nbsp;</td>
+      <td class='line'>208</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>182</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l182s0'>		PagesRecord pagesRecord    = new PagesRecord();</pre></td>
+      <td class='line'>209</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l209s0'>		PagesRecord pagesRecord    = new PagesRecord();</pre></td>
     </tr>
     <tr>
-      <td class='line'>183</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l183s0'>		pagesRecord.protocol       = record.getString("PROTOCOL");</pre></td>
+      <td class='line'>210</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l210s0'>		pagesRecord.protocol       = record.getString("PROTOCOL");</pre></td>
     </tr>
     <tr>
-      <td class='line'>184</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l184s0'>		pagesRecord.host           = record.getString("HOSTNAME");</pre></td>
+      <td class='line'>211</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l211s0'>		pagesRecord.host           = record.getString("HOSTNAME");</pre></td>
     </tr>
     <tr>
-      <td class='line'>185</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l185s0'>		pagesRecord.h_path         = record.getInt("H_PATH");</pre></td>
+      <td class='line'>212</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l212s0'>		pagesRecord.h_path         = record.getInt("H_PATH");</pre></td>
     </tr>
     <tr>
-      <td class='line'>186</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l186s0'>		pagesRecord.h_parameter    = record.getInt("H_PARAM");</pre></td>
+      <td class='line'>213</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l213s0'>		pagesRecord.h_filename     = record.getInt("H_FILENAME");</pre></td>
     </tr>
     <tr>
-      <td class='line'>187</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l187s0'>		pagesRecord.path           = (List&lt;String>) record.getObject("PATH");</pre></td>
+      <td class='line'>214</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l214s0'>		pagesRecord.h_parameter    = record.getInt("H_PARAM");</pre></td>
     </tr>
     <tr>
-      <td class='line'>188</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l188s0'>		pagesRecord.pathCount      = record.getInt("PATH_COUNT");</pre></td>
+      <td class='line'>215</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l215s0'>		pagesRecord.fileid         = record.getLong("FILEID");</pre></td>
     </tr>
     <tr>
-      <td class='line'>189</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l189s0'>		pagesRecord.parameter      = (Map&lt;String,String>) record.getObject("PARAMETER");</pre></td>
+      <td class='line'>216</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l216s0'>		pagesRecord.timeid         = record.getLong("TIMEID");</pre></td>
     </tr>
     <tr>
-      <td class='line'>190</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l190s0'>		pagesRecord.parameterCount = record.getInt("PARAMETER_COUNT");</pre></td>
+      <td class='line'>217</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l217s0'>		pagesRecord.path           = (List&lt;String>) record.getObject("PATH");</pre></td>
     </tr>
     <tr>
-      <td class='line'>191</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l191s0'>		pagesRecord.requestHeader  = (Map&lt;String,String>) record.getObject("REQUEST_HEADER");</pre></td>
+      <td class='line'>218</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l218s0'>		pagesRecord.pathCount      = record.getInt("PATH_COUNT");</pre></td>
     </tr>
     <tr>
-      <td class='line'>192</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l192s0'>		pagesRecord.responceHeader = (Map&lt;String,String>) record.getObject("RESPONCE_HEADER");</pre></td>
+      <td class='line'>219</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l219s0'>		pagesRecord.parameter      = (Map&lt;String,String>) record.getObject("PARAMETER");</pre></td>
     </tr>
     <tr>
-      <td class='line'>193</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l193s0'>		pagesRecord.fileid         = record.getLong("FILEID");</pre></td>
+      <td class='line'>220</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l220s0'>		pagesRecord.parameterCount = record.getInt("PARAMETER_COUNT");</pre></td>
     </tr>
     <tr>
-      <td class='line'>194</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l194s0'>		pagesRecord.timeid         = record.getLong("TIMEID");</pre></td>
+      <td class='line'>221</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l221s0'>		pagesRecord.requestHeader  = (Map&lt;String,String>) record.getObject("REQUEST_HEADER");</pre></td>
     </tr>
     <tr>
-      <td class='line'>195</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l195s0'>		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");</pre></td>
+      <td class='line'>222</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l222s0'>		pagesRecord.responceHeader = (Map&lt;String,String>) record.getObject("RESPONCE_HEADER");</pre></td>
     </tr>
     <tr>
-      <td class='line'>196</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l196s0'>		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");</pre></td>
+      <td class='line'>223</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l223s0'>		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");</pre></td>
     </tr>
     <tr>
-      <td class='line'>197</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l197s0'>		return pagesRecord;</pre></td>
+      <td class='line'>224</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l224s0'>		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");</pre></td>
     </tr>
     <tr>
-      <td class='line'>198</td><td>&nbsp;</td>
+      <td class='line'>225</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l225s0'>		return pagesRecord;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>226</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>200</td><td>&nbsp;</td>
+      <td class='line'>228</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	@SuppressWarnings("unchecked")</pre></td>
     </tr>
     <tr>
-      <td class='line'>201</td><td>&nbsp;</td>
+      <td class='line'>229</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	@Override</pre></td>
     </tr>
     <tr>
-      <td class='line'>202</td><td>&nbsp;</td>
+      <td class='line'>230</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public DataConvertable convert(Record record)	throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>203</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l203s0'>		PagesRecord pagesRecord    = new PagesRecord();</pre></td>
+      <td class='line'>231</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l231s0'>		PagesRecord pagesRecord    = new PagesRecord();</pre></td>
     </tr>
     <tr>
-      <td class='line'>204</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l204s0'>		pagesRecord.protocol       = record.getString(1);</pre></td>
+      <td class='line'>232</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l232s0'>		pagesRecord.protocol       = record.getString(1);</pre></td>
     </tr>
     <tr>
-      <td class='line'>205</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l205s0'>		pagesRecord.host           = record.getString(2);</pre></td>
+      <td class='line'>233</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l233s0'>		pagesRecord.host           = record.getString(2);</pre></td>
     </tr>
     <tr>
-      <td class='line'>206</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l206s0'>		pagesRecord.h_path         = record.getInt(3);</pre></td>
+      <td class='line'>234</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l234s0'>		pagesRecord.h_path         = record.getInt(3);</pre></td>
     </tr>
     <tr>
-      <td class='line'>207</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l207s0'>		pagesRecord.h_parameter    = record.getInt(4);</pre></td>
+      <td class='line'>235</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l235s0'>		pagesRecord.h_filename     = record.getInt(4);</pre></td>
     </tr>
     <tr>
-      <td class='line'>208</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l208s0'>		pagesRecord.path           = (List&lt;String>) record.getObject(5);</pre></td>
+      <td class='line'>236</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l236s0'>		pagesRecord.h_parameter    = record.getInt(5);</pre></td>
     </tr>
     <tr>
-      <td class='line'>209</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l209s0'>		pagesRecord.pathCount      = record.getInt(6);</pre></td>
+      <td class='line'>237</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l237s0'>		pagesRecord.path           = (List&lt;String>) record.getObject(6);</pre></td>
     </tr>
     <tr>
-      <td class='line'>210</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l210s0'>		pagesRecord.parameter      = (Map&lt;String,String>) record.getObject(7);</pre></td>
+      <td class='line'>238</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l238s0'>		pagesRecord.pathCount      = record.getInt(7);</pre></td>
     </tr>
     <tr>
-      <td class='line'>211</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l211s0'>		pagesRecord.parameterCount = record.getInt(8);</pre></td>
+      <td class='line'>239</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l239s0'>		pagesRecord.parameter      = (Map&lt;String,String>) record.getObject(8);</pre></td>
     </tr>
     <tr>
-      <td class='line'>212</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l212s0'>		pagesRecord.requestHeader  = (Map&lt;String,String>) record.getObject(9);</pre></td>
+      <td class='line'>240</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l240s0'>		pagesRecord.parameterCount = record.getInt(9);</pre></td>
     </tr>
     <tr>
-      <td class='line'>213</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l213s0'>		pagesRecord.responceHeader = (Map&lt;String,String>) record.getObject(10);</pre></td>
+      <td class='line'>241</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l241s0'>		pagesRecord.requestHeader  = (Map&lt;String,String>) record.getObject(10);</pre></td>
     </tr>
     <tr>
-      <td class='line'>214</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l214s0'>		pagesRecord.fileid         = record.getLong(11);</pre></td>
+      <td class='line'>242</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l242s0'>		pagesRecord.responceHeader = (Map&lt;String,String>) record.getObject(11);</pre></td>
     </tr>
     <tr>
-      <td class='line'>215</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l215s0'>		pagesRecord.timeid         = record.getLong(12);</pre></td>
+      <td class='line'>243</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l243s0'>		pagesRecord.fileid         = record.getLong(12);</pre></td>
     </tr>
     <tr>
-      <td class='line'>216</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l216s0'>		pagesRecord.createDate     = record.getDate(13);</pre></td>
+      <td class='line'>244</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l244s0'>		pagesRecord.timeid         = record.getLong(13);</pre></td>
     </tr>
     <tr>
-      <td class='line'>217</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l217s0'>		pagesRecord.updateDate     = record.getDate(14);</pre></td>
+      <td class='line'>245</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l245s0'>		pagesRecord.createDate     = record.getDate(14);</pre></td>
     </tr>
     <tr>
-      <td class='line'>218</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l218s0'>		return pagesRecord;</pre></td>
+      <td class='line'>246</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l246s0'>		pagesRecord.updateDate     = record.getDate(15);</pre></td>
     </tr>
     <tr>
-      <td class='line'>219</td><td>&nbsp;</td>
+      <td class='line'>247</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l247s0'>		return pagesRecord;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>248</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr>
-      <td class='line'>220</td><td>&nbsp;</td>
+      <td class='line'>249</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

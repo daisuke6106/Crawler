@@ -6,22 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.exception.BrowzingException;
-import jp.co.dk.browzer.http.header.Header;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
-import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
-import jp.co.dk.crawler.dao.record.DocumentsRecord;
-import jp.co.dk.crawler.dao.record.PagesRecord;
-import jp.co.dk.crawler.dao.record.UrlsRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.ByteDump;
 
 /**
- * PAGEはクローラにて使用される単一おnページを表すクラスです。<p/>
+ * PAGEはクローラにて使用される単一のページを表すクラスです。<p/>
  * 本クラスにて接続先のページ情報のデータストアへの保存、データストアからの読み込みを行います。<br/>
  * 
  */
@@ -34,37 +29,53 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * コンストラクタ<p/>
 	 * 指定のURL、データストアマネージャのインスタンスを元に、ページオブジェクトのインスタンスを生成します。
 	 * 
-	 * @param url
-	 * @param dataStoreManager
-	 * @throws BrowzingException
+	 * @param url              URL文字列
+	 * @param dataStoreManager データストアマネージャ
+	 * @throws BrowzingException ページ情報の読み込みに失敗した場合
 	 */
 	public Page(String url, DataStoreManager dataStoreManager) throws BrowzingException {
 		super(url);
 		this.dataStoreManager = dataStoreManager;
 	}
 	
-	public Page (String url, Header header, ByteDump data) throws BrowzingException {
-		super(url, header, data);
+	/**
+	 * コンストラクタ<p/>
+	 * すでに保存済みのデータからページのインスタンスを生成します。<br/>
+	 * URLのプロトコルが未知、リクエストヘッダ、レスポンスヘッダが不正である場合などは、例外が発生します。
+	 * 
+	 * @param url            URL文字列
+	 * @param requestHeader  リクエストヘッダ
+	 * @param responseHeader レスポンスヘッダ
+	 * @param data           ページデータ
+	 * @throws BrowzingException インスタンスの生成に失敗した場合
+	 */
+	public Page (String url, Map<String, String> requestHeader, Map<String, List<String>> responseHeader, ByteDump data) throws BrowzingException {
+		super(url, requestHeader, responseHeader, data);
 	}
 	
 	public void save() throws CrawlerException, DataStoreManagerException {
+		this.dataStoreManager.startTrunsaction();
 		Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		
-		String url                   = super.getURL();
-		String protocol              = super.getProtocol();
-		String host                  = super.getHost();
-		List<String> pathList        = super.getPathList(super.getURLObject());
-		String filename              = super.getFileName();
-		Map<String,String> parameter = super.getParameter();
-		long fileid = getFileId();
-		long timeid = getTimeId();
-		Date createDate = getCreateDate();
-		Date updateDate = getUpdateDate();
-//		pages.insert(protocol, host, pathList, filename, parameter, fileid, timeid, createDate, updateDate);
-		
-		
+		String url                    = super.getURL();
+		String protocol               = super.getProtocol();
+		String host                   = super.getHost();
+		List<String> pathList         = super.getPathList(super.getURLObject());
+		String filename               = super.getFileName();
+		String extension              = super.getExtension();
+		Map<String,String> parameter  = super.getParameter();
+		byte[] data                   = super.byteDump.getBytes();
+		long fileid                   = getFileId();
+		long timeid                   = getTimeId();
+		Date createDate               = getCreateDate();
+		Date updateDate               = getUpdateDate();
+		Map<String,String>       requestHeader  = super.requestHeader.getHeaderMap();
+		Map<String,List<String>> responseHeader = super.responseHeader.getHeaderMap();
+		urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
+		pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);
+		documents.insert(fileid, timeid, filename, extension, createDate, data, createDate, updateDate);
+		this.dataStoreManager.finishTrunsaction();
 	}
 	
 	
@@ -106,7 +117,7 @@ public class Page extends jp.co.dk.browzer.Page{
 	 */
 //	public boolean isLatest() throws DataStoreManagerException {
 //		if (!isSaved()) return false;
-//		super.header.getResponseRecord();
+//		super.responseHeader.getResponseRecord();
 //	}
 	
 //	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {

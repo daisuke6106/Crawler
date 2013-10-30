@@ -1,7 +1,9 @@
 package jp.co.dk.crawler;
 
+import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
+import jp.co.dk.property.exception.PropertyException;
 
 import org.junit.Test;
 
@@ -12,17 +14,25 @@ public class TestCrawler extends TestCrawlerFoundation{
 		// ========================================正常系========================================
 		// 引数なしでコンストラクタを呼び出した場合、正常にインスタンスが生成されること。
 		try {
-			Crawler crawler = new Crawler();
+			Crawler crawler = new Crawler("");
 			assertNotNull(crawler.dsm);
 		} catch (DataStoreManagerException e) {
+			fail(e);
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (PropertyException e) {
 			fail(e);
 		}
 		
 		// 引数ありでコンストラクタを呼び出した場合、正常にインスタンスが生成されること。
 		try {
-			Crawler crawler = new Crawler(new DataStoreManagerProperty());
+			Crawler crawler = new Crawler("", new DataStoreManagerProperty());
 			assertNotNull(crawler.dsm);
 		} catch (DataStoreManagerException e) {
+			fail(e);
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (PropertyException e) {
 			fail(e);
 		}
 		

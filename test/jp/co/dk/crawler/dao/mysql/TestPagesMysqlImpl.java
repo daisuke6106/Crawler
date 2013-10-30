@@ -56,8 +56,10 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		Map<String, String> requestHeader = new HashMap<String,String>();
 		requestHeader.put("RequestHeader_key", "RequestHeader_value");
 		// レスポンスヘッダ
-		Map<String, String> responceHeader = new HashMap<String,String>();
-		responceHeader.put("ResponceHeader_key", "ResponceHeader_value");
+		Map<String, List<String>> responceHeader = new HashMap<String,List<String>>();
+		List<String> responseHeaderValue = new ArrayList<String>();
+		responseHeaderValue.add("ResponceHeader_value");
+		responceHeader.put("ResponceHeader_key", responseHeaderValue);
 		// ファイルＩＤ
 		long fileid = 1234567890L;
 		// タイムID
@@ -178,8 +180,10 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		Map<String, String> requestHeader = new HashMap<String,String>();
 		requestHeader.put("RequestHeader_key", "RequestHeader_value");
 		// レスポンスヘッダ
-		Map<String, String> responceHeader = new HashMap<String,String>();
-		responceHeader.put("ResponceHeader_key", "ResponceHeader_value");
+		Map<String, List<String>> responceHeader = new HashMap<String,List<String>>();
+		List<String> responseHeaderValue = new ArrayList<String>();
+		responseHeaderValue.add("ResponceHeader_value");
+		responceHeader.put("ResponceHeader_key", responseHeaderValue);
 		// ファイルＩＤ
 		long fileid = 1234567890L;
 		// タイムID
@@ -304,8 +308,10 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		Map<String, String> requestHeader = new HashMap<String,String>();
 		requestHeader.put("RequestHeader_key", "RequestHeader_value");
 		// レスポンスヘッダ
-		Map<String, String> responceHeader = new HashMap<String,String>();
-		responceHeader.put("ResponceHeader_key", "ResponceHeader_value");
+		Map<String, List<String>> responceHeader = new HashMap<String,List<String>>();
+		List<String> responseHeaderValue = new ArrayList<String>();
+		responseHeaderValue.add("ResponceHeader_value");
+		responceHeader.put("ResponceHeader_key", responseHeaderValue);
 		// ファイルＩＤ
 		long fileid = 1234567890L;
 		// タイムID

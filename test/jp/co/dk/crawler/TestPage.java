@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.crawler.dao.CrawlerDaoConstants;
+import jp.co.dk.crawler.dao.Documents;
+import jp.co.dk.crawler.dao.Pages;
+import jp.co.dk.crawler.dao.Urls;
+import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
@@ -28,7 +33,53 @@ public class TestPage extends TestCrawlerFoundation{
 	}
 	
 	@Test
-	public void getLong() {
+	public void save() {
+		try {
+			// ＝＝＝＝＝＝＝＝＝＝準備＝＝＝＝＝＝＝＝＝＝
+			// テーブルを作成
+			DataStoreManager manager = getAccessableDataStoreManager();
+			manager.startTrunsaction();
+			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+			urls.createTable();
+			pages.createTable();
+			documents.createTable();
+			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// テスト実行
+			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
+			page.save();
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		} catch (CrawlerException e) {
+			fail(e);
+		} finally {
+			// ＝＝＝＝＝＝＝＝＝＝後片付け＝＝＝＝＝＝＝＝＝＝
+			// テーブルを削除
+			DataStoreManager manager;
+			try {
+				manager = getAccessableDataStoreManager();
+				manager.startTrunsaction();
+				Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+				Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+				Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+				urls.dropTable();
+				pages.dropTable();
+				documents.dropTable();
+				manager.finishTrunsaction();
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+		}
+	}
+	
+	@Test
+	public void getFileId() {
 		
 		// ==========正常にファイルIDが返却されること==========
 		// プロトコル＋ホスト名
@@ -118,6 +169,33 @@ public class TestPage extends TestCrawlerFoundation{
 			Map<String,String> parameter = new HashMap<String,String>();
 			parameter.put("gws_rd", "cr");
 			parameter.put("ei", "XVplUvTHH86FkwXcvoCACQ");
+			BigDecimal result = new BigDecimal(protocol.hashCode());
+			result = result.multiply(new BigDecimal(host.hashCode()));
+			result = result.multiply(new BigDecimal(pathList.hashCode()));
+			result = result.multiply(new BigDecimal(filename.hashCode()));
+			result = result.multiply(new BigDecimal(parameter.hashCode()));
+			
+			assertEquals(page.getFileId(), result.longValue());
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		}
+		
+		// プロトコル＋ホスト名＋パス＋パラメータ
+		try {
+			Page page = new Page("http://dailynews.yahoo.co.jp/fc/domestic/typhoons/?id=6094644", getAccessableDataStoreManager());
+			
+			// 比較値を生成
+			String protocol              = "http";
+			String host                  = "dailynews.yahoo.co.jp";
+			List<String> pathList        = new ArrayList<String>();
+			pathList.add("fc");
+			pathList.add("domestic");
+			pathList.add("typhoons");
+			String filename              = "default.html";
+			Map<String,String> parameter = new HashMap<String,String>();
+			parameter.put("id", "6094644");
 			BigDecimal result = new BigDecimal(protocol.hashCode());
 			result = result.multiply(new BigDecimal(host.hashCode()));
 			result = result.multiply(new BigDecimal(pathList.hashCode()));

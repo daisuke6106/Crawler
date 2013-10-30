@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JMockit Coverage Report - Page.java</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../coverage.js'></script>
+  <script type='text/javascript' src='../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption>Crawler/src/jp/co/dk/crawler/Page.java</caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package jp.co.dk.crawler;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.crawler.dao.CrawlerDaoConstants;
+import jp.co.dk.crawler.dao.Documents;
+import jp.co.dk.crawler.dao.Pages;
+import jp.co.dk.crawler.dao.Urls;
+import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.datastoremanager.DataStoreManager;
+import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+import jp.co.dk.document.ByteDump;
+</div><span>import ...</span></pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>/**
+ * PAGEはクローラにて使用される単一のページを表すクラスです。&lt;p/>
+ * 本クラスにて接続先のページ情報のデータストアへの保存、データストアからの読み込みを行います。&lt;br/>
+ * 
+ */</div><span>/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>23</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>public class Page extends jp.co.dk.browzer.Page{</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>25</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** データストアマネージャ */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>26</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected DataStoreManager <span class='instance covered' title='Reads: 5 Writes: 7'>dataStoreManager</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * コンストラクタ&lt;p/>
+	 * 指定のURL、データストアマネージャのインスタンスを元に、ページオブジェクトのインスタンスを生成します。
+	 * 
+	 * @param url              URL文字列
+	 * @param dataStoreManager データストアマネージャ
+	 * @throws BrowzingException ページ情報の読み込みに失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>36</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Page(String url, DataStoreManager dataStoreManager) throws BrowzingException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td class='count'>7</td>
+      <td><pre class='prettyprint covered' id='l37s0'>		super(url);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>38</td><td class='count'>7</td>
+      <td><pre class='prettyprint covered' id='l38s0'>		this.dataStoreManager = dataStoreManager;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>39</td><td class='count'>7</td>
+      <td><pre class='prettyprint covered' id='l39s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * コンストラクタ&lt;p/>
+	 * すでに保存済みのデータからページのインスタンスを生成します。&lt;br/>
+	 * URLのプロトコルが未知、リクエストヘッダ、レスポンスヘッダが不正である場合などは、例外が発生します。
+	 * 
+	 * @param url            URL文字列
+	 * @param requestHeader  リクエストヘッダ
+	 * @param responseHeader レスポンスヘッダ
+	 * @param data           ページデータ
+	 * @throws BrowzingException インスタンスの生成に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>52</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Page (String url, Map&lt;String, String> requestHeader, Map&lt;String, List&lt;String>> responseHeader, ByteDump data) throws BrowzingException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>53</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l53s0'>		super(url, requestHeader, responseHeader, data);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>54</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l54s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>56</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void save() throws CrawlerException, DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>57</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l57s0'>		this.dataStoreManager.startTrunsaction();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l58s0'>		Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>59</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l59s0'>		Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l60s0'>		Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>61</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l61s0'>		String url                    = super.getURL();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>62</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l62s0'>		String protocol               = super.getProtocol();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l63s0'>		String host                   = super.getHost();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l64s0'>		List&lt;String> pathList         = super.getPathList(super.getURLObject());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l65s0'>		String filename               = super.getFileName();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l66s0'>		String extension              = super.getExtension();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l67s0'>		Map&lt;String,String> parameter  = super.getParameter();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>68</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l68s0'>		byte[] data                   = super.byteDump.getBytes();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>69</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l69s0'>		long fileid                   = getFileId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>70</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l70s0'>		long timeid                   = getTimeId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>71</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l71s0'>		Date createDate               = getCreateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l72s0'>		Date updateDate               = getUpdateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>73</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l73s0'>		Map&lt;String,String>       requestHeader  = super.requestHeader.getHeaderMap();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>74</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l74s0'>		Map&lt;String,List&lt;String>> responseHeader = super.responseHeader.getHeaderMap();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l75s0'>		urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l76s0'>		pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l77s0'>		documents.insert(fileid, timeid, filename, extension, createDate, data, createDate, updateDate);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>78</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l78s0'>		this.dataStoreManager.finishTrunsaction();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>79</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l79s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * このページを保存している履歴の個数を取得します。
+	 * 
+	 * @return 履歴を保持している個数
+	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 */
+//	public int getCount() throws DataStoreManagerException {
+//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+//		String protcol = super.protocol;
+//		String host    = super.host;
+//		List&lt;String> pathList = super.pathList;
+//		Map&lt;String, String> parameter = super.parameter;
+//		return pages.count(protcol, host, pathList, parameter);
+//	}</div><span>	/*...*/</span></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * このページが既にデータストアに保存されているか判定します。&lt;p/>
+	 * 既に保存されている場合、trueを返却し、保存されているない場合、falseを返却します。
+	 * 
+	 * 確認対象は、PAGESテーブルにすでにレコードがあるかどうかで判定を行います。
+	 * 
+	 * @return 判定結果（true=保存済みである、false=未だに保存されていないページである）
+	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 */
+//	public boolean isSaved() throws DataStoreManagerException {
+//		if(getCount() != 0) return true;
+//		return false;
+//	}</div><span>	/*...*/</span></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * このページをデータストアに保存されているものと比較して最新状態であるかどうかを判定します。&lt;p/>
+	 * 最新である場合はtrue、最新でない、もしくはページが保存すらされていない場合は、falseを返却します。
+	 * @return 判定結果（true=最新である、false=最新でない、またはページが保存されていない）
+	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 */
+//	public boolean isLatest() throws DataStoreManagerException {
+//		if (!isSaved()) return false;
+//		super.responseHeader.getResponseRecord();
+//	}</div><span>	/*...*/</span></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>123</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>124</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>125</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>126</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String host    = super.host;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>127</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>128</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>129</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		return urls.select(protcol, host, pathList, parameter);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>130</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>131</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>132</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	protected List&lt;PagesRecord> getPagesRecord() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>133</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>134</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>135</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String host    = super.host;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>136</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>137</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>138</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		return pages.select(protcol, host, pathList, parameter);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>139</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>140</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>141</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	protected DocumentsRecord getDocumentsRecord() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>142</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		PagesRecord pagesRecord = getPagesRecord();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>143</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		if (pagesRecord == null) return null;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>144</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		long fileId = pagesRecord.getFileId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>145</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		long timeId = pagesRecord.getTimeId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>146</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>147</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		return documents.select(fileId, timeId);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>148</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * このページのURLからページを一意に特定するためのファイルIDを算出し返却します。&lt;p/>
+	 * 算出はこのページの&lt;br/>
+	 * ・プロトコル&lt;br/>
+	 * ・ホスト名&lt;br/>
+	 * ・パス&lt;br/>
+	 * ・ファイル名&lt;br/>
+	 * ・パラメータ&lt;br/>
+	 * のハッシュ値を上記の順で乗算した結果が返却されます。
+	 * 
+	 * @return ファイルID
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>162</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected long getFileId() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>163</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l163s0'>		String protocol              = super.getProtocol();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>164</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l164s0'>		String host                  = super.getHost();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>165</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l165s0'>		List&lt;String> pathList        = super.getPathList(super.getURLObject());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>166</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l166s0'>		String filename              = super.getFileName();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>167</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l167s0'>		Map&lt;String,String> parameter = super.getParameter();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>168</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l168s0'>		BigDecimal result = new BigDecimal(protocol.hashCode());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>169</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l169s0'>		result = result.multiply(new BigDecimal(host.hashCode()));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>170</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l170s0'>		result = result.multiply(new BigDecimal(pathList.hashCode()));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>171</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l171s0'>		result = result.multiply(new BigDecimal(filename.hashCode()));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>172</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l172s0'>		result = result.multiply(new BigDecimal(parameter.hashCode()));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>173</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l173s0'>		return result.longValue();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>174</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * この現在の時刻からファイルIDに付随する登録時刻であるタイムIDを算出し返却します。&lt;p/>
+	 * デフォルトではJVMが稼働しているマシンの現在日付をlong値に変換した値が返却されます。&lt;br/>
+	 * 変更する場合はオーバーライドを使用してください。
+	 * 
+	 * @return タイムID
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>183</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected long getTimeId() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>184</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l184s0'>		return new Date().getTime();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>185</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * 作成日付を生成し、返却します。&lt;p/>
+	 * データストアに登録される際の作成日付を返却します。&lt;br/>
+	 * デフォルトではJVMが稼働しているマシンの現在日付が返却されます。&lt;br/>
+	 * 変更する場合はオーバーライドを使用してください。
+	 * 
+	 * @return 作成日付
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>195</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected Date getCreateDate() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>196</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l196s0'>		return new Date();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>197</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * 更新日付を生成し、返却します。&lt;p/>
+	 * データストアに登録される際の更新日付を返却します。&lt;br/>
+	 * デフォルトではJVMが稼働しているマシンの現在日付が返却されます。&lt;br/>
+	 * 変更する場合はオーバーライドを使用してください。
+	 * 
+	 * @return 更新日付
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>207</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected Date getUpdateDate() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>208</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l208s0'>		return new Date();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>209</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>210</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

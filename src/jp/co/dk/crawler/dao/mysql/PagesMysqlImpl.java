@@ -127,7 +127,7 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	}
 	
 	@Override
-	public void insert(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, String> responceHeader, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
+	public void insert(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
 		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
 		if (path == null) path = new ArrayList<String>();

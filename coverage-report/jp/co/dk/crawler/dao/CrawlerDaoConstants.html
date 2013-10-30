@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JMockit Coverage Report - CrawlerDaoConstants.java</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../coverage.js'></script>
+  <script type='text/javascript' src='../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption>Crawler/src/jp/co/dk/crawler/dao/CrawlerDaoConstants.java</caption>
+    <tr>
+      <td class='line'>1</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l1s0'>package jp.co.dk.crawler.dao;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import jp.co.dk.crawler.dao.mysql.DocumentsMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.LinksMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.PagesMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.UrlsMysqlImpl;
+import jp.co.dk.datastoremanager.DataAccessObject;
+import jp.co.dk.datastoremanager.DataAccessObjectFactory;
+import jp.co.dk.datastoremanager.DataStore;
+import jp.co.dk.datastoremanager.DataStoreKind;
+import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
+</div><span>import ...</span></pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>15</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>public enum CrawlerDaoConstants implements jp.co.dk.datastoremanager.DaoConstants{</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>17</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** ドキュメントテーブル */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>18</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l18s0'>	DOCUMENTS("DOCUMENTS", new DataAccessObjectFactory() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>19</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>20</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>21</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l21s0'>			switch (kind) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>22</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case ORACLE:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>23</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l23s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>24</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case MYSQL:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>25</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l25s0'>				return new DocumentsMysqlImpl(dataStore);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>26</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case POSTGRESQL:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>27</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l27s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>28</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case CSV:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>29</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l29s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>30</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			default :</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>31</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l31s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, "unkonown");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>32</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>33</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>34</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}),</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>36</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** リンクテーブル */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l37s0'>	LINKS("LINKS", new DataAccessObjectFactory() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>38</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>39</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>40</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l40s0'>			switch (kind) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>41</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case ORACLE:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l42s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>43</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case MYSQL:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>44</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l44s0'>				return new LinksMysqlImpl(dataStore);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>45</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case POSTGRESQL:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>46</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l46s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>47</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case CSV:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l48s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>49</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			default :</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>50</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l50s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, "unkonown");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>51</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>52</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>53</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}),</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>55</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** ページテーブル */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>56</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l56s0'>	PAGES("PAGES", new DataAccessObjectFactory() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>57</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>59</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l59s0'>			switch (kind) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case ORACLE:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>61</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l61s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>62</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case MYSQL:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l63s0'>				return new PagesMysqlImpl(dataStore);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case POSTGRESQL:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l65s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case CSV:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l67s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>68</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			default :</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>69</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l69s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, "unkonown");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>70</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>71</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}),</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>74</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** URLテーブル */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l75s0'>	URLS("URLS", new DataAccessObjectFactory() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>78</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l78s0'>			switch (kind) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>79</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case ORACLE:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>80</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l80s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>81</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case MYSQL:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>82</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l82s0'>				return new UrlsMysqlImpl(dataStore);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>83</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case POSTGRESQL:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>84</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l84s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>85</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			case CSV:</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>86</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l86s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>87</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			default :</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>88</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l88s0'>				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, "unkonown");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>89</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>90</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>91</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}),</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>93</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>95</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** DAO名称 */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>96</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private String name;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>98</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** DAOファクトリクラスインスタンス */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>99</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private DataAccessObjectFactory factory;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>101</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l101s0'>	private CrawlerDaoConstants(String name, DataAccessObjectFactory factory) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>102</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l102s0'>		this.name    = name;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>103</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l103s0'>		this.factory = factory;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>104</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l104s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>106</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>107</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public DataAccessObjectFactory getDataAccessObjectFactory() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>108</td><td class='count'>9</td>
+      <td><pre class='prettyprint covered' id='l108s0'>		return this.factory;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>109</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>111</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>112</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public String getName() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>113</td><td class='count'>9</td>
+      <td><pre class='prettyprint covered' id='l113s0'>		return this.name;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>114</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>116</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

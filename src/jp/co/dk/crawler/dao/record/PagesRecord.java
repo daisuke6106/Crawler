@@ -55,7 +55,7 @@ public class PagesRecord implements DataConvertable{
 	protected Map<String, String> requestHeader;
 	
 	/** レスポンスヘッダー */
-	protected Map<String, String> responceHeader;
+	protected Map<String, List<String>> responceHeader;
 	
 	/** 作成日時 */
 	protected Date createDate;
@@ -167,7 +167,7 @@ public class PagesRecord implements DataConvertable{
 	 * @return レスポンスヘッダーマップ
 	 * @throws CrawlerException バイト配列からレスポンスヘッダーマップへ変換に失敗した場合
 	 */
-	public Map<String, String> getResponceHeader() throws CrawlerException {
+	public Map<String, List<String>> getResponceHeader() throws CrawlerException {
 		return this.responceHeader;
 	}
 	
@@ -219,7 +219,7 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.parameter      = (Map<String,String>) record.getObject("PARAMETER");
 		pagesRecord.parameterCount = record.getInt("PARAMETER_COUNT");
 		pagesRecord.requestHeader  = (Map<String,String>) record.getObject("REQUEST_HEADER");
-		pagesRecord.responceHeader = (Map<String,String>) record.getObject("RESPONCE_HEADER");
+		pagesRecord.responceHeader = (Map<String,List<String>>) record.getObject("RESPONCE_HEADER");
 		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");
 		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");
 		return pagesRecord;
@@ -239,7 +239,7 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.parameter      = (Map<String,String>) record.getObject(8);
 		pagesRecord.parameterCount = record.getInt(9);
 		pagesRecord.requestHeader  = (Map<String,String>) record.getObject(10);
-		pagesRecord.responceHeader = (Map<String,String>) record.getObject(11);
+		pagesRecord.responceHeader = (Map<String,List<String>>) record.getObject(11);
 		pagesRecord.fileid         = record.getLong(12);
 		pagesRecord.timeid         = record.getLong(13);
 		pagesRecord.createDate     = record.getDate(14);

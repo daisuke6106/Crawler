@@ -33,7 +33,7 @@ public interface Urls extends DataAccessObject {
 	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
 	 * @param filename   ファイル名（設定されていない場合、空の文字列で置き換え）
 	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
-	 * @throws DataStoreManagerException 登録に失敗した場合
+	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */
 	public UrlsRecord select(String protcol, String host, List<String> path, String filename, Map<String, String> parameter) throws DataStoreManagerException ;
 	

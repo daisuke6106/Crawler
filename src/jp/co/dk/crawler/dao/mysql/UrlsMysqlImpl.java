@@ -72,7 +72,7 @@ public class UrlsMysqlImpl extends AbstractDataBaseAccessObject implements Urls{
 		sql.setParameter(parameter.hashCode());
 		return this.selectSingle(sql, new UrlsRecord());
 	}
-
+	
 	@Override
 	public void insert(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");

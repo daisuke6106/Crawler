@@ -2,15 +2,18 @@ package jp.co.dk.crawler;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.crawler.header.CrawlerResponseHeader;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.ByteDump;
@@ -53,32 +56,38 @@ public class Page extends jp.co.dk.browzer.Page{
 		super(url, requestHeader, responseHeader, data);
 	}
 	
+	/**
+	 * このページ情報をデータストアに保存する。
+	 * 
+	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
+	 * @throws DataStoreManagerException データストアの登録に失敗した場合
+	 */
 	public void save() throws CrawlerException, DataStoreManagerException {
 		this.dataStoreManager.startTrunsaction();
 		Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		String url                    = super.getURL();
-		String protocol               = super.getProtocol();
-		String host                   = super.getHost();
-		List<String> pathList         = super.getPathList(super.getURLObject());
-		String filename               = super.getFileName();
-		String extension              = super.getExtension();
-		Map<String,String> parameter  = super.getParameter();
-		byte[] data                   = super.byteDump.getBytes();
-		long fileid                   = getFileId();
-		long timeid                   = getTimeId();
-		Date createDate               = getCreateDate();
-		Date updateDate               = getUpdateDate();
-		Map<String,String>       requestHeader  = super.requestHeader.getHeaderMap();
-		Map<String,List<String>> responseHeader = super.responseHeader.getHeaderMap();
-		urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
+		String                   url            = this.getURL();
+		String                   protocol       = this.getProtocol();
+		String                   host           = this.getHost();
+		List<String>             pathList       = this.getPathList();
+		String                   filename       = this.getFileName();
+		String                   extension      = this.getExtension();
+		Map<String,String>       parameter      = this.getParameter();
+		byte[]                   data           = this.getData().getBytes();
+		long                     fileid         = this.getFileId();
+		long                     timeid         = this.getTimeId();
+		Date                     createDate     = this.getCreateDate();
+		Date                     updateDate     = this.getUpdateDate();
+		Map<String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();
+		Map<String,List<String>> responseHeader = this.getResponseHeader().getHeaderMap();
+		if (urls.select(protocol, host, pathList, filename, parameter) == null) {
+			urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
+		}
 		pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);
 		documents.insert(fileid, timeid, filename, extension, createDate, data, createDate, updateDate);
 		this.dataStoreManager.finishTrunsaction();
 	}
-	
-	
 	
 	/**
 	 * このページを保存している履歴の個数を取得します。
@@ -86,14 +95,18 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * @return 履歴を保持している個数
 	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
 	 */
-//	public int getCount() throws DataStoreManagerException {
-//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-//		String protcol = super.protocol;
-//		String host    = super.host;
-//		List<String> pathList = super.pathList;
-//		Map<String, String> parameter = super.parameter;
-//		return pages.count(protcol, host, pathList, parameter);
-//	}
+	public int getCount() throws DataStoreManagerException {
+		this.dataStoreManager.startTrunsaction();
+		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+		String              protcol   = this.getProtocol();
+		String              host      = this.getHost();
+		List<String>        pathList  = this.getPathList();
+		String              filename  = this.getFileName();
+		Map<String, String> parameter = this.getParameter();
+		int count = pages.count(protcol, host, pathList, filename, parameter);
+		this.dataStoreManager.finishTrunsaction();
+		return count;
+	}
 	
 	/**
 	 * このページが既にデータストアに保存されているか判定します。<p/>
@@ -147,6 +160,16 @@ public class Page extends jp.co.dk.browzer.Page{
 //		return documents.select(fileId, timeId);
 //	}
 	
+	@Override
+	public Map<String, String> getParameter() {
+		return new ParameterMap(super.parameter);
+	}
+	
+	@Override
+	protected ResponseHeader createResponseHeader(Map<String, List<String>> responseHeader) throws BrowzingException {
+		return new CrawlerResponseHeader(responseHeader);
+	}
+	
 	/**
 	 * このページのURLからページを一意に特定するためのファイルIDを算出し返却します。<p/>
 	 * 算出はこのページの<br/>
@@ -160,11 +183,11 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * @return ファイルID
 	 */
 	protected long getFileId() {
-		String protocol              = super.getProtocol();
-		String host                  = super.getHost();
-		List<String> pathList        = super.getPathList(super.getURLObject());
-		String filename              = super.getFileName();
-		Map<String,String> parameter = super.getParameter();
+		String protocol              = this.getProtocol();
+		String host                  = this.getHost();
+		List<String> pathList        = this.getPathList();
+		String filename              = this.getFileName();
+		Map<String,String> parameter = this.getParameter();
 		BigDecimal result = new BigDecimal(protocol.hashCode());
 		result = result.multiply(new BigDecimal(host.hashCode()));
 		result = result.multiply(new BigDecimal(pathList.hashCode()));
@@ -206,5 +229,26 @@ public class Page extends jp.co.dk.browzer.Page{
 	 */
 	protected Date getUpdateDate() {
 		return new Date();
+	}
+}
+
+class ParameterMap extends HashMap<String, String> {
+	
+	/** シリアルバージョンID */
+	private static final long serialVersionUID = 6071724790375396636L;
+	
+	ParameterMap() {
+		super();
+	}
+	
+	ParameterMap(Map<String, String> parameter) {
+		super(parameter);
+	}
+	
+	@Override
+	public int hashCode() {
+		int originalHashCode = super.hashCode();
+		if (originalHashCode == 0) return 1;
+		return originalHashCode;
 	}
 }

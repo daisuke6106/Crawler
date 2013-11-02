@@ -134,16 +134,88 @@ public class TestPage extends TestCrawlerFoundation{
 			assertEquals(page2.getCount(), 1);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
-//			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-//			// テスト実行
-//			Page page3 = new Page("http://www.google.com", getAccessableDataStoreManager());
-//			page3.save();
-//			page3.save();
-//			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-//			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-//			// テスト結果確認
-//			assertEquals(page3.getCount(), 2);
-//			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			Page page3 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			page3.save();
+			page3.save();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト結果確認
+			assertEquals(page3.getCount(), 2);
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		} catch (CrawlerException e) {
+			fail(e);
+		} finally {
+			// ＝＝＝＝＝＝＝＝＝＝後片付け＝＝＝＝＝＝＝＝＝＝
+			// テーブルを削除
+			DataStoreManager manager;
+			try {
+				manager = getAccessableDataStoreManager();
+				manager.startTrunsaction();
+				Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+				Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+				Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+				urls.dropTable();
+				pages.dropTable();
+				documents.dropTable();
+				manager.finishTrunsaction();
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+		}
+	}
+	
+	@Test
+	public void isSaved() {
+		try {
+			// ＝＝＝＝＝＝＝＝＝＝準備＝＝＝＝＝＝＝＝＝＝
+			// テーブルを作成
+			DataStoreManager manager = getAccessableDataStoreManager();
+			manager.startTrunsaction();
+			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+			urls.createTable();
+			pages.createTable();
+			documents.createTable();
+			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			Page page1 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト結果確認
+			assertThat(page1.isSaved(), is(false));
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			Page page2 = new Page("http://www.studyinghttp.net/header", getAccessableDataStoreManager());
+			page2.save();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト結果確認
+			assertThat(page2.isSaved(), is(true));
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			Page page3 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			page3.save();
+			page3.save();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト結果確認
+			assertThat(page3.isSaved(), is(true));
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		} catch (BrowzingException e) {
 			fail(e);
 		} catch (DataStoreManagerException e) {

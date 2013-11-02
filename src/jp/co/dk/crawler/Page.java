@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.exception.BrowzingException;
-import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.exception.CrawlerException;
-import jp.co.dk.crawler.header.CrawlerResponseHeader;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.ByteDump;
+
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
  * PAGEはクローラにて使用される単一のページを表すクラスです。<p/>
@@ -81,11 +81,19 @@ public class Page extends jp.co.dk.browzer.Page{
 		Date                     updateDate     = this.getUpdateDate();
 		Map<String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();
 		Map<String,List<String>> responseHeader = this.getResponseHeader().getHeaderMap();
-		if (urls.select(protocol, host, pathList, filename, parameter) == null) {
-			urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
+		Date                     lastModified;
+		try {
+			lastModified = this.getResponseHeader().getLastModified();
+			if (lastModified == null) lastModified = createDate;
+			
+			if (urls.select(protocol, host, pathList, filename, parameter) == null) {
+				urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
+			}
+			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);
+			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);
+		} catch (BrowzingException e) {
+			throw new CrawlerException(FAILE_TO_SAVE_PAGE, this.getURL(), e);
 		}
-		pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);
-		documents.insert(fileid, timeid, filename, extension, createDate, data, createDate, updateDate);
 		this.dataStoreManager.finishTrunsaction();
 	}
 	
@@ -110,28 +118,33 @@ public class Page extends jp.co.dk.browzer.Page{
 	
 	/**
 	 * このページが既にデータストアに保存されているか判定します。<p/>
-	 * 既に保存されている場合、trueを返却し、保存されているない場合、falseを返却します。
+	 * 既に保存されている場合、trueを返却し、保存されているない場合、falseを返却します。<br/>
 	 * 
 	 * 確認対象は、PAGESテーブルにすでにレコードがあるかどうかで判定を行います。
 	 * 
 	 * @return 判定結果（true=保存済みである、false=未だに保存されていないページである）
 	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
 	 */
-//	public boolean isSaved() throws DataStoreManagerException {
-//		if(getCount() != 0) return true;
-//		return false;
-//	}
+	public boolean isSaved() throws DataStoreManagerException {
+		if(getCount() != 0) return true;
+		return false;
+	}
 	
 	/**
 	 * このページをデータストアに保存されているものと比較して最新状態であるかどうかを判定します。<p/>
-	 * 最新である場合はtrue、最新でない、もしくはページが保存すらされていない場合は、falseを返却します。
+	 * 最新である場合はtrue、最新でない、もしくはページが保存すらされていない場合は、falseを返却します。<br/>
+	 * <br/>
+	 * 判定は以下の手順に沿って行われます。<br/>
+	 * １．ページが保存すらされていない場合は、falseを返却<br/>
+	 * ２．このページと保存されてるページで更新日付が異なる場合、かつ、<br/>
+	 * 
 	 * @return 判定結果（true=最新である、false=最新でない、またはページが保存されていない）
 	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
 	 */
-//	public boolean isLatest() throws DataStoreManagerException {
-//		if (!isSaved()) return false;
-//		super.responseHeader.getResponseRecord();
-//	}
+	public boolean isLatest() throws DataStoreManagerException {
+		if (!isSaved()) return false;
+		super.responseHeader.getResponseRecord();
+	}
 	
 //	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {
 //		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
@@ -163,11 +176,6 @@ public class Page extends jp.co.dk.browzer.Page{
 	@Override
 	public Map<String, String> getParameter() {
 		return new ParameterMap(super.parameter);
-	}
-	
-	@Override
-	protected ResponseHeader createResponseHeader(Map<String, List<String>> responseHeader) throws BrowzingException {
-		return new CrawlerResponseHeader(responseHeader);
 	}
 	
 	/**

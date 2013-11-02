@@ -19,6 +19,10 @@ public class CrawlerMessage extends AbstractMessage{
 	/** バイト配列からオブジェクトのインスタンスへの変換に失敗しました。PARAM=[{0}] */
 	public static final CrawlerMessage FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY = new CrawlerMessage("E003");
 	
+	/** ページ情報の保存に失敗しました。URL=[{0}] */
+	public static final CrawlerMessage FAILE_TO_SAVE_PAGE = new CrawlerMessage("E004");
+	
+	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);
 	}

@@ -57,4 +57,9 @@ public class Crawler extends Browzer{
 		this.dsm.finishTrunsaction();
 		
 	}
+	
+	@Override
+	protected Page ceatePage(String url) throws BrowzingException {
+		return new jp.co.dk.crawler.Page(url, this.dsm);
+	}
 }

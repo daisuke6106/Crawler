@@ -15,7 +15,7 @@ public class TestCrawler extends TestCrawlerFoundation{
 		// 引数なしでコンストラクタを呼び出した場合、正常にインスタンスが生成されること。
 		try {
 			Crawler crawler = new Crawler("");
-			assertNotNull(crawler.dsm);
+			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
 		} catch (BrowzingException e) {

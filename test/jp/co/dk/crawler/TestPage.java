@@ -150,6 +150,7 @@ public class TestPage extends TestCrawlerFoundation{
 			// テスト実行
 			Page page4 = new Page("http://gigazine.net/news/20131103-four-elements-of-company-building/", getAccessableDataStoreManager());
 			page4.save();
+			page4.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト結果確認

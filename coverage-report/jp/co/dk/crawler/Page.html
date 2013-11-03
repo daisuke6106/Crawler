@@ -58,7 +58,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
     </tr>
     <tr>
       <td class='line'>31</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected DataStoreManager <span class='instance covered' title='Reads: 118 Writes: 19'>dataStoreManager</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected DataStoreManager <span class='instance covered' title='Reads: 124 Writes: 19'>dataStoreManager</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -130,17 +130,17 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public void save() throws CrawlerException  {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>11</td>
+      <td></td><td class='count'>12</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#55aa00' onclick='hidePath()'>Path coverage: 2/3</span>
-        <span class='covered' onclick="showPath(this,'l68s0 l68s1')">A: 3</span>
+        <span class='covered' onclick="showPath(this,'l68s0 l68s1')">A: 4</span>
         <span class='uncovered' onclick="showPath(this,'l68s0 l70s0 l89s0 l92s0 l98s0 l104s0')">B: 0</span>
         <span class='covered' onclick="showPath(this,'l68s0 l70s0 l89s0 l90s0 l92s0 l98s0 l104s0')">C: 8</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>68</td><td class='count'>11</td>
-      <td><pre class='prettyprint jmp'>		<span id='l68s0' title='Executions: 11' class='covered'>if (this.isLatest()) return ;</span></pre></td>
+      <td class='line'>68</td><td class='count'>12</td>
+      <td><pre class='prettyprint jmp'>		<span id='l68s0' title='Executions: 12' class='covered'>if (this.isLatest()) return ;</span></pre></td>
     </tr>
     <tr>
       <td class='line'>69</td><td>&nbsp;</td>
@@ -302,39 +302,39 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>114</td><td class='count'>21</td>
+      <td class='line'>114</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l114s0'>			this.dataStoreManager.startTrunsaction();</pre></td>
     </tr>
     <tr>
-      <td class='line'>115</td><td class='count'>21</td>
+      <td class='line'>115</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l115s0'>			Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
     </tr>
     <tr>
-      <td class='line'>116</td><td class='count'>21</td>
+      <td class='line'>116</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l116s0'>			String              protcol   = this.getProtocol();</pre></td>
     </tr>
     <tr>
-      <td class='line'>117</td><td class='count'>21</td>
+      <td class='line'>117</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l117s0'>			String              host      = this.getHost();</pre></td>
     </tr>
     <tr>
-      <td class='line'>118</td><td class='count'>21</td>
+      <td class='line'>118</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l118s0'>			List&lt;String>        pathList  = this.getPathList();</pre></td>
     </tr>
     <tr>
-      <td class='line'>119</td><td class='count'>21</td>
+      <td class='line'>119</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l119s0'>			String              filename  = this.getFileName();</pre></td>
     </tr>
     <tr>
-      <td class='line'>120</td><td class='count'>21</td>
+      <td class='line'>120</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l120s0'>			Map&lt;String, String> parameter = this.getParameter();</pre></td>
     </tr>
     <tr>
-      <td class='line'>121</td><td class='count'>21</td>
+      <td class='line'>121</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l121s0'>			int count = pages.count(protcol, host, pathList, filename, parameter);</pre></td>
     </tr>
     <tr>
-      <td class='line'>122</td><td class='count'>42</td>
+      <td class='line'>122</td><td class='count'>44</td>
       <td><pre class='prettyprint covered' id='l122s0'>			return count;</pre></td>
     </tr>
     <tr>
@@ -354,7 +354,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>127</td><td class='count'>21</td>
+      <td class='line'>127</td><td class='count'>22</td>
       <td><pre class='prettyprint covered' id='l127s0'>				this.dataStoreManager.finishTrunsaction();</pre></td>
     </tr>
     <tr>
@@ -395,16 +395,16 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public boolean isSaved() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>17</td>
+      <td></td><td class='count'>18</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#00ff00' onclick='hidePath()'>Path coverage: 2/2</span>
-        <span class='covered' onclick="showPath(this,'l144s0 l144s1')">A: 7</span>
+        <span class='covered' onclick="showPath(this,'l144s0 l144s1')">A: 8</span>
         <span class='covered' onclick="showPath(this,'l144s0 l145s0')">B: 10</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>144</td><td class='count'>17</td>
-      <td><pre class='prettyprint jmp'>		<span id='l144s0' title='Executions: 17' class='covered'>if(getCount() != 0) return true;</span></pre></td>
+      <td class='line'>144</td><td class='count'>18</td>
+      <td><pre class='prettyprint jmp'>		<span id='l144s0' title='Executions: 18' class='covered'>if(getCount() != 0) return true;</span></pre></td>
     </tr>
     <tr>
       <td class='line'>145</td><td class='count'>10</td>
@@ -434,60 +434,60 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public boolean isLatest() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>14</td>
+      <td></td><td class='count'>15</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#996600' onclick='hidePath()'>Path coverage: 2/5</span>
         <span class='covered' onclick="showPath(this,'l160s0 l160s1')">A: 9</span>
         <span class='uncovered' onclick="showPath(this,'l160s0 l162s0 l166s0 l177s0')">B: 0</span>
-        <span class='covered' onclick="showPath(this,'l160s0 l162s0 l166s0 l167s0 l171s0 l171s1 l177s0')">C: 5</span>
+        <span class='covered' onclick="showPath(this,'l160s0 l162s0 l166s0 l167s0 l171s0 l171s1 l177s0')">C: 6</span>
         <span class='uncovered' onclick="showPath(this,'l160s0 l162s0 l166s0 l167s0 l171s0 l177s0')">D: 0</span>
         <span class='uncovered' onclick="showPath(this,'l160s0 l162s0 l166s0 l167s0 l171s0 l171s1 l177s0')">E: 0</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>160</td><td class='count'>14</td>
-      <td><pre class='prettyprint jmp'>		<span id='l160s0' title='Executions: 14' class='covered'>if (!isSaved()) return false;</span></pre></td>
+      <td class='line'>160</td><td class='count'>15</td>
+      <td><pre class='prettyprint jmp'>		<span id='l160s0' title='Executions: 15' class='covered'>if (!isSaved()) return false;</span></pre></td>
     </tr>
     <tr>
       <td class='line'>161</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>162</td><td class='count'>5</td>
+      <td class='line'>162</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l162s0'>			this.dataStoreManager.startTrunsaction();</pre></td>
     </tr>
     <tr>
-      <td class='line'>163</td><td class='count'>5</td>
+      <td class='line'>163</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l163s0'>			Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
     </tr>
     <tr>
-      <td class='line'>164</td><td class='count'>5</td>
+      <td class='line'>164</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l164s0'>			DocumentsRecord documentsRecord = documents.selectLastest(this.getFileId());</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>166</td><td class='count'>5</td>
-      <td><pre class='prettyprint jmp'>			<span id='l166s0' title='Executions: 5' class='covered'>if (documentsRecord == null)</span> <span id='l166s1' title='Executions: 0' class='uncovered'>return false;</span></pre></td>
+      <td class='line'>166</td><td class='count'>6</td>
+      <td><pre class='prettyprint jmp'>			<span id='l166s0' title='Executions: 6' class='covered'>if (documentsRecord == null)</span> <span id='l166s1' title='Executions: 0' class='uncovered'>return false;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>167</td><td class='count'>5</td>
+      <td class='line'>167</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l167s0'>			Date thisLastModified  = this.getResponseHeader().getLastModified();</pre></td>
     </tr>
     <tr>
-      <td class='line'>168</td><td class='count'>5</td>
+      <td class='line'>168</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l168s0'>			Date savedLastModified = documentsRecord.getLastUpdateDate();</pre></td>
     </tr>
     <tr>
-      <td class='line'>169</td><td class='count'>5</td>
+      <td class='line'>169</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l169s0'>			byte[] thisPageData = this.getData().getBytes();</pre></td>
     </tr>
     <tr>
-      <td class='line'>170</td><td class='count'>5</td>
+      <td class='line'>170</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l170s0'>			byte[] savedData    = documentsRecord.getData();</pre></td>
     </tr>
     <tr>
-      <td class='line'>171</td><td class='count'>10</td>
-      <td><pre class='prettyprint jmp'>			<span id='l171s0' title='Executions: 10' class='covered'>if (this.sameDate(thisLastModified, savedLastModified)</span> && <span id='l171s1' title='Executions: 5' class='covered'>this.sameBytes(thisPageData, savedData)) return true;</span></pre></td>
+      <td class='line'>171</td><td class='count'>12</td>
+      <td><pre class='prettyprint jmp'>			<span id='l171s0' title='Executions: 12' class='covered'>if (this.sameDate(thisLastModified, savedLastModified)</span> && <span id='l171s1' title='Executions: 6' class='covered'>this.sameBytes(thisPageData, savedData)) return true;</span></pre></td>
     </tr>
     <tr>
       <td class='line'>172</td><td class='count'>0</td>
@@ -510,7 +510,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>177</td><td class='count'>5</td>
+      <td class='line'>177</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l177s0'>				this.dataStoreManager.finishTrunsaction();</pre></td>
     </tr>
     <tr>
@@ -550,7 +550,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	protected boolean sameDate(Date date1, Date date2) {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>10</td>
+      <td></td><td class='count'>11</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#c83700' onclick='hidePath()'>Path coverage: 5/23</span>
         <span class='covered' onclick="showPath(this,'l193s0 l193s1 l193s2')">A: 6</span>
@@ -561,7 +561,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
         <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l195s0 l195s1 l195s2')">F: 0</span>
         <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l194s1 l195s0 l195s1 l195s2')">G: 0</span>
         <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l195s0 l196s0 l196s1')">H: 0</span>
-        <span class='covered' onclick="showPath(this,'l193s0 l194s0 l195s0 l195s1 l196s0 l196s1')">I: 1</span>
+        <span class='covered' onclick="showPath(this,'l193s0 l194s0 l195s0 l195s1 l196s0 l196s1')">I: 2</span>
         <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l194s1 l195s0 l196s0 l196s1')">J: 0</span>
         <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l194s1 l195s0 l195s1 l196s0 l196s1')">K: 0</span>
         <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l195s0 l196s0 l196s1')">L: 0</span>
@@ -579,20 +579,20 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       </td>
     </tr>
     <tr>
-      <td class='line'>193</td><td class='count'>10</td>
-      <td><pre class='prettyprint jmp'>		<span id='l193s0' title='Executions: 10' class='covered'>if (date1 == null</span> && <span id='l193s1' title='Executions: 7' class='covered'>date2 == null)</span> <span id='l193s2' title='Executions: 6' class='covered'>return true;</span> </pre></td>
+      <td class='line'>193</td><td class='count'>11</td>
+      <td><pre class='prettyprint jmp'>		<span id='l193s0' title='Executions: 11' class='covered'>if (date1 == null</span> && <span id='l193s1' title='Executions: 7' class='covered'>date2 == null)</span> <span id='l193s2' title='Executions: 6' class='covered'>return true;</span> </pre></td>
     </tr>
     <tr>
-      <td class='line'>194</td><td class='count'>4</td>
-      <td><pre class='prettyprint jmp'>		<span id='l194s0' title='Executions: 4' class='covered'>if (date1 == null</span> && <span id='l194s1' title='Executions: 1' class='covered'>date2 != null)</span> <span id='l194s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
+      <td class='line'>194</td><td class='count'>5</td>
+      <td><pre class='prettyprint jmp'>		<span id='l194s0' title='Executions: 5' class='covered'>if (date1 == null</span> && <span id='l194s1' title='Executions: 1' class='covered'>date2 != null)</span> <span id='l194s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>195</td><td class='count'>3</td>
-      <td><pre class='prettyprint jmp'>		<span id='l195s0' title='Executions: 3' class='covered'>if (date1 != null</span> && <span id='l195s1' title='Executions: 3' class='covered'>date2 == null)</span> <span id='l195s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
+      <td class='line'>195</td><td class='count'>4</td>
+      <td><pre class='prettyprint jmp'>		<span id='l195s0' title='Executions: 4' class='covered'>if (date1 != null</span> && <span id='l195s1' title='Executions: 4' class='covered'>date2 == null)</span> <span id='l195s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>196</td><td class='count'>2</td>
-      <td><pre class='prettyprint jmp'>		<span id='l196s0' title='Executions: 2' class='covered'>if (date1.equals(date2)) return true;</span></pre></td>
+      <td class='line'>196</td><td class='count'>3</td>
+      <td><pre class='prettyprint jmp'>		<span id='l196s0' title='Executions: 3' class='covered'>if (date1.equals(date2)) return true;</span></pre></td>
     </tr>
     <tr>
       <td class='line'>197</td><td class='count'>1</td>
@@ -618,7 +618,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	protected boolean sameBytes(byte[] bytes1, byte[] bytes2) {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>9</td>
+      <td></td><td class='count'>10</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#d32c00' onclick='hidePath()'>Path coverage: 4/23</span>
         <span class='covered' onclick="showPath(this,'l208s0 l208s1 l208s2')">A: 1</span>
@@ -629,7 +629,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
         <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l210s0 l210s1 l210s2')">F: 0</span>
         <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l209s1 l210s0 l210s1 l210s2')">G: 0</span>
         <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l210s0 l211s0 l212s0 l212s1 l215s0')">H: 0</span>
-        <span class='covered' onclick="showPath(this,'l208s0 l209s0 l210s0 l210s1 l211s0 l212s0 l212s1 l215s0')">I: 6</span>
+        <span class='covered' onclick="showPath(this,'l208s0 l209s0 l210s0 l210s1 l211s0 l212s0 l212s1 l215s0')">I: 7</span>
         <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l209s1 l210s0 l211s0 l212s0 l212s1 l215s0')">J: 0</span>
         <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l209s1 l210s0 l210s1 l211s0 l212s0 l212s1 l215s0')">K: 0</span>
         <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l210s0 l211s0 l212s0 l212s1 l215s0')">L: 0</span>
@@ -647,35 +647,35 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       </td>
     </tr>
     <tr>
-      <td class='line'>208</td><td class='count'>10</td>
-      <td><pre class='prettyprint jmp'>		<span id='l208s0' title='Executions: 10' class='covered'>if (bytes1 == null</span> && <span id='l208s1' title='Executions: 2' class='covered'>bytes2 == null)</span> <span id='l208s2' title='Executions: 1' class='covered'>return true;</span> </pre></td>
+      <td class='line'>208</td><td class='count'>11</td>
+      <td><pre class='prettyprint jmp'>		<span id='l208s0' title='Executions: 11' class='covered'>if (bytes1 == null</span> && <span id='l208s1' title='Executions: 2' class='covered'>bytes2 == null)</span> <span id='l208s2' title='Executions: 1' class='covered'>return true;</span> </pre></td>
     </tr>
     <tr>
-      <td class='line'>209</td><td class='count'>9</td>
-      <td><pre class='prettyprint jmp'>		<span id='l209s0' title='Executions: 9' class='covered'>if (bytes1 == null</span> && <span id='l209s1' title='Executions: 1' class='covered'>bytes2 != null)</span> <span id='l209s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
+      <td class='line'>209</td><td class='count'>10</td>
+      <td><pre class='prettyprint jmp'>		<span id='l209s0' title='Executions: 10' class='covered'>if (bytes1 == null</span> && <span id='l209s1' title='Executions: 1' class='covered'>bytes2 != null)</span> <span id='l209s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>210</td><td class='count'>8</td>
-      <td><pre class='prettyprint jmp'>		<span id='l210s0' title='Executions: 8' class='covered'>if (bytes1 != null</span> && <span id='l210s1' title='Executions: 8' class='covered'>bytes2 == null)</span> <span id='l210s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
+      <td class='line'>210</td><td class='count'>9</td>
+      <td><pre class='prettyprint jmp'>		<span id='l210s0' title='Executions: 9' class='covered'>if (bytes1 != null</span> && <span id='l210s1' title='Executions: 9' class='covered'>bytes2 == null)</span> <span id='l210s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>211</td><td class='count'>7</td>
-      <td><pre class='prettyprint jmp'>		<span id='l211s0' title='Executions: 7' class='covered'>if (bytes1.length == bytes2.length)</span> <span id='l211s1' title='Executions: 7' class='covered'>{</span></pre></td>
+      <td class='line'>211</td><td class='count'>8</td>
+      <td><pre class='prettyprint jmp'>		<span id='l211s0' title='Executions: 8' class='covered'>if (bytes1.length == bytes2.length)</span> <span id='l211s1' title='Executions: 8' class='covered'>{</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>212</td><td class='count'>90660</td>
+      <td class='line'>212</td><td class='count'>149190</td>
       <td><pre class='prettyprint covered' id='l212s0'>			for (int i=0; i&lt;bytes1.length; i++) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>213</td><td class='count'>90654</td>
-      <td><pre class='prettyprint jmp'>				<span id='l213s0' title='Executions: 90654' class='covered'>if (bytes1[i] != bytes2[i])</span> <span id='l213s1' title='Executions: 1' class='covered'>return false;</span> </pre></td>
+      <td class='line'>213</td><td class='count'>149183</td>
+      <td><pre class='prettyprint jmp'>				<span id='l213s0' title='Executions: 149183' class='covered'>if (bytes1[i] != bytes2[i])</span> <span id='l213s1' title='Executions: 1' class='covered'>return false;</span> </pre></td>
     </tr>
     <tr>
       <td class='line'>214</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			}</pre></td>
     </tr>
     <tr>
-      <td class='line'>215</td><td class='count'>6</td>
+      <td class='line'>215</td><td class='count'>7</td>
       <td><pre class='prettyprint covered' id='l215s0'>			return true;</pre></td>
     </tr>
     <tr>
@@ -808,7 +808,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public Map&lt;String, String> getParameter() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>249</td><td class='count'>49</td>
+      <td class='line'>249</td><td class='count'>51</td>
       <td><pre class='prettyprint covered' id='l249s0'>		return new ParameterMap(super.parameter);</pre></td>
     </tr>
     <tr>
@@ -836,47 +836,47 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	protected long getFileId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>265</td><td class='count'>19</td>
+      <td class='line'>265</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l265s0'>		String protocol              = this.getProtocol();</pre></td>
     </tr>
     <tr>
-      <td class='line'>266</td><td class='count'>19</td>
+      <td class='line'>266</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l266s0'>		String host                  = this.getHost();</pre></td>
     </tr>
     <tr>
-      <td class='line'>267</td><td class='count'>19</td>
+      <td class='line'>267</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l267s0'>		List&lt;String> pathList        = this.getPathList();</pre></td>
     </tr>
     <tr>
-      <td class='line'>268</td><td class='count'>19</td>
+      <td class='line'>268</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l268s0'>		String filename              = this.getFileName();</pre></td>
     </tr>
     <tr>
-      <td class='line'>269</td><td class='count'>19</td>
+      <td class='line'>269</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l269s0'>		Map&lt;String,String> parameter = this.getParameter();</pre></td>
     </tr>
     <tr>
-      <td class='line'>270</td><td class='count'>19</td>
+      <td class='line'>270</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l270s0'>		BigDecimal result = new BigDecimal(protocol.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>271</td><td class='count'>19</td>
+      <td class='line'>271</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l271s0'>		result = result.multiply(new BigDecimal(host.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>272</td><td class='count'>19</td>
+      <td class='line'>272</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l272s0'>		result = result.multiply(new BigDecimal(pathList.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>273</td><td class='count'>19</td>
+      <td class='line'>273</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l273s0'>		result = result.multiply(new BigDecimal(filename.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>274</td><td class='count'>19</td>
+      <td class='line'>274</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l274s0'>		result = result.multiply(new BigDecimal(parameter.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>275</td><td class='count'>19</td>
+      <td class='line'>275</td><td class='count'>20</td>
       <td><pre class='prettyprint covered' id='l275s0'>		return result.longValue();</pre></td>
     </tr>
     <tr>
@@ -1000,11 +1000,11 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	ParameterMap(Map&lt;String, String> parameter) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>327</td><td class='count'>49</td>
+      <td class='line'>327</td><td class='count'>51</td>
       <td><pre class='prettyprint covered' id='l327s0'>		super(parameter);</pre></td>
     </tr>
     <tr>
-      <td class='line'>328</td><td class='count'>49</td>
+      <td class='line'>328</td><td class='count'>51</td>
       <td><pre class='prettyprint covered' id='l328s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -1017,20 +1017,20 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public int hashCode() {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>71</td>
+      <td></td><td class='count'>73</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#00ff00' onclick='hidePath()'>Path coverage: 2/2</span>
-        <span class='covered' onclick="showPath(this,'l332s0 l333s0 l333s1')">A: 67</span>
+        <span class='covered' onclick="showPath(this,'l332s0 l333s0 l333s1')">A: 69</span>
         <span class='covered' onclick="showPath(this,'l332s0 l333s0 l334s0')">B: 4</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>332</td><td class='count'>71</td>
+      <td class='line'>332</td><td class='count'>73</td>
       <td><pre class='prettyprint covered' id='l332s0'>		int originalHashCode = super.hashCode();</pre></td>
     </tr>
     <tr>
-      <td class='line'>333</td><td class='count'>71</td>
-      <td><pre class='prettyprint jmp'>		<span id='l333s0' title='Executions: 71' class='covered'>if (originalHashCode == 0)</span> <span id='l333s1' title='Executions: 67' class='covered'>return 1;</span></pre></td>
+      <td class='line'>333</td><td class='count'>73</td>
+      <td><pre class='prettyprint jmp'>		<span id='l333s0' title='Executions: 73' class='covered'>if (originalHashCode == 0)</span> <span id='l333s1' title='Executions: 69' class='covered'>return 1;</span></pre></td>
     </tr>
     <tr>
       <td class='line'>334</td><td class='count'>4</td>

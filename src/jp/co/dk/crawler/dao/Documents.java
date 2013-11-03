@@ -27,9 +27,17 @@ public interface Documents extends DataAccessObject {
 	 * 
 	 * @param fileId ファイルID
 	 * @param timeId タイムID
-	 * @throws DataStoreManagerException 登録に失敗した場合
+	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */
 	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException;
+	
+	/**
+	 * DOCUMENTSテーブルから指定のファイルIDにひもづくレコードで最もタイムIDの値が最も大きい１レコードを取得する。
+	 * 
+	 * @param fileId ファイルID
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */
+	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException;
 	
 	/**
 	 * DOCUMENTSテーブルから指定の１レコードを登録する。<p/>

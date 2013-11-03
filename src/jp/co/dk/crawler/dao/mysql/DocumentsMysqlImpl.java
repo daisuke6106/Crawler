@@ -49,7 +49,14 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 		Sql sql = new Sql(sb.toString());
 		this.dropTable(sql);
 	}
-
+	
+	@Override
+	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException {
+		StringBuilder sb = new StringBuilder("SELECT @i:=@i+1 ROWNUM, * FROM DOCUMENTS WHERE FILEID=? AND ROWNUM=1 ORDER BY TIMEID DESC ");
+		Sql sql = new Sql(sb.toString());
+		return this.selectSingle(sql, new DocumentsRecord());
+	}
+	
 	@Override
 	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("SELECT * FROM DOCUMENTS WHERE FILEID=? AND TIMEID=?");
@@ -66,7 +73,12 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 		sql.setParameter(timeId);
 		sql.setParameter(filename);
 		sql.setParameter(extention);
-		sql.setParameter(new Timestamp(lastUpdateDate.getTime()));
+		if (lastUpdateDate != null) {
+			sql.setParameter(new Timestamp(lastUpdateDate.getTime()));
+		} else {
+			Timestamp tmpTimeStamp = null;
+			sql.setParameter(tmpTimeStamp);
+		}
 		sql.setParameter(data);
 		sql.setParameter(new Timestamp(createDate.getTime()));
 		sql.setParameter(new Timestamp(updateDate.getTime()));

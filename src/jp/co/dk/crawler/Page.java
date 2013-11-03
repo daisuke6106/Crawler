@@ -11,6 +11,8 @@ import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
+import jp.co.dk.crawler.dao.record.DocumentsRecord;
+import jp.co.dk.crawler.dao.record.UrlsRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
@@ -84,8 +86,6 @@ public class Page extends jp.co.dk.browzer.Page{
 		Date                     lastModified;
 		try {
 			lastModified = this.getResponseHeader().getLastModified();
-			if (lastModified == null) lastModified = createDate;
-			
 			if (urls.select(protocol, host, pathList, filename, parameter) == null) {
 				urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
 			}
@@ -136,16 +136,45 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * <br/>
 	 * 判定は以下の手順に沿って行われます。<br/>
 	 * １．ページが保存すらされていない場合は、falseを返却<br/>
-	 * ２．このページと保存されてるページで更新日付が異なる場合、かつ、<br/>
+	 * ２．このページと保存されてるページで更新日付が異なる場合は<br/>
 	 * 
 	 * @return 判定結果（true=最新である、false=最新でない、またはページが保存されていない）
 	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 * @throws BrowzingException 更新日付に不正な値が設定されていた場合
 	 */
-	public boolean isLatest() throws DataStoreManagerException {
+	public boolean isLatest() throws DataStoreManagerException, BrowzingException {
 		if (!isSaved()) return false;
-		super.responseHeader.getResponseRecord();
+		this.dataStoreManager.startTrunsaction();
+		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+		DocumentsRecord documentsRecord = documents.selectLastest(this.getFileId());
+		if (documentsRecord == null) return false;
+		
+		Date thisLastModified  = this.getResponseHeader().getLastModified();
+		Date savedLastModified = documentsRecord.getLastUpdateDate();
+		
+		byte[] savedData    = documentsRecord.getData();
+		byte[] thisPageData = this.getData().getBytes();
+		
+		if (thisLastModified == null && savedLastModified == null) {
+			
+		} else if (thisLastModified != null && savedLastModified != null && thisLastModified.equals(savedLastModified)) {
+			
+		} else {
+			return false;
+		}
+		
 	}
 	
+	protected sameBytes() {
+		if (savedData.length == thisPageData.length) {
+			for (int i=0; i<savedData.length; i++) {
+				if (savedData[i] != thisPageData[i]) return false; 
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 //	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {
 //		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
 //		String protcol = super.protocol;
@@ -238,6 +267,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	protected Date getUpdateDate() {
 		return new Date();
 	}
+	
+	// ====================================================================================================
+	// データストア関連
 }
 
 class ParameterMap extends HashMap<String, String> {

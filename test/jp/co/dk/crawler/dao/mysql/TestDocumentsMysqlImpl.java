@@ -1,5 +1,6 @@
 package jp.co.dk.crawler.dao.mysql;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import jp.co.dk.crawler.TestCrawlerFoundation;
@@ -68,10 +69,10 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 			fail();
 		} catch (DataStoreManagerException e) {
 			assertEquals(e.getMessageObj(), DataStoreManagerMessage.FAILE_TO_EXECUTE_SQL);
+		} finally {
+			// ========================================後処理========================================
+			documents.dropTable();
 		}
-		
-		// ========================================後処理========================================
-		documents.dropTable();
 	}
 	
 	@Test
@@ -105,6 +106,8 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 		try {
 			// 登録処理を実行
 			documents.insert(fileid, timeid, filename, extention, lastUpdateDate, contents, createDate, updateDate);
+			// PK以外NULLを設定した場合、正常に登録されること
+			documents.insert(fileid+1, timeid+1, filename, extention, null, null, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -113,7 +116,6 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 		// ========================================正常系========================================
 		// 引数に正常値を渡した場合、正常に取得できること。
 		try {
-			// 登録処理を実行
 			DocumentsRecord record = documents.select(fileid, timeid);
 			assertEquals(record.getFileId(), fileid);
 			assertEquals(record.getFilename(), filename);
@@ -124,10 +126,71 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 			}
 			assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getCreateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(createDate));
 			assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getUpdateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(updateDate));
+			
+			
+			
+			DocumentsRecord record1 = documents.select(fileid+1, timeid+1);
+			assertEquals(record1.getFileId(), fileid+1);
+			assertEquals(record1.getFilename(), filename);
+			assertEquals(record1.getExtention(), extention);
+			assertNull(record1.getLastUpdateDate());
+			assertNull(record1.getData());
+			assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getCreateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(createDate));
+			assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getUpdateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(updateDate));
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		} finally {
+			// ========================================後処理========================================
+			documents.dropTable();
+		}
+	}
+	
+	@Test
+	public void selectLastest() throws DataStoreManagerException, ParseException {
+		
+		// ========================================準備========================================
+		// テーブル作成
+		Documents documents = new DocumentsMysqlImpl(super.getAccessableDataBaseAccessParameter());
+		documents.createTable();
+		
+		//ファイルID
+		long fileid    = 1234567890L;
+		//タイムID
+		long timeid1    = super.createDateByString("20131001120101").getTime();
+		long timeid2    = super.createDateByString("20131001120102").getTime();
+		// ファイル名
+		String filename = "filename.txt";
+		// 拡張子
+		String extention = "txt";
+		// コンテンツデータ
+		byte[] contents = {1,2,3};
+		// 作成日時
+		Date createDate = new Date();
+		// 更新日時
+		Date updateDate = new Date();
+		
+		// ========================================正常系========================================
+		
+		// 引数に正常値を渡した場合、正常に登録できること。
+		try {
+			// 登録処理を実行
+			documents.insert(fileid, timeid1, filename, extention, new Date(timeid1), contents, createDate, updateDate);
+			documents.insert(fileid, timeid2, filename, extention, new Date(timeid2), contents, createDate, updateDate);
+			
 		} catch (DataStoreManagerException e) {
 			fail(e);
 		}
-		// ========================================後処理========================================
-		documents.dropTable();
+		
+		// ========================================正常系========================================
+		// 引数に正常値を渡した場合、正常に取得できること。
+		try {
+			DocumentsRecord record = documents.selectLastest(fileid);
+			assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getLastUpdateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(new Date(timeid2)));
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		} finally {
+			// ========================================後処理========================================
+			documents.dropTable();
+		}
 	}
 }

@@ -28,6 +28,8 @@ import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
+import jp.co.dk.crawler.dao.record.DocumentsRecord;
+import jp.co.dk.crawler.dao.record.UrlsRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
@@ -46,17 +48,17 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  */</div><span>/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>26</td><td>&nbsp;</td>
+      <td class='line'>28</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>public class Page extends jp.co.dk.browzer.Page{</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>28</td><td>&nbsp;</td>
+      <td class='line'>30</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** データストアマネージャ */</pre></td>
     </tr>
     <tr>
-      <td class='line'>29</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected DataStoreManager <span class='instance covered' title='Reads: 53 Writes: 13'>dataStoreManager</span>;</pre></td>
+      <td class='line'>31</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected DataStoreManager <span class='instance covered' title='Reads: 118 Writes: 19'>dataStoreManager</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -71,20 +73,20 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>39</td><td>&nbsp;</td>
+      <td class='line'>41</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Page(String url, DataStoreManager dataStoreManager) throws BrowzingException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>40</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l40s0'>		super(url);</pre></td>
+      <td class='line'>42</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l42s0'>		super(url);</pre></td>
     </tr>
     <tr>
-      <td class='line'>41</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l41s0'>		this.dataStoreManager = dataStoreManager;</pre></td>
+      <td class='line'>43</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l43s0'>		this.dataStoreManager = dataStoreManager;</pre></td>
     </tr>
     <tr>
-      <td class='line'>42</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l42s0'>	}</pre></td>
+      <td class='line'>44</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l44s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -102,16 +104,16 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>55</td><td>&nbsp;</td>
+      <td class='line'>57</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Page (String url, Map&lt;String, String> requestHeader, Map&lt;String, List&lt;String>> responseHeader, ByteDump data) throws BrowzingException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>56</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l56s0'>		super(url, requestHeader, responseHeader, data);</pre></td>
+      <td class='line'>58</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l58s0'>		super(url, requestHeader, responseHeader, data);</pre></td>
     </tr>
     <tr>
-      <td class='line'>57</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l57s0'>	}</pre></td>
+      <td class='line'>59</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l59s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -120,118 +122,112 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 * このページ情報をデータストアに保存する。
 	 * 
 	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
-	 * @throws DataStoreManagerException データストアの登録に失敗した場合
+	 * @throws BrowzingException 更新日付に不正な値が設定されていた場合
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>65</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public void save() throws CrawlerException, DataStoreManagerException {</pre></td>
+      <td class='line'>67</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void save() throws CrawlerException  {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>7</td>
+      <td></td><td class='count'>11</td>
       <td class='paths'>
-        <span style='cursor:default; background-color:#7f8000' onclick='hidePath()'>Path coverage: 2/4</span>
-        <span class='uncovered' onclick="showPath(this,'l66s0 l87s0 l89s0 l92s0 l97s0 l98s0')">A: 0</span>
-        <span class='uncovered' onclick="showPath(this,'l66s0 l87s0 l89s0 l90s0 l92s0 l97s0 l98s0')">B: 0</span>
-        <span class='covered' onclick="showPath(this,'l66s0 l87s0 l87s1 l89s0 l92s0 l97s0 l98s0')">C: 2</span>
-        <span class='covered' onclick="showPath(this,'l66s0 l87s0 l87s1 l89s0 l90s0 l92s0 l97s0 l98s0')">D: 5</span>
+        <span style='cursor:default; background-color:#55aa00' onclick='hidePath()'>Path coverage: 2/3</span>
+        <span class='covered' onclick="showPath(this,'l68s0 l68s1')">A: 3</span>
+        <span class='uncovered' onclick="showPath(this,'l68s0 l70s0 l89s0 l92s0 l98s0 l104s0')">B: 0</span>
+        <span class='covered' onclick="showPath(this,'l68s0 l70s0 l89s0 l90s0 l92s0 l98s0 l104s0')">C: 8</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>66</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l66s0'>		this.dataStoreManager.startTrunsaction();</pre></td>
+      <td class='line'>68</td><td class='count'>11</td>
+      <td><pre class='prettyprint jmp'>		<span id='l68s0' title='Executions: 11' class='covered'>if (this.isLatest()) return ;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>67</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l67s0'>		Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>68</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l68s0'>		Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>69</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l69s0'>		Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>70</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l70s0'>		String                   url            = this.getURL();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>71</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l71s0'>		String                   protocol       = this.getProtocol();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>72</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l72s0'>		String                   host           = this.getHost();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>73</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l73s0'>		List&lt;String>             pathList       = this.getPathList();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>74</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l74s0'>		String                   filename       = this.getFileName();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>75</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l75s0'>		String                   extension      = this.getExtension();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>76</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l76s0'>		Map&lt;String,String>       parameter      = this.getParameter();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>77</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l77s0'>		byte[]                   data           = this.getData().getBytes();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>78</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l78s0'>		long                     fileid         = this.getFileId();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>79</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l79s0'>		long                     timeid         = this.getTimeId();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>80</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l80s0'>		Date                     createDate     = this.getCreateDate();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>81</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l81s0'>		Date                     updateDate     = this.getUpdateDate();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>82</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l82s0'>		Map&lt;String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>83</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l83s0'>		Map&lt;String,List&lt;String>> responseHeader = this.getResponseHeader().getHeaderMap();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>84</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		Date                     lastModified;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>85</td><td>&nbsp;</td>
+      <td class='line'>69</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>86</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l86s0'>			lastModified = this.getResponseHeader().getLastModified();</pre></td>
+      <td class='line'>70</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l70s0'>			this.dataStoreManager.startTrunsaction();</pre></td>
     </tr>
     <tr>
-      <td class='line'>87</td><td class='count'>7</td>
-      <td><pre class='prettyprint jmp'>			<span id='l87s0' title='Executions: 7' class='covered'>if (lastModified == null)</span> <span id='l87s1' title='Executions: 7' class='covered'>lastModified = createDate;</span></pre></td>
-    </tr>
-    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
-    <tr>
-      <td class='line'>89</td><td class='count'>7</td>
-      <td><pre class='prettyprint jmp'>			<span id='l89s0' title='Executions: 7' class='covered'>if (urls.select(protocol, host, pathList, filename, parameter) == null)</span> <span id='l89s1' title='Executions: 5' class='covered'>{</span></pre></td>
+      <td class='line'>71</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l71s0'>			Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
     </tr>
     <tr>
-      <td class='line'>90</td><td class='count'>5</td>
+      <td class='line'>72</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l72s0'>			Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>73</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l73s0'>			Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>74</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l74s0'>			String                   url            = this.getURL();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l75s0'>			String                   protocol       = this.getProtocol();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l76s0'>			String                   host           = this.getHost();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l77s0'>			List&lt;String>             pathList       = this.getPathList();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>78</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l78s0'>			String                   filename       = this.getFileName();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>79</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l79s0'>			String                   extension      = this.getExtension();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>80</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l80s0'>			Map&lt;String,String>       parameter      = this.getParameter();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>81</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l81s0'>			byte[]                   data           = this.getData().getBytes();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>82</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l82s0'>			long                     fileid         = this.getFileId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>83</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l83s0'>			long                     timeid         = this.getTimeId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>84</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l84s0'>			Date                     createDate     = this.getCreateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>85</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l85s0'>			Date                     updateDate     = this.getUpdateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>86</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l86s0'>			Map&lt;String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>87</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l87s0'>			Map&lt;String,List&lt;String>> responseHeader = this.getResponseHeader().getHeaderMap();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>88</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l88s0'>			Date lastModified = this.getResponseHeader().getLastModified();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>89</td><td class='count'>8</td>
+      <td><pre class='prettyprint jmp'>			<span id='l89s0' title='Executions: 8' class='covered'>if (urls.select(protocol, host, pathList, filename, parameter) == null)</span> <span id='l89s1' title='Executions: 8' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>90</td><td class='count'>8</td>
       <td><pre class='prettyprint covered' id='l90s0'>				urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);</pre></td>
     </tr>
     <tr>
@@ -239,32 +235,53 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			}</pre></td>
     </tr>
     <tr>
-      <td class='line'>92</td><td class='count'>7</td>
+      <td class='line'>92</td><td class='count'>8</td>
       <td><pre class='prettyprint covered' id='l92s0'>			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);</pre></td>
     </tr>
     <tr>
-      <td class='line'>93</td><td class='count'>7</td>
+      <td class='line'>93</td><td class='count'>8</td>
       <td><pre class='prettyprint covered' id='l93s0'>			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);</pre></td>
     </tr>
     <tr>
       <td class='line'>94</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l94s0'>		} catch (BrowzingException e) {</pre></td>
+      <td><pre class='prettyprint uncovered' id='l94s0'>		} catch (DataStoreManagerException | BrowzingException e) {</pre></td>
     </tr>
     <tr>
       <td class='line'>95</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l95s0'>			throw new CrawlerException(FAILE_TO_SAVE_PAGE, this.getURL(), e);</pre></td>
+      <td><pre class='prettyprint uncovered' id='l95s0'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
     </tr>
     <tr>
-      <td class='line'>96</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		}</pre></td>
+      <td class='line'>96</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l96s0'>		} finally {</pre></td>
     </tr>
     <tr>
-      <td class='line'>97</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l97s0'>		this.dataStoreManager.finishTrunsaction();</pre></td>
+      <td class='line'>97</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>98</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l98s0'>	}</pre></td>
+      <td class='line'>98</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l98s0'>				this.dataStoreManager.finishTrunsaction();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>99</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l99s0'>			} catch (DataStoreManagerException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>100</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l100s0'>				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>101</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>102</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l102s0'>		}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>104</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l104s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -273,55 +290,91 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 * このページを保存している履歴の個数を取得します。
 	 * 
 	 * @return 履歴を保持している個数
-	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 * @throws CrawlerException データストアへ対する操作にて例外が発生した場合
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>106</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public int getCount() throws DataStoreManagerException {</pre></td>
+      <td class='line'>112</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int getCount() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>107</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l107s0'>		this.dataStoreManager.startTrunsaction();</pre></td>
+      <td class='line'>113</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>108</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l108s0'>		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
+      <td class='line'>114</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l114s0'>			this.dataStoreManager.startTrunsaction();</pre></td>
     </tr>
     <tr>
-      <td class='line'>109</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l109s0'>		String              protcol   = this.getProtocol();</pre></td>
+      <td class='line'>115</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l115s0'>			Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
     </tr>
     <tr>
-      <td class='line'>110</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l110s0'>		String              host      = this.getHost();</pre></td>
+      <td class='line'>116</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l116s0'>			String              protcol   = this.getProtocol();</pre></td>
     </tr>
     <tr>
-      <td class='line'>111</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l111s0'>		List&lt;String>        pathList  = this.getPathList();</pre></td>
+      <td class='line'>117</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l117s0'>			String              host      = this.getHost();</pre></td>
     </tr>
     <tr>
-      <td class='line'>112</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l112s0'>		String              filename  = this.getFileName();</pre></td>
+      <td class='line'>118</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l118s0'>			List&lt;String>        pathList  = this.getPathList();</pre></td>
     </tr>
     <tr>
-      <td class='line'>113</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l113s0'>		Map&lt;String, String> parameter = this.getParameter();</pre></td>
+      <td class='line'>119</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l119s0'>			String              filename  = this.getFileName();</pre></td>
     </tr>
     <tr>
-      <td class='line'>114</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l114s0'>		int count = pages.count(protcol, host, pathList, filename, parameter);</pre></td>
+      <td class='line'>120</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l120s0'>			Map&lt;String, String> parameter = this.getParameter();</pre></td>
     </tr>
     <tr>
-      <td class='line'>115</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l115s0'>		this.dataStoreManager.finishTrunsaction();</pre></td>
+      <td class='line'>121</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l121s0'>			int count = pages.count(protcol, host, pathList, filename, parameter);</pre></td>
     </tr>
     <tr>
-      <td class='line'>116</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l116s0'>		return count;</pre></td>
+      <td class='line'>122</td><td class='count'>42</td>
+      <td><pre class='prettyprint covered' id='l122s0'>			return count;</pre></td>
     </tr>
     <tr>
-      <td class='line'>117</td><td>&nbsp;</td>
+      <td class='line'>123</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l123s0'>		} catch (DataStoreManagerException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>124</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l124s0'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>125</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l125s0'>		} finally {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>126</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			try {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>127</td><td class='count'>21</td>
+      <td><pre class='prettyprint covered' id='l127s0'>				this.dataStoreManager.finishTrunsaction();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>128</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l128s0'>			} catch (DataStoreManagerException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>129</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l129s0'>				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>130</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>131</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l131s0'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>132</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -329,36 +382,36 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * このページが既にデータストアに保存されているか判定します。&lt;p/>
-	 * 既に保存されている場合、trueを返却し、保存されているない場合、falseを返却します。
+	 * 既に保存されている場合、trueを返却し、保存されているない場合、falseを返却します。&lt;br/>
 	 * 
 	 * 確認対象は、PAGESテーブルにすでにレコードがあるかどうかで判定を行います。
 	 * 
 	 * @return 判定結果（true=保存済みである、false=未だに保存されていないページである）
-	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 * @throws CrawlerException データストアへ対する操作にて例外が発生した場合
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>128</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public boolean isSaved() throws DataStoreManagerException {</pre></td>
+      <td class='line'>143</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public boolean isSaved() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>3</td>
+      <td></td><td class='count'>17</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#00ff00' onclick='hidePath()'>Path coverage: 2/2</span>
-        <span class='covered' onclick="showPath(this,'l129s0 l129s1')">A: 2</span>
-        <span class='covered' onclick="showPath(this,'l129s0 l130s0')">B: 1</span>
+        <span class='covered' onclick="showPath(this,'l144s0 l144s1')">A: 7</span>
+        <span class='covered' onclick="showPath(this,'l144s0 l145s0')">B: 10</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>129</td><td class='count'>3</td>
-      <td><pre class='prettyprint jmp'>		<span id='l129s0' title='Executions: 3' class='covered'>if(getCount() != 0) return true;</span></pre></td>
+      <td class='line'>144</td><td class='count'>17</td>
+      <td><pre class='prettyprint jmp'>		<span id='l144s0' title='Executions: 17' class='covered'>if(getCount() != 0) return true;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>130</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l130s0'>		return false;</pre></td>
+      <td class='line'>145</td><td class='count'>10</td>
+      <td><pre class='prettyprint covered' id='l145s0'>		return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>131</td><td>&nbsp;</td>
+      <td class='line'>146</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -366,135 +419,400 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * このページをデータストアに保存されているものと比較して最新状態であるかどうかを判定します。&lt;p/>
-	 * 最新である場合はtrue、最新でない、もしくはページが保存すらされていない場合は、falseを返却します。
+	 * 最新である場合はtrue、最新でない、もしくはページが保存すらされていない場合は、falseを返却します。&lt;br/>
+	 * &lt;br/>
+	 * 判定は以下の手順に沿って行われます。&lt;br/>
+	 * １．ページが保存すらされていない場合は、falseを返却&lt;br/>
+	 * ２．このページと保存されてるページで更新日付が異なる場合は&lt;br/>
+	 * 
 	 * @return 判定結果（true=最新である、false=最新でない、またはページが保存されていない）
-	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
-	 */
-//	public boolean isLatest() throws DataStoreManagerException {
-//		if (!isSaved()) return false;
-//		super.responseHeader.getResponseRecord();
-//	}</div><span>	/*...*/</span></td>
-    </tr>
-    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
-    <tr>
-      <td class='line'>144</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>145</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>146</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>147</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		String host    = super.host;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>148</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>149</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>150</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		return urls.select(protcol, host, pathList, parameter);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>151</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	}</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>152</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>153</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	protected List&lt;PagesRecord> getPagesRecord() throws DataStoreManagerException {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>154</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>155</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>156</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		String host    = super.host;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>157</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>158</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
+	 * @throws CrawlerException  データストアへ対する操作にて例外が発生した場合
+	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
       <td class='line'>159</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		return pages.select(protcol, host, pathList, parameter);</pre></td>
+      <td><pre class='prettyprint'>	public boolean isLatest() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>160</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	}</pre></td>
+      <td></td><td class='count'>14</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#996600' onclick='hidePath()'>Path coverage: 2/5</span>
+        <span class='covered' onclick="showPath(this,'l160s0 l160s1')">A: 9</span>
+        <span class='uncovered' onclick="showPath(this,'l160s0 l162s0 l166s0 l177s0')">B: 0</span>
+        <span class='covered' onclick="showPath(this,'l160s0 l162s0 l166s0 l167s0 l171s0 l171s1 l177s0')">C: 5</span>
+        <span class='uncovered' onclick="showPath(this,'l160s0 l162s0 l166s0 l167s0 l171s0 l177s0')">D: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l160s0 l162s0 l166s0 l167s0 l171s0 l171s1 l177s0')">E: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>160</td><td class='count'>14</td>
+      <td><pre class='prettyprint jmp'>		<span id='l160s0' title='Executions: 14' class='covered'>if (!isSaved()) return false;</span></pre></td>
     </tr>
     <tr>
       <td class='line'>161</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		try {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>162</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l162s0'>			this.dataStoreManager.startTrunsaction();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>163</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l163s0'>			Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>164</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l164s0'>			DocumentsRecord documentsRecord = documents.selectLastest(this.getFileId());</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>166</td><td class='count'>5</td>
+      <td><pre class='prettyprint jmp'>			<span id='l166s0' title='Executions: 5' class='covered'>if (documentsRecord == null)</span> <span id='l166s1' title='Executions: 0' class='uncovered'>return false;</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>167</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l167s0'>			Date thisLastModified  = this.getResponseHeader().getLastModified();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>168</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l168s0'>			Date savedLastModified = documentsRecord.getLastUpdateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>169</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l169s0'>			byte[] thisPageData = this.getData().getBytes();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>170</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l170s0'>			byte[] savedData    = documentsRecord.getData();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>171</td><td class='count'>10</td>
+      <td><pre class='prettyprint jmp'>			<span id='l171s0' title='Executions: 10' class='covered'>if (this.sameDate(thisLastModified, savedLastModified)</span> && <span id='l171s1' title='Executions: 5' class='covered'>this.sameBytes(thisPageData, savedData)) return true;</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>172</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l172s0'>			return false;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>173</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l173s0'>		} catch (DataStoreManagerException | BrowzingException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>174</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l174s0'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>175</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l175s0'>		} finally {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>176</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			try {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>177</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l177s0'>				this.dataStoreManager.finishTrunsaction();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>178</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l178s0'>			} catch (DataStoreManagerException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>179</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l179s0'>				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>180</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>181</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l181s0'>		}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>183</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * 引数に設定された日付が同じものかどうか判定します。
+	 * 
+	 * @param date1 日付１
+	 * @param date2 日付２
+	 * @return 判定結果（true=一致、false=不一致）
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>192</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected boolean sameDate(Date date1, Date date2) {</pre></td>
+    </tr>
+    <tr>
+      <td></td><td class='count'>10</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#c83700' onclick='hidePath()'>Path coverage: 5/23</span>
+        <span class='covered' onclick="showPath(this,'l193s0 l193s1 l193s2')">A: 6</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l194s1 l194s2')">B: 0</span>
+        <span class='covered' onclick="showPath(this,'l193s0 l193s1 l194s0 l194s1 l194s2')">C: 1</span>
+        <span class='covered' onclick="showPath(this,'l193s0 l194s0 l195s0 l195s1 l195s2')">D: 1</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l194s1 l195s0 l195s1 l195s2')">E: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l195s0 l195s1 l195s2')">F: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l194s1 l195s0 l195s1 l195s2')">G: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l195s0 l196s0 l196s1')">H: 0</span>
+        <span class='covered' onclick="showPath(this,'l193s0 l194s0 l195s0 l195s1 l196s0 l196s1')">I: 1</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l194s1 l195s0 l196s0 l196s1')">J: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l194s1 l195s0 l195s1 l196s0 l196s1')">K: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l195s0 l196s0 l196s1')">L: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l195s0 l195s1 l196s0 l196s1')">M: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l194s1 l195s0 l196s0 l196s1')">N: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l194s1 l195s0 l195s1 l196s0 l196s1')">O: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l195s0 l196s0 l197s0')">P: 0</span>
+        <span class='covered' onclick="showPath(this,'l193s0 l194s0 l195s0 l195s1 l196s0 l197s0')">Q: 1</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l194s1 l195s0 l196s0 l197s0')">R: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l194s0 l194s1 l195s0 l195s1 l196s0 l197s0')">S: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l195s0 l196s0 l197s0')">T: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l195s0 l195s1 l196s0 l197s0')">U: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l194s1 l195s0 l196s0 l197s0')">V: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l193s0 l193s1 l194s0 l194s1 l195s0 l195s1 l196s0 l197s0')">W: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>193</td><td class='count'>10</td>
+      <td><pre class='prettyprint jmp'>		<span id='l193s0' title='Executions: 10' class='covered'>if (date1 == null</span> && <span id='l193s1' title='Executions: 7' class='covered'>date2 == null)</span> <span id='l193s2' title='Executions: 6' class='covered'>return true;</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>194</td><td class='count'>4</td>
+      <td><pre class='prettyprint jmp'>		<span id='l194s0' title='Executions: 4' class='covered'>if (date1 == null</span> && <span id='l194s1' title='Executions: 1' class='covered'>date2 != null)</span> <span id='l194s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>195</td><td class='count'>3</td>
+      <td><pre class='prettyprint jmp'>		<span id='l195s0' title='Executions: 3' class='covered'>if (date1 != null</span> && <span id='l195s1' title='Executions: 3' class='covered'>date2 == null)</span> <span id='l195s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>196</td><td class='count'>2</td>
+      <td><pre class='prettyprint jmp'>		<span id='l196s0' title='Executions: 2' class='covered'>if (date1.equals(date2)) return true;</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>197</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l197s0'>		return false;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>198</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * 引数に設定されたバイト配列が同じものかどうか判定します。
+	 * 
+	 * @param bytes1 バイト配列１
+	 * @param bytes2 バイト配列２
+	 * @return 判定結果（true=一致、false=不一致）
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>207</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected boolean sameBytes(byte[] bytes1, byte[] bytes2) {</pre></td>
+    </tr>
+    <tr>
+      <td></td><td class='count'>9</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#d32c00' onclick='hidePath()'>Path coverage: 4/23</span>
+        <span class='covered' onclick="showPath(this,'l208s0 l208s1 l208s2')">A: 1</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l209s1 l209s2')">B: 0</span>
+        <span class='covered' onclick="showPath(this,'l208s0 l208s1 l209s0 l209s1 l209s2')">C: 1</span>
+        <span class='covered' onclick="showPath(this,'l208s0 l209s0 l210s0 l210s1 l210s2')">D: 1</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l209s1 l210s0 l210s1 l210s2')">E: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l210s0 l210s1 l210s2')">F: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l209s1 l210s0 l210s1 l210s2')">G: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l210s0 l211s0 l212s0 l212s1 l215s0')">H: 0</span>
+        <span class='covered' onclick="showPath(this,'l208s0 l209s0 l210s0 l210s1 l211s0 l212s0 l212s1 l215s0')">I: 6</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l209s1 l210s0 l211s0 l212s0 l212s1 l215s0')">J: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l209s1 l210s0 l210s1 l211s0 l212s0 l212s1 l215s0')">K: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l210s0 l211s0 l212s0 l212s1 l215s0')">L: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l210s0 l210s1 l211s0 l212s0 l212s1 l215s0')">M: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l209s1 l210s0 l211s0 l212s0 l212s1 l215s0')">N: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l209s1 l210s0 l210s1 l211s0 l212s0 l212s1 l215s0')">O: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l210s0 l211s0 l217s0')">P: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l210s0 l210s1 l211s0 l217s0')">Q: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l209s1 l210s0 l211s0 l217s0')">R: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l209s0 l209s1 l210s0 l210s1 l211s0 l217s0')">S: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l210s0 l211s0 l217s0')">T: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l210s0 l210s1 l211s0 l217s0')">U: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l209s1 l210s0 l211s0 l217s0')">V: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l208s0 l208s1 l209s0 l209s1 l210s0 l210s1 l211s0 l217s0')">W: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>208</td><td class='count'>10</td>
+      <td><pre class='prettyprint jmp'>		<span id='l208s0' title='Executions: 10' class='covered'>if (bytes1 == null</span> && <span id='l208s1' title='Executions: 2' class='covered'>bytes2 == null)</span> <span id='l208s2' title='Executions: 1' class='covered'>return true;</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>209</td><td class='count'>9</td>
+      <td><pre class='prettyprint jmp'>		<span id='l209s0' title='Executions: 9' class='covered'>if (bytes1 == null</span> && <span id='l209s1' title='Executions: 1' class='covered'>bytes2 != null)</span> <span id='l209s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>210</td><td class='count'>8</td>
+      <td><pre class='prettyprint jmp'>		<span id='l210s0' title='Executions: 8' class='covered'>if (bytes1 != null</span> && <span id='l210s1' title='Executions: 8' class='covered'>bytes2 == null)</span> <span id='l210s2' title='Executions: 1' class='covered'>return false;</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>211</td><td class='count'>7</td>
+      <td><pre class='prettyprint jmp'>		<span id='l211s0' title='Executions: 7' class='covered'>if (bytes1.length == bytes2.length)</span> <span id='l211s1' title='Executions: 7' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>212</td><td class='count'>90660</td>
+      <td><pre class='prettyprint covered' id='l212s0'>			for (int i=0; i&lt;bytes1.length; i++) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>213</td><td class='count'>90654</td>
+      <td><pre class='prettyprint jmp'>				<span id='l213s0' title='Executions: 90654' class='covered'>if (bytes1[i] != bytes2[i])</span> <span id='l213s1' title='Executions: 1' class='covered'>return false;</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>214</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>215</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l215s0'>			return true;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>216</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		} else {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>217</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l217s0'>			return false;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>218</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>219</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>220</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>221</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>222</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>223</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String host    = super.host;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>224</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>225</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>226</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		return urls.select(protcol, host, pathList, parameter);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>227</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>228</td><td>&nbsp;</td>
       <td><pre class='comment'>//	</pre></td>
     </tr>
     <tr>
-      <td class='line'>162</td><td>&nbsp;</td>
+      <td class='line'>229</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	protected List&lt;PagesRecord> getPagesRecord() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>230</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>231</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>232</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String host    = super.host;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>233</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>234</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>235</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		return pages.select(protcol, host, pathList, parameter);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>236</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>237</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>238</td><td>&nbsp;</td>
       <td><pre class='comment'>//	protected DocumentsRecord getDocumentsRecord() throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>163</td><td>&nbsp;</td>
+      <td class='line'>239</td><td>&nbsp;</td>
       <td><pre class='comment'>//		PagesRecord pagesRecord = getPagesRecord();</pre></td>
     </tr>
     <tr>
-      <td class='line'>164</td><td>&nbsp;</td>
+      <td class='line'>240</td><td>&nbsp;</td>
       <td><pre class='comment'>//		if (pagesRecord == null) return null;</pre></td>
     </tr>
     <tr>
-      <td class='line'>165</td><td>&nbsp;</td>
+      <td class='line'>241</td><td>&nbsp;</td>
       <td><pre class='comment'>//		long fileId = pagesRecord.getFileId();</pre></td>
     </tr>
     <tr>
-      <td class='line'>166</td><td>&nbsp;</td>
+      <td class='line'>242</td><td>&nbsp;</td>
       <td><pre class='comment'>//		long timeId = pagesRecord.getTimeId();</pre></td>
     </tr>
     <tr>
-      <td class='line'>167</td><td>&nbsp;</td>
+      <td class='line'>243</td><td>&nbsp;</td>
       <td><pre class='comment'>//		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
     </tr>
     <tr>
-      <td class='line'>168</td><td>&nbsp;</td>
+      <td class='line'>244</td><td>&nbsp;</td>
       <td><pre class='comment'>//		return documents.select(fileId, timeId);</pre></td>
     </tr>
     <tr>
-      <td class='line'>169</td><td>&nbsp;</td>
+      <td class='line'>245</td><td>&nbsp;</td>
       <td><pre class='comment'>//	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>171</td><td>&nbsp;</td>
+      <td class='line'>247</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	@Override</pre></td>
     </tr>
     <tr>
-      <td class='line'>172</td><td>&nbsp;</td>
+      <td class='line'>248</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Map&lt;String, String> getParameter() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>173</td><td class='count'>27</td>
-      <td><pre class='prettyprint covered' id='l173s0'>		return new ParameterMap(super.parameter);</pre></td>
+      <td class='line'>249</td><td class='count'>49</td>
+      <td><pre class='prettyprint covered' id='l249s0'>		return new ParameterMap(super.parameter);</pre></td>
     </tr>
     <tr>
-      <td class='line'>174</td><td>&nbsp;</td>
+      <td class='line'>250</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -514,55 +832,55 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>188</td><td>&nbsp;</td>
+      <td class='line'>264</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected long getFileId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>189</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l189s0'>		String protocol              = this.getProtocol();</pre></td>
+      <td class='line'>265</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l265s0'>		String protocol              = this.getProtocol();</pre></td>
     </tr>
     <tr>
-      <td class='line'>190</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l190s0'>		String host                  = this.getHost();</pre></td>
+      <td class='line'>266</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l266s0'>		String host                  = this.getHost();</pre></td>
     </tr>
     <tr>
-      <td class='line'>191</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l191s0'>		List&lt;String> pathList        = this.getPathList();</pre></td>
+      <td class='line'>267</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l267s0'>		List&lt;String> pathList        = this.getPathList();</pre></td>
     </tr>
     <tr>
-      <td class='line'>192</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l192s0'>		String filename              = this.getFileName();</pre></td>
+      <td class='line'>268</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l268s0'>		String filename              = this.getFileName();</pre></td>
     </tr>
     <tr>
-      <td class='line'>193</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l193s0'>		Map&lt;String,String> parameter = this.getParameter();</pre></td>
+      <td class='line'>269</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l269s0'>		Map&lt;String,String> parameter = this.getParameter();</pre></td>
     </tr>
     <tr>
-      <td class='line'>194</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l194s0'>		BigDecimal result = new BigDecimal(protocol.hashCode());</pre></td>
+      <td class='line'>270</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l270s0'>		BigDecimal result = new BigDecimal(protocol.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>195</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l195s0'>		result = result.multiply(new BigDecimal(host.hashCode()));</pre></td>
+      <td class='line'>271</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l271s0'>		result = result.multiply(new BigDecimal(host.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>196</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l196s0'>		result = result.multiply(new BigDecimal(pathList.hashCode()));</pre></td>
+      <td class='line'>272</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l272s0'>		result = result.multiply(new BigDecimal(pathList.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>197</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l197s0'>		result = result.multiply(new BigDecimal(filename.hashCode()));</pre></td>
+      <td class='line'>273</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l273s0'>		result = result.multiply(new BigDecimal(filename.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>198</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l198s0'>		result = result.multiply(new BigDecimal(parameter.hashCode()));</pre></td>
+      <td class='line'>274</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l274s0'>		result = result.multiply(new BigDecimal(parameter.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>199</td><td class='count'>13</td>
-      <td><pre class='prettyprint covered' id='l199s0'>		return result.longValue();</pre></td>
+      <td class='line'>275</td><td class='count'>19</td>
+      <td><pre class='prettyprint covered' id='l275s0'>		return result.longValue();</pre></td>
     </tr>
     <tr>
-      <td class='line'>200</td><td>&nbsp;</td>
+      <td class='line'>276</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -577,15 +895,15 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>209</td><td>&nbsp;</td>
+      <td class='line'>285</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected long getTimeId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>210</td><td class='count'>6</td>
-      <td><pre class='prettyprint covered' id='l210s0'>		return new Date().getTime();</pre></td>
+      <td class='line'>286</td><td class='count'>7</td>
+      <td><pre class='prettyprint covered' id='l286s0'>		return new Date().getTime();</pre></td>
     </tr>
     <tr>
-      <td class='line'>211</td><td>&nbsp;</td>
+      <td class='line'>287</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -601,15 +919,15 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>221</td><td>&nbsp;</td>
+      <td class='line'>297</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected Date getCreateDate() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>222</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l222s0'>		return new Date();</pre></td>
+      <td class='line'>298</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l298s0'>		return new Date();</pre></td>
     </tr>
     <tr>
-      <td class='line'>223</td><td>&nbsp;</td>
+      <td class='line'>299</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -625,96 +943,105 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>233</td><td>&nbsp;</td>
+      <td class='line'>309</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected Date getUpdateDate() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>234</td><td class='count'>7</td>
-      <td><pre class='prettyprint covered' id='l234s0'>		return new Date();</pre></td>
+      <td class='line'>310</td><td class='count'>8</td>
+      <td><pre class='prettyprint covered' id='l310s0'>		return new Date();</pre></td>
     </tr>
     <tr>
-      <td class='line'>235</td><td>&nbsp;</td>
+      <td class='line'>311</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>236</td><td>&nbsp;</td>
+      <td class='line'>313</td><td>&nbsp;</td>
+      <td><pre class='comment'>	// ====================================================================================================</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>314</td><td>&nbsp;</td>
+      <td><pre class='comment'>	// データストア関連</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>315</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>238</td><td>&nbsp;</td>
+      <td class='line'>317</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>class ParameterMap extends HashMap&lt;String, String> {</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>240</td><td>&nbsp;</td>
+      <td class='line'>319</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** シリアルバージョンID */</pre></td>
     </tr>
     <tr>
-      <td class='line'>241</td><td>&nbsp;</td>
+      <td class='line'>320</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	private static final long serialVersionUID = 6071724790375396636L;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>243</td><td>&nbsp;</td>
+      <td class='line'>322</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	ParameterMap() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>244</td><td class='count'>5</td>
-      <td><pre class='prettyprint covered' id='l244s0'>		super();</pre></td>
+      <td class='line'>323</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l323s0'>		super();</pre></td>
     </tr>
     <tr>
-      <td class='line'>245</td><td class='count'>5</td>
-      <td><pre class='prettyprint covered' id='l245s0'>	}</pre></td>
+      <td class='line'>324</td><td class='count'>5</td>
+      <td><pre class='prettyprint covered' id='l324s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>247</td><td>&nbsp;</td>
+      <td class='line'>326</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	ParameterMap(Map&lt;String, String> parameter) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>248</td><td class='count'>27</td>
-      <td><pre class='prettyprint covered' id='l248s0'>		super(parameter);</pre></td>
+      <td class='line'>327</td><td class='count'>49</td>
+      <td><pre class='prettyprint covered' id='l327s0'>		super(parameter);</pre></td>
     </tr>
     <tr>
-      <td class='line'>249</td><td class='count'>27</td>
-      <td><pre class='prettyprint covered' id='l249s0'>	}</pre></td>
+      <td class='line'>328</td><td class='count'>49</td>
+      <td><pre class='prettyprint covered' id='l328s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>251</td><td>&nbsp;</td>
+      <td class='line'>330</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	@Override</pre></td>
     </tr>
     <tr>
-      <td class='line'>252</td><td>&nbsp;</td>
+      <td class='line'>331</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public int hashCode() {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>45</td>
+      <td></td><td class='count'>71</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#00ff00' onclick='hidePath()'>Path coverage: 2/2</span>
-        <span class='covered' onclick="showPath(this,'l253s0 l254s0 l254s1')">A: 41</span>
-        <span class='covered' onclick="showPath(this,'l253s0 l254s0 l255s0')">B: 4</span>
+        <span class='covered' onclick="showPath(this,'l332s0 l333s0 l333s1')">A: 67</span>
+        <span class='covered' onclick="showPath(this,'l332s0 l333s0 l334s0')">B: 4</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>253</td><td class='count'>45</td>
-      <td><pre class='prettyprint covered' id='l253s0'>		int originalHashCode = super.hashCode();</pre></td>
+      <td class='line'>332</td><td class='count'>71</td>
+      <td><pre class='prettyprint covered' id='l332s0'>		int originalHashCode = super.hashCode();</pre></td>
     </tr>
     <tr>
-      <td class='line'>254</td><td class='count'>45</td>
-      <td><pre class='prettyprint jmp'>		<span id='l254s0' title='Executions: 45' class='covered'>if (originalHashCode == 0)</span> <span id='l254s1' title='Executions: 41' class='covered'>return 1;</span></pre></td>
+      <td class='line'>333</td><td class='count'>71</td>
+      <td><pre class='prettyprint jmp'>		<span id='l333s0' title='Executions: 71' class='covered'>if (originalHashCode == 0)</span> <span id='l333s1' title='Executions: 67' class='covered'>return 1;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>255</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l255s0'>		return originalHashCode;</pre></td>
+      <td class='line'>334</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l334s0'>		return originalHashCode;</pre></td>
     </tr>
     <tr>
-      <td class='line'>256</td><td>&nbsp;</td>
+      <td class='line'>335</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr>
-      <td class='line'>257</td><td>&nbsp;</td>
+      <td class='line'>336</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

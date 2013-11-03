@@ -142,7 +142,18 @@ public class TestPage extends TestCrawlerFoundation{
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト結果確認
-			assertEquals(page3.getCount(), 2);
+			assertEquals(page3.getCount(), 1);
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			Page page4 = new Page("http://gigazine.net/news/20131103-four-elements-of-company-building/", getAccessableDataStoreManager());
+			page4.save();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト結果確認
+			assertEquals(page4.getCount(), 1);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		} catch (BrowzingException e) {
 			fail(e);
@@ -241,6 +252,134 @@ public class TestPage extends TestCrawlerFoundation{
 			}
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		}
+	}
+	
+	@Test
+	public void isLastest() {
+		try {
+			// ＝＝＝＝＝＝＝＝＝＝準備＝＝＝＝＝＝＝＝＝＝
+			// テーブルを作成
+			DataStoreManager manager = getAccessableDataStoreManager();
+			manager.startTrunsaction();
+			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+			urls.createTable();
+			pages.createTable();
+			documents.createTable();
+			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			Page page1 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト結果確認
+			assertThat(page1.isLatest(), is(false));
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			// 最終更新日付けが設定されていないページの場合
+			Page page2 = new Page("http://www.studyinghttp.net/header", getAccessableDataStoreManager());
+			if (page2.getResponseHeader().getLastModified() == null) {
+				// 保存を実行
+				page2.save();
+				// テスト結果確認
+				assertThat(page2.isLatest(), is(true));
+				// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			} else {
+				fail();
+			}
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			Page page3 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			page3.save();
+			page3.save();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト結果確認
+			assertThat(page3.isLatest(), is(true));
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		} catch (CrawlerException e) {
+			fail(e);
+		} finally {
+			// ＝＝＝＝＝＝＝＝＝＝後片付け＝＝＝＝＝＝＝＝＝＝
+			// テーブルを削除
+			DataStoreManager manager;
+			try {
+				manager = getAccessableDataStoreManager();
+				manager.startTrunsaction();
+				Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+				Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+				Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+				urls.dropTable();
+				pages.dropTable();
+				documents.dropTable();
+				manager.finishTrunsaction();
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+		}
+	}
+	
+	@Test
+	public void sameDate() {
+		try {
+			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
+			// NULL２つ設定した場合、trueが返却されること。
+			assertThat(page.sameDate(null, null), is(true));
+			
+			// 片方のみ値を設定した場合、falseが返却されること。
+			assertThat(page.sameDate(new Date(), null), is(false));
+			assertThat(page.sameDate(null, new Date()), is(false));
+			
+			// 同じ日付けオブジェクトを渡した場合、trueが返却されること。
+			Date date = new Date();
+			assertThat(page.sameDate(date, date), is(true));
+			
+			assertThat(page.sameDate(new Date(date.getTime()), new Date(date.getTime()+1)), is(false));
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		}
+		
+	}
+	
+	@Test
+	public void sameBytes() {
+		try {
+			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
+			// NULL２つ設定した場合、trueが返却されること。
+			assertThat(page.sameBytes(null, null), is(true));
+			
+			// 片方のみ値を設定した場合、falseが返却されること。
+			byte[] bytes = {1,2,3};
+			assertThat(page.sameBytes(bytes, null), is(false));
+			assertThat(page.sameBytes(null, bytes), is(false));
+			
+			// 同じ日付けオブジェクトを渡した場合、trueが返却されること。
+			byte[] bytes1 = {1,2,3};
+			byte[] bytes2 = {1,2,3};
+			assertThat(page.sameBytes(bytes1, bytes2), is(true));
+			
+			bytes2[0] = 0;
+			assertThat(page.sameBytes(bytes1, bytes2), is(false));
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		}
+		
 	}
 	
 	@Test

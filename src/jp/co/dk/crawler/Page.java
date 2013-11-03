@@ -62,58 +62,73 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * このページ情報をデータストアに保存する。
 	 * 
 	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
-	 * @throws DataStoreManagerException データストアの登録に失敗した場合
+	 * @throws BrowzingException 更新日付に不正な値が設定されていた場合
 	 */
-	public void save() throws CrawlerException, DataStoreManagerException {
-		this.dataStoreManager.startTrunsaction();
-		Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
-		Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-		Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		String                   url            = this.getURL();
-		String                   protocol       = this.getProtocol();
-		String                   host           = this.getHost();
-		List<String>             pathList       = this.getPathList();
-		String                   filename       = this.getFileName();
-		String                   extension      = this.getExtension();
-		Map<String,String>       parameter      = this.getParameter();
-		byte[]                   data           = this.getData().getBytes();
-		long                     fileid         = this.getFileId();
-		long                     timeid         = this.getTimeId();
-		Date                     createDate     = this.getCreateDate();
-		Date                     updateDate     = this.getUpdateDate();
-		Map<String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();
-		Map<String,List<String>> responseHeader = this.getResponseHeader().getHeaderMap();
-		Date                     lastModified;
+	public void save() throws CrawlerException  {
+		if (this.isLatest()) return ;
 		try {
-			lastModified = this.getResponseHeader().getLastModified();
+			this.dataStoreManager.startTrunsaction();
+			Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
+			Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+			Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+			String                   url            = this.getURL();
+			String                   protocol       = this.getProtocol();
+			String                   host           = this.getHost();
+			List<String>             pathList       = this.getPathList();
+			String                   filename       = this.getFileName();
+			String                   extension      = this.getExtension();
+			Map<String,String>       parameter      = this.getParameter();
+			byte[]                   data           = this.getData().getBytes();
+			long                     fileid         = this.getFileId();
+			long                     timeid         = this.getTimeId();
+			Date                     createDate     = this.getCreateDate();
+			Date                     updateDate     = this.getUpdateDate();
+			Map<String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();
+			Map<String,List<String>> responseHeader = this.getResponseHeader().getHeaderMap();
+			Date lastModified = this.getResponseHeader().getLastModified();
 			if (urls.select(protocol, host, pathList, filename, parameter) == null) {
 				urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
 			}
 			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);
 			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);
-		} catch (BrowzingException e) {
-			throw new CrawlerException(FAILE_TO_SAVE_PAGE, this.getURL(), e);
+		} catch (DataStoreManagerException | BrowzingException e) {
+			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+		} finally {
+			try {
+				this.dataStoreManager.finishTrunsaction();
+			} catch (DataStoreManagerException e) {
+				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+			}
 		}
-		this.dataStoreManager.finishTrunsaction();
+		
 	}
 	
 	/**
 	 * このページを保存している履歴の個数を取得します。
 	 * 
 	 * @return 履歴を保持している個数
-	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 * @throws CrawlerException データストアへ対する操作にて例外が発生した場合
 	 */
-	public int getCount() throws DataStoreManagerException {
-		this.dataStoreManager.startTrunsaction();
-		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-		String              protcol   = this.getProtocol();
-		String              host      = this.getHost();
-		List<String>        pathList  = this.getPathList();
-		String              filename  = this.getFileName();
-		Map<String, String> parameter = this.getParameter();
-		int count = pages.count(protcol, host, pathList, filename, parameter);
-		this.dataStoreManager.finishTrunsaction();
-		return count;
+	public int getCount() throws CrawlerException {
+		try {
+			this.dataStoreManager.startTrunsaction();
+			Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+			String              protcol   = this.getProtocol();
+			String              host      = this.getHost();
+			List<String>        pathList  = this.getPathList();
+			String              filename  = this.getFileName();
+			Map<String, String> parameter = this.getParameter();
+			int count = pages.count(protcol, host, pathList, filename, parameter);
+			return count;
+		} catch (DataStoreManagerException e) {
+			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+		} finally {
+			try {
+				this.dataStoreManager.finishTrunsaction();
+			} catch (DataStoreManagerException e) {
+				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+			}
+		}
 	}
 	
 	/**
@@ -123,9 +138,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * 確認対象は、PAGESテーブルにすでにレコードがあるかどうかで判定を行います。
 	 * 
 	 * @return 判定結果（true=保存済みである、false=未だに保存されていないページである）
-	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
+	 * @throws CrawlerException データストアへ対する操作にて例外が発生した場合
 	 */
-	public boolean isSaved() throws DataStoreManagerException {
+	public boolean isSaved() throws CrawlerException {
 		if(getCount() != 0) return true;
 		return false;
 	}
@@ -139,36 +154,63 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * ２．このページと保存されてるページで更新日付が異なる場合は<br/>
 	 * 
 	 * @return 判定結果（true=最新である、false=最新でない、またはページが保存されていない）
-	 * @throws DataStoreManagerException データストアへ対する操作にて例外が発生した場合
-	 * @throws BrowzingException 更新日付に不正な値が設定されていた場合
+	 * @throws CrawlerException  データストアへ対する操作にて例外が発生した場合
 	 */
-	public boolean isLatest() throws DataStoreManagerException, BrowzingException {
+	public boolean isLatest() throws CrawlerException {
 		if (!isSaved()) return false;
-		this.dataStoreManager.startTrunsaction();
-		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		DocumentsRecord documentsRecord = documents.selectLastest(this.getFileId());
-		if (documentsRecord == null) return false;
-		
-		Date thisLastModified  = this.getResponseHeader().getLastModified();
-		Date savedLastModified = documentsRecord.getLastUpdateDate();
-		
-		byte[] savedData    = documentsRecord.getData();
-		byte[] thisPageData = this.getData().getBytes();
-		
-		if (thisLastModified == null && savedLastModified == null) {
+		try {
+			this.dataStoreManager.startTrunsaction();
+			Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+			DocumentsRecord documentsRecord = documents.selectLastest(this.getFileId());
 			
-		} else if (thisLastModified != null && savedLastModified != null && thisLastModified.equals(savedLastModified)) {
-			
-		} else {
+			if (documentsRecord == null) return false;
+			Date thisLastModified  = this.getResponseHeader().getLastModified();
+			Date savedLastModified = documentsRecord.getLastUpdateDate();
+			byte[] thisPageData = this.getData().getBytes();
+			byte[] savedData    = documentsRecord.getData();
+			if (this.sameDate(thisLastModified, savedLastModified) && this.sameBytes(thisPageData, savedData)) return true;
 			return false;
+		} catch (DataStoreManagerException | BrowzingException e) {
+			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+		} finally {
+			try {
+				this.dataStoreManager.finishTrunsaction();
+			} catch (DataStoreManagerException e) {
+				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+			}
 		}
 		
 	}
 	
-	protected sameBytes() {
-		if (savedData.length == thisPageData.length) {
-			for (int i=0; i<savedData.length; i++) {
-				if (savedData[i] != thisPageData[i]) return false; 
+	/**
+	 * 引数に設定された日付が同じものかどうか判定します。
+	 * 
+	 * @param date1 日付１
+	 * @param date2 日付２
+	 * @return 判定結果（true=一致、false=不一致）
+	 */
+	protected boolean sameDate(Date date1, Date date2) {
+		if (date1 == null && date2 == null) return true; 
+		if (date1 == null && date2 != null) return false;
+		if (date1 != null && date2 == null) return false;
+		if (date1.equals(date2)) return true;
+		return false;
+	}
+	
+	/**
+	 * 引数に設定されたバイト配列が同じものかどうか判定します。
+	 * 
+	 * @param bytes1 バイト配列１
+	 * @param bytes2 バイト配列２
+	 * @return 判定結果（true=一致、false=不一致）
+	 */
+	protected boolean sameBytes(byte[] bytes1, byte[] bytes2) {
+		if (bytes1 == null && bytes2 == null) return true; 
+		if (bytes1 == null && bytes2 != null) return false;
+		if (bytes1 != null && bytes2 == null) return false;
+		if (bytes1.length == bytes2.length) {
+			for (int i=0; i<bytes1.length; i++) {
+				if (bytes1[i] != bytes2[i]) return false; 
 			}
 			return true;
 		} else {

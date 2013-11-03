@@ -22,6 +22,8 @@ public class CrawlerMessage extends AbstractMessage{
 	/** ページ情報の保存に失敗しました。URL=[{0}] */
 	public static final CrawlerMessage FAILE_TO_SAVE_PAGE = new CrawlerMessage("E004");
 	
+	/** ページ情報の取得に失敗しました。URL=[{0}] */
+	public static final CrawlerMessage FAILE_TO_GET_PAGE = new CrawlerMessage("E005");
 	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);

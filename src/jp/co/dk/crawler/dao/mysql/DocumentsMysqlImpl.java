@@ -2,6 +2,7 @@ package jp.co.dk.crawler.dao.mysql;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
@@ -52,9 +53,12 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 	
 	@Override
 	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException {
-		StringBuilder sb = new StringBuilder("SELECT @i:=@i+1 ROWNUM, * FROM DOCUMENTS WHERE FILEID=? AND ROWNUM=1 ORDER BY TIMEID DESC ");
+		StringBuilder sb = new StringBuilder("SELECT * FROM DOCUMENTS WHERE FILEID=? ORDER BY TIMEID DESC ");
 		Sql sql = new Sql(sb.toString());
-		return this.selectSingle(sql, new DocumentsRecord());
+		sql.setParameter(fileId);
+		List<DocumentsRecord> documentRecordList = this.selectMulti(sql, new DocumentsRecord());
+		if (documentRecordList.size() == 0) return null;
+		return documentRecordList.get(0);
 	}
 	
 	@Override

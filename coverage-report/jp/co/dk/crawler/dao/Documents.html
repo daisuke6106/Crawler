@@ -60,12 +60,26 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * 
 	 * @param fileId ファイルID
 	 * @param timeId タイムID
-	 * @throws DataStoreManagerException 登録に失敗した場合
+	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
       <td class='line'>32</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * DOCUMENTSテーブルから指定のファイルIDにひもづくレコードで最もタイムIDの値が最も大きい１レコードを取得する。
+	 * 
+	 * @param fileId ファイルID
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>40</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -85,7 +99,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>47</td><td>&nbsp;</td>
+      <td class='line'>55</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void insert(long fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -99,11 +113,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>55</td><td>&nbsp;</td>
+      <td class='line'>63</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
     </tr>
     <tr>
-      <td class='line'>56</td><td>&nbsp;</td>
+      <td class='line'>64</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

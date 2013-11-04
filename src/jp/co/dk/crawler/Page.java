@@ -12,7 +12,6 @@ import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
-import jp.co.dk.crawler.dao.record.UrlsRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
@@ -59,13 +58,17 @@ public class Page extends jp.co.dk.browzer.Page{
 	}
 	
 	/**
-	 * このページ情報をデータストアに保存する。
+	 * このページ情報をデータストアに保存する。<p/>
+	 * 保存処理は以下の順序で実施されます。<p/>
+	 * １．このページが既にデータストアに保存されているか判定します。既に保存されていた場合はfalseを返却して処理を終了します。<br/>
+	 * ２．このページの情報を「URLS」、「PAGES」、「DOCUMENTS」テーブルに保存し、trueを返却して処理を終了します。
 	 * 
+	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
 	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
 	 * @throws BrowzingException 更新日付に不正な値が設定されていた場合
 	 */
-	public void save() throws CrawlerException  {
-		if (this.isLatest()) return ;
+	public boolean save() throws CrawlerException  {
+		if (this.isLatest()) return false;
 		try {
 			this.dataStoreManager.startTrunsaction();
 			Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
@@ -100,7 +103,7 @@ public class Page extends jp.co.dk.browzer.Page{
 				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
 			}
 		}
-		
+		return true;
 	}
 	
 	/**
@@ -151,7 +154,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * <br/>
 	 * 判定は以下の手順に沿って行われます。<br/>
 	 * １．ページが保存すらされていない場合は、falseを返却<br/>
-	 * ２．このページと保存されてるページで更新日付が異なる場合は<br/>
+	 * ２．このページと保存されてるページで更新日付が異なる場合はfalse。<br/>
+	 * ３．このページと保存されているページで更新日付が同じ、かつ、保存されているデータが完全に一致売る場合は、true<br/>
+	 * 　　（更新日付がともにnullも一致と判定、データの差異比較の場合も、同様）
 	 * 
 	 * @return 判定結果（true=最新である、false=最新でない、またはページが保存されていない）
 	 * @throws CrawlerException  データストアへ対する操作にて例外が発生した場合
@@ -309,9 +314,6 @@ public class Page extends jp.co.dk.browzer.Page{
 	protected Date getUpdateDate() {
 		return new Date();
 	}
-	
-	// ====================================================================================================
-	// データストア関連
 }
 
 class ParameterMap extends HashMap<String, String> {

@@ -1,11 +1,19 @@
 package jp.co.dk.crawler;
 
+import java.util.List;
+
 import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
+import jp.co.dk.document.Element;
+import jp.co.dk.document.File;
+import jp.co.dk.document.html.HtmlDocument;
+import jp.co.dk.document.html.constant.HtmlElementName;
+import jp.co.dk.document.html.element.Image;
 import jp.co.dk.property.exception.PropertyException;
 
 /**
@@ -51,10 +59,25 @@ public class Crawler extends Browzer{
 	 * 現在アクティブになっているページオブジェクトをデータストアへ保存する。
 	 * @throws DataStoreManagerException 
 	 */
-	public void save() throws DataStoreManagerException {
-		this.dsm.startTrunsaction();
-		Page page = this.getPage();
-		this.dsm.finishTrunsaction();
+	public void save() throws CrawlerException {
+		jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)this.getPage();
+		page.save();
+	}
+	
+	public void saveImage() throws CrawlerException, BrowzingException {
+		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
+		File file = activePage.getDocument();
+		if (!(file instanceof HtmlDocument)) return;
+		HtmlDocument htmlDocument = (HtmlDocument)file;
+		List<Element> imageElements = htmlDocument.getElement(HtmlElementName.IMG);
+		for (Element imageElement : imageElements) {
+			this.move((jp.co.dk.browzer.html.element.Image)imageElement);
+			this.save();
+			this.back();
+		}
+	}
+	
+	protected void saveLinks() {
 		
 	}
 	

@@ -127,6 +127,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * @param parameter      パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param requestHeader  リクエストヘッダ
 	 * @param responceHeader レスポンスヘッダ
+	 * @param httpStatusCode HTTPステータスコード
+	 * @param httpVersion    HTTPバージョン
 	 * @param fileid         ファイルID
 	 * @param timeid         タイムID
 	 * @param createDate     登録日付
@@ -136,8 +138,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>86</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter, Map&lt;String, String> requestHeader, Map&lt;String, List&lt;String>> responceHeader, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;</pre></td>
+      <td class='line'>88</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter, Map&lt;String, String> requestHeader, Map&lt;String, List&lt;String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -150,11 +152,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>94</td><td>&nbsp;</td>
+      <td class='line'>96</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
     </tr>
     <tr>
-      <td class='line'>95</td><td>&nbsp;</td>
+      <td class='line'>97</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

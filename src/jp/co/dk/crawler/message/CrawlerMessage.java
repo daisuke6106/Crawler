@@ -1,5 +1,7 @@
 package jp.co.dk.crawler.message;
 
+import java.io.Serializable;
+
 import jp.co.dk.message.AbstractMessage;
 
 /**
@@ -8,8 +10,11 @@ import jp.co.dk.message.AbstractMessage;
  * @version 1.0
  * @author D.Kanno
  */
-public class CrawlerMessage extends AbstractMessage{
+public class CrawlerMessage extends AbstractMessage implements Serializable{
 	
+	/** シリアルバージョンID */
+	private static final long serialVersionUID = -5583067693198405513L;
+
 	/** 指定のデータストアは対応していません。データストア種別=[{0}] */
 	public static final CrawlerMessage DETASTORETYPE_IS_NOT_SUPPORT = new CrawlerMessage("E001");
 	
@@ -24,6 +29,9 @@ public class CrawlerMessage extends AbstractMessage{
 	
 	/** ページ情報の取得に失敗しました。URL=[{0}] */
 	public static final CrawlerMessage FAILE_TO_GET_PAGE = new CrawlerMessage("E005");
+	
+	/** データストアマネージャが設定されていません。 */
+	public static final CrawlerMessage DETASTORETYPE_IS_NOT_SET = new CrawlerMessage("E006");
 	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);

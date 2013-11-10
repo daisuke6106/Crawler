@@ -8,7 +8,7 @@ import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
 /**
- * PagesRecordは、PAGESテーブルの単一のレコードを表すクラス。
+ * DocumentsRecordは、DOCUMENTSテーブルの単一のレコードを表すクラス。
  * 
  * @version 1.0
  * @author D.Kanno

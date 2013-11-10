@@ -40,21 +40,23 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	public void createTable() throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("CREATE TABLE PAGES ");
 		sb.append('(');
-		sb.append("PROTOCOL        VARCHAR(6)   NOT NULL,");
-		sb.append("HOSTNAME        VARCHAR(256) NOT NULL,");
-		sb.append("H_PATH          INT          NOT NULL,");
-		sb.append("H_FILENAME      INT          NOT NULL,");
-		sb.append("H_PARAM         INT          NOT NULL,");
-		sb.append("FILEID          BIGINT(8)    NOT NULL,");
-		sb.append("TIMEID          BIGINT(8)    NOT NULL,");
-		sb.append("PATH            LONGBLOB,");
-		sb.append("PATH_COUNT      INT,");
-		sb.append("PARAMETER       LONGBLOB,");
-		sb.append("PARAMETER_COUNT INT,");
-		sb.append("REQUEST_HEADER  LONGBLOB,");
-		sb.append("RESPONCE_HEADER LONGBLOB,");
-		sb.append("CREATE_DATE     DATETIME, ");
-		sb.append("UPDATE_DATE     DATETIME, ");
+		sb.append("PROTOCOL         VARCHAR(6)   NOT NULL,");
+		sb.append("HOSTNAME         VARCHAR(256) NOT NULL,");
+		sb.append("H_PATH           INT          NOT NULL,");
+		sb.append("H_FILENAME       INT          NOT NULL,");
+		sb.append("H_PARAM          INT          NOT NULL,");
+		sb.append("FILEID           BIGINT(8)    NOT NULL,");
+		sb.append("TIMEID           BIGINT(8)    NOT NULL,");
+		sb.append("PATH             LONGBLOB,");
+		sb.append("PATH_COUNT       INT,");
+		sb.append("PARAMETER        LONGBLOB,");
+		sb.append("PARAMETER_COUNT  INT,");
+		sb.append("REQUEST_HEADER   LONGBLOB,");
+		sb.append("RESPONCE_HEADER  LONGBLOB,");
+		sb.append("HTTP_STATUS_CODE CHAR(3),");
+		sb.append("HTTP_VERSION     CHAR(3),");
+		sb.append("CREATE_DATE      DATETIME, ");
+		sb.append("UPDATE_DATE      DATETIME, ");
 		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_FILENAME, H_PARAM, FILEID, TIMEID))");
 		Sql sql = new Sql(sb.toString());
 		this.createTable(sql);
@@ -127,13 +129,13 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	}
 	
 	@Override
-	public void insert(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
+	public void insert(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
 		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
 		if (path == null) path = new ArrayList<String>();
 		if (filename == null) filename = "";
 		if (parameter == null) parameter = new HashMap<String, String>();
-		Sql sql = new Sql("INSERT INTO PAGES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		Sql sql = new Sql("INSERT INTO PAGES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		sql.setParameter(protcol);
 		sql.setParameter(host);
 		sql.setParameter(path.hashCode());
@@ -147,6 +149,8 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sql.setParameter(parameter.size());
 		sql.setParameterConvertToBytes(requestHeader);
 		sql.setParameterConvertToBytes(responceHeader);
+		sql.setParameter(httpStatusCode);
+		sql.setParameter(httpVersion);
 		sql.setParameter(new Timestamp(createDate.getTime()));
 		sql.setParameter(new Timestamp(updateDate.getTime()));
 		this.insert(sql);

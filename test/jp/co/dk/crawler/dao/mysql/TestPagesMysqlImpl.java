@@ -60,6 +60,10 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		List<String> responseHeaderValue = new ArrayList<String>();
 		responseHeaderValue.add("ResponceHeader_value");
 		responceHeader.put("ResponceHeader_key", responseHeaderValue);
+		// HTTPステータスコード
+		String httpStutasCode = "200";
+		// HTTPバージョン
+		String httpVersion = "1.1";
 		// ファイルＩＤ
 		long fileid = 1234567890L;
 		// タイムID
@@ -74,7 +78,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// 引数に正常値を渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, path, filename, parameter, requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, host, path, filename, parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -85,7 +89,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, new ArrayList<String>(), "", new HashMap<String, String>(), requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, host, new ArrayList<String>(), "", new HashMap<String, String>(), requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -97,7 +101,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// すでにレコードが存在する場合、異常が発生すること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, path, filename, parameter, requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, host, path, filename, parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			assertEquals(e.getMessageObj(), DataStoreManagerMessage.FAILE_TO_EXECUTE_SQL);
@@ -108,7 +112,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// プロトコル名がnullの場合、例外が送出されること。
 		try {
 			// 登録処理を実行
-			pages.insert(null, host, path, filename, parameter, requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(null, host, path, filename, parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -119,7 +123,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// ホスト名がnullの場合、例外が送出されること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, null, path, filename, parameter, requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, null, path, filename, parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -130,7 +134,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// プロトコル名が空の場合、例外が送出されること。
 		try {
 			// 登録処理を実行
-			pages.insert("", host, path, filename, parameter, requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert("", host, path, filename, parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -141,7 +145,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// ホスト名が空の場合、例外が送出されること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, "", path, filename, parameter, requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, "", path, filename, parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			fail();
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -184,6 +188,10 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		List<String> responseHeaderValue = new ArrayList<String>();
 		responseHeaderValue.add("ResponceHeader_value");
 		responceHeader.put("ResponceHeader_key", responseHeaderValue);
+		// HTTPステータスコード
+		String httpStutasCode = "200";
+		// HTTPバージョン
+		String httpVersion = "1.1";
 		// ファイルＩＤ
 		long fileid = 1234567890L;
 		// タイムID
@@ -196,7 +204,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// 引数に正常値を渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, path, filename, parameter, requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, host, path, filename, parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -207,7 +215,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, new ArrayList<String>(), "", new HashMap<String, String>(), requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, host, new ArrayList<String>(), "", new HashMap<String, String>(), requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -257,6 +265,8 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 			assertEquals(records.get(0).getParameterCount(), parameter.size());
 			assertEquals(records.get(0).getRequestHeader(), requestHeader);
 			assertEquals(records.get(0).getResponceHeader(), responceHeader);
+			assertEquals(records.get(0).getHttpStatusCode(), httpStutasCode);
+			assertEquals(records.get(0).getHttpVersion(), httpVersion);
 			assertEquals(records.get(0).getFileId(), fileid);
 			assertEquals(records.get(0).getTimeId(), timeid);
 			assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(records.get(0).getCreateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(createDate));
@@ -312,6 +322,10 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		List<String> responseHeaderValue = new ArrayList<String>();
 		responseHeaderValue.add("ResponceHeader_value");
 		responceHeader.put("ResponceHeader_key", responseHeaderValue);
+		// HTTPステータスコード
+		String httpStutasCode = "200";
+		// HTTPバージョン
+		String httpVersion = "1.1";
 		// ファイルＩＤ
 		long fileid = 1234567890L;
 		// タイムID
@@ -324,7 +338,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// 引数に正常値を渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, path, filename, parameter, requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, host, path, filename, parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -335,7 +349,7 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に登録できること。
 		try {
 			// 登録処理を実行
-			pages.insert(protcol, host, new ArrayList<String>(), "", new HashMap<String, String>(), requestHeader, responceHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protcol, host, new ArrayList<String>(), "", new HashMap<String, String>(), requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);

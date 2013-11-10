@@ -57,6 +57,12 @@ public class PagesRecord implements DataConvertable{
 	/** レスポンスヘッダー */
 	protected Map<String, List<String>> responceHeader;
 	
+	/** HTTPステータスコード */
+	protected String httpStatusCode;
+	
+	/** HTTPバージョン */
+	protected String httpVersion;
+	
 	/** 作成日時 */
 	protected Date createDate;
 	
@@ -180,6 +186,22 @@ public class PagesRecord implements DataConvertable{
 	}
 	
 	/**
+	 * HTTPステータスコードを取得する。
+	 * @return HTTPステータスコード
+	 */
+	public String getHttpStatusCode() {
+		return httpStatusCode;
+	}
+	
+	/**
+	 * HTTPバージョンを取得する。
+	 * @return HTTPバージョン
+	 */
+	public String getHttpVersion() {
+		return httpVersion;
+	}
+	
+	/**
 	 * タイムIDを取得する。
 	 * @return タイムID
 	 */
@@ -220,6 +242,8 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.parameterCount = record.getInt("PARAMETER_COUNT");
 		pagesRecord.requestHeader  = (Map<String,String>) record.getObject("REQUEST_HEADER");
 		pagesRecord.responceHeader = (Map<String,List<String>>) record.getObject("RESPONCE_HEADER");
+		pagesRecord.httpStatusCode = record.getString("HTTP_STATUS_CODE");
+		pagesRecord.httpVersion    = record.getString("HTTP_VERSION");
 		pagesRecord.createDate     = record.getTimestamp("CREATE_DATE");
 		pagesRecord.updateDate     = record.getTimestamp("UPDATE_DATE");
 		return pagesRecord;
@@ -240,10 +264,12 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.parameterCount = record.getInt(9);
 		pagesRecord.requestHeader  = (Map<String,String>) record.getObject(10);
 		pagesRecord.responceHeader = (Map<String,List<String>>) record.getObject(11);
-		pagesRecord.fileid         = record.getLong(12);
-		pagesRecord.timeid         = record.getLong(13);
-		pagesRecord.createDate     = record.getDate(14);
-		pagesRecord.updateDate     = record.getDate(15);
+		pagesRecord.httpStatusCode = record.getString(12);
+		pagesRecord.httpVersion    = record.getString(13);
+		pagesRecord.fileid         = record.getLong(14);
+		pagesRecord.timeid         = record.getLong(15);
+		pagesRecord.createDate     = record.getDate(16);
+		pagesRecord.updateDate     = record.getDate(17);
 		return pagesRecord;
 	}
 }

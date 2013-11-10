@@ -88,11 +88,13 @@ public class Page extends jp.co.dk.browzer.Page{
 			Date                     updateDate     = this.getUpdateDate();
 			Map<String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();
 			Map<String,List<String>> responseHeader = this.getResponseHeader().getHeaderMap();
+			String                   httpStatusCode = this.getResponseHeader().getResponseRecord().getHttpStatusCode().getCode();
+			String                   httpVersion    = this.getResponseHeader().getResponseRecord().getHttpVersion();
 			Date lastModified = this.getResponseHeader().getLastModified();
 			if (urls.select(protocol, host, pathList, filename, parameter) == null) {
 				urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
 			}
-			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);
+			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, httpStatusCode, httpVersion, fileid, timeid, createDate, updateDate);
 			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);
 		} catch (DataStoreManagerException | BrowzingException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);

@@ -17,13 +17,22 @@
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'></td><td>&nbsp;</td>
-      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import jp.co.dk.browzer.Browzer;
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import java.util.List;
+
+import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.Page;
+import jp.co.dk.browzer.PageManager;
+import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
-import jp.co.dk.property.exception.PropertyException;
+import jp.co.dk.document.Element;
+import jp.co.dk.document.File;
+import jp.co.dk.document.html.HtmlDocument;
+import jp.co.dk.document.html.constant.HtmlElementName;
+
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
 </div><span>import ...</span></pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -38,71 +47,50 @@ import jp.co.dk.property.exception.PropertyException;
  */</div><span>/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>18</td><td>&nbsp;</td>
+      <td class='line'>27</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>public class Crawler extends Browzer{</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>20</td><td>&nbsp;</td>
+      <td class='line'>29</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** データストアマネージャー */</pre></td>
     </tr>
     <tr>
-      <td class='line'>21</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected DataStoreManager <span class='instance uncovered' title='Reads: 0 Writes: 0'>dsm</span>;</pre></td>
+      <td class='line'>30</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected DataStoreManager <span class='instance covered' title='Reads: 3 Writes: 1'>dsm</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * コンストラクタ&lt;p/>
-	 * デフォルトのデータストアプロパティファイル（properties/DataStoreManager.properties）を元に、クローラクラスのインスタンスを生成する。&lt;br/>
-	 * 指定したデータストアプロパティの設定値が不足している等、プロパティインスタンスに不整合があった場合、例外を送出する。
+	 * 指定のデータストアマネージャを元に、クローラクラスのインスタンスを生成する。&lt;br/>
+	 * データストアマネージャが設定されていなかった場合、例外を送出する。
 	 * 
-	 * @throws DataStoreManagerException データストアプロパティの取得に失敗した場合
-	 * @throws PropertyException プロパティファイルの読み込みに失敗した場合
-	 * @throws BrowzingException ページ情報の読み込みに失敗した場合
-	 */</div><span>	/*...*/</span></td>
-    </tr>
-    <tr>
-      <td class='line'>32</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public Crawler(String url) throws DataStoreManagerException, BrowzingException, PropertyException {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>33</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l33s0'>		this(url, new DataStoreManagerProperty());</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>34</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l34s0'>	}</pre></td>
-    </tr>
-    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
-    <tr>
-      <td class='line'></td><td>&nbsp;</td>
-      <td class='comment' onclick='showHideLines(this)'><div>	/**
-	 * コンストラクタ&lt;p/>
-	 * 指定のデータストアプロパティを元に、クローラクラスのインスタンスを生成する。&lt;br/>
-	 * 指定したデータストアプロパティの設定値が不足している等、プロパティインスタンスに不整合があった場合、例外を送出する。
-	 * 
-	 * @param dataStoreManagerProperty データストア設定プロパティ
+	 * @param dataStoreManager データストアマネージャ
 	 * @throws DataStoreManagerException データストアプロパティの取得に失敗した場合
 	 * @throws BrowzingException ページ情報の読み込みに失敗した場合
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>45</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public Crawler(String url, DataStoreManagerProperty dataStoreManagerProperty) throws DataStoreManagerException, BrowzingException { </pre></td>
+      <td class='line'>41</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Crawler(String url, DataStoreManager dataStoreManager) throws CrawlerException, BrowzingException { </pre></td>
     </tr>
     <tr>
-      <td class='line'>46</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l46s0'>		super(url);</pre></td>
+      <td class='line'>42</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l42s0'>		super(url, new CrawlerPageRedirectHandler(dataStoreManager));</pre></td>
     </tr>
     <tr>
-      <td class='line'>47</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l47s0'>		this.dsm = new DataStoreManager(dataStoreManagerProperty);</pre></td>
+      <td class='line'>43</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l43s0'>		this.dsm = dataStoreManager;</pre></td>
     </tr>
     <tr>
-      <td class='line'>48</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l48s0'>	}</pre></td>
+      <td class='line'>44</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l44s0'>		((CrawlerPageManager)super.pageManager).dsm = dataStoreManager;// orz</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>45</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l45s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -113,28 +101,288 @@ import jp.co.dk.property.exception.PropertyException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>54</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public void save() throws DataStoreManagerException {</pre></td>
+      <td class='line'>51</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void save() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>55</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l55s0'>		this.dsm.startTrunsaction();</pre></td>
+      <td class='line'>52</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l52s0'>		jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)this.getPage();</pre></td>
     </tr>
     <tr>
-      <td class='line'>56</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l56s0'>		Page page = this.getPage();</pre></td>
+      <td class='line'>53</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l53s0'>		page.save();</pre></td>
     </tr>
     <tr>
-      <td class='line'>57</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l57s0'>		this.dsm.finishTrunsaction();</pre></td>
+      <td class='line'>54</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l54s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>59</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l59s0'>	}</pre></td>
+      <td class='line'>56</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void saveImage() throws CrawlerException, BrowzingException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>60</td><td>&nbsp;</td>
+      <td></td><td class='count'>0</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/2</span>
+        <span class='uncovered' onclick="showPath(this,'l57s0 l59s0 l59s1')">A: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l57s0 l59s0 l60s0 l62s0 l67s0')">B: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>57</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l57s0'>		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l58s0'>		File file = activePage.getDocument();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>59</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l59s0' title='Executions: 0' class='uncovered'>if (!(file instanceof HtmlDocument)) return;</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l60s0'>		HtmlDocument htmlDocument = (HtmlDocument)file;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>61</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l61s0'>		List&lt;Element> imageElements = htmlDocument.getElement(HtmlElementName.IMG);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>62</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l62s0'>		for (Element imageElement : imageElements) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l63s0'>			this.move((jp.co.dk.browzer.html.element.Image)imageElement);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l64s0'>			this.save();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l65s0'>			this.back();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l67s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>69</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>70</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected Page ceatePage(String url) throws BrowzingException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>71</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l71s0'>		return new jp.co.dk.crawler.Page(url, this.dsm);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>74</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected PageManager createPageManager(Page page, PageRedirectHandler handler) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l76s0'>		return new CrawlerPageManager(this.dsm, page, handler);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>79</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>80</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected PageManager createPageManager(Page page, PageRedirectHandler handler, int maxNestLevel) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>81</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l81s0'>		return new CrawlerPageManager(this.dsm, page, handler, maxNestLevel);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>82</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>83</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>85</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>class CrawlerPageManager extends PageManager{</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>87</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected DataStoreManager dsm;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>89</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	CrawlerPageManager(DataStoreManager dsm, Page page, PageRedirectHandler pageRedirectHandler) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>90</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		super(page, pageRedirectHandler);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>91</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.dsm = dsm;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>92</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>94</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	CrawlerPageManager(DataStoreManager dsm, Page page, PageRedirectHandler pageRedirectHandler, int maxNestLevel) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>95</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		super(page, pageRedirectHandler, maxNestLevel);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>96</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.dsm = dsm;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>97</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>99</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected CrawlerPageManager(DataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, int nestLevel, int maxNestLevel){</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>100</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		super(parentPage, page, pageRedirectHandler, nestLevel, maxNestLevel);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>101</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.dsm = dsm;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>102</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>104</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>105</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Page createPage(String url) throws BrowzingException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>106</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		return new jp.co.dk.crawler.Page(url, this.dsm);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>107</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>109</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>110</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected PageManager createPageManager(PageManager pageManager, Page page, PageRedirectHandler pageRedirectHandler, int nextLevel, int maxNestLevel) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>111</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		return new CrawlerPageManager(this.dsm, pageManager, page, pageRedirectHandler, nextLevel, maxNestLevel);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>112</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>113</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>115</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>class CrawlerPageRedirectHandler extends PageRedirectHandler {</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>117</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected DataStoreManager dsm;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>119</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	CrawlerPageRedirectHandler(DataStoreManager dsm) throws CrawlerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>120</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		if (dsm == null) throw new CrawlerException(DETASTORETYPE_IS_NOT_SET);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>121</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.dsm = dsm;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>122</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>124</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>125</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected Page ceatePage(String url) throws BrowzingException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>126</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		return new jp.co.dk.crawler.Page(url, this.dsm);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>127</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}	</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>128</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>130</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>class ExceptionHandler {</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>134</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

@@ -17,7 +17,9 @@
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'></td><td>&nbsp;</td>
-      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import jp.co.dk.message.AbstractMessage;
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import java.io.Serializable;
+
+import jp.co.dk.message.AbstractMessage;
 </div><span>import ...</span></pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -31,70 +33,88 @@
  */</div><span>/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>11</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l11s0'>public class CrawlerMessage extends AbstractMessage{</pre></td>
+      <td class='line'>13</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l13s0'>public class CrawlerMessage extends AbstractMessage implements Serializable{</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>13</td><td>&nbsp;</td>
+      <td class='line'>15</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** シリアルバージョンID */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>16</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private static final long serialVersionUID = -5583067693198405513L;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>18</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** 指定のデータストアは対応していません。データストア種別=[{0}] */</pre></td>
     </tr>
     <tr>
-      <td class='line'>14</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l14s0'>	public static final CrawlerMessage DETASTORETYPE_IS_NOT_SUPPORT = new CrawlerMessage("E001");</pre></td>
+      <td class='line'>19</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l19s0'>	public static final CrawlerMessage DETASTORETYPE_IS_NOT_SUPPORT = new CrawlerMessage("E001");</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>16</td><td>&nbsp;</td>
+      <td class='line'>21</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** レコードインスタンスの生成に失敗しました。必須パラメータが設定されていません。PARAM=[{0}] */</pre></td>
     </tr>
     <tr>
-      <td class='line'>17</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l17s0'>	public static final CrawlerMessage PARAMETER_IS_NOT_SET = new CrawlerMessage("E002");</pre></td>
+      <td class='line'>22</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l22s0'>	public static final CrawlerMessage PARAMETER_IS_NOT_SET = new CrawlerMessage("E002");</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>19</td><td>&nbsp;</td>
+      <td class='line'>24</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** バイト配列からオブジェクトのインスタンスへの変換に失敗しました。PARAM=[{0}] */</pre></td>
     </tr>
     <tr>
-      <td class='line'>20</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l20s0'>	public static final CrawlerMessage FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY = new CrawlerMessage("E003");</pre></td>
+      <td class='line'>25</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l25s0'>	public static final CrawlerMessage FAILE_TO_CONVERT_TO_INSTANCE_OF_AN_OBJECT_FROM_A_BYTE_ARRAY = new CrawlerMessage("E003");</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>22</td><td>&nbsp;</td>
+      <td class='line'>27</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** ページ情報の保存に失敗しました。URL=[{0}] */</pre></td>
     </tr>
     <tr>
-      <td class='line'>23</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l23s0'>	public static final CrawlerMessage FAILE_TO_SAVE_PAGE = new CrawlerMessage("E004");</pre></td>
+      <td class='line'>28</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l28s0'>	public static final CrawlerMessage FAILE_TO_SAVE_PAGE = new CrawlerMessage("E004");</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>25</td><td>&nbsp;</td>
+      <td class='line'>30</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** ページ情報の取得に失敗しました。URL=[{0}] */</pre></td>
     </tr>
     <tr>
-      <td class='line'>26</td><td class='count'>1</td>
-      <td><pre class='prettyprint covered' id='l26s0'>	public static final CrawlerMessage FAILE_TO_GET_PAGE = new CrawlerMessage("E005");</pre></td>
+      <td class='line'>31</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l31s0'>	public static final CrawlerMessage FAILE_TO_GET_PAGE = new CrawlerMessage("E005");</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>28</td><td>&nbsp;</td>
+      <td class='line'>33</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** データストアマネージャが設定されていません。 */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>34</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l34s0'>	public static final CrawlerMessage DETASTORETYPE_IS_NOT_SET = new CrawlerMessage("E006");</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>36</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected CrawlerMessage(String messageId) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>29</td><td class='count'>5</td>
-      <td><pre class='prettyprint covered' id='l29s0'>		super(messageId);</pre></td>
+      <td class='line'>37</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l37s0'>		super(messageId);</pre></td>
     </tr>
     <tr>
-      <td class='line'>30</td><td class='count'>5</td>
-      <td><pre class='prettyprint covered' id='l30s0'>	}</pre></td>
+      <td class='line'>38</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l38s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>32</td><td>&nbsp;</td>
+      <td class='line'>40</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

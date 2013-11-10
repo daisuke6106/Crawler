@@ -36,22 +36,14 @@ public class TestPage extends TestCrawlerFoundation{
 	@Test
 	public void save() {
 		try {
-			// ＝＝＝＝＝＝＝＝＝＝準備＝＝＝＝＝＝＝＝＝＝
-			// テーブルを作成
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
-			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-			urls.createTable();
-			pages.createTable();
-			documents.createTable();
-			manager.finishTrunsaction();
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			FakePage page = new FakePage("http://www.google.com", getAccessableDataStoreManager());
+			FakePage page = new FakePage("http://www.google.com", manager);
 			page.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
@@ -62,15 +54,18 @@ public class TestPage extends TestCrawlerFoundation{
 			List<String>       pathList  = page.getPathList();
 			String             filename  = page.getFileName();
 			Map<String,String> parameter = page.getParameter();
-			
 			long               fileId    = page.getFileId();
 			long               timeId    = page.getTimeId();
-			
-			manager.startTrunsaction();
+			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
 			UrlsRecord      urlRecord       = urls.select(protocol, host, pathList, filename, parameter);
 			PagesRecord     pagesRecord     = pages.select(protocol, host, pathList, filename, parameter, fileId, timeId);
 			DocumentsRecord documentsRecord = documents.select(fileId, timeId);
+			
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
 			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
 		} catch (BrowzingException e) {
 			fail(e);
@@ -78,46 +73,20 @@ public class TestPage extends TestCrawlerFoundation{
 			fail(e);
 		} catch (CrawlerException e) {
 			fail(e);
-		} finally {
-			// ＝＝＝＝＝＝＝＝＝＝後片付け＝＝＝＝＝＝＝＝＝＝
-			// テーブルを削除
-			DataStoreManager manager;
-			try {
-				manager = getAccessableDataStoreManager();
-				manager.startTrunsaction();
-				Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-				Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-				Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-				urls.dropTable();
-				pages.dropTable();
-				documents.dropTable();
-				manager.finishTrunsaction();
-			} catch (DataStoreManagerException e) {
-				fail(e);
-			}
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		}
 	}
 	
 	@Test
 	public void getCount() {
 		try {
-			// ＝＝＝＝＝＝＝＝＝＝準備＝＝＝＝＝＝＝＝＝＝
-			// テーブルを作成
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
-			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-			urls.createTable();
-			pages.createTable();
-			documents.createTable();
-			manager.finishTrunsaction();
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page1 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page1 = new Page("http://www.google.com", manager);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト結果確認
@@ -126,7 +95,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page2 = new Page("http://www.studyinghttp.net/header", getAccessableDataStoreManager());
+			Page page2 = new Page("http://www.studyinghttp.net/header", manager);
 			page2.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -136,7 +105,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page3 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page3 = new Page("http://www.google.com", manager);
 			page3.save();
 			page3.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -148,7 +117,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page4 = new Page("http://gigazine.net/news/20131103-four-elements-of-company-building/", getAccessableDataStoreManager());
+			Page page4 = new Page("http://gigazine.net/news/20131103-four-elements-of-company-building/", manager);
 			page4.save();
 			page4.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -156,52 +125,30 @@ public class TestPage extends TestCrawlerFoundation{
 			// テスト結果確認
 			assertEquals(page4.getCount(), 1);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
+			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		} catch (BrowzingException e) {
 			fail(e);
 		} catch (DataStoreManagerException e) {
 			fail(e);
 		} catch (CrawlerException e) {
 			fail(e);
-		} finally {
-			// ＝＝＝＝＝＝＝＝＝＝後片付け＝＝＝＝＝＝＝＝＝＝
-			// テーブルを削除
-			DataStoreManager manager;
-			try {
-				manager = getAccessableDataStoreManager();
-				manager.startTrunsaction();
-				Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-				Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-				Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-				urls.dropTable();
-				pages.dropTable();
-				documents.dropTable();
-				manager.finishTrunsaction();
-			} catch (DataStoreManagerException e) {
-				fail(e);
-			}
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		}
 	}
 	
 	@Test
 	public void isSaved() {
 		try {
-			// ＝＝＝＝＝＝＝＝＝＝準備＝＝＝＝＝＝＝＝＝＝
-			// テーブルを作成
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
-			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-			urls.createTable();
-			pages.createTable();
-			documents.createTable();
-			manager.finishTrunsaction();
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page1 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page1 = new Page("http://www.google.com", manager);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト結果確認
@@ -210,7 +157,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page2 = new Page("http://www.studyinghttp.net/header", getAccessableDataStoreManager());
+			Page page2 = new Page("http://www.studyinghttp.net/header", manager);
 			page2.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -220,7 +167,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page3 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page3 = new Page("http://www.google.com", manager);
 			page3.save();
 			page3.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -228,52 +175,30 @@ public class TestPage extends TestCrawlerFoundation{
 			// テスト結果確認
 			assertThat(page3.isSaved(), is(true));
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
+			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		} catch (BrowzingException e) {
 			fail(e);
 		} catch (DataStoreManagerException e) {
 			fail(e);
 		} catch (CrawlerException e) {
 			fail(e);
-		} finally {
-			// ＝＝＝＝＝＝＝＝＝＝後片付け＝＝＝＝＝＝＝＝＝＝
-			// テーブルを削除
-			DataStoreManager manager;
-			try {
-				manager = getAccessableDataStoreManager();
-				manager.startTrunsaction();
-				Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-				Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-				Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-				urls.dropTable();
-				pages.dropTable();
-				documents.dropTable();
-				manager.finishTrunsaction();
-			} catch (DataStoreManagerException e) {
-				fail(e);
-			}
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		}
 	}
 	
 	@Test
 	public void isLastest() {
 		try {
-			// ＝＝＝＝＝＝＝＝＝＝準備＝＝＝＝＝＝＝＝＝＝
-			// テーブルを作成
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
-			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-			urls.createTable();
-			pages.createTable();
-			documents.createTable();
-			manager.finishTrunsaction();
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page1 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page1 = new Page("http://www.google.com", manager);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト結果確認
@@ -283,7 +208,7 @@ public class TestPage extends TestCrawlerFoundation{
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
 			// 最終更新日付けが設定されていないページの場合
-			Page page2 = new Page("http://www.studyinghttp.net/header", getAccessableDataStoreManager());
+			Page page2 = new Page("http://www.studyinghttp.net/header", manager);
 			if (page2.getResponseHeader().getLastModified() == null) {
 				// 保存を実行
 				page2.save();
@@ -297,7 +222,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page3 = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page3 = new Page("http://www.google.com", manager);
 			page3.save();
 			page3.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -305,30 +230,16 @@ public class TestPage extends TestCrawlerFoundation{
 			// テスト結果確認
 			assertThat(page3.isLatest(), is(true));
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
+			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		} catch (BrowzingException e) {
 			fail(e);
 		} catch (DataStoreManagerException e) {
 			fail(e);
 		} catch (CrawlerException e) {
 			fail(e);
-		} finally {
-			// ＝＝＝＝＝＝＝＝＝＝後片付け＝＝＝＝＝＝＝＝＝＝
-			// テーブルを削除
-			DataStoreManager manager;
-			try {
-				manager = getAccessableDataStoreManager();
-				manager.startTrunsaction();
-				Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-				Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-				Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-				urls.dropTable();
-				pages.dropTable();
-				documents.dropTable();
-				manager.finishTrunsaction();
-			} catch (DataStoreManagerException e) {
-				fail(e);
-			}
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		}
 	}
 	

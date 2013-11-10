@@ -63,7 +63,7 @@ public class LinksMysqlImpl extends AbstractDataBaseAccessObject implements Link
 	}
 	
 	@Override
-	public LinksRecord select(String protcol, String host, List<String> path, String filename, Map<String, String> parameter) throws DataStoreManagerException {
+	public List<LinksRecord> select(String protcol, String host, List<String> path, String filename, Map<String, String> parameter) throws DataStoreManagerException {
 		if (path == null) path = new ArrayList<String>();
 		if (parameter == null) parameter = new HashMap<String, String>();
 		if (filename == null) filename = "";
@@ -74,11 +74,11 @@ public class LinksMysqlImpl extends AbstractDataBaseAccessObject implements Link
 		sql.setParameter(path.hashCode());
 		sql.setParameter(filename.hashCode());
 		sql.setParameter(parameter.hashCode());
-		return this.selectSingle(sql, new LinksRecord());
+		return this.selectMulti(sql, new LinksRecord());
 	}
 	
 	@Override
-	public List<LinksRecord> select(String from_protcol, String from_host, List<String> from_path, String from_filename, Map<String, String> from_parameter, String to_protcol, String to_host, List<String> to_path, String to_filename, Map<String, String> to_parameter, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
+	public LinksRecord select(String from_protcol, String from_host, List<String> from_path, String from_filename, Map<String, String> from_parameter, String to_protcol, String to_host, List<String> to_path, String to_filename, Map<String, String> to_parameter, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (from_protcol == null || from_protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "from_protocol");
 		if (from_host == null    || from_host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "from_host");
 		if (from_path == null) from_path = new ArrayList<String>();
@@ -102,7 +102,7 @@ public class LinksMysqlImpl extends AbstractDataBaseAccessObject implements Link
 		sql.setParameter(to_path.hashCode());
 		sql.setParameter(to_filename.hashCode());
 		sql.setParameter(to_parameter.hashCode());
-		return this.selectMulti(sql, new LinksRecord());
+		return this.selectSingle(sql, new LinksRecord());
 	}
 	
 	@Override

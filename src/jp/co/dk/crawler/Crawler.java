@@ -9,6 +9,7 @@ import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.PageManager;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Errors;
 import jp.co.dk.crawler.dao.Links;
@@ -50,15 +51,6 @@ public class Crawler extends Browzer{
 		((CrawlerPageManager)super.pageManager).dsm = dataStoreManager;// orz
 	}
 	
-	/**
-	 * 現在アクティブになっているページオブジェクトをデータストアへ保存する。
-	 * @throws DataStoreManagerException 
-	 */
-	public void save() throws CrawlerException {
-		jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)this.getPage();
-		page.save();
-	}
-	
 	public void saveImage() throws CrawlerException, BrowzingException, DataStoreManagerException {
 		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
 		File file = activePage.getDocument();
@@ -71,7 +63,9 @@ public class Crawler extends Browzer{
 				this.addLinks(activePage, nextPage);
 				nextPage.save();
 				this.back();
-			} catch (BrowzingException e) {
+			} catch (CrawlerPageRedirectHandlerException e) {
+				Page errorPage = e.getPage();
+				this.addLinks(activePage, errorPage);
 				this.errorHandler(e);
 			}
 		}
@@ -86,8 +80,11 @@ public class Crawler extends Browzer{
 	 * @throws CrawlerException エラーハンフドリング後、処理を停止させる場合
 	 * @throws DataStoreManagerException データストア関連処理に失敗した場合
 	 */
-	protected void errorHandler (Throwable throwable) throws CrawlerException, DataStoreManagerException {
+	protected void errorHandler (CrawlerPageRedirectHandlerException throwable) throws CrawlerException, DataStoreManagerException {
 		Errors errors = (Errors)this.dsm.getDataAccessObject(CrawlerDaoConstants.ERRORS);
+		jp.co.dk.crawler.Page errorPage = (jp.co.dk.crawler.Page)throwable.getPage();
+		long fileId = errorPage.getFileId();
+		long timeId = errorPage.getTimeId();
 		String message = throwable.getMessage();
 		StackTraceElement[] stackTraceElements = throwable.getStackTrace();
 		Date createDate = new Date();
@@ -183,11 +180,43 @@ class CrawlerPageRedirectHandler extends PageRedirectHandler {
 	@Override
 	protected Page ceatePage(String url) throws BrowzingException {
 		return new jp.co.dk.crawler.Page(url, this.dsm);
-	}	
+	}
+	
+	@Override
+	protected Page redirectBy_SERVER_ERROR(ResponseHeader header, Page page) throws BrowzingException {
+		try {
+			return super.redirectBy_SERVER_ERROR(header, page);
+		} catch (BrowzingException e) {
+			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.Page)page);
+		}
+		
+	}
+	
+	@Override
+	protected Page redirectBy_CLIENT_ERROR(ResponseHeader header, Page page) throws BrowzingException {
+		try {
+			return super.redirectBy_CLIENT_ERROR(header, page);
+		} catch (BrowzingException e) {
+			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.Page)page);
+		}
+	}
 }
 
-class ExceptionHandler {
+class CrawlerPageRedirectHandlerException extends BrowzingException {
+
+	/** シリアルバージョンID */
+	private static final long serialVersionUID = -6589147054844498464L;
 	
+	/** エラー発生ページオブジェクト */
+	private jp.co.dk.crawler.Page page;
 	
+	CrawlerPageRedirectHandlerException(BrowzingException exception, jp.co.dk.crawler.Page page) {
+		super(exception.getMessageObj(), exception.getEmbeddedStrList());
+		this.page = page;
+	}
+
+	public Page getPage() {
+		return page;
+	}
 	
 }

@@ -29,6 +29,12 @@ public class Page extends jp.co.dk.browzer.Page{
 	/** データストアマネージャ */
 	protected DataStoreManager dataStoreManager;
 	
+	/** ファイルID */
+	protected long fileId = -1;
+	
+	/** タイムID */
+	protected long timeId = -1;
+	
 	/**
 	 * コンストラクタ<p/>
 	 * 指定のURL、データストアマネージャのインスタンスを元に、ページオブジェクトのインスタンスを生成します。
@@ -51,10 +57,14 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * @param requestHeader  リクエストヘッダ
 	 * @param responseHeader レスポンスヘッダ
 	 * @param data           ページデータ
+	 * @param fileId         ファイルID
+	 * @param timeId         タイムID
 	 * @throws BrowzingException インスタンスの生成に失敗した場合
 	 */
-	public Page (String url, Map<String, String> requestHeader, Map<String, List<String>> responseHeader, ByteDump data) throws BrowzingException {
+	public Page (String url, Map<String, String> requestHeader, Map<String, List<String>> responseHeader, ByteDump data, long fileId,long timeId) throws BrowzingException {
 		super(url, requestHeader, responseHeader, data);
+		this.fileId = fileId;
+		this.timeId = timeId;
 	}
 	
 	/**
@@ -65,22 +75,41 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * 
 	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
 	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
-	 * @throws BrowzingException 更新日付に不正な値が設定されていた場合
 	 */
-	public boolean save() throws CrawlerException  {
+	public boolean save() throws CrawlerException {
 		if (this.isLatest()) return false;
+		this.addUrlRecord();
+		this.addPageRecord();
+		this.addDocumentRecord();
+		return true;
+	}
+	
+	public void addUrlRecord() throws CrawlerException{
 		try {
-			Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
+			Urls               urls       = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
+			String             url        = this.getURL();
+			String             protocol   = this.getProtocol();
+			String             host       = this.getHost();
+			List<String>       pathList   = this.getPathList();
+			String             filename   = this.getFileName();
+			Map<String,String> parameter  = this.getParameter();
+			long               fileid     = this.getFileId();
+			Date               createDate = this.getCreateDate();
+			Date               updateDate = this.getUpdateDate();
+			urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
+		} catch (DataStoreManagerException e) {
+			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+		}
+	}
+	
+	public void addPageRecord() throws CrawlerException{
+		try {
 			Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-			Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-			String                   url            = this.getURL();
 			String                   protocol       = this.getProtocol();
 			String                   host           = this.getHost();
 			List<String>             pathList       = this.getPathList();
 			String                   filename       = this.getFileName();
-			String                   extension      = this.getExtension();
 			Map<String,String>       parameter      = this.getParameter();
-			byte[]                   data           = this.getData().getBytes();
 			long                     fileid         = this.getFileId();
 			long                     timeid         = this.getTimeId();
 			Date                     createDate     = this.getCreateDate();
@@ -89,16 +118,27 @@ public class Page extends jp.co.dk.browzer.Page{
 			Map<String,List<String>> responseHeader = this.getResponseHeader().getHeaderMap();
 			String                   httpStatusCode = this.getResponseHeader().getResponseRecord().getHttpStatusCode().getCode();
 			String                   httpVersion    = this.getResponseHeader().getResponseRecord().getHttpVersion();
-			Date lastModified = this.getResponseHeader().getLastModified();
-			if (urls.select(protocol, host, pathList, filename, parameter) == null) {
-				urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
-			}
 			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, httpStatusCode, httpVersion, fileid, timeid, createDate, updateDate);
+		} catch (DataStoreManagerException e) {
+			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+		}
+	}
+	
+	public void addDocumentRecord() throws CrawlerException{
+		try {
+			Documents documents  = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+			String  filename     = this.getFileName();
+			String  extension    = this.getExtension();
+			byte[]  data         = this.getData().getBytes();
+			long    fileid       = this.getFileId();
+			long    timeid       = this.getTimeId();
+			Date    createDate   = this.getCreateDate();
+			Date    updateDate   = this.getUpdateDate();
+			Date    lastModified = this.getResponseHeader().getLastModified();
 			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);
 		} catch (DataStoreManagerException | BrowzingException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
-		return true;
 	}
 	
 	/**
@@ -247,6 +287,7 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * @return ファイルID
 	 */
 	protected long getFileId() {
+		if (this.fileId != -1) return this.fileId;
 		String protocol              = this.getProtocol();
 		String host                  = this.getHost();
 		List<String> pathList        = this.getPathList();
@@ -257,7 +298,8 @@ public class Page extends jp.co.dk.browzer.Page{
 		result = result.multiply(new BigDecimal(pathList.hashCode()));
 		result = result.multiply(new BigDecimal(filename.hashCode()));
 		result = result.multiply(new BigDecimal(parameter.hashCode()));
-		return result.longValue();
+		this.fileId = result.longValue();
+		return this.fileId;
 	}
 	
 	/**
@@ -268,7 +310,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * @return タイムID
 	 */
 	protected long getTimeId() {
-		return new Date().getTime();
+		if (timeId != -1) return this.timeId;
+		this.timeId = new Date().getTime();
+		return this.timeId;
 	}
 	
 	/**

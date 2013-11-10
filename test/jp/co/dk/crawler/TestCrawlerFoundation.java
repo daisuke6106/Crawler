@@ -1,5 +1,14 @@
 package jp.co.dk.crawler;
 
+import org.junit.After;
+import org.junit.Before;
+
+import jp.co.dk.crawler.dao.CrawlerDaoConstants;
+import jp.co.dk.crawler.dao.Documents;
+import jp.co.dk.crawler.dao.Errors;
+import jp.co.dk.crawler.dao.Links;
+import jp.co.dk.crawler.dao.Pages;
+import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.datastoremanager.DataStoreKind;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
@@ -55,5 +64,40 @@ public class TestCrawlerFoundation extends TestCaseTemplate{
 	@Override
 	protected void fail(AbstractMessageException e) {
 		super.fail(e);
+	}
+	
+
+	@Before
+	public void createTable() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		Links     links     = (Links)manager.getDataAccessObject(CrawlerDaoConstants.LINKS);
+		Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+		Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+		Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+		Errors    errors    = (Errors)manager.getDataAccessObject(CrawlerDaoConstants.ERRORS);
+		links.createTable();
+		urls.createTable();
+		pages.createTable();
+		documents.createTable();
+		errors.createTable();
+		manager.finishTrunsaction();
+	}
+	
+	@After
+	public void dropTable() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		Links     links     = (Links)manager.getDataAccessObject(CrawlerDaoConstants.LINKS);
+		Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
+		Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+		Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+		Errors    errors    = (Errors)manager.getDataAccessObject(CrawlerDaoConstants.ERRORS);
+		links.dropTable();
+		urls.dropTable();
+		pages.dropTable();
+		documents.dropTable();
+		errors.dropTable();
+		manager.finishTrunsaction();
 	}
 }

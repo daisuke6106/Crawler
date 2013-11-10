@@ -61,6 +61,24 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
+      <td class='line'>32</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** ファイルID */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>33</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected long fileId = -1;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>35</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** タイムID */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>36</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	protected long timeId = -1;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * コンストラクタ&lt;p/>
@@ -72,19 +90,19 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>40</td><td>&nbsp;</td>
+      <td class='line'>46</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Page(String url, DataStoreManager dataStoreManager) throws BrowzingException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>41</td><td>&nbsp;</td>
+      <td class='line'>47</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		super(url);</pre></td>
     </tr>
     <tr>
-      <td class='line'>42</td><td>&nbsp;</td>
+      <td class='line'>48</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		this.dataStoreManager = dataStoreManager;</pre></td>
     </tr>
     <tr>
-      <td class='line'>43</td><td>&nbsp;</td>
+      <td class='line'>49</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -99,19 +117,29 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 * @param requestHeader  リクエストヘッダ
 	 * @param responseHeader レスポンスヘッダ
 	 * @param data           ページデータ
+	 * @param fileId         ファイルID
+	 * @param timeId         タイムID
 	 * @throws BrowzingException インスタンスの生成に失敗した場合
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>56</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public Page (String url, Map&lt;String, String> requestHeader, Map&lt;String, List&lt;String>> responseHeader, ByteDump data) throws BrowzingException {</pre></td>
+      <td class='line'>64</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Page (String url, Map&lt;String, String> requestHeader, Map&lt;String, List&lt;String>> responseHeader, ByteDump data, long fileId,long timeId) throws BrowzingException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>57</td><td>&nbsp;</td>
+      <td class='line'>65</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		super(url, requestHeader, responseHeader, data);</pre></td>
     </tr>
     <tr>
-      <td class='line'>58</td><td>&nbsp;</td>
+      <td class='line'>66</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.fileId = fileId;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.timeId = timeId;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>68</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -125,159 +153,253 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 * 
 	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
 	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
-	 * @throws BrowzingException 更新日付に不正な値が設定されていた場合
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>70</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public boolean save() throws CrawlerException  {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>71</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		if (this.isLatest()) return false;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>72</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		try {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>73</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			this.dataStoreManager.startTrunsaction();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>74</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>75</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>76</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>77</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			String                   url            = this.getURL();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>78</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			String                   protocol       = this.getProtocol();</pre></td>
-    </tr>
-    <tr>
       <td class='line'>79</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			String                   host           = this.getHost();</pre></td>
+      <td><pre class='prettyprint'>	public boolean save() throws CrawlerException {</pre></td>
     </tr>
     <tr>
       <td class='line'>80</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			List&lt;String>             pathList       = this.getPathList();</pre></td>
+      <td><pre class='prettyprint'>		if (this.isLatest()) return false;</pre></td>
     </tr>
     <tr>
       <td class='line'>81</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			String                   filename       = this.getFileName();</pre></td>
+      <td><pre class='prettyprint'>		this.addUrlRecord();</pre></td>
     </tr>
     <tr>
       <td class='line'>82</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			String                   extension      = this.getExtension();</pre></td>
+      <td><pre class='prettyprint'>		this.addPageRecord();</pre></td>
     </tr>
     <tr>
       <td class='line'>83</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Map&lt;String,String>       parameter      = this.getParameter();</pre></td>
+      <td><pre class='prettyprint'>		this.addDocumentRecord();</pre></td>
     </tr>
     <tr>
       <td class='line'>84</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			byte[]                   data           = this.getData().getBytes();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>85</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			long                     fileid         = this.getFileId();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>86</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			long                     timeid         = this.getTimeId();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>87</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Date                     createDate     = this.getCreateDate();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>88</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Date                     updateDate     = this.getUpdateDate();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>89</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Map&lt;String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>90</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Map&lt;String,List&lt;String>> responseHeader = this.getResponseHeader().getHeaderMap();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>91</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			Date lastModified = this.getResponseHeader().getLastModified();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>92</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			if (urls.select(protocol, host, pathList, filename, parameter) == null) {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>93</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>				urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>94</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			}</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>95</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, fileid, timeid, createDate, updateDate);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>96</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>97</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		} catch (DataStoreManagerException | BrowzingException e) {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>98</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>99</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		} finally {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>100</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			try {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>101</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>				this.dataStoreManager.finishTrunsaction();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>102</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			} catch (DataStoreManagerException e) {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>103</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>104</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			}</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>105</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		}</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>106</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		return true;</pre></td>
     </tr>
     <tr>
+      <td class='line'>85</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>87</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void addUrlRecord() throws CrawlerException{</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>88</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		try {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>89</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Urls               urls       = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>90</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String             url        = this.getURL();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>91</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String             protocol   = this.getProtocol();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>92</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String             host       = this.getHost();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>93</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			List&lt;String>       pathList   = this.getPathList();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>94</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String             filename   = this.getFileName();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>95</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Map&lt;String,String> parameter  = this.getParameter();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>96</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			long               fileid     = this.getFileId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>97</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Date               createDate = this.getCreateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>98</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Date               updateDate = this.getUpdateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>99</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>100</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		} catch (DataStoreManagerException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>101</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>102</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>103</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>105</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void addPageRecord() throws CrawlerException{</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>106</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		try {</pre></td>
+    </tr>
+    <tr>
       <td class='line'>107</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>108</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String                   protocol       = this.getProtocol();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>109</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String                   host           = this.getHost();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>110</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			List&lt;String>             pathList       = this.getPathList();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>111</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String                   filename       = this.getFileName();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>112</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Map&lt;String,String>       parameter      = this.getParameter();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>113</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			long                     fileid         = this.getFileId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>114</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			long                     timeid         = this.getTimeId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>115</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Date                     createDate     = this.getCreateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>116</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Date                     updateDate     = this.getUpdateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>117</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Map&lt;String,String>       requestHeader  = this.getRequestHeader().getHeaderMap();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>118</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Map&lt;String,List&lt;String>> responseHeader = this.getResponseHeader().getHeaderMap();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>119</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String                   httpStatusCode = this.getResponseHeader().getResponseRecord().getHttpStatusCode().getCode();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>120</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String                   httpVersion    = this.getResponseHeader().getResponseRecord().getHttpVersion();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>121</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, httpStatusCode, httpVersion, fileid, timeid, createDate, updateDate);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>122</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		} catch (DataStoreManagerException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>123</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>124</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>125</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>127</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void addDocumentRecord() throws CrawlerException{</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>128</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		try {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>129</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Documents documents  = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>130</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String  filename     = this.getFileName();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>131</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			String  extension    = this.getExtension();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>132</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			byte[]  data         = this.getData().getBytes();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>133</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			long    fileid       = this.getFileId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>134</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			long    timeid       = this.getTimeId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>135</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Date    createDate   = this.getCreateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>136</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Date    updateDate   = this.getUpdateDate();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>137</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			Date    lastModified = this.getResponseHeader().getLastModified();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>138</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>139</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		} catch (DataStoreManagerException | BrowzingException e) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>140</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>141</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>142</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -291,87 +413,59 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>115</td><td>&nbsp;</td>
+      <td class='line'>150</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public int getCount() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>116</td><td>&nbsp;</td>
+      <td class='line'>151</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>117</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			this.dataStoreManager.startTrunsaction();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>118</td><td>&nbsp;</td>
+      <td class='line'>152</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
     </tr>
     <tr>
-      <td class='line'>119</td><td>&nbsp;</td>
+      <td class='line'>153</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			String              protcol   = this.getProtocol();</pre></td>
     </tr>
     <tr>
-      <td class='line'>120</td><td>&nbsp;</td>
+      <td class='line'>154</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			String              host      = this.getHost();</pre></td>
     </tr>
     <tr>
-      <td class='line'>121</td><td>&nbsp;</td>
+      <td class='line'>155</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			List&lt;String>        pathList  = this.getPathList();</pre></td>
     </tr>
     <tr>
-      <td class='line'>122</td><td>&nbsp;</td>
+      <td class='line'>156</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			String              filename  = this.getFileName();</pre></td>
     </tr>
     <tr>
-      <td class='line'>123</td><td>&nbsp;</td>
+      <td class='line'>157</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			Map&lt;String, String> parameter = this.getParameter();</pre></td>
     </tr>
     <tr>
-      <td class='line'>124</td><td>&nbsp;</td>
+      <td class='line'>158</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			int count = pages.count(protcol, host, pathList, filename, parameter);</pre></td>
     </tr>
     <tr>
-      <td class='line'>125</td><td>&nbsp;</td>
+      <td class='line'>159</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			return count;</pre></td>
     </tr>
     <tr>
-      <td class='line'>126</td><td>&nbsp;</td>
+      <td class='line'>160</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		} catch (DataStoreManagerException e) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>127</td><td>&nbsp;</td>
+      <td class='line'>161</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
     </tr>
     <tr>
-      <td class='line'>128</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		} finally {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>129</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			try {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>130</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>				this.dataStoreManager.finishTrunsaction();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>131</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			} catch (DataStoreManagerException e) {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>132</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>133</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			}</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>134</td><td>&nbsp;</td>
+      <td class='line'>162</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		}</pre></td>
     </tr>
     <tr>
-      <td class='line'>135</td><td>&nbsp;</td>
+      <td class='line'>163</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -388,19 +482,19 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>146</td><td>&nbsp;</td>
+      <td class='line'>174</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public boolean isSaved() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>147</td><td>&nbsp;</td>
+      <td class='line'>175</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if(getCount() != 0) return true;</pre></td>
     </tr>
     <tr>
-      <td class='line'>148</td><td>&nbsp;</td>
+      <td class='line'>176</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>149</td><td>&nbsp;</td>
+      <td class='line'>177</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -421,97 +515,68 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>164</td><td>&nbsp;</td>
+      <td class='line'>192</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public boolean isLatest() throws CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>165</td><td>&nbsp;</td>
+      <td class='line'>193</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (!isSaved()) return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>166</td><td>&nbsp;</td>
+      <td class='line'>194</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		try {</pre></td>
     </tr>
     <tr>
-      <td class='line'>167</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			this.dataStoreManager.startTrunsaction();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>168</td><td>&nbsp;</td>
+      <td class='line'>195</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
     </tr>
     <tr>
-      <td class='line'>169</td><td>&nbsp;</td>
+      <td class='line'>196</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			DocumentsRecord documentsRecord = documents.selectLastest(this.getFileId());</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>171</td><td>&nbsp;</td>
+      <td class='line'>198</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			if (documentsRecord == null) return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>172</td><td>&nbsp;</td>
+      <td class='line'>199</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			Date thisLastModified  = this.getResponseHeader().getLastModified();</pre></td>
     </tr>
     <tr>
-      <td class='line'>173</td><td>&nbsp;</td>
+      <td class='line'>200</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			Date savedLastModified = documentsRecord.getLastUpdateDate();</pre></td>
     </tr>
     <tr>
-      <td class='line'>174</td><td>&nbsp;</td>
+      <td class='line'>201</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			byte[] thisPageData = this.getData().getBytes();</pre></td>
     </tr>
     <tr>
-      <td class='line'>175</td><td>&nbsp;</td>
+      <td class='line'>202</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			byte[] savedData    = documentsRecord.getData();</pre></td>
     </tr>
     <tr>
-      <td class='line'>176</td><td>&nbsp;</td>
+      <td class='line'>203</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			if (this.sameDate(thisLastModified, savedLastModified) && this.sameBytes(thisPageData, savedData)) return true;</pre></td>
     </tr>
     <tr>
-      <td class='line'>177</td><td>&nbsp;</td>
+      <td class='line'>204</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>178</td><td>&nbsp;</td>
+      <td class='line'>205</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		} catch (DataStoreManagerException | BrowzingException e) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>179</td><td>&nbsp;</td>
+      <td class='line'>206</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
     </tr>
     <tr>
-      <td class='line'>180</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		} finally {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>181</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			try {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>182</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>				this.dataStoreManager.finishTrunsaction();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>183</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			} catch (DataStoreManagerException e) {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>184</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>185</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>			}</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>186</td><td>&nbsp;</td>
+      <td class='line'>207</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		}</pre></td>
     </tr>
-    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>188</td><td>&nbsp;</td>
+      <td class='line'>208</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -526,31 +591,31 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>197</td><td>&nbsp;</td>
+      <td class='line'>217</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected boolean sameDate(Date date1, Date date2) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>198</td><td>&nbsp;</td>
+      <td class='line'>218</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (date1 == null && date2 == null) return true; </pre></td>
     </tr>
     <tr>
-      <td class='line'>199</td><td>&nbsp;</td>
+      <td class='line'>219</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (date1 == null && date2 != null) return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>200</td><td>&nbsp;</td>
+      <td class='line'>220</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (date1 != null && date2 == null) return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>201</td><td>&nbsp;</td>
+      <td class='line'>221</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (date1.equals(date2)) return true;</pre></td>
     </tr>
     <tr>
-      <td class='line'>202</td><td>&nbsp;</td>
+      <td class='line'>222</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>203</td><td>&nbsp;</td>
+      <td class='line'>223</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -565,176 +630,176 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>212</td><td>&nbsp;</td>
+      <td class='line'>232</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected boolean sameBytes(byte[] bytes1, byte[] bytes2) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>213</td><td>&nbsp;</td>
+      <td class='line'>233</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (bytes1 == null && bytes2 == null) return true; </pre></td>
     </tr>
     <tr>
-      <td class='line'>214</td><td>&nbsp;</td>
+      <td class='line'>234</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (bytes1 == null && bytes2 != null) return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>215</td><td>&nbsp;</td>
+      <td class='line'>235</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (bytes1 != null && bytes2 == null) return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>216</td><td>&nbsp;</td>
+      <td class='line'>236</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		if (bytes1.length == bytes2.length) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>217</td><td>&nbsp;</td>
+      <td class='line'>237</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			for (int i=0; i&lt;bytes1.length; i++) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>218</td><td>&nbsp;</td>
+      <td class='line'>238</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>				if (bytes1[i] != bytes2[i]) return false; </pre></td>
     </tr>
     <tr>
-      <td class='line'>219</td><td>&nbsp;</td>
+      <td class='line'>239</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			}</pre></td>
     </tr>
     <tr>
-      <td class='line'>220</td><td>&nbsp;</td>
+      <td class='line'>240</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			return true;</pre></td>
     </tr>
     <tr>
-      <td class='line'>221</td><td>&nbsp;</td>
+      <td class='line'>241</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		} else {</pre></td>
     </tr>
     <tr>
-      <td class='line'>222</td><td>&nbsp;</td>
+      <td class='line'>242</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>			return false;</pre></td>
     </tr>
     <tr>
-      <td class='line'>223</td><td>&nbsp;</td>
+      <td class='line'>243</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		}</pre></td>
     </tr>
     <tr>
-      <td class='line'>224</td><td>&nbsp;</td>
+      <td class='line'>244</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr>
-      <td class='line'>225</td><td>&nbsp;</td>
+      <td class='line'>245</td><td>&nbsp;</td>
       <td><pre class='comment'>//	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>226</td><td>&nbsp;</td>
+      <td class='line'>246</td><td>&nbsp;</td>
       <td><pre class='comment'>//		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);</pre></td>
     </tr>
     <tr>
-      <td class='line'>227</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>228</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		String host    = super.host;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>229</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>230</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>231</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		return urls.select(protcol, host, pathList, parameter);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>232</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	}</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>233</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>234</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	protected List&lt;PagesRecord> getPagesRecord() throws DataStoreManagerException {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>235</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>236</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>237</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		String host    = super.host;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>238</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>239</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>240</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		return pages.select(protcol, host, pathList, parameter);</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>241</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	}</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>242</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>243</td><td>&nbsp;</td>
-      <td><pre class='comment'>//	protected DocumentsRecord getDocumentsRecord() throws DataStoreManagerException {</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>244</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		PagesRecord pagesRecord = getPagesRecord();</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>245</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		if (pagesRecord == null) return null;</pre></td>
-    </tr>
-    <tr>
-      <td class='line'>246</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		long fileId = pagesRecord.getFileId();</pre></td>
-    </tr>
-    <tr>
       <td class='line'>247</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		long timeId = pagesRecord.getTimeId();</pre></td>
+      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
     </tr>
     <tr>
       <td class='line'>248</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
+      <td><pre class='comment'>//		String host    = super.host;</pre></td>
     </tr>
     <tr>
       <td class='line'>249</td><td>&nbsp;</td>
-      <td><pre class='comment'>//		return documents.select(fileId, timeId);</pre></td>
+      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
     </tr>
     <tr>
       <td class='line'>250</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>251</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		return urls.select(protcol, host, pathList, parameter);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>252</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>253</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>254</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	protected List&lt;PagesRecord> getPagesRecord() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>255</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>256</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String protcol = super.protocol;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>257</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		String host    = super.host;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>258</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		List&lt;String> pathList = super.pathList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>259</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Map&lt;String, String> parameter = super.parameter;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>260</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		return pages.select(protcol, host, pathList, parameter);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>261</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>262</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>263</td><td>&nbsp;</td>
+      <td><pre class='comment'>//	protected DocumentsRecord getDocumentsRecord() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>264</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		PagesRecord pagesRecord = getPagesRecord();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>265</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		if (pagesRecord == null) return null;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>266</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		long fileId = pagesRecord.getFileId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>267</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		long timeId = pagesRecord.getTimeId();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>268</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>269</td><td>&nbsp;</td>
+      <td><pre class='comment'>//		return documents.select(fileId, timeId);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>270</td><td>&nbsp;</td>
       <td><pre class='comment'>//	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>252</td><td>&nbsp;</td>
+      <td class='line'>272</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	@Override</pre></td>
     </tr>
     <tr>
-      <td class='line'>253</td><td>&nbsp;</td>
+      <td class='line'>273</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public Map&lt;String, String> getParameter() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>254</td><td>&nbsp;</td>
+      <td class='line'>274</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		return new ParameterMap(super.parameter);</pre></td>
     </tr>
     <tr>
-      <td class='line'>255</td><td>&nbsp;</td>
+      <td class='line'>275</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -754,55 +819,63 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>269</td><td>&nbsp;</td>
+      <td class='line'>289</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected long getFileId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>270</td><td>&nbsp;</td>
+      <td class='line'>290</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		if (this.fileId != -1) return this.fileId;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>291</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		String protocol              = this.getProtocol();</pre></td>
     </tr>
     <tr>
-      <td class='line'>271</td><td>&nbsp;</td>
+      <td class='line'>292</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		String host                  = this.getHost();</pre></td>
     </tr>
     <tr>
-      <td class='line'>272</td><td>&nbsp;</td>
+      <td class='line'>293</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		List&lt;String> pathList        = this.getPathList();</pre></td>
     </tr>
     <tr>
-      <td class='line'>273</td><td>&nbsp;</td>
+      <td class='line'>294</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		String filename              = this.getFileName();</pre></td>
     </tr>
     <tr>
-      <td class='line'>274</td><td>&nbsp;</td>
+      <td class='line'>295</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		Map&lt;String,String> parameter = this.getParameter();</pre></td>
     </tr>
     <tr>
-      <td class='line'>275</td><td>&nbsp;</td>
+      <td class='line'>296</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		BigDecimal result = new BigDecimal(protocol.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>276</td><td>&nbsp;</td>
+      <td class='line'>297</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		result = result.multiply(new BigDecimal(host.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>277</td><td>&nbsp;</td>
+      <td class='line'>298</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		result = result.multiply(new BigDecimal(pathList.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>278</td><td>&nbsp;</td>
+      <td class='line'>299</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		result = result.multiply(new BigDecimal(filename.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>279</td><td>&nbsp;</td>
+      <td class='line'>300</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		result = result.multiply(new BigDecimal(parameter.hashCode()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>280</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		return result.longValue();</pre></td>
+      <td class='line'>301</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.fileId = result.longValue();</pre></td>
     </tr>
     <tr>
-      <td class='line'>281</td><td>&nbsp;</td>
+      <td class='line'>302</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		return this.fileId;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>303</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -817,15 +890,23 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>290</td><td>&nbsp;</td>
+      <td class='line'>312</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected long getTimeId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>291</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>		return new Date().getTime();</pre></td>
+      <td class='line'>313</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		if (timeId != -1) return this.timeId;</pre></td>
     </tr>
     <tr>
-      <td class='line'>292</td><td>&nbsp;</td>
+      <td class='line'>314</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.timeId = new Date().getTime();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>315</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		return this.timeId;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>316</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -841,15 +922,15 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>302</td><td>&nbsp;</td>
+      <td class='line'>326</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected Date getCreateDate() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>303</td><td>&nbsp;</td>
+      <td class='line'>327</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		return new Date();</pre></td>
     </tr>
     <tr>
-      <td class='line'>304</td><td>&nbsp;</td>
+      <td class='line'>328</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -865,96 +946,96 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>314</td><td>&nbsp;</td>
+      <td class='line'>338</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	protected Date getUpdateDate() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>315</td><td>&nbsp;</td>
+      <td class='line'>339</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		return new Date();</pre></td>
     </tr>
     <tr>
-      <td class='line'>316</td><td>&nbsp;</td>
+      <td class='line'>340</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr>
-      <td class='line'>317</td><td>&nbsp;</td>
+      <td class='line'>341</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>319</td><td>&nbsp;</td>
+      <td class='line'>343</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>class ParameterMap extends HashMap&lt;String, String> {</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>321</td><td>&nbsp;</td>
+      <td class='line'>345</td><td>&nbsp;</td>
       <td><pre class='comment'>	/** シリアルバージョンID */</pre></td>
     </tr>
     <tr>
-      <td class='line'>322</td><td>&nbsp;</td>
+      <td class='line'>346</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	private static final long serialVersionUID = 6071724790375396636L;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>324</td><td>&nbsp;</td>
+      <td class='line'>348</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	ParameterMap() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>325</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l325s0'>		super();</pre></td>
+      <td class='line'>349</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l349s0'>		super();</pre></td>
     </tr>
     <tr>
-      <td class='line'>326</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l326s0'>	}</pre></td>
+      <td class='line'>350</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l350s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>328</td><td>&nbsp;</td>
+      <td class='line'>352</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	ParameterMap(Map&lt;String, String> parameter) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>329</td><td class='count'>9</td>
-      <td><pre class='prettyprint covered' id='l329s0'>		super(parameter);</pre></td>
+      <td class='line'>353</td><td class='count'>471</td>
+      <td><pre class='prettyprint covered' id='l353s0'>		super(parameter);</pre></td>
     </tr>
     <tr>
-      <td class='line'>330</td><td class='count'>9</td>
-      <td><pre class='prettyprint covered' id='l330s0'>	}</pre></td>
+      <td class='line'>354</td><td class='count'>471</td>
+      <td><pre class='prettyprint covered' id='l354s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
-      <td class='line'>332</td><td>&nbsp;</td>
+      <td class='line'>356</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	@Override</pre></td>
     </tr>
     <tr>
-      <td class='line'>333</td><td>&nbsp;</td>
+      <td class='line'>357</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public int hashCode() {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>15</td>
+      <td></td><td class='count'>565</td>
       <td class='paths'>
         <span style='cursor:default; background-color:#7f8000' onclick='hidePath()'>Path coverage: 1/2</span>
-        <span class='covered' onclick="showPath(this,'l334s0 l335s0 l335s1')">A: 15</span>
-        <span class='uncovered' onclick="showPath(this,'l334s0 l335s0 l336s0')">B: 0</span>
+        <span class='covered' onclick="showPath(this,'l358s0 l359s0 l359s1')">A: 565</span>
+        <span class='uncovered' onclick="showPath(this,'l358s0 l359s0 l360s0')">B: 0</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>334</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l334s0'>		int originalHashCode = super.hashCode();</pre></td>
+      <td class='line'>358</td><td class='count'>565</td>
+      <td><pre class='prettyprint covered' id='l358s0'>		int originalHashCode = super.hashCode();</pre></td>
     </tr>
     <tr>
-      <td class='line'>335</td><td class='count'>15</td>
-      <td><pre class='prettyprint jmp'>		<span id='l335s0' title='Executions: 15' class='covered'>if (originalHashCode == 0)</span> <span id='l335s1' title='Executions: 15' class='covered'>return 1;</span></pre></td>
+      <td class='line'>359</td><td class='count'>565</td>
+      <td><pre class='prettyprint jmp'>		<span id='l359s0' title='Executions: 565' class='covered'>if (originalHashCode == 0)</span> <span id='l359s1' title='Executions: 565' class='covered'>return 1;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>336</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l336s0'>		return originalHashCode;</pre></td>
+      <td class='line'>360</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l360s0'>		return originalHashCode;</pre></td>
     </tr>
     <tr>
-      <td class='line'>337</td><td>&nbsp;</td>
+      <td class='line'>361</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr>
-      <td class='line'>338</td><td>&nbsp;</td>
+      <td class='line'>362</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

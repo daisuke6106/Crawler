@@ -277,7 +277,7 @@ public class TestLinksMysqlImpl extends TestCrawlerFoundation{
 		// 引数に正常値を渡した場合、正常に取得できること。
 		try {
 			// 登録処理を実行
-			LinksRecord record = pages.select(from_protcol, from_host, from_path, from_filename, from_parameter);
+			LinksRecord record = pages.select(from_protcol, from_host, from_path, from_filename, from_parameter).get(0);
 			assertEquals(record.getFromProtocol(), "1http");
 			assertEquals(record.getFromHost(), "1google.com");
 			assertEquals(record.getFromH_path(), from_path.hashCode());

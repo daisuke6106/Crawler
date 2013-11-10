@@ -4,6 +4,7 @@ import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.message.BrowzingMessage;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
+import jp.co.dk.crawler.dao.Errors;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
@@ -16,6 +17,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
 import jp.co.dk.property.exception.PropertyException;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class TestCrawler extends TestCrawlerFoundation{
@@ -45,24 +48,21 @@ public class TestCrawler extends TestCrawlerFoundation{
 		// 引数なしでコンストラクタを呼び出した場合、正常にインスタンスが生成されること。
 		
 		try {
-			// ＝＝＝＝＝＝＝＝＝＝準備＝＝＝＝＝＝＝＝＝＝
-			// テーブルを作成
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
-			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-			urls.createTable();
-			pages.createTable();
-			documents.createTable();
-			manager.finishTrunsaction();
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Crawler crawler = new Crawler("http://kanasoku.info/articles/27440.html", getAccessableDataStoreManager());
+			Crawler crawler = new Crawler("http://kanasoku.info/articles/27440.html", manager);
 			crawler.saveImage();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
+			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -72,25 +72,7 @@ public class TestCrawler extends TestCrawlerFoundation{
 			fail(e);
 		} catch (CrawlerException e) {
 			fail(e);
-		} finally {
-			// ＝＝＝＝＝＝＝＝＝＝後片付け＝＝＝＝＝＝＝＝＝＝
-			// テーブルを削除
-			DataStoreManager manager;
-			try {
-				manager = getAccessableDataStoreManager();
-				manager.startTrunsaction();
-				Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
-				Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-				Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-				urls.dropTable();
-				pages.dropTable();
-				documents.dropTable();
-				manager.finishTrunsaction();
-			} catch (DataStoreManagerException e) {
-				fail(e);
-			}
-			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 		}
-		
 	}
+	
 }

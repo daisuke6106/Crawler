@@ -70,7 +70,6 @@ public class Page extends jp.co.dk.browzer.Page{
 	public boolean save() throws CrawlerException  {
 		if (this.isLatest()) return false;
 		try {
-			this.dataStoreManager.startTrunsaction();
 			Urls      urls      = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
 			Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 			Documents documents = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
@@ -98,12 +97,6 @@ public class Page extends jp.co.dk.browzer.Page{
 			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);
 		} catch (DataStoreManagerException | BrowzingException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
-		} finally {
-			try {
-				this.dataStoreManager.finishTrunsaction();
-			} catch (DataStoreManagerException e) {
-				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
-			}
 		}
 		return true;
 	}
@@ -116,7 +109,6 @@ public class Page extends jp.co.dk.browzer.Page{
 	 */
 	public int getCount() throws CrawlerException {
 		try {
-			this.dataStoreManager.startTrunsaction();
 			Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 			String              protcol   = this.getProtocol();
 			String              host      = this.getHost();
@@ -127,12 +119,6 @@ public class Page extends jp.co.dk.browzer.Page{
 			return count;
 		} catch (DataStoreManagerException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
-		} finally {
-			try {
-				this.dataStoreManager.finishTrunsaction();
-			} catch (DataStoreManagerException e) {
-				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
-			}
 		}
 	}
 	
@@ -166,7 +152,6 @@ public class Page extends jp.co.dk.browzer.Page{
 	public boolean isLatest() throws CrawlerException {
 		if (!isSaved()) return false;
 		try {
-			this.dataStoreManager.startTrunsaction();
 			Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
 			DocumentsRecord documentsRecord = documents.selectLastest(this.getFileId());
 			
@@ -179,14 +164,7 @@ public class Page extends jp.co.dk.browzer.Page{
 			return false;
 		} catch (DataStoreManagerException | BrowzingException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
-		} finally {
-			try {
-				this.dataStoreManager.finishTrunsaction();
-			} catch (DataStoreManagerException e) {
-				throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
-			}
 		}
-		
 	}
 	
 	/**

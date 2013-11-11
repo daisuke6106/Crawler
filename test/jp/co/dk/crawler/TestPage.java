@@ -43,7 +43,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			FakePage page = new FakePage("http://www.google.com", manager);
+			Page page = new Page("http://www.google.com", manager);
 			page.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
@@ -425,20 +425,5 @@ public class TestPage extends TestCrawlerFoundation{
 		} catch (DataStoreManagerException e) {
 			fail(e);
 		}
-	}
-}
-
-
-class FakePage extends Page {
-	
-	long timeId;
-	
-	public FakePage(String url, DataStoreManager dataStoreManager) throws BrowzingException {
-		super(url, dataStoreManager);
-		this.timeId = new Date().getTime();
-	}
-	
-	public long getTimeId() {
-		return timeId;
 	}
 }

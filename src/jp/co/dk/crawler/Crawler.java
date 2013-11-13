@@ -18,8 +18,10 @@ import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.Element;
+import jp.co.dk.document.ElementSelector;
 import jp.co.dk.document.File;
 import jp.co.dk.document.html.HtmlDocument;
+import jp.co.dk.document.html.HtmlElement;
 import jp.co.dk.document.html.constant.HtmlElementName;
 
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
@@ -51,22 +53,120 @@ public class Crawler extends Browzer{
 		((CrawlerPageManager)super.pageManager).dsm = dataStoreManager;// orz
 	}
 	
+	/**
+	 * 現在アクティブになっているページに記載されているすべてのIMGタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
+	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
+	 * <br/>
+	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
+	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
+	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
+	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
+	 * 
+	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
+	 * @throws BrowzingException         アクティブになっているページのドュメントオブジェクトの生成に失敗した場合
+	 * @throws DataStoreManagerException データストアの操作に失敗した場合
+	 */
 	public void saveImage() throws CrawlerException, BrowzingException, DataStoreManagerException {
 		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
 		File file = activePage.getDocument();
 		if (!(file instanceof HtmlDocument)) return;
 		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> imageElements = htmlDocument.getElement(HtmlElementName.IMG);
-		for (Element imageElement : imageElements) {
+		List<Element> elements = htmlDocument.getElement(HtmlElementName.IMG);
+		for (Element element : elements) {
+			String url = null;
 			try {
-				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move((jp.co.dk.browzer.html.element.Image)imageElement);
+				jp.co.dk.browzer.html.element.Image castedElement = (jp.co.dk.browzer.html.element.Image)element;
+				url = castedElement.getSrc();
+				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
 				this.addLinks(activePage, nextPage);
 				nextPage.save();
 				this.back();
-			} catch (CrawlerPageRedirectHandlerException e) {
-				Page errorPage = e.getPage();
-				this.addLinks(activePage, errorPage);
-				this.errorHandler(e);
+			} catch (BrowzingException e) {
+				this.errorHandler(activePage, url, e);
+			}
+		}
+	}
+	
+	/**
+	 * 現在アクティブになっているページに記載されているすべてのSCRIPTタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
+	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
+	 * <br/>
+	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
+	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
+	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
+	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
+	 * 
+	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
+	 * @throws BrowzingException         アクティブになっているページのドュメントオブジェクトの生成に失敗した場合
+	 * @throws DataStoreManagerException データストアの操作に失敗した場合
+	 */
+	public void saveScript() throws CrawlerException, BrowzingException, DataStoreManagerException {
+		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
+		File file = activePage.getDocument();
+		if (!(file instanceof HtmlDocument)) return;
+		HtmlDocument htmlDocument = (HtmlDocument)file;
+		List<Element> elements = htmlDocument.getElement(new ElementSelector() {
+			@Override
+			public boolean judgment(Element element) {
+				if (!(element instanceof HtmlElement)) return false;
+				HtmlElement htmlElement = (HtmlElement)element;
+				if (htmlElement.getElementType() == HtmlElementName.SCRIPT && htmlElement.hasAttribute("src")) return true;
+				return false;
+			}
+		});
+		for (Element element : elements) {
+			String url = null;
+			try {
+				jp.co.dk.browzer.html.element.Script castedElement = (jp.co.dk.browzer.html.element.Script)element;
+				url = castedElement.getSrc();
+				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
+				this.addLinks(activePage, nextPage);
+				nextPage.save();
+				this.back();
+			} catch (BrowzingException e) {
+				this.errorHandler(activePage, url, e);
+			}
+		}
+	}
+	
+	/**
+	 * 現在アクティブになっているページに記載されているすべてのLINKタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
+	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
+	 * <br/>
+	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
+	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
+	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
+	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
+	 * 
+	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
+	 * @throws BrowzingException         アクティブになっているページのドュメントオブジェクトの生成に失敗した場合
+	 * @throws DataStoreManagerException データストアの操作に失敗した場合
+	 */
+	public void saveLink() throws CrawlerException, BrowzingException, DataStoreManagerException {
+		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
+		File file = activePage.getDocument();
+		if (!(file instanceof HtmlDocument)) return;
+		HtmlDocument htmlDocument = (HtmlDocument)file;
+		List<Element> elements = htmlDocument.getElement(new ElementSelector() {
+			@Override
+			public boolean judgment(Element element) {
+				if (!(element instanceof HtmlElement)) return false;
+				HtmlElement htmlElement = (HtmlElement)element;
+				if (htmlElement.getElementType() == HtmlElementName.LINK && htmlElement.hasAttribute("href")) return true;
+				return false;
+			}
+		});
+		for (Element element : elements) {
+			String url = null;
+			try {
+				jp.co.dk.browzer.html.element.Link castedElement = (jp.co.dk.browzer.html.element.Link)element;
+				url = castedElement.getHref();
+				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
+				this.addLinks(activePage, nextPage);
+				nextPage.save();
+				this.back();
+			} catch (BrowzingException e) {
+				this.errorHandler(activePage, url, e);
 			}
 		}
 	}
@@ -80,17 +180,24 @@ public class Crawler extends Browzer{
 	 * @throws CrawlerException エラーハンフドリング後、処理を停止させる場合
 	 * @throws DataStoreManagerException データストア関連処理に失敗した場合
 	 */
-	protected void errorHandler (CrawlerPageRedirectHandlerException throwable) throws CrawlerException, DataStoreManagerException {
-		Errors errors = (Errors)this.dsm.getDataAccessObject(CrawlerDaoConstants.ERRORS);
-		jp.co.dk.crawler.Page errorPage = (jp.co.dk.crawler.Page)throwable.getPage();
-		long fileId = errorPage.getFileId();
-		long timeId = errorPage.getTimeId();
-		String message = throwable.getMessage();
-		StackTraceElement[] stackTraceElements = throwable.getStackTrace();
-		Date createDate = new Date();
-		Date updateDate = new Date();
-		errors.insert(fileId, timeId, message, stackTraceElements, createDate, updateDate);
-		return ;
+	protected void errorHandler (Page beforePage, String nextPageUrl, Throwable throwable) throws CrawlerException, DataStoreManagerException {
+		if (throwable instanceof CrawlerPageRedirectHandlerException) {
+			CrawlerPageRedirectHandlerException crawlerPageRedirectHandlerException = (CrawlerPageRedirectHandlerException) throwable;
+			jp.co.dk.crawler.Page errorPage = (jp.co.dk.crawler.Page)crawlerPageRedirectHandlerException.getPage();
+			this.addLinks(beforePage, errorPage);
+			Errors errors = (Errors)this.dsm.getDataAccessObject(CrawlerDaoConstants.ERRORS);
+			long fileId = errorPage.getFileId();
+			long timeId = errorPage.getTimeId();
+			String message = throwable.getMessage();
+			StackTraceElement[] stackTraceElements = throwable.getStackTrace();
+			Date createDate = new Date();
+			Date updateDate = new Date();
+			errors.insert(fileId, timeId, message, stackTraceElements, createDate, updateDate);
+			return ;
+		}
+		// TODO Pageインスタンス作成時のBrowzerExceptionは現在のところ無視、ログファイルにくらいは出しておく？対応方針を決め次第対応する
+		
+		
 	}
 	
 	/**

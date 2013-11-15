@@ -43,6 +43,38 @@ public class TestCrawler extends TestCrawlerFoundation{
 	}
 	
 	@Test
+	public void saveAll() {
+		// ========================================正常系========================================
+		try {
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
+			DataStoreManager manager = getAccessableDataStoreManager();
+			manager.startTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			// テスト実行
+			Crawler crawler = new Crawler("http://kanasoku.info/articles/27440.html", manager);
+			crawler.saveAll();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
+			manager.finishTrunsaction();
+			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+			
+			System.out.print("");
+			
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		} catch (BrowzingException e) {
+			fail(e);
+		} catch (PropertyException e) {
+			fail(e);
+		} catch (CrawlerException e) {
+			fail(e);
+		}
+	}
+	
+	@Test
 	public void saveImage() {
 		// ========================================正常系========================================
 		try {
@@ -91,7 +123,6 @@ public class TestCrawler extends TestCrawlerFoundation{
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
 			manager.finishTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-			System.out.print("");
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);
@@ -122,7 +153,6 @@ public class TestCrawler extends TestCrawlerFoundation{
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
 			manager.finishTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-			System.out.print("");
 			
 		} catch (DataStoreManagerException e) {
 			fail(e);

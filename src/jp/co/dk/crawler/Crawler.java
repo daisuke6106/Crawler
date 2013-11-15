@@ -49,8 +49,16 @@ public class Crawler extends Browzer{
 	 */
 	public Crawler(String url, DataStoreManager dataStoreManager) throws CrawlerException, BrowzingException { 
 		super(url, new CrawlerPageRedirectHandler(dataStoreManager));
-		this.dsm = dataStoreManager;
-		((CrawlerPageManager)super.pageManager).dsm = dataStoreManager;// orz
+		this.dsm         = dataStoreManager;
+		this.pageManager = this.createPageManager(url, super.pageRedirectHandler);
+	}
+	
+	public void saveAll() throws CrawlerException, BrowzingException, DataStoreManagerException {+
+		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
+		activePage.save();
+		this.saveImage();
+		this.saveScript();
+		this.saveLink();
 	}
 	
 	/**
@@ -230,18 +238,13 @@ public class Crawler extends Browzer{
 	}
 	
 	@Override
-	protected Page ceatePage(String url) throws BrowzingException {
-		return new jp.co.dk.crawler.Page(url, this.dsm);
+	protected PageManager createPageManager(String url, PageRedirectHandler handler) throws BrowzingException {
+		return new CrawlerPageManager(this.dsm, url, handler);
 	}
 	
 	@Override
-	protected PageManager createPageManager(Page page, PageRedirectHandler handler) {
-		return new CrawlerPageManager(this.dsm, page, handler);
-	}
-	
-	@Override
-	protected PageManager createPageManager(Page page, PageRedirectHandler handler, int maxNestLevel) {
-		return new CrawlerPageManager(this.dsm, page, handler, maxNestLevel);
+	protected PageManager createPageManager(String url, PageRedirectHandler handler, int maxNestLevel) throws BrowzingException {
+		return new CrawlerPageManager(this.dsm, url, handler, maxNestLevel);
 	}
 }
 
@@ -249,13 +252,13 @@ class CrawlerPageManager extends PageManager{
 	
 	protected DataStoreManager dsm;
 	
-	CrawlerPageManager(DataStoreManager dsm, Page page, PageRedirectHandler pageRedirectHandler) {
-		super(page, pageRedirectHandler);
+	CrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler) throws BrowzingException {
+		super(url, pageRedirectHandler);
 		this.dsm = dsm;
 	}
 	
-	CrawlerPageManager(DataStoreManager dsm, Page page, PageRedirectHandler pageRedirectHandler, int maxNestLevel) {
-		super(page, pageRedirectHandler, maxNestLevel);
+	CrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, int maxNestLevel) throws BrowzingException {
+		super(url, pageRedirectHandler, maxNestLevel);
 		this.dsm = dsm;
 	}
 	

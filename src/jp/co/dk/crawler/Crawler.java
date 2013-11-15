@@ -53,7 +53,7 @@ public class Crawler extends Browzer{
 		this.pageManager = this.createPageManager(url, super.pageRedirectHandler);
 	}
 	
-	public void saveAll() throws CrawlerException, BrowzingException, DataStoreManagerException {+
+	public void saveAll() throws CrawlerException, BrowzingException, DataStoreManagerException {
 		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
 		activePage.save();
 		this.saveImage();

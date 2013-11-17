@@ -255,11 +255,15 @@ class CrawlerPageManager extends PageManager{
 	CrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler) throws BrowzingException {
 		super(url, pageRedirectHandler);
 		this.dsm = dsm;
+		jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)super.getPage(); // orz
+		page.dataStoreManager = dsm;
 	}
 	
 	CrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, int maxNestLevel) throws BrowzingException {
 		super(url, pageRedirectHandler, maxNestLevel);
 		this.dsm = dsm;
+		jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)super.getPage();// orz
+		page.dataStoreManager = dsm;
 	}
 	
 	protected CrawlerPageManager(DataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, int nestLevel, int maxNestLevel){

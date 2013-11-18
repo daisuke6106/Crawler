@@ -54,7 +54,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>22</td><td class='count'>137</td>
+      <td class='line'>22</td><td class='count'>46</td>
       <td><pre class='prettyprint covered' id='l22s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -70,7 +70,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>26</td><td class='count'>137</td>
+      <td class='line'>26</td><td class='count'>46</td>
       <td><pre class='prettyprint covered' id='l26s0'>				return new DocumentsMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -127,7 +127,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>41</td><td class='count'>137</td>
+      <td class='line'>41</td><td class='count'>49</td>
       <td><pre class='prettyprint covered' id='l41s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -143,7 +143,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>45</td><td class='count'>137</td>
+      <td class='line'>45</td><td class='count'>49</td>
       <td><pre class='prettyprint covered' id='l45s0'>				return new LinksMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -200,7 +200,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>60</td><td class='count'>257</td>
+      <td class='line'>60</td><td class='count'>77</td>
       <td><pre class='prettyprint covered' id='l60s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -216,7 +216,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>64</td><td class='count'>257</td>
+      <td class='line'>64</td><td class='count'>77</td>
       <td><pre class='prettyprint covered' id='l64s0'>				return new PagesMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -273,7 +273,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>79</td><td class='count'>130</td>
+      <td class='line'>79</td><td class='count'>33</td>
       <td><pre class='prettyprint covered' id='l79s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -289,7 +289,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>83</td><td class='count'>130</td>
+      <td class='line'>83</td><td class='count'>33</td>
       <td><pre class='prettyprint covered' id='l83s0'>				return new UrlsMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -346,7 +346,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>98</td><td class='count'>10</td>
+      <td class='line'>98</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l98s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -362,7 +362,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>102</td><td class='count'>10</td>
+      <td class='line'>102</td><td class='count'>6</td>
       <td><pre class='prettyprint covered' id='l102s0'>				return new ErrorsMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -451,7 +451,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public DataAccessObjectFactory getDataAccessObjectFactory() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>128</td><td class='count'>671</td>
+      <td class='line'>128</td><td class='count'>211</td>
       <td><pre class='prettyprint covered' id='l128s0'>		return this.factory;</pre></td>
     </tr>
     <tr>
@@ -468,7 +468,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public String getName() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>133</td><td class='count'>671</td>
+      <td class='line'>133</td><td class='count'>211</td>
       <td><pre class='prettyprint covered' id='l133s0'>		return this.name;</pre></td>
     </tr>
     <tr>

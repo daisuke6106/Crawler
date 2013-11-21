@@ -43,7 +43,21 @@ public class CrawlerControler {
 		dataStoreManager.finishTrunsaction();
 	}
 	
-	public void crawl(String url)
+	
+	public void crawl(String url) throws DataStoreManagerException {
+		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
+		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
+		dataStoreManager.startTrunsaction();
+		
+		try {
+			Crawler crawler = new Crawler(url, dataStoreManager);
+			crawler.getPage().getDocument();
+		} catch (CrawlerException | BrowzingException e) {
+			e.printStackTrace();
+		}
+		
+		dataStoreManager.finishTrunsaction();
+	}
 	
 	public void save(String url) throws DataStoreManagerException, CrawlerException, BrowzingException {
 		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();

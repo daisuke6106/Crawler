@@ -36,8 +36,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
  */</div><span>/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>16</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l16s0'>public class ErrorsRecord implements DataConvertable{</pre></td>
+      <td class='line'>16</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l16s0'>public class ErrorsRecord implements DataConvertable{</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -46,7 +46,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>19</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected long <span class='instance uncovered' title='Reads: 0 Writes: 0'>fileId</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected long <span class='instance covered' title='Reads: 1 Writes: 1'>fileId</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -55,7 +55,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>22</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected long <span class='instance uncovered' title='Reads: 0 Writes: 0'>timeId</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected long <span class='instance covered' title='Reads: 1 Writes: 1'>timeId</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -64,7 +64,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>25</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected String <span class='instance uncovered' title='Reads: 0 Writes: 0'>message</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected String <span class='instance covered' title='Reads: 1 Writes: 1'>message</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -73,7 +73,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>28</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected StackTraceElement[] <span class='instance uncovered' title='Reads: 0 Writes: 0'>stackTraceElements</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected StackTraceElement[] <span class='instance uncovered' title='Reads: 0 Writes: 1'>stackTraceElements</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -82,7 +82,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>31</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 0 Writes: 0'>createDate</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 0 Writes: 1'>createDate</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -91,7 +91,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>34</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 0 Writes: 0'>updateDate</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected Date <span class='instance uncovered' title='Reads: 0 Writes: 1'>updateDate</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -106,8 +106,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public long getFileId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>41</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l41s0'>		return fileId;</pre></td>
+      <td class='line'>41</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l41s0'>		return fileId;</pre></td>
     </tr>
     <tr>
       <td class='line'>42</td><td>&nbsp;</td>
@@ -126,8 +126,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public long getTimeId() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>49</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l49s0'>		return timeId;</pre></td>
+      <td class='line'>49</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l49s0'>		return timeId;</pre></td>
     </tr>
     <tr>
       <td class='line'>50</td><td>&nbsp;</td>
@@ -146,8 +146,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public String getMessage() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>57</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l57s0'>		return message;</pre></td>
+      <td class='line'>57</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l57s0'>		return message;</pre></td>
     </tr>
     <tr>
       <td class='line'>58</td><td>&nbsp;</td>
@@ -223,36 +223,36 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>86</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l86s0'>		ErrorsRecord pagesRecord       = new ErrorsRecord();</pre></td>
+      <td class='line'>86</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l86s0'>		ErrorsRecord pagesRecord       = new ErrorsRecord();</pre></td>
     </tr>
     <tr>
-      <td class='line'>87</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l87s0'>		pagesRecord.fileId             = record.getLong("FILEID");</pre></td>
+      <td class='line'>87</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l87s0'>		pagesRecord.fileId             = record.getLong("FILEID");</pre></td>
     </tr>
     <tr>
-      <td class='line'>88</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l88s0'>		pagesRecord.timeId             = record.getLong("TIMEID");</pre></td>
+      <td class='line'>88</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l88s0'>		pagesRecord.timeId             = record.getLong("TIMEID");</pre></td>
     </tr>
     <tr>
-      <td class='line'>89</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l89s0'>		pagesRecord.message            = record.getString("MESSAGE");</pre></td>
+      <td class='line'>89</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l89s0'>		pagesRecord.message            = record.getString("MESSAGE");</pre></td>
     </tr>
     <tr>
-      <td class='line'>90</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l90s0'>		pagesRecord.stackTraceElements = (StackTraceElement[])record.getObject("STACKTRACEELEMENTS");</pre></td>
+      <td class='line'>90</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l90s0'>		pagesRecord.stackTraceElements = (StackTraceElement[])record.getObject("STACKTRACEELEMENTS");</pre></td>
     </tr>
     <tr>
-      <td class='line'>91</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l91s0'>		pagesRecord.createDate         = record.getTimestamp("CREATE_DATE");</pre></td>
+      <td class='line'>91</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l91s0'>		pagesRecord.createDate         = record.getTimestamp("CREATE_DATE");</pre></td>
     </tr>
     <tr>
-      <td class='line'>92</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l92s0'>		pagesRecord.updateDate         = record.getTimestamp("UPDATE_DATE");</pre></td>
+      <td class='line'>92</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l92s0'>		pagesRecord.updateDate         = record.getTimestamp("UPDATE_DATE");</pre></td>
     </tr>
     <tr>
-      <td class='line'>93</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l93s0'>		return pagesRecord;</pre></td>
+      <td class='line'>93</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l93s0'>		return pagesRecord;</pre></td>
     </tr>
     <tr>
       <td class='line'>94</td><td>&nbsp;</td>

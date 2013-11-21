@@ -4,8 +4,10 @@ import java.text.ParseException;
 import java.util.Date;
 
 import jp.co.dk.crawler.TestCrawlerFoundation;
+import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
+import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.message.DataStoreManagerMessage;
 
@@ -17,8 +19,8 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 	public void createTable_dropTable() {
 		try {
 			Documents documents = new DocumentsMysqlImpl(super.getAccessableDataBaseAccessParameter());
-			documents.createTable();
 			documents.dropTable();
+			documents.createTable();
 		} catch (DataStoreManagerException e) {
 			e.printStackTrace();
 			fail(e);
@@ -28,10 +30,9 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 	@Test
 	public void insert() throws DataStoreManagerException {
 		
-		// ========================================準備========================================
-		// テーブル作成
-		Documents documents = new DocumentsMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		documents.createTable();
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
 		
 		//ファイルID
 		long fileid    = 1234567890L;
@@ -69,19 +70,20 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 			fail();
 		} catch (DataStoreManagerException e) {
 			assertEquals(e.getMessageObj(), DataStoreManagerMessage.FAILE_TO_EXECUTE_SQL);
-		} finally {
-			// ========================================後処理========================================
-			documents.dropTable();
 		}
+		
+		manager.finishTrunsaction();
 	}
 	
 	@Test
 	public void select() throws DataStoreManagerException {
 		
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		
 		// ========================================準備========================================
 		// テーブル作成
-		Documents documents = new DocumentsMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		documents.createTable();
+		Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
 		
 		//ファイルID
 		long fileid    = 1234567890L;
@@ -139,19 +141,21 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 			assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getUpdateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(updateDate));
 		} catch (DataStoreManagerException e) {
 			fail(e);
-		} finally {
-			// ========================================後処理========================================
-			documents.dropTable();
 		}
+		
+		manager.finishTrunsaction();
+		
 	}
 	
 	@Test
 	public void selectLastest() throws DataStoreManagerException, ParseException {
 		
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		
 		// ========================================準備========================================
 		// テーブル作成
-		Documents documents = new DocumentsMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		documents.createTable();
+		Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
 		
 		//ファイルID
 		long fileid    = 1234567890L;
@@ -188,9 +192,8 @@ public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
 			assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getLastUpdateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(new Date(timeid2)));
 		} catch (DataStoreManagerException e) {
 			fail(e);
-		} finally {
-			// ========================================後処理========================================
-			documents.dropTable();
 		}
+		
+		manager.finishTrunsaction();
 	}
 }

@@ -4,10 +4,13 @@ import java.text.ParseException;
 import java.util.Date;
 
 import jp.co.dk.crawler.TestCrawlerFoundation;
+import jp.co.dk.crawler.dao.CrawlerDaoConstants;
+import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Errors;
 import jp.co.dk.crawler.dao.record.ErrorsRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.message.CrawlerMessage;
+import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.message.DataStoreManagerMessage;
 
@@ -76,10 +79,9 @@ public class TestErrorsMysqlImpl extends TestCrawlerFoundation{
 	@Test
 	public void select() throws DataStoreManagerException {
 		
-		// ========================================準備========================================
-		// テーブル作成
-		Errors errors = new ErrorsMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		errors.createTable();
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		Errors errors = (Errors)manager.getDataAccessObject(CrawlerDaoConstants.ERRORS);
 		
 		//ファイルID
 		long fileid    = 1234567890L;
@@ -134,6 +136,7 @@ public class TestErrorsMysqlImpl extends TestCrawlerFoundation{
 			// ========================================後処理========================================
 //			errors.dropTable();
 		}
+		manager.finishTrunsaction();
 	}
 	
 }

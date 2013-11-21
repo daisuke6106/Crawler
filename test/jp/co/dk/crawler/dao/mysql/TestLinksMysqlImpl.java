@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.crawler.TestCrawlerFoundation;
+import jp.co.dk.crawler.dao.CrawlerDaoConstants;
+import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.record.LinksRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.message.CrawlerMessage;
+import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.message.DataStoreManagerMessage;
 
@@ -22,8 +25,8 @@ public class TestLinksMysqlImpl extends TestCrawlerFoundation{
 	public void createTable_dropTable() {
 		try {
 			Links pages = new LinksMysqlImpl(super.getAccessableDataBaseAccessParameter());
-			pages.createTable();
 			pages.dropTable();
+			pages.createTable();
 		} catch (DataStoreManagerException e) {
 			e.printStackTrace();
 			fail(e);
@@ -33,10 +36,10 @@ public class TestLinksMysqlImpl extends TestCrawlerFoundation{
 	@Test
 	public void insert() throws DataStoreManagerException {
 		
-		// ========================================準備========================================
-		// テーブル作成
-		Links pages = new LinksMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		pages.createTable();
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		
+		Links pages =  (Links)manager.getDataAccessObject(CrawlerDaoConstants.LINKS);
 		
 		// ------------------------------------FROM値------------------------------------
 		// プロトコル
@@ -201,16 +204,16 @@ public class TestLinksMysqlImpl extends TestCrawlerFoundation{
 			assertEquals(e.getMessageObj(), CrawlerMessage.PARAMETER_IS_NOT_SET);
 		}
 		// ========================================後処理========================================
-		pages.dropTable();
+		manager.finishTrunsaction();
 	}
 	
 	@Test
 	public void select() throws DataStoreManagerException {
 		
-		// ========================================準備========================================
-		// テーブル作成
-		Links pages = new LinksMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		pages.createTable();
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		
+		Links pages =  (Links)manager.getDataAccessObject(CrawlerDaoConstants.LINKS);
 		
 		// ------------------------------------FROM値------------------------------------
 		// プロトコル
@@ -305,6 +308,6 @@ public class TestLinksMysqlImpl extends TestCrawlerFoundation{
 		}
 		
 		// ========================================後処理========================================
-		pages.dropTable();
+		manager.finishTrunsaction();
 	}
 }

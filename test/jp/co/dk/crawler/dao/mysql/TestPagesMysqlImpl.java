@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.crawler.TestCrawlerFoundation;
+import jp.co.dk.crawler.dao.CrawlerDaoConstants;
+import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.record.PagesRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.message.CrawlerMessage;
+import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.message.DataStoreManagerMessage;
 
@@ -22,8 +25,8 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 	public void createTable_dropTable() {
 		try {
 			Pages pages = new PagesMysqlImpl(super.getAccessableDataBaseAccessParameter());
-			pages.createTable();
 			pages.dropTable();
+			pages.createTable();
 		} catch (DataStoreManagerException e) {
 			fail(e);
 		}
@@ -32,10 +35,10 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 	@Test
 	public void insert() throws DataStoreManagerException {
 		
-		// ========================================準備========================================
-		// テーブル作成
-		Pages pages = new PagesMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		pages.createTable();
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		
+		Pages pages = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		
 		// プロトコル
 		String protcol   = "http";
@@ -153,17 +156,16 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 			assertEquals(e.getMessageObj(), CrawlerMessage.PARAMETER_IS_NOT_SET);
 		}
 		
-		// ========================================後処理========================================
-		pages.dropTable();
+		manager.finishTrunsaction();
 	}
 	
 	@Test
 	public void select() throws DataStoreManagerException {
 		
-		// ========================================準備========================================
-		// テーブル作成
-		Pages pages = new PagesMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		pages.createTable();
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		
+		Pages pages = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		
 		// プロトコル
 		String protcol   = "http";
@@ -286,18 +288,17 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 			fail(e);
 		}
 		
-		// ========================================後処理========================================
-		pages.dropTable();
+		manager.finishTrunsaction();
 	}
 	
 	
 	@Test
 	public void count() throws DataStoreManagerException {
 		
-		// ========================================準備========================================
-		// テーブル作成
-		Pages pages = new PagesMysqlImpl(super.getAccessableDataBaseAccessParameter());
-		pages.createTable();
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		
+		Pages pages = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		
 		// プロトコル
 		String protcol   = "http";
@@ -375,7 +376,6 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 			fail(e);
 		}
 		
-		// ========================================後処理========================================
-		pages.dropTable();
+		manager.finishTrunsaction();
 	}
 }

@@ -51,7 +51,9 @@ public class CrawlerControler {
 		
 		try {
 			Crawler crawler = new Crawler(url, dataStoreManager);
-			crawler.getPage().getDocument();
+			jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)crawler.getPage();
+			jp.co.dk.document.File file = page.getDocument();
+			jp.co.dk.document.html.HtmlDocument htmlDocument = (jp.co.dk.document.html.HtmlDocument)file;
 		} catch (CrawlerException | BrowzingException e) {
 			e.printStackTrace();
 		}

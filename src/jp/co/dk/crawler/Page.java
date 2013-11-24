@@ -271,7 +271,7 @@ public class Page extends jp.co.dk.browzer.Page{
 	
 	@Override
 	public Map<String, String> getParameter() {
-		return new ParameterMap(super.parameter);
+		return new ParameterMap(super.getParameter());
 	}
 	
 	/**

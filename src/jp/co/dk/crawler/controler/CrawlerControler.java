@@ -1,11 +1,14 @@
 package jp.co.dk.crawler.controler;
 
+import java.util.List;
+
 import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
+import jp.co.dk.crawler.dao.CrawlerErrors;
 import jp.co.dk.crawler.dao.Documents;
-import jp.co.dk.crawler.dao.Errors;
+import jp.co.dk.crawler.dao.RedirectErrors;
 import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
@@ -27,7 +30,8 @@ public class CrawlerControler {
 	 * ・URLS<br/>
 	 * ・PAGES<br/>
 	 * ・DOCUMENTS<br/>
-	 * ・ERRORS<br/>
+	 * ・REDIRECT_ERRORS<br/>
+	 * ・CRAWLER_ERRORS<br/>
 	 * 
 	 * @throws DataStoreManagerException テーブルの作成に失敗した場合
 	 */
@@ -35,21 +39,23 @@ public class CrawlerControler {
 		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
 		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
 		dataStoreManager.startTrunsaction();
-		Links     links     = (Links)    dataStoreManager.getDataAccessObject(CrawlerDaoConstants.LINKS);
-		Urls      urls      = (Urls)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
-		Pages     pages     = (Pages)    dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-		Documents documents = (Documents)dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		Errors    errors    = (Errors)   dataStoreManager.getDataAccessObject(CrawlerDaoConstants.ERRORS);
+		Links          links          = (Links)         dataStoreManager.getDataAccessObject(CrawlerDaoConstants.LINKS);
+		Urls           urls           = (Urls)          dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
+		Pages          pages          = (Pages)         dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+		Documents      documents      = (Documents)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+		RedirectErrors redirectErrors = (RedirectErrors)dataStoreManager.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
+		CrawlerErrors  crawlerErrors  = (CrawlerErrors) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
 		links.createTable();
 		urls.createTable();
 		pages.createTable();
 		documents.createTable();
-		errors.createTable();
+		redirectErrors.createTable();
+		crawlerErrors.createTable();
 		dataStoreManager.finishTrunsaction();
 	}
 	
 	
-	public void crawl(String url) throws DataStoreManagerException {
+	public void crawl(String url) throws CrawlerException, BrowzingException, DataStoreManagerException {
 		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
 		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
 		dataStoreManager.startTrunsaction();
@@ -59,7 +65,7 @@ public class CrawlerControler {
 			jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)crawler.getPage();
 			jp.co.dk.document.File file = page.getDocument();
 			jp.co.dk.document.html.HtmlDocument htmlDocument = (jp.co.dk.document.html.HtmlDocument)file;
-			htmlDocument.getChildElement(new ElementSelector() {
+			List<Element> anchorElementList = htmlDocument.getChildElement(new ElementSelector() {
 				@Override
 				public boolean judgment(Element element) {
 					if (!(element instanceof HtmlElement)) return false;
@@ -73,8 +79,11 @@ public class CrawlerControler {
 					return false;
 				}
 			});
+			for (Element element : anchorElementList) {
+				
+			}
 		} catch (CrawlerException | BrowzingException e) {
-			e.printStackTrace();
+			throw e;
 		}
 		
 		dataStoreManager.finishTrunsaction();

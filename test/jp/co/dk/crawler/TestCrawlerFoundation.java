@@ -4,8 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
+import jp.co.dk.crawler.dao.CrawlerErrors;
 import jp.co.dk.crawler.dao.Documents;
-import jp.co.dk.crawler.dao.Errors;
+import jp.co.dk.crawler.dao.RedirectErrors;
 import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
@@ -75,12 +76,14 @@ public class TestCrawlerFoundation extends TestCaseTemplate{
 		Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		Errors    errors    = (Errors)manager.getDataAccessObject(CrawlerDaoConstants.ERRORS);
+		RedirectErrors    redirectErrors = (RedirectErrors)manager.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
+		CrawlerErrors     crawlerErrors  = (CrawlerErrors)manager.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
 		links.createTable();
 		urls.createTable();
 		pages.createTable();
 		documents.createTable();
-		errors.createTable();
+		redirectErrors.createTable();
+		crawlerErrors.createTable();
 		manager.finishTrunsaction();
 	}
 	
@@ -92,12 +95,14 @@ public class TestCrawlerFoundation extends TestCaseTemplate{
 		Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-		Errors    errors    = (Errors)manager.getDataAccessObject(CrawlerDaoConstants.ERRORS);
+		RedirectErrors    redirectErrors = (RedirectErrors)manager.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
+		CrawlerErrors     crawlerErrors  = (CrawlerErrors)manager.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
 		links.dropTable();
 		urls.dropTable();
 		pages.dropTable();
 		documents.dropTable();
-		errors.dropTable();
+		redirectErrors.dropTable();
+		crawlerErrors.dropTable();
 		manager.finishTrunsaction();
 	}
 }

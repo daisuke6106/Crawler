@@ -8,10 +8,12 @@ import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.PageManager;
 import jp.co.dk.browzer.PageRedirectHandler;
+import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
-import jp.co.dk.crawler.dao.Errors;
+import jp.co.dk.crawler.dao.CrawlerErrors;
+import jp.co.dk.crawler.dao.RedirectErrors;
 import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.record.LinksRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
@@ -54,6 +56,13 @@ public class Crawler extends Browzer{
 		this.pageManager = this.createPageManager(url, super.pageRedirectHandler);
 	}
 	
+	/**
+	 * 現在アクティブになっているページの情報と、そのページが参照するIMG、SCRIPT、LINKタグが参照するページをデータストアへ保存します。<p/>
+	 * 
+	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
+	 * @throws BrowzingException         アクティブになっているページのドュメントオブジェクトの生成に失敗した場合
+	 * @throws DataStoreManagerException データストアの操作に失敗した場合
+	 */
 	public void saveAll() throws CrawlerException, BrowzingException, DataStoreManagerException {
 		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
 		activePage.save();
@@ -88,11 +97,11 @@ public class Crawler extends Browzer{
 				jp.co.dk.browzer.html.element.Image castedElement = (jp.co.dk.browzer.html.element.Image)element;
 				url = castedElement.getSrc();
 				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
-				this.addLinks(activePage, nextPage);
+				this.addLinks(activePage.getUrl(), nextPage.getUrl());
 				nextPage.save();
 				this.back();
 			} catch (BrowzingException e) {
-				this.errorHandler(activePage, url, e);
+				this.errorHandler(activePage, new Url(url), e);
 			}
 		}
 	}
@@ -130,11 +139,11 @@ public class Crawler extends Browzer{
 				jp.co.dk.browzer.html.element.Script castedElement = (jp.co.dk.browzer.html.element.Script)element;
 				url = castedElement.getSrc();
 				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
-				this.addLinks(activePage, nextPage);
+				this.addLinks(activePage.getUrl(), nextPage.getUrl());
 				nextPage.save();
 				this.back();
 			} catch (BrowzingException e) {
-				this.errorHandler(activePage, url, e);
+				this.errorHandler(activePage, new Url(url), e);
 			}
 		}
 	}
@@ -172,11 +181,11 @@ public class Crawler extends Browzer{
 				jp.co.dk.browzer.html.element.Link castedElement = (jp.co.dk.browzer.html.element.Link)element;
 				url = castedElement.getHref();
 				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
-				this.addLinks(activePage, nextPage);
+				this.addLinks(activePage.getUrl(), nextPage.getUrl());
 				nextPage.save();
 				this.back();
 			} catch (BrowzingException e) {
-				this.errorHandler(activePage, url, e);
+				this.errorHandler(activePage, new Url(url), e);
 			}
 		}
 	}
@@ -190,12 +199,12 @@ public class Crawler extends Browzer{
 	 * @throws CrawlerException エラーハンフドリング後、処理を停止させる場合
 	 * @throws DataStoreManagerException データストア関連処理に失敗した場合
 	 */
-	protected void errorHandler (Page beforePage, String nextPageUrl, Throwable throwable) throws CrawlerException, DataStoreManagerException {
+	protected void errorHandler (Page beforePage, Url nextPageUrl, Throwable throwable) throws CrawlerException, DataStoreManagerException {
 		if (throwable instanceof CrawlerPageRedirectHandlerException) {
 			CrawlerPageRedirectHandlerException crawlerPageRedirectHandlerException = (CrawlerPageRedirectHandlerException) throwable;
 			jp.co.dk.crawler.Page errorPage = (jp.co.dk.crawler.Page)crawlerPageRedirectHandlerException.getPage();
-			this.addLinks(beforePage, errorPage);
-			Errors errors = (Errors)this.dsm.getDataAccessObject(CrawlerDaoConstants.ERRORS);
+			this.addLinks(beforePage.getUrl(), errorPage.getUrl());
+			RedirectErrors errors = (RedirectErrors)this.dsm.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
 			long fileId = errorPage.getFileId();
 			long timeId = errorPage.getTimeId();
 			String message = throwable.getMessage();
@@ -204,9 +213,19 @@ public class Crawler extends Browzer{
 			Date updateDate = new Date();
 			errors.insert(fileId, timeId, message, stackTraceElements, createDate, updateDate);
 			return ;
+		} else {
+			this.addLinks(beforePage.getUrl(), nextPageUrl);
+			CrawlerErrors errors = (CrawlerErrors)this.dsm.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
+			String protcol                = nextPageUrl.getProtocol();
+			String host                   = nextPageUrl.getHost();
+			List<String> path             = nextPageUrl.getPathList();
+			Map<String, String> parameter = nextPageUrl.getParameter();
+			String message                = throwable.getMessage();
+			StackTraceElement[] stackTraceElements = throwable.getStackTrace();
+			Date createDate = new Date();
+			Date updateDate = new Date();
+			errors.insert(protcol, host, path, parameter, message, stackTraceElements, createDate, updateDate);
 		}
-		// TODO Pageインスタンス作成時のBrowzerExceptionは現在のところ無視、ログファイルにくらいは出しておく？対応方針を決め次第対応する
-		
 		
 	}
 	
@@ -219,16 +238,16 @@ public class Crawler extends Browzer{
 	 * @throws DataStoreManagerException 登録処理に失敗した場合
 	 * @throws CrawlerException 必須項目が不足している場合
 	 */
-	protected void addLinks(Page beforePage, Page toPage) throws DataStoreManagerException, CrawlerException {
+	protected void addLinks(Url beforePageUrl, Url toPageUrl) throws DataStoreManagerException, CrawlerException {
 		Links links = (Links)this.dsm.getDataAccessObject(CrawlerDaoConstants.LINKS);
-		String             from_protcol   = beforePage.getProtocol();
-		String             from_host      = beforePage.getHost();
-		List<String>       from_path      = beforePage.getPathList();
-		Map<String,String> from_parameter = beforePage.getParameter();
-		String             to_protcol     = toPage.getProtocol();
-		String             to_host        = toPage.getHost();
-		List<String>       to_path        = toPage.getPathList();
-		Map<String,String> to_parameter   = toPage.getParameter();
+		String             from_protcol   = beforePageUrl.getProtocol();
+		String             from_host      = beforePageUrl.getHost();
+		List<String>       from_path      = beforePageUrl.getPathList();
+		Map<String,String> from_parameter = beforePageUrl.getParameter();
+		String             to_protcol     = toPageUrl.getProtocol();
+		String             to_host        = toPageUrl.getHost();
+		List<String>       to_path        = toPageUrl.getPathList();
+		Map<String,String> to_parameter   = toPageUrl.getParameter();
 		Date createDate = new Date();
 		Date updateDate = new Date();
 		LinksRecord savedLinksRecord = links.select(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);

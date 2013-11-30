@@ -4,7 +4,7 @@ import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.message.BrowzingMessage;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
-import jp.co.dk.crawler.dao.Errors;
+import jp.co.dk.crawler.dao.RedirectErrors;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;

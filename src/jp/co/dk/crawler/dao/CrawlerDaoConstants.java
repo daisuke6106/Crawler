@@ -1,7 +1,8 @@
 package jp.co.dk.crawler.dao;
 
+import jp.co.dk.crawler.dao.mysql.CrawlerErrorsMysqlImpl;
 import jp.co.dk.crawler.dao.mysql.DocumentsMysqlImpl;
-import jp.co.dk.crawler.dao.mysql.ErrorsMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.RedirectErrorsMysqlImpl;
 import jp.co.dk.crawler.dao.mysql.LinksMysqlImpl;
 import jp.co.dk.crawler.dao.mysql.PagesMysqlImpl;
 import jp.co.dk.crawler.dao.mysql.UrlsMysqlImpl;
@@ -91,15 +92,15 @@ public enum CrawlerDaoConstants implements jp.co.dk.datastoremanager.DaoConstant
 		}
 	}),
 	
-	/** ERRORSテーブル */
-	ERRORS("ERRORS", new DataAccessObjectFactory() {
+	/** REDIRECT_ERRORSテーブル */
+	REDIRECT_ERRORS("REDIRECT_ERRORS", new DataAccessObjectFactory() {
 		@Override
 		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {
 			switch (kind) {
 			case ORACLE:
 				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());
 			case MYSQL:
-				return new ErrorsMysqlImpl(dataStore);
+				return new RedirectErrorsMysqlImpl(dataStore);
 			case POSTGRESQL:
 				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());
 			case CSV:
@@ -110,6 +111,24 @@ public enum CrawlerDaoConstants implements jp.co.dk.datastoremanager.DaoConstant
 		}
 	}),
 	
+	/** CRAWLER_ERRORSテーブル */
+	CRAWLER_ERRORS("CRAWLER_ERRORS", new DataAccessObjectFactory() {
+		@Override
+		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {
+			switch (kind) {
+			case ORACLE:
+				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());
+			case MYSQL:
+				return new CrawlerErrorsMysqlImpl(dataStore);
+			case POSTGRESQL:
+				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());
+			case CSV:
+				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, kind.toString());
+			default :
+				throw new DataStoreManagerException(DETASTORETYPE_IS_NOT_SUPPORT, "unkonown");
+			}
+		}
+	}),
 	;
 	
 	/** DAO名称 */

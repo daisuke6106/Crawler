@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JMockit Coverage Report - CrawlerErrorsMysqlImpl.java</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../../coverage.js'></script>
+  <script type='text/javascript' src='../../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption>Crawler/src/jp/co/dk/crawler/dao/mysql/CrawlerErrorsMysqlImpl.java</caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package jp.co.dk.crawler.dao.mysql;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import jp.co.dk.crawler.dao.CrawlerErrors;
+import jp.co.dk.crawler.dao.record.CrawlerErrorsRecord;
+import jp.co.dk.datastoremanager.DataStore;
+import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
+import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
+import jp.co.dk.datastoremanager.database.DataBaseDriverConstants;
+import jp.co.dk.datastoremanager.database.Sql;
+import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+</div><span>import ...</span></pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>19</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>public class CrawlerErrorsMysqlImpl extends AbstractDataBaseAccessObject implements CrawlerErrors{</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>21</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public CrawlerErrorsMysqlImpl(DataBaseAccessParameter parameter) throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>22</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l22s0'>		super(parameter);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>23</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l23s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>25</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public CrawlerErrorsMysqlImpl(DataBaseDriverConstants driver, String url,String sid, String user, String password) throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>26</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l26s0'>		super(driver, url, sid, user, password);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>27</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l27s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>29</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public CrawlerErrorsMysqlImpl(DataStore datastore) throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>30</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l30s0'>		super(datastore);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>31</td><td class='count'>6</td>
+      <td><pre class='prettyprint covered' id='l31s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>33</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>34</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void createTable() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>35</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l35s0'>		StringBuilder sb = new StringBuilder("CREATE TABLE CRAWLER_ERRORS ");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>36</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l36s0'>		sb.append('(');</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l37s0'>		sb.append("PROTOCOL         VARCHAR(6)   NOT NULL,");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>38</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l38s0'>		sb.append("HOSTNAME         VARCHAR(256) NOT NULL,");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>39</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l39s0'>		sb.append("H_PATH           INT          NOT NULL,");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>40</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l40s0'>		sb.append("H_PARAM          INT          NOT NULL,");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>41</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l41s0'>		sb.append("MESSAGE            TEXT    , ");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l42s0'>		sb.append("STACKTRACEELEMENTS LONGBLOB, ");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>43</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l43s0'>		sb.append("CREATE_DATE        DATETIME, ");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>44</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l44s0'>		sb.append("UPDATE_DATE        DATETIME, ");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>45</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l45s0'>		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_PARAM))");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>46</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l46s0'>		Sql sql = new Sql(sb.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>47</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l47s0'>		this.createTable(sql);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l48s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>50</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>51</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>52</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l52s0'>		StringBuilder sb = new StringBuilder("DROP TABLE CRAWLER_ERRORS ");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>53</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l53s0'>		Sql sql = new Sql(sb.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>54</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l54s0'>		this.dropTable(sql);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>55</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l55s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>57</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public CrawlerErrorsRecord select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException {</pre></td>
+    </tr>
+    <tr>
+      <td></td><td class='count'>2</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#7f8000' onclick='hidePath()'>Path coverage: 2/4</span>
+        <span class='covered' onclick="showPath(this,'l59s0 l60s0 l61s0 l67s0')">A: 1</span>
+        <span class='uncovered' onclick="showPath(this,'l59s0 l60s0 l60s1 l61s0 l67s0')">B: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l59s0 l59s1 l60s0 l61s0 l67s0')">C: 0</span>
+        <span class='covered' onclick="showPath(this,'l59s0 l59s1 l60s0 l60s1 l61s0 l67s0')">D: 1</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>59</td><td class='count'>2</td>
+      <td><pre class='prettyprint jmp'>		<span id='l59s0' title='Executions: 2' class='covered'>if (path == null)</span> <span id='l59s1' title='Executions: 1' class='covered'>path = new ArrayList&lt;String>();</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td class='count'>2</td>
+      <td><pre class='prettyprint jmp'>		<span id='l60s0' title='Executions: 2' class='covered'>if (parameter == null)</span> <span id='l60s1' title='Executions: 1' class='covered'>parameter = new HashMap&lt;String, String>();</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>61</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l61s0'>		StringBuilder sb = new StringBuilder("SELECT * FROM CRAWLER_ERRORS WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>62</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l62s0'>		Sql sql = new Sql(sb.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l63s0'>		sql.setParameter(protcol);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l64s0'>		sql.setParameter(host);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l65s0'>		sql.setParameter(path.hashCode());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l66s0'>		sql.setParameter(parameter.hashCode());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l67s0'>		return this.selectSingle(sql, new CrawlerErrorsRecord());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>68</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>70</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>71</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException{</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l72s0'>		Sql sql = new Sql("INSERT INTO CRAWLER_ERRORS VALUES (?, ?, ?, ?, ?, ?, ?, ?)");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>73</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l73s0'>		sql.setParameter(protcol);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>74</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l74s0'>		sql.setParameter(host);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l75s0'>		sql.setParameter(path.hashCode());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l76s0'>		sql.setParameter(parameter.hashCode());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l77s0'>		sql.setParameter(message);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>78</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l78s0'>		sql.setParameter(stackTraceElements);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>79</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l79s0'>		sql.setParameter(new Timestamp(createDate.getTime()));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>80</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l80s0'>		sql.setParameter(new Timestamp(updateDate.getTime()));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>81</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l81s0'>		this.insert(sql);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>82</td><td class='count'>3</td>
+      <td><pre class='prettyprint covered' id='l82s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>84</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

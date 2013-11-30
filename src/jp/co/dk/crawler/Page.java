@@ -91,12 +91,11 @@ public class Page extends jp.co.dk.browzer.Page{
 			String             protocol   = this.getProtocol();
 			String             host       = this.getHost();
 			List<String>       pathList   = this.getPathList();
-			String             filename   = this.getFileName();
 			Map<String,String> parameter  = this.getParameter();
 			long               fileid     = this.getFileId();
 			Date               createDate = this.getCreateDate();
 			Date               updateDate = this.getUpdateDate();
-			urls.insert(protocol, host, pathList, filename, parameter, url, fileid, createDate, updateDate);
+			urls.insert(protocol, host, pathList, parameter, url, fileid, createDate, updateDate);
 		} catch (DataStoreManagerException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
@@ -108,7 +107,6 @@ public class Page extends jp.co.dk.browzer.Page{
 			String                   protocol       = this.getProtocol();
 			String                   host           = this.getHost();
 			List<String>             pathList       = this.getPathList();
-			String                   filename       = this.getFileName();
 			Map<String,String>       parameter      = this.getParameter();
 			long                     fileid         = this.getFileId();
 			long                     timeid         = this.getTimeId();
@@ -118,7 +116,7 @@ public class Page extends jp.co.dk.browzer.Page{
 			Map<String,List<String>> responseHeader = this.getResponseHeader().getHeaderMap();
 			String                   httpStatusCode = this.getResponseHeader().getResponseRecord().getHttpStatusCode().getCode();
 			String                   httpVersion    = this.getResponseHeader().getResponseRecord().getHttpVersion();
-			pages.insert(protocol, host, pathList, filename, parameter, requestHeader, responseHeader, httpStatusCode, httpVersion, fileid, timeid, createDate, updateDate);
+			pages.insert(protocol, host, pathList, parameter, requestHeader, responseHeader, httpStatusCode, httpVersion, fileid, timeid, createDate, updateDate);
 		} catch (DataStoreManagerException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
@@ -153,9 +151,8 @@ public class Page extends jp.co.dk.browzer.Page{
 			String              protcol   = this.getProtocol();
 			String              host      = this.getHost();
 			List<String>        pathList  = this.getPathList();
-			String              filename  = this.getFileName();
 			Map<String, String> parameter = this.getParameter();
-			int count = pages.count(protcol, host, pathList, filename, parameter);
+			int count = pages.count(protcol, host, pathList, parameter);
 			return count;
 		} catch (DataStoreManagerException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
@@ -271,7 +268,7 @@ public class Page extends jp.co.dk.browzer.Page{
 	
 	@Override
 	public Map<String, String> getParameter() {
-		return new ParameterMap(super.getParameter());
+		return new ParameterMap(this.url.getParameter());
 	}
 	
 	/**

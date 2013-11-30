@@ -64,14 +64,13 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * @param protocol  プロトコル名
 	 * @param hostname  ホスト名
 	 * @param path      パスのハッシュ値
-	 * @param filename  ファイル名のハッシュ値
 	 * @param parameter パラメータのハッシュ値
 	 * @return カウント結果
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>38</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public int count(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
+      <td class='line'>37</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int count(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -82,14 +81,13 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * @param protocol  プロトコル名
 	 * @param hostname  ホスト名
 	 * @param path      パスのハッシュ値
-	 * @param filename  ファイル名のハッシュ値
 	 * @param parameter パラメータのハッシュ値
 	 * @return 取得したレコードオブジェクトの一覧
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>50</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public List&lt;PagesRecord> select(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
+      <td class='line'>48</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public List&lt;PagesRecord> select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -100,7 +98,6 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * @param protocol  プロトコル名
 	 * @param hostname  ホスト名
 	 * @param path      パスのハッシュ値
-	 * @param filename  ファイル名のハッシュ値
 	 * @param parameter パラメータのハッシュ値
 	 * @param fileId    ファイルID
 	 * @param timeId    タイムID
@@ -108,8 +105,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>64</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public PagesRecord select(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter, long fileId, long timeId) throws DataStoreManagerException ;</pre></td>
+      <td class='line'>61</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public PagesRecord select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter, long fileId, long timeId) throws DataStoreManagerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -123,7 +120,6 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * @param protcol        プロトコル文字列（必須）
 	 * @param host           ホスト名（必須）
 	 * @param path           パスリスト（設定されていない場合、空のリストで置き換え）
-	 * @param filename       ファイル名のハッシュ値（設定されていない場合、空の文字列で置き換え）
 	 * @param parameter      パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param requestHeader  リクエストヘッダ
 	 * @param responceHeader レスポンスヘッダ
@@ -138,8 +134,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>88</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter, Map&lt;String, String> requestHeader, Map&lt;String, List&lt;String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;</pre></td>
+      <td class='line'>84</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter, Map&lt;String, String> requestHeader, Map&lt;String, List&lt;String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -152,11 +148,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>96</td><td>&nbsp;</td>
+      <td class='line'>92</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
     </tr>
     <tr>
-      <td class='line'>97</td><td>&nbsp;</td>
+      <td class='line'>93</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

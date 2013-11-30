@@ -52,15 +52,14 @@ public class TestPage extends TestCrawlerFoundation{
 			String             protocol  = page.getProtocol();
 			String             host      = page.getHost();
 			List<String>       pathList  = page.getPathList();
-			String             filename  = page.getFileName();
 			Map<String,String> parameter = page.getParameter();
 			long               fileId    = page.getFileId();
 			long               timeId    = page.getTimeId();
 			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
 			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-			UrlsRecord      urlRecord       = urls.select(protocol, host, pathList, filename, parameter);
-			PagesRecord     pagesRecord     = pages.select(protocol, host, pathList, filename, parameter, fileId, timeId);
+			UrlsRecord      urlRecord       = urls.select(protocol, host, pathList, parameter);
+			PagesRecord     pagesRecord     = pages.select(protocol, host, pathList, parameter, fileId, timeId);
 			DocumentsRecord documentsRecord = documents.select(fileId, timeId);
 			
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝

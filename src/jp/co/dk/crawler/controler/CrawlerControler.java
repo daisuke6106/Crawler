@@ -1,6 +1,7 @@
 package jp.co.dk.crawler.controler;
 
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
@@ -12,6 +13,10 @@ import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
+import jp.co.dk.document.Element;
+import jp.co.dk.document.ElementSelector;
+import jp.co.dk.document.html.HtmlElement;
+import jp.co.dk.document.html.constant.HtmlElementName;
 
 public class CrawlerControler {
 	
@@ -54,6 +59,20 @@ public class CrawlerControler {
 			jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)crawler.getPage();
 			jp.co.dk.document.File file = page.getDocument();
 			jp.co.dk.document.html.HtmlDocument htmlDocument = (jp.co.dk.document.html.HtmlDocument)file;
+			htmlDocument.getChildElement(new ElementSelector() {
+				@Override
+				public boolean judgment(Element element) {
+					if (!(element instanceof HtmlElement)) return false;
+					HtmlElement htmlElement = (HtmlElement)element;
+					if (htmlElement instanceof A) {
+						A anchor = (A) htmlElement;
+						String beforeHost = anchor.getPage().getHost();
+						String nextHost   = anchor.getHost();
+						if (beforeHost.equals(nextHost)) return true;
+					}
+					return false;
+				}
+			});
 		} catch (CrawlerException | BrowzingException e) {
 			e.printStackTrace();
 		}

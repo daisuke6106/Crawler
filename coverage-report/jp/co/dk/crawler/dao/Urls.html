@@ -64,14 +64,13 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * @param protcol    プロトコル文字列（必須）
 	 * @param host       ホスト名（必須）
 	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
-	 * @param filename   ファイル名（設定されていない場合、空の文字列で置き換え）
 	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>38</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public UrlsRecord select(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
+      <td class='line'>37</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public UrlsRecord select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -85,7 +84,6 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 * @param protcol    プロトコル文字列（必須）
 	 * @param host       ホスト名（必須）
 	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
-	 * @param filename   ファイル名（設定されていない場合、空の文字列で置き換え）
 	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param url        URL文字列
 	 * @param fileid     ファイルID
@@ -96,8 +94,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>58</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, String filename, Map&lt;String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;</pre></td>
+      <td class='line'>56</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -110,11 +108,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>66</td><td>&nbsp;</td>
+      <td class='line'>64</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
     </tr>
     <tr>
-      <td class='line'>67</td><td>&nbsp;</td>
+      <td class='line'>65</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

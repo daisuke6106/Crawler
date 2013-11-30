@@ -31,11 +31,10 @@ public interface Urls extends DataAccessObject {
 	 * @param protcol    プロトコル文字列（必須）
 	 * @param host       ホスト名（必須）
 	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
-	 * @param filename   ファイル名（設定されていない場合、空の文字列で置き換え）
 	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */
-	public UrlsRecord select(String protcol, String host, List<String> path, String filename, Map<String, String> parameter) throws DataStoreManagerException ;
+	public UrlsRecord select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException ;
 	
 	/**
 	 * URLSテーブルから指定の１レコードを登録する。<p/>
@@ -46,7 +45,6 @@ public interface Urls extends DataAccessObject {
 	 * @param protcol    プロトコル文字列（必須）
 	 * @param host       ホスト名（必須）
 	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
-	 * @param filename   ファイル名（設定されていない場合、空の文字列で置き換え）
 	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param url        URL文字列
 	 * @param fileid     ファイルID
@@ -55,7 +53,7 @@ public interface Urls extends DataAccessObject {
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 * @throws CrawlerException 必須パラメータが設定されていない場合
 	 */
-	public void insert(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;
 	
 	/**
 	 * URLSテーブルを削除する。<p/>

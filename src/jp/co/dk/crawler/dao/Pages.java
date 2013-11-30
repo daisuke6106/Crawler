@@ -31,11 +31,10 @@ public interface Pages extends DataAccessObject{
 	 * @param protocol  プロトコル名
 	 * @param hostname  ホスト名
 	 * @param path      パスのハッシュ値
-	 * @param filename  ファイル名のハッシュ値
 	 * @param parameter パラメータのハッシュ値
 	 * @return カウント結果
 	 */
-	public int count(String protcol, String host, List<String> path, String filename, Map<String, String> parameter) throws DataStoreManagerException ;
+	public int count(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException ;
 	
 	/**
 	 * PAGESテーブルから指定の条件に合致するレコードを取得する。
@@ -43,11 +42,10 @@ public interface Pages extends DataAccessObject{
 	 * @param protocol  プロトコル名
 	 * @param hostname  ホスト名
 	 * @param path      パスのハッシュ値
-	 * @param filename  ファイル名のハッシュ値
 	 * @param parameter パラメータのハッシュ値
 	 * @return 取得したレコードオブジェクトの一覧
 	 */
-	public List<PagesRecord> select(String protcol, String host, List<String> path, String filename, Map<String, String> parameter) throws DataStoreManagerException ;
+	public List<PagesRecord> select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException ;
 	
 	/**
 	 * PAGESテーブルから指定の条件に合致するレコードを取得する。
@@ -55,13 +53,12 @@ public interface Pages extends DataAccessObject{
 	 * @param protocol  プロトコル名
 	 * @param hostname  ホスト名
 	 * @param path      パスのハッシュ値
-	 * @param filename  ファイル名のハッシュ値
 	 * @param parameter パラメータのハッシュ値
 	 * @param fileId    ファイルID
 	 * @param timeId    タイムID
 	 * @return 取得したレコードオブジェクト
 	 */
-	public PagesRecord select(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, long fileId, long timeId) throws DataStoreManagerException ;
+	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter, long fileId, long timeId) throws DataStoreManagerException ;
 	
 	/**
 	 * PAGESテーブルから指定の１レコードを登録する。<p/>
@@ -72,7 +69,6 @@ public interface Pages extends DataAccessObject{
 	 * @param protcol        プロトコル文字列（必須）
 	 * @param host           ホスト名（必須）
 	 * @param path           パスリスト（設定されていない場合、空のリストで置き換え）
-	 * @param filename       ファイル名のハッシュ値（設定されていない場合、空の文字列で置き換え）
 	 * @param parameter      パラメータマップ（設定されていない場合、空のマップで置き換え）
 	 * @param requestHeader  リクエストヘッダ
 	 * @param responceHeader レスポンスヘッダ
@@ -85,7 +81,7 @@ public interface Pages extends DataAccessObject{
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 * @throws CrawlerException          必須パラメータが設定されていない場合
 	 */
-	public void insert(String protcol, String host, List<String> path, String filename, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;
 	
 	/**
 	 * PAGESテーブルを削除する。<p/>

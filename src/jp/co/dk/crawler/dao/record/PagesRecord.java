@@ -27,9 +27,6 @@ public class PagesRecord implements DataConvertable{
 	/** パス-ハッシュ値 */
 	protected int h_path;
 	
-	/** ファイル名-ハッシュ値 */
-	protected int h_filename;
-	
 	/** パラメータ-ハッシュ値 */
 	protected int h_parameter;
 	
@@ -91,14 +88,6 @@ public class PagesRecord implements DataConvertable{
 	 */
 	public int getH_path() {
 		return h_path;
-	}
-	
-	/**
-	 * ファイル名のハッシュ値を取得する。
-	 * @return ファイル名のハッシュ値
-	 */
-	public int getH_filename() {
-		return h_filename;
 	}
 	
 	/**
@@ -232,7 +221,6 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.protocol       = record.getString("PROTOCOL");
 		pagesRecord.host           = record.getString("HOSTNAME");
 		pagesRecord.h_path         = record.getInt("H_PATH");
-		pagesRecord.h_filename     = record.getInt("H_FILENAME");
 		pagesRecord.h_parameter    = record.getInt("H_PARAM");
 		pagesRecord.fileid         = record.getLong("FILEID");
 		pagesRecord.timeid         = record.getLong("TIMEID");
@@ -256,20 +244,19 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.protocol       = record.getString(1);
 		pagesRecord.host           = record.getString(2);
 		pagesRecord.h_path         = record.getInt(3);
-		pagesRecord.h_filename     = record.getInt(4);
-		pagesRecord.h_parameter    = record.getInt(5);
-		pagesRecord.path           = (List<String>) record.getObject(6);
-		pagesRecord.pathCount      = record.getInt(7);
-		pagesRecord.parameter      = (Map<String,String>) record.getObject(8);
-		pagesRecord.parameterCount = record.getInt(9);
-		pagesRecord.requestHeader  = (Map<String,String>) record.getObject(10);
-		pagesRecord.responceHeader = (Map<String,List<String>>) record.getObject(11);
-		pagesRecord.httpStatusCode = record.getString(12);
-		pagesRecord.httpVersion    = record.getString(13);
-		pagesRecord.fileid         = record.getLong(14);
-		pagesRecord.timeid         = record.getLong(15);
-		pagesRecord.createDate     = record.getDate(16);
-		pagesRecord.updateDate     = record.getDate(17);
+		pagesRecord.h_parameter    = record.getInt(4);
+		pagesRecord.path           = (List<String>) record.getObject(5);
+		pagesRecord.pathCount      = record.getInt(6);
+		pagesRecord.parameter      = (Map<String,String>) record.getObject(7);
+		pagesRecord.parameterCount = record.getInt(8);
+		pagesRecord.requestHeader  = (Map<String,String>) record.getObject(9);
+		pagesRecord.responceHeader = (Map<String,List<String>>) record.getObject(10);
+		pagesRecord.httpStatusCode = record.getString(11);
+		pagesRecord.httpVersion    = record.getString(12);
+		pagesRecord.fileid         = record.getLong(13);
+		pagesRecord.timeid         = record.getLong(14);
+		pagesRecord.createDate     = record.getDate(15);
+		pagesRecord.updateDate     = record.getDate(16);
 		return pagesRecord;
 	}
 }

@@ -15,6 +15,7 @@ import jp.co.dk.crawler.dao.Errors;
 import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.record.LinksRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.crawler.exception.CrawlerPageRedirectHandlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.Element;
@@ -59,6 +60,7 @@ public class Crawler extends Browzer{
 		this.saveImage();
 		this.saveScript();
 		this.saveLink();
+		this.pageManager.removeChild();
 	}
 	
 	/**
@@ -222,18 +224,16 @@ public class Crawler extends Browzer{
 		String             from_protcol   = beforePage.getProtocol();
 		String             from_host      = beforePage.getHost();
 		List<String>       from_path      = beforePage.getPathList();
-		String             from_filename  = beforePage.getFileName();
 		Map<String,String> from_parameter = beforePage.getParameter();
 		String             to_protcol     = toPage.getProtocol();
 		String             to_host        = toPage.getHost();
 		List<String>       to_path        = toPage.getPathList();
-		String             to_filename    = toPage.getFileName();
 		Map<String,String> to_parameter   = toPage.getParameter();
 		Date createDate = new Date();
 		Date updateDate = new Date();
-		LinksRecord savedLinksRecord = links.select(from_protcol, from_host, from_path, from_filename, from_parameter, to_protcol, to_host, to_path, to_filename, to_parameter, createDate, updateDate);
+		LinksRecord savedLinksRecord = links.select(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);
 		if (savedLinksRecord == null) {
-			links.insert(from_protcol, from_host, from_path, from_filename, from_parameter, to_protcol, to_host, to_path, to_filename, to_parameter, createDate, updateDate);
+			links.insert(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);
 		}
 	}
 	
@@ -316,21 +316,3 @@ class CrawlerPageRedirectHandler extends PageRedirectHandler {
 	}
 }
 
-class CrawlerPageRedirectHandlerException extends BrowzingException {
-
-	/** シリアルバージョンID */
-	private static final long serialVersionUID = -6589147054844498464L;
-	
-	/** エラー発生ページオブジェクト */
-	private jp.co.dk.crawler.Page page;
-	
-	CrawlerPageRedirectHandlerException(BrowzingException exception, jp.co.dk.crawler.Page page) {
-		super(exception.getMessageObj(), exception.getEmbeddedStrList());
-		this.page = page;
-	}
-
-	public Page getPage() {
-		return page;
-	}
-	
-}

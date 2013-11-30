@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JMockit Coverage Report - CrawlerPageRedirectHandlerException.java</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../coverage.js'></script>
+  <script type='text/javascript' src='../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption>Crawler/src/jp/co/dk/crawler/exception/CrawlerPageRedirectHandlerException.java</caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package jp.co.dk.crawler.exception;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import jp.co.dk.browzer.Page;
+import jp.co.dk.browzer.exception.BrowzingException;
+</div><span>import ...</span></pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>/**
+ * CrawlerPageRedirectHandlerExceptionは、ページリダイレクトハンドラにてHTTPステータスコードを判定した際に発生する例外クラスです。&lt;p/>
+ * HTTPステータスコードが404等を返却、そのページに遷移出来なかった場合などに発生します。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */</div><span>/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>13</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>public class CrawlerPageRedirectHandlerException extends BrowzingException {</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>15</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** シリアルバージョンID */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>16</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private static final long serialVersionUID = -6589147054844498464L;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>18</td><td>&nbsp;</td>
+      <td><pre class='comment'>	/** エラー発生ページオブジェクト */</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>19</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private jp.co.dk.crawler.Page <span class='instance covered' title='Reads: 4 Writes: 4'>page</span>;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * コンストラクタ&lt;p/>
+	 * 遷移先のページオブジェクトと、例外オブジェクトを元に、例外クラスを生成します。
+	 * 
+	 * @param exception 例外オブジェクト
+	 * @param page 例外が発生したページオブジェクト
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>28</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public CrawlerPageRedirectHandlerException(BrowzingException exception, jp.co.dk.crawler.Page page) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>29</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l29s0'>		super(exception.getMessageObj(), exception.getEmbeddedStrList());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>30</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l30s0'>		this.page = page;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>31</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l31s0'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * この例外が発生したページオブジェクトを返却します。
+	 * @return ペジオブジェクト
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Page getPage() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>38</td><td class='count'>4</td>
+      <td><pre class='prettyprint covered' id='l38s0'>		return page;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>39</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>41</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

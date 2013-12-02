@@ -2,6 +2,7 @@ package jp.co.dk.crawler.controler;
 
 import java.util.List;
 
+import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.Crawler;
@@ -55,40 +56,29 @@ public class CrawlerControler {
 	}
 	
 	
-	public void crawl(String url) throws CrawlerException, BrowzingException, DataStoreManagerException {
+	public void crawl(String url, CrawlingRule crawlingRule) throws CrawlerException, BrowzingException, DataStoreManagerException {
 		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
 		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
 		dataStoreManager.startTrunsaction();
 		
 		try {
 			Crawler crawler = new Crawler(url, dataStoreManager);
-			jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page)crawler.getPage();
-			jp.co.dk.document.File file = page.getDocument();
-			jp.co.dk.document.html.HtmlDocument htmlDocument = (jp.co.dk.document.html.HtmlDocument)file;
-			List<Element> anchorElementList = htmlDocument.getChildElement(new ElementSelector() {
-				@Override
-				public boolean judgment(Element element) {
-					if (!(element instanceof HtmlElement)) return false;
-					HtmlElement htmlElement = (HtmlElement)element;
-					if (htmlElement instanceof A) {
-						A anchor = (A) htmlElement;
-						String beforeHost = anchor.getPage().getHost();
-						String nextHost   = anchor.getHost();
-						if (beforeHost.equals(nextHost)) return true;
-					}
-					return false;
-				}
-			});
-			for (Element element : anchorElementList) {
-				
-			}
+			crawler.save();
+			
+			
 		} catch (CrawlerException | BrowzingException e) {
 			throw e;
 		}
-		
 		dataStoreManager.finishTrunsaction();
 	}
 	
+	/**
+	 * 
+	 * @param url
+	 * @throws DataStoreManagerException
+	 * @throws CrawlerException
+	 * @throws BrowzingException
+	 */
 	public void save(String url) throws DataStoreManagerException, CrawlerException, BrowzingException {
 		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
 		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);

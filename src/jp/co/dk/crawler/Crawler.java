@@ -57,6 +57,17 @@ public class Crawler extends Browzer{
 	}
 	
 	/**
+	 * 現在アクティブになっているページを保存する。
+	 * 
+	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
+	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
+	 */
+	public boolean save() throws CrawlerException {
+		jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page) this.getPage();
+		return page.save();
+	}
+	
+	/**
 	 * 現在アクティブになっているページの情報と、そのページが参照するIMG、SCRIPT、LINKタグが参照するページをデータストアへ保存します。<p/>
 	 * 
 	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合

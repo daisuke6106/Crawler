@@ -12,7 +12,7 @@ public class TestCrawlerControler extends TestCrawlerFoundation{
 
 	@Test
 	public void save() {
-		CrawlerControler controler = new CrawlerControler();
+		CrawlerExecuter controler = new CrawlerExecuter();
 		try {
 			controler.save("http://kanasoku.info/articles/32592.html");
 		} catch (DataStoreManagerException e) {

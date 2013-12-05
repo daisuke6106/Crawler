@@ -246,10 +246,11 @@ public class Crawler extends Browzer{
 	 * 
 	 * @param beforePage 遷移元ページ情報
 	 * @param toPage     遷移先ページ情報
+	 * @return true=保存をおこなった場合、false=すでにレコードが存在した場合
 	 * @throws DataStoreManagerException 登録処理に失敗した場合
 	 * @throws CrawlerException 必須項目が不足している場合
 	 */
-	protected void addLinks(Url beforePageUrl, Url toPageUrl) throws DataStoreManagerException, CrawlerException {
+	public boolean addLinks(Url beforePageUrl, Url toPageUrl) throws DataStoreManagerException, CrawlerException {
 		Links links = (Links)this.dsm.getDataAccessObject(CrawlerDaoConstants.LINKS);
 		String             from_protcol   = beforePageUrl.getProtocol();
 		String             from_host      = beforePageUrl.getHost();
@@ -262,9 +263,9 @@ public class Crawler extends Browzer{
 		Date createDate = new Date();
 		Date updateDate = new Date();
 		LinksRecord savedLinksRecord = links.select(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);
-		if (savedLinksRecord == null) {
-			links.insert(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);
-		}
+		if (savedLinksRecord != null) return false;
+		links.insert(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);
+		return true;
 	}
 	
 	@Override

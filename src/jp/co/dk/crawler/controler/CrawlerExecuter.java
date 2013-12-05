@@ -2,9 +2,7 @@ package jp.co.dk.crawler.controler;
 
 import java.util.List;
 
-import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.BrowzingException;
-import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.CrawlerErrors;
@@ -18,11 +16,8 @@ import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
 import jp.co.dk.document.Element;
-import jp.co.dk.document.ElementSelector;
-import jp.co.dk.document.html.HtmlElement;
-import jp.co.dk.document.html.constant.HtmlElementName;
 
-public class CrawlerControler {
+public class CrawlerExecuter {
 	
 	/**
 	 * 環境作成を実行する。<p/>
@@ -56,7 +51,7 @@ public class CrawlerControler {
 	}
 	
 	
-	public void crawl(String url, CrawlingRule crawlingRule) throws CrawlerException, BrowzingException, DataStoreManagerException {
+	public void crawl(String url, CrawlingControler crawlingRule) throws CrawlerException, BrowzingException, DataStoreManagerException {
 		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
 		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
 		dataStoreManager.startTrunsaction();
@@ -64,8 +59,10 @@ public class CrawlerControler {
 		try {
 			Crawler crawler = new Crawler(url, dataStoreManager);
 			crawler.save();
-			
-			
+			List<Element> refsElements = crawlingRule.getRefsElements(crawler.getPage());
+			for (Element element : refsElements) {
+				
+			}
 		} catch (CrawlerException | BrowzingException e) {
 			throw e;
 		}

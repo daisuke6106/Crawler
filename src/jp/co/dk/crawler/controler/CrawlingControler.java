@@ -3,8 +3,12 @@ package jp.co.dk.crawler.controler;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
 import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.crawler.Crawler;
 import jp.co.dk.document.Element;
 import jp.co.dk.document.ElementSelector;
 import jp.co.dk.document.File;
@@ -12,7 +16,17 @@ import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.HtmlElement;
 import jp.co.dk.document.html.constant.HtmlElementName;
 
-public class CrawlingRule {
+public class CrawlingControler {
+	
+	void control(Crawler crawler) throws BrowzingException {
+		List<Element> refsElements = this.getRefsElements(crawler.getPage());
+		for (Element element : refsElements) {
+			if (!(element instanceof MovableElement)) continue;
+			MovableElement movableElement = (MovableElement)element;
+			crawler.move(movableElement);
+		}
+	}
+	
 	
 	List<Element> getRefsElements(Page page) throws BrowzingException {
 		List<Element> elementList = new ArrayList<Element>();
@@ -39,6 +53,15 @@ public class CrawlingRule {
 		elementList.addAll(anchors);
 		return elementList;
 	}
+}
+
+class MovableElementSelector implements ElementSelector {
+	@Override
+	public boolean judgment(Element element) {
+		if (element instanceof MovableElement) return true;
+		return false;
+	}
+	
 }
 
 class AnchorElementSelector implements ElementSelector {

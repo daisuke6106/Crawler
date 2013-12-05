@@ -84,9 +84,17 @@ public class Page extends jp.co.dk.browzer.Page{
 		return true;
 	}
 	
-	public void addUrlRecord() throws CrawlerException{
+	/**
+	 * URLテーブルに対してレコードを追加する。<p/>
+	 * このページのURL情報をURLテーブルに対してレコードを追加する。<br/>
+	 * すでにレコードが存在した場合、保存は行わない。その場合、falseを返却します。
+	 * 
+	 * @return true=保存をおこなった場合、false=すでにレコードが存在した場合
+	 * @throws CrawlerException データストアへの保存に失敗した場合
+	 */
+	public boolean addUrlRecord() throws CrawlerException{
 		try {
-			Urls               urls       = (Urls)      dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
+			Urls               urls       = (Urls)dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
 			String             url        = this.getURL();
 			String             protocol   = this.getProtocol();
 			String             host       = this.getHost();
@@ -95,15 +103,25 @@ public class Page extends jp.co.dk.browzer.Page{
 			long               fileid     = this.getFileId();
 			Date               createDate = this.getCreateDate();
 			Date               updateDate = this.getUpdateDate();
+			if (urls.select(protocol, host, pathList, parameter) != null) return false;
 			urls.insert(protocol, host, pathList, parameter, url, fileid, createDate, updateDate);
+			return true;
 		} catch (DataStoreManagerException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
 	
-	public void addPageRecord() throws CrawlerException{
+	/**
+	 * PAGEテーブルに対してレコードを追加する。<p/>
+	 * このページのページ情報をPAGEテーブルに対してレコードを追加する。<br/>
+	 * すでにレコードが存在した場合、保存は行わない。その場合、falseを返却します。
+	 * 
+	 * @return true=保存をおこなった場合、false=すでにレコードが存在した場合
+	 * @throws CrawlerException データストアへの保存に失敗した場合
+	 */
+	public boolean addPageRecord() throws CrawlerException{
 		try {
-			Pages     pages     = (Pages)     dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
+			Pages     pages     = (Pages)dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 			String                   protocol       = this.getProtocol();
 			String                   host           = this.getHost();
 			List<String>             pathList       = this.getPathList();
@@ -116,13 +134,23 @@ public class Page extends jp.co.dk.browzer.Page{
 			Map<String,List<String>> responseHeader = this.getResponseHeader().getHeaderMap();
 			String                   httpStatusCode = this.getResponseHeader().getResponseRecord().getHttpStatusCode().getCode();
 			String                   httpVersion    = this.getResponseHeader().getResponseRecord().getHttpVersion();
+			if (pages.select(protocol, host, pathList, parameter, fileid, timeid) != null) return false;
 			pages.insert(protocol, host, pathList, parameter, requestHeader, responseHeader, httpStatusCode, httpVersion, fileid, timeid, createDate, updateDate);
+			return true;
 		} catch (DataStoreManagerException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
 	
-	public void addDocumentRecord() throws CrawlerException{
+	/**
+	 * DOCUMENTテーブルに対してレコードを追加する。<p/>
+	 * このページのドキュメントをDOCUMENTテーブルに対してレコードを追加する。<br/>
+	 * すでにレコードが存在した場合、保存は行わない。その場合、falseを返却します。
+	 * 
+	 * @return true=保存をおこなった場合、false=すでにレコードが存在した場合
+	 * @throws CrawlerException データストアへの保存に失敗した場合
+	 */
+	public boolean addDocumentRecord() throws CrawlerException{
 		try {
 			Documents documents  = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
 			String  filename     = this.getFileName();
@@ -133,7 +161,9 @@ public class Page extends jp.co.dk.browzer.Page{
 			Date    createDate   = this.getCreateDate();
 			Date    updateDate   = this.getUpdateDate();
 			Date    lastModified = this.getResponseHeader().getLastModified();
+			if (documents.select(fileid, timeid) != null) return false;
 			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);
+			return true;
 		} catch (DataStoreManagerException | BrowzingException e) {
 			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}

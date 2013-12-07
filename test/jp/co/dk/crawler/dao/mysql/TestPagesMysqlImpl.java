@@ -22,17 +22,6 @@ import org.junit.Test;
 public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 
 	@Test
-	public void createTable_dropTable() {
-		try {
-			Pages pages = new PagesMysqlImpl(super.getAccessableDataBaseAccessParameter());
-			pages.dropTable();
-			pages.createTable();
-		} catch (DataStoreManagerException e) {
-			fail(e);
-		}
-	}
-	
-	@Test
 	public void insert() throws DataStoreManagerException {
 		
 		DataStoreManager manager = getAccessableDataStoreManager();
@@ -302,81 +291,81 @@ public class TestPagesMysqlImpl extends TestCrawlerFoundation{
 		Pages pages = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 		
 		try {
-		// プロトコル
-		String protcol   = "http";
-		// ホスト名
-		String host      = "google.com";
-		// パスリスト
-		List<String> path = new ArrayList<String>();
-		path.add("doodles");
-		path.add("finder");
-		path.add("2013");
-		path.add("All%20doodles");
-		// ファイル名
-		String filename = "filename.txt";
-		// パラメータマップ
-		Map<String, String> parameter = new HashMap<String,String>();
-		parameter.put("Parameter_key", "Parameter_value");
-		// リクエストヘッダ
-		Map<String, String> requestHeader = new HashMap<String,String>();
-		requestHeader.put("RequestHeader_key", "RequestHeader_value");
-		// レスポンスヘッダ
-		Map<String, List<String>> responceHeader = new HashMap<String,List<String>>();
-		List<String> responseHeaderValue = new ArrayList<String>();
-		responseHeaderValue.add("ResponceHeader_value");
-		responceHeader.put("ResponceHeader_key", responseHeaderValue);
-		// HTTPステータスコード
-		String httpStutasCode = "200";
-		// HTTPバージョン
-		String httpVersion = "1.1";
-		// ファイルＩＤ
-		long fileid = 1234567890L;
-		// タイムID
-		long timeid = new Date().getTime();
-		// 作成日時
-		Date createDate = new Date();
-		// 更新日時
-		Date updateDate = new Date();
-		
-		// 引数に正常値を渡した場合、正常に登録できること。
-		try {
-			// 登録処理を実行
-			pages.insert(protcol, host, path,  parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
+			// プロトコル
+			String protcol   = "http";
+			// ホスト名
+			String host      = "google.com";
+			// パスリスト
+			List<String> path = new ArrayList<String>();
+			path.add("doodles");
+			path.add("finder");
+			path.add("2013");
+			path.add("All%20doodles");
+			// ファイル名
+			String filename = "filename.txt";
+			// パラメータマップ
+			Map<String, String> parameter = new HashMap<String,String>();
+			parameter.put("Parameter_key", "Parameter_value");
+			// リクエストヘッダ
+			Map<String, String> requestHeader = new HashMap<String,String>();
+			requestHeader.put("RequestHeader_key", "RequestHeader_value");
+			// レスポンスヘッダ
+			Map<String, List<String>> responceHeader = new HashMap<String,List<String>>();
+			List<String> responseHeaderValue = new ArrayList<String>();
+			responseHeaderValue.add("ResponceHeader_value");
+			responceHeader.put("ResponceHeader_key", responseHeaderValue);
+			// HTTPステータスコード
+			String httpStutasCode = "200";
+			// HTTPバージョン
+			String httpVersion = "1.1";
+			// ファイルＩＤ
+			long fileid = 1234567890L;
+			// タイムID
+			long timeid = new Date().getTime();
+			// 作成日時
+			Date createDate = new Date();
+			// 更新日時
+			Date updateDate = new Date();
 			
-		} catch (DataStoreManagerException e) {
-			fail(e);
-		} catch (CrawlerException e) {
-			fail(e);
-		}
-		
-		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に登録できること。
-		try {
-			// 登録処理を実行
-			pages.insert(protcol, host, new ArrayList<String>(), new HashMap<String, String>(), requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
+			// 引数に正常値を渡した場合、正常に登録できること。
+			try {
+				// 登録処理を実行
+				pages.insert(protcol, host, path,  parameter, requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
+				
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			} catch (CrawlerException e) {
+				fail(e);
+			}
 			
-		} catch (DataStoreManagerException e) {
-			fail(e);
-		} catch (CrawlerException e) {
-			fail(e);
-		}
-		
-		// ========================================正常系========================================
-		// 引数に正常値を渡した場合、正常に取得できること。
-		try {
-			// 登録処理を実行
-			int count = pages.count(protcol, host, path,  parameter);
-			assertEquals(count, 1);
-		} catch (DataStoreManagerException e) {
-			fail(e);
-		}
-		// 引数に空のパスリスト、パラメータマップを渡した場合、正常に取得できること。
-		try {
-			// 登録処理を実行
-			int count = pages.count(protcol, host, null, null);
-			assertEquals(count, 1);
-		} catch (DataStoreManagerException e) {
-			fail(e);
-		}
+			// 引数に空のパスリスト、パラメータマップを渡した場合、正常に登録できること。
+			try {
+				// 登録処理を実行
+				pages.insert(protcol, host, new ArrayList<String>(), new HashMap<String, String>(), requestHeader, responceHeader, httpStutasCode, httpVersion, fileid, timeid, createDate, updateDate);
+				
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			} catch (CrawlerException e) {
+				fail(e);
+			}
+			
+			// ========================================正常系========================================
+			// 引数に正常値を渡した場合、正常に取得できること。
+			try {
+				// 登録処理を実行
+				int count = pages.count(protcol, host, path,  parameter);
+				assertEquals(count, 1);
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}
+			// 引数に空のパスリスト、パラメータマップを渡した場合、正常に取得できること。
+			try {
+				// 登録処理を実行
+				int count = pages.count(protcol, host, null, null);
+				assertEquals(count, 1);
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}
 		
 		} finally {
 			manager.finishTrunsaction();

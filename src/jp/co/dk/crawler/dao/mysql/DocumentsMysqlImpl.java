@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import jp.co.dk.crawler.dao.Documents;
+import jp.co.dk.crawler.dao.record.CountRecord;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
 import jp.co.dk.datastoremanager.DataStore;
 import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
@@ -68,6 +69,16 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 		sql.setParameter(fileId);
 		sql.setParameter(timeId);
 		return this.selectSingle(sql, new DocumentsRecord());
+	}
+	
+
+	@Override
+	public int count(long fileId, long timeId) throws DataStoreManagerException {
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM DOCUMENTS WHERE FILEID=? AND TIMEID=?");
+		Sql sql = new Sql(sb.toString());
+		sql.setParameter(fileId);
+		sql.setParameter(timeId);
+		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();
 	}
 
 	@Override

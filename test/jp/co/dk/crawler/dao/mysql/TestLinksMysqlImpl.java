@@ -301,4 +301,100 @@ public class TestLinksMysqlImpl extends TestCrawlerFoundation{
 			manager.finishTrunsaction();
 		}
 	}
+	
+	@Test
+	public void count() throws DataStoreManagerException {
+		
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		Links pages =  (Links)manager.getDataAccessObject(CrawlerDaoConstants.LINKS);
+		try {
+			// ------------------------------------FROM値------------------------------------
+			// プロトコル
+			String from_protcol   = "1http";
+			// ホスト名
+			String from_host      = "1google.com";
+			// パスリスト
+			List<String> from_path = new ArrayList<String>();
+			from_path.add("1doodles");
+			from_path.add("1finder");
+			from_path.add("12013");
+			from_path.add("1All%20doodles");
+			// ファイル名
+			String from_filename = "1failename.txt";
+			// パラメータマップ
+			Map<String, String> from_parameter = new HashMap<String,String>();
+			from_parameter.put("1Parameter_key", "1Parameter_value");
+			
+			// ------------------------------------TO値------------------------------------
+			// プロトコル
+			String to_protcol   = "2http";
+			// ホスト名
+			String to_host      = "2google.com";
+			// パスリスト
+			List<String> to_path = new ArrayList<String>();
+			to_path.add("2doodles");
+			to_path.add("2finder");
+			to_path.add("22013");
+			to_path.add("2All%20doodles");
+			// ファイル名
+			String to_filename = "2failename.txt";
+			// パラメータマップ
+			Map<String, String> to_parameter = new HashMap<String,String>();
+			to_parameter.put("2Parameter_key", "2Parameter_value");
+			
+			// 作成日時
+			Date createDate = new Date();
+			// 更新日時
+			Date updateDate = new Date();
+			
+			// 登録前は０件が取得できること。
+			assertEquals(pages.count(from_protcol, from_host, from_path, from_parameter),0);
+			assertEquals(pages.count(from_protcol, from_host, null, null),0);
+			
+			// 引数に正常値を渡した場合、正常に登録できること。
+			try {
+				// 登録処理を実行
+				pages.insert(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);
+				
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			} catch (CrawlerException e) {
+				fail(e);
+			}
+			
+			// 引数に空のパスリスト、パラメータマップを渡した場合、正常に登録できること。
+			try {
+				// 登録処理を実行
+				pages.insert(from_protcol, from_host, null, null, to_protcol, to_host, null, null, createDate, updateDate);
+				
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			} catch (CrawlerException e) {
+				fail(e);
+			}
+			
+			// ========================================正常系========================================
+			// 引数に正常値を渡した場合、正常に取得できること。
+			try {
+				// 登録処理を実行
+				assertEquals(pages.count(from_protcol, from_host, from_path, from_parameter),1);
+			} catch (DataStoreManagerException e) {
+				e.printStackTrace();
+				fail(e);
+			}
+			
+			// 引数に空のパスリスト、パラメータマップを渡した場合、正常に取得できること。
+			try {
+				// 登録処理を実行
+				assertEquals(pages.count(from_protcol, from_host, null, null),1);
+				
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}
+		// ========================================後処理========================================
+		} finally {
+			manager.finishTrunsaction();
+		}
+	}
 }

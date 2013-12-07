@@ -37,6 +37,18 @@ public interface Urls extends DataAccessObject {
 	public UrlsRecord select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException ;
 	
 	/**
+	 * URLSテーブルから特定のレコードの件数を取得する。
+	 * 
+	 * @param protcol    プロトコル文字列（必須）
+	 * @param host       ホスト名（必須）
+	 * @param path       パスリスト（設定されていない場合、空のリストで置き換え）
+	 * @param parameter  パラメータマップ（設定されていない場合、空のマップで置き換え）
+	 * @return 件数
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */
+	public int count(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException ;
+	
+	/**
 	 * URLSテーブルから指定の１レコードを登録する。<p/>
 	 * 必須パラメータが設定されていない場合、例外を送出します。<br/>
 	 * <br/>

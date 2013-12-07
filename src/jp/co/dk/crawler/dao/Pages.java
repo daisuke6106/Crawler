@@ -26,6 +26,17 @@ public interface Pages extends DataAccessObject{
 	public void createTable() throws DataStoreManagerException;
 	
 	/**
+	 * PAGESテーブルから指定の条件に合致するレコードを取得する。
+	 * 
+	 * @param protocol  プロトコル名
+	 * @param hostname  ホスト名
+	 * @param path      パスのハッシュ値
+	 * @param parameter パラメータのハッシュ値
+	 * @return 取得したレコードオブジェクトの一覧
+	 */
+	public List<PagesRecord> select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException ;
+	
+	/**
 	 * PAGESテーブルから指定の条件に合致するレコードの数を取得する。
 	 * 
 	 * @param protocol  プロトコル名
@@ -43,22 +54,23 @@ public interface Pages extends DataAccessObject{
 	 * @param hostname  ホスト名
 	 * @param path      パスのハッシュ値
 	 * @param parameter パラメータのハッシュ値
-	 * @return 取得したレコードオブジェクトの一覧
-	 */
-	public List<PagesRecord> select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException ;
-	
-	/**
-	 * PAGESテーブルから指定の条件に合致するレコードを取得する。
-	 * 
-	 * @param protocol  プロトコル名
-	 * @param hostname  ホスト名
-	 * @param path      パスのハッシュ値
-	 * @param parameter パラメータのハッシュ値
 	 * @param fileId    ファイルID
 	 * @param timeId    タイムID
 	 * @return 取得したレコードオブジェクト
 	 */
 	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter, long fileId, long timeId) throws DataStoreManagerException ;
+	
+	/**
+	 * PAGESテーブルから指定の条件に合致するレコードを取得する。
+	 * DOCUMENTSテーブルから指定のファイルIDにひもづくレコードで最も最新の１レコードを取得する。
+	 * 
+	 * @param protocol  プロトコル名
+	 * @param hostname  ホスト名
+	 * @param path      パスのハッシュ値
+	 * @param parameter パラメータのハッシュ値
+	 * @return 取得したレコードオブジェクト
+	 */
+	public PagesRecord selectLastest(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException ;
 	
 	/**
 	 * PAGESテーブルから指定の１レコードを登録する。<p/>

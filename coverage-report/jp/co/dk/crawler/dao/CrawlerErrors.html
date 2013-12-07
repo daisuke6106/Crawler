@@ -75,6 +75,24 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * CRAWLER_ERRORSテーブルから特定のレコードの件数を取得する。
+	 * 
+	 * @param protcol   プロトコル名
+	 * @param host      ホスト名
+	 * @param path      パス
+	 * @param parameter パラメータ
+	 * @return 件数
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int count(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * CRAWLER_ERRORSテーブルから指定の１レコードを登録する。&lt;p/>
 	 * 
 	 * @param protcol   　　　　　プロトコル名
@@ -89,7 +107,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>51</td><td>&nbsp;</td>
+      <td class='line'>64</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -103,11 +121,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>59</td><td>&nbsp;</td>
+      <td class='line'>72</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
     </tr>
     <tr>
-      <td class='line'>60</td><td>&nbsp;</td>
+      <td class='line'>73</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

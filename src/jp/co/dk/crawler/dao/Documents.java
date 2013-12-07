@@ -32,7 +32,17 @@ public interface Documents extends DataAccessObject {
 	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException;
 	
 	/**
-	 * DOCUMENTSテーブルから指定のファイルIDにひもづくレコードで最もタイムIDの値が最も大きい１レコードを取得する。
+	 * DOCUMENTSテーブルから特定のレコードの件数を取得する。
+	 * 
+	 * @param fileId ファイルID
+	 * @param timeId タイムID
+	 * @return 件数
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */
+	public int count(long fileId, long timeId) throws DataStoreManagerException;
+	
+	/**
+	 * DOCUMENTSテーブルから指定のファイルIDにひもづくレコードで最も最新の１レコードを取得する。
 	 * 
 	 * @param fileId ファイルID
 	 * @throws DataStoreManagerException 取得に失敗した場合

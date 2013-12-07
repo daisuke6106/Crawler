@@ -1,5 +1,6 @@
 package jp.co.dk.crawler;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +14,13 @@ import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.CrawlerErrors;
+import jp.co.dk.crawler.dao.Documents;
+import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.RedirectErrors;
 import jp.co.dk.crawler.dao.Links;
+import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.dao.record.LinksRecord;
+import jp.co.dk.crawler.dao.record.PagesRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerPageRedirectHandlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
@@ -54,6 +59,64 @@ public class Crawler extends Browzer{
 		super(url, new CrawlerPageRedirectHandler(dataStoreManager));
 		this.dsm         = dataStoreManager;
 		this.pageManager = this.createPageManager(url, super.pageRedirectHandler);
+	}
+	
+	/**
+	 * 指定のURLのデータストアへ保存履歴を取得します。<p/>
+	 * 
+	 * 指定のURLの状態が以下である場合、記載の通りの結果を返却します。<br/>
+	 * ・一度もアクセスしていない場合：NON_SAVEが１つ設定された値を返却します。<br/>
+	 * ・以前アクセスしているが、サーバにアクセス自体アクセスできないなどのエラーが発生していた場合：CRAWLER_ERRORSが１つ設定されたリストを返却します。<br/>
+	 * ・以前アクセスしているが、サーバアクセスはできたが、HTTPステータス404などのエラーが返却されていた場合、REDIRECT_ERRORSを保持したリストを返却します。<br/>
+	 * ・以前アクセスしている、且つ正常にページアクセスに成功して保存されている場合、SUCCESS_SAVEDを保持したリストを返却します。<br/>
+	 * <br/>
+	 * 例えば指定のURLがすでに保存されており、３履歴分保存済み、且つ、最新の状態ではページが削除されており、404が返却されていた場合
+	 * ・[0]=ERROR_SAVED_BY_REDIRECT
+	 * ・[1]=SUCCESS_SAVED
+	 * ・[2]=SUCCESS_SAVED
+	 * ・[3]=SUCCESS_SAVED
+	 * 
+	 * のようなリストで返却されます。
+	 * 
+	 * @param url 対象のURL
+	 * @return 履歴の一覧
+	 * @throws DataStoreManagerException
+	 * @throws BrowzingException URL文字列がnullまたは、空文字だった場合
+	 */
+	public List<PageStatus> getHistory(String url) throws DataStoreManagerException, BrowzingException {
+		List<PageStatus> history = new ArrayList<PageStatus>();
+		Url urlObj = new Url(url);
+		String protocol               = urlObj.getProtocol();
+		String host                   = urlObj.getHost();
+		List<String> path             = urlObj.getPathList();
+		Map<String, String> parameter = urlObj.getParameter();
+		Urls urls = (Urls)dsm.getDataAccessObject(CrawlerDaoConstants.URLS);
+		if (urls.count(protocol, host, path, parameter) == 0) {
+			history.add(PageStatus.NON_SAVE);
+			return history;
+		}
+		Pages pages = (Pages)dsm.getDataAccessObject(CrawlerDaoConstants.PAGES);
+		int pageCount = pages.count(protocol, host, path, parameter);
+		if (pageCount == 0) {
+			CrawlerErrors redirectErrors = (CrawlerErrors)dsm.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
+			if (redirectErrors.count(protocol, host, path, parameter) != 0){
+				history.add(PageStatus.ERROR_SAVED_BY_CRAWL);
+			}
+		} else {
+			List<PagesRecord> pagesRecords = pages.select(protocol, host, path, parameter);
+			Documents      documents      = (Documents)dsm.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+			RedirectErrors redirectErrors = (RedirectErrors)dsm.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
+			for (PagesRecord pagesRecord : pagesRecords) {
+				long fileId = pagesRecord.getFileid();
+				long timeId = pagesRecord.getTimeid();
+				if (documents.count(fileId, timeId) != 0) {
+					history.add(PageStatus.SUCCESS_SAVED);
+				} else if (redirectErrors.count(fileId, timeId) != 0){
+					history.add(PageStatus.ERROR_SAVED_BY_REDIRECT);
+				}
+			}
+		}
+		return history;
 	}
 	
 	/**

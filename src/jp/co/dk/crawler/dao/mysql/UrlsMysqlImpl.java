@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.crawler.dao.Urls;
+import jp.co.dk.crawler.dao.record.CountRecord;
 import jp.co.dk.crawler.dao.record.UrlsRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStore;
@@ -70,6 +71,18 @@ public class UrlsMysqlImpl extends AbstractDataBaseAccessObject implements Urls{
 		return this.selectSingle(sql, new UrlsRecord());
 	}
 	
+	@Override
+	public int count(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
+		if (path == null) path = new ArrayList<String>();
+		if (parameter == null) parameter = new HashMap<String, String>();
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM URLS WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");
+		Sql sql = new Sql(sb.toString());
+		sql.setParameter(protcol);
+		sql.setParameter(host);
+		sql.setParameter(path.hashCode());
+		sql.setParameter(parameter.hashCode());
+		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();
+	}
 	@Override
 	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");

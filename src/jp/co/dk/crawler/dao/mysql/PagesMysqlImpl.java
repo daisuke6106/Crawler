@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.crawler.dao.Pages;
+import jp.co.dk.crawler.dao.record.CountRecord;
 import jp.co.dk.crawler.dao.record.PagesRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataConvertable;
@@ -78,26 +79,14 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sql.setParameter(host);
 		sql.setParameter(path.hashCode());
 		sql.setParameter(parameter.hashCode());
-		return this.selectSingle(sql, new DataConvertable(){
-			private int count;
-			@Override
-			public DataConvertable convert(DataBaseRecord arg0)	throws DataStoreManagerException {
-				count = arg0.getInt("RESULT");
-				return this;
-			}
-			@Override
-			public DataConvertable convert(Record arg0)	throws DataStoreManagerException {
-				this.count = arg0.getInt(1);
-				return this;
-			}
-		}).count;
+		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();
 	}
 	
 	@Override
 	public List<PagesRecord> select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
 		if (path == null) path = new ArrayList<String>();
 		if (parameter == null) parameter = new HashMap<String, String>();
-		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");
+		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=? ORDER BY TIMEID DESC");
 		Sql sql = new Sql(sb.toString());
 		sql.setParameter(protcol);
 		sql.setParameter(host);
@@ -123,6 +112,20 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	}
 	
 	@Override
+	public PagesRecord selectLastest(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
+		if (path == null) path = new ArrayList<String>();
+		if (parameter == null) parameter = new HashMap<String, String>();
+		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=? ORDER BY TIMEID");
+		Sql sql = new Sql(sb.toString());
+		sql.setParameter(protcol);
+		sql.setParameter(host);
+		sql.setParameter(path.hashCode());
+		sql.setParameter(parameter.hashCode());
+		List<PagesRecord> result = this.selectMulti(sql, new PagesRecord());
+		if (result.size()==0) return null;
+		return result.get(0);
+	}
+	@Override
 	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
 		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
@@ -147,6 +150,5 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sql.setParameter(new Timestamp(updateDate.getTime()));
 		this.insert(sql);
 	}
-
 
 }

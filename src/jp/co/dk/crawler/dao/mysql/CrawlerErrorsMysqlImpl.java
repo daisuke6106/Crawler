@@ -8,11 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.crawler.dao.CrawlerErrors;
+import jp.co.dk.crawler.dao.record.CountRecord;
 import jp.co.dk.crawler.dao.record.CrawlerErrorsRecord;
+import jp.co.dk.datastoremanager.DataConvertable;
 import jp.co.dk.datastoremanager.DataStore;
+import jp.co.dk.datastoremanager.Record;
 import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
 import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
 import jp.co.dk.datastoremanager.database.DataBaseDriverConstants;
+import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.database.Sql;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
@@ -66,7 +70,20 @@ public class CrawlerErrorsMysqlImpl extends AbstractDataBaseAccessObject impleme
 		sql.setParameter(parameter.hashCode());
 		return this.selectSingle(sql, new CrawlerErrorsRecord());
 	}
-
+	
+	@Override
+	public int count(String protcol, String host, List<String> path,Map<String, String> parameter) throws DataStoreManagerException {
+		if (path == null) path = new ArrayList<String>();
+		if (parameter == null) parameter = new HashMap<String, String>();
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM CRAWLER_ERRORS WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");
+		Sql sql = new Sql(sb.toString());
+		sql.setParameter(protcol);
+		sql.setParameter(host);
+		sql.setParameter(path.hashCode());
+		sql.setParameter(parameter.hashCode());
+		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();
+	}
+	
 	@Override
 	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException{
 		Sql sql = new Sql("INSERT INTO CRAWLER_ERRORS VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -80,5 +97,4 @@ public class CrawlerErrorsMysqlImpl extends AbstractDataBaseAccessObject impleme
 		sql.setParameter(new Timestamp(updateDate.getTime()));
 		this.insert(sql);
 	}
-
 }

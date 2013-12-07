@@ -59,23 +59,6 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>	/**
-	 * PAGESテーブルから指定の条件に合致するレコードの数を取得する。
-	 * 
-	 * @param protocol  プロトコル名
-	 * @param hostname  ホスト名
-	 * @param path      パスのハッシュ値
-	 * @param parameter パラメータのハッシュ値
-	 * @return カウント結果
-	 */</div><span>	/*...*/</span></td>
-    </tr>
-    <tr>
-      <td class='line'>37</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public int count(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
-    </tr>
-    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
-    <tr>
-      <td class='line'></td><td>&nbsp;</td>
-      <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * PAGESテーブルから指定の条件に合致するレコードを取得する。
 	 * 
 	 * @param protocol  プロトコル名
@@ -86,8 +69,25 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>48</td><td>&nbsp;</td>
+      <td class='line'>37</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public List&lt;PagesRecord> select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * PAGESテーブルから指定の条件に合致するレコードの数を取得する。
+	 * 
+	 * @param protocol  プロトコル名
+	 * @param hostname  ホスト名
+	 * @param path      パスのハッシュ値
+	 * @param parameter パラメータのハッシュ値
+	 * @return カウント結果
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int count(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException ;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>

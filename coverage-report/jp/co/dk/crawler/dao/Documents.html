@@ -71,6 +71,22 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * DOCUMENTSテーブルから特定のレコードの件数を取得する。
+	 * 
+	 * @param fileId ファイルID
+	 * @param timeId タイムID
+	 * @return 件数
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int count(long fileId, long timeId) throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * DOCUMENTSテーブルから指定のファイルIDにひもづくレコードで最もタイムIDの値が最も大きい１レコードを取得する。
 	 * 
 	 * @param fileId ファイルID
@@ -78,7 +94,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>40</td><td>&nbsp;</td>
+      <td class='line'>50</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -99,7 +115,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>55</td><td>&nbsp;</td>
+      <td class='line'>65</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void insert(long fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -113,11 +129,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>63</td><td>&nbsp;</td>
+      <td class='line'>73</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
     </tr>
     <tr>
-      <td class='line'>64</td><td>&nbsp;</td>
+      <td class='line'>74</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

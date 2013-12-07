@@ -126,4 +126,56 @@ public class TestRedirectErrorsMysqlImpl extends TestCrawlerFoundation{
 		}
 	}
 	
+	@Test
+	public void count() throws DataStoreManagerException {
+		
+		DataStoreManager manager = getAccessableDataStoreManager();
+		manager.startTrunsaction();
+		RedirectErrors errors = (RedirectErrors)manager.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
+		
+		try {
+			//ファイルID
+			long fileid    = 1234567890L;
+			//タイムID
+			long timeid    = new Date().getTime();
+			// ファイル名
+			String message  = "exception message";
+			// コンテンツデータ
+			Throwable exception = new CrawlerException(CrawlerMessage.DETASTORETYPE_IS_NOT_SUPPORT);
+			StackTraceElement[] stackTraceElements = exception.getStackTrace();
+			// 作成日時
+			Date createDate = new Date();
+			// 更新日時
+			Date updateDate = new Date();
+			
+			// ========================================正常系========================================
+			
+			// 登録していない場合０件が返却されること
+			assertEquals(errors.count(fileid, timeid), 0);
+			assertEquals(errors.count(fileid+1, timeid+1), 0);
+			
+			// 引数に正常値を渡した場合、正常に登録できること。
+			try {
+				// 登録処理を実行
+				errors.insert(fileid, timeid, message, stackTraceElements, createDate, updateDate);
+				// PK以外NULLを設定した場合、正常に登録されること
+				errors.insert(fileid+1, timeid+1, null, null, createDate, updateDate);
+				
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}
+			
+			// ========================================正常系========================================
+			// 引数に正常値を渡した場合、正常に取得できること。
+			try {
+				assertEquals(errors.count(fileid, timeid), 1);
+				assertEquals(errors.count(fileid+1, timeid+1), 1);
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}
+		} finally {
+			manager.finishTrunsaction();
+		}
+	}
+	
 }

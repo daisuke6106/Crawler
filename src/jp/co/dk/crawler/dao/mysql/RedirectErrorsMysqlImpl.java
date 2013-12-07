@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import jp.co.dk.crawler.dao.RedirectErrors;
+import jp.co.dk.crawler.dao.record.CountRecord;
 import jp.co.dk.crawler.dao.record.RedirectErrorsRecord;
 import jp.co.dk.datastoremanager.DataStore;
 import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
@@ -56,7 +57,16 @@ public class RedirectErrorsMysqlImpl extends AbstractDataBaseAccessObject implem
 		sql.setParameter(timeId);
 		return this.selectSingle(sql, new RedirectErrorsRecord());
 	}
-
+	
+	@Override
+	public int count(long fileId, long timeId) throws DataStoreManagerException {
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM REDIRECT_ERRORS WHERE FILEID=? AND TIMEID=?");
+		Sql sql = new Sql(sb.toString());
+		sql.setParameter(fileId);
+		sql.setParameter(timeId);
+		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();
+	}
+	
 	@Override
 	public void insert(long fileId, long timeId, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException{
 		Sql sql = new Sql("INSERT INTO REDIRECT_ERRORS VALUES (?, ?, ?, ?, ?, ?)");
@@ -68,5 +78,4 @@ public class RedirectErrorsMysqlImpl extends AbstractDataBaseAccessObject implem
 		sql.setParameter(new Timestamp(updateDate.getTime()));
 		this.insert(sql);
 	}
-
 }

@@ -32,6 +32,16 @@ public interface RedirectErrors extends DataAccessObject {
 	public RedirectErrorsRecord select(long fileId, long timeId) throws DataStoreManagerException;
 	
 	/**
+	 * REDIRECT_ERRORテーブルから特定の１レコードを取得する。
+	 * 
+	 * @param fileId ファイルID
+	 * @param timeId タイムID
+	 * @return 件数
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */
+	public int count(long fileId, long timeId) throws DataStoreManagerException;
+	
+	/**
 	 * REDIRECT_ERRORテーブルから指定の１レコードを登録する。<p/>
 	 * 
 	 * @param fileId             ファイルID

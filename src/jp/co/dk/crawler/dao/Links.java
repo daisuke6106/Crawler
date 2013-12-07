@@ -38,6 +38,18 @@ public interface Links extends DataAccessObject {
 	public List<LinksRecord> select(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException;
 	
 	/**
+	 * LINKSテーブルから遷移元ページが特定のページである遷移先ページのレコードの件数を取得する。
+	 * 
+	 * @param protcol   プロトコル名
+	 * @param host      ホスト名
+	 * @param path      パス
+	 * @param parameter パラメータ
+	 * @return 件数
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */
+	public int count(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException;
+	
+	/**
 	 * LINKSテーブルから特定の１レコードを取得する。<p/>
 	 * 必須パラメータが設定されていない場合、例外を送出します。<br/>
 	 * <br/>

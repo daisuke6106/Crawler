@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.crawler.dao.Links;
+import jp.co.dk.crawler.dao.record.CountRecord;
 import jp.co.dk.crawler.dao.record.LinksRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStore;
@@ -71,6 +72,19 @@ public class LinksMysqlImpl extends AbstractDataBaseAccessObject implements Link
 		sql.setParameter(path.hashCode());
 		sql.setParameter(parameter.hashCode());
 		return this.selectMulti(sql, new LinksRecord());
+	}
+	
+	@Override
+	public int count(String protcol, String host, List<String> path, Map<String, String> parameter) throws DataStoreManagerException {
+		if (path == null) path = new ArrayList<String>();
+		if (parameter == null) parameter = new HashMap<String, String>();
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM LINKS WHERE FROM_PROTOCOL=? AND FROM_HOSTNAME=? AND FROM_H_PATH=? AND FROM_H_PARAM=?");
+		Sql sql = new Sql(sb.toString());
+		sql.setParameter(protcol);
+		sql.setParameter(host);
+		sql.setParameter(path.hashCode());
+		sql.setParameter(parameter.hashCode());
+		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();
 	}
 	
 	@Override

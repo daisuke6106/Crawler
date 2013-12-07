@@ -71,6 +71,22 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>	/**
+	 * REDIRECT_ERRORテーブルから特定の１レコードを取得する。
+	 * 
+	 * @param fileId ファイルID
+	 * @param timeId タイムID
+	 * @return 件数
+	 * @throws DataStoreManagerException 取得に失敗した場合
+	 */</div><span>	/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public int count(long fileId, long timeId) throws DataStoreManagerException;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>	/**
 	 * REDIRECT_ERRORテーブルから指定の１レコードを登録する。&lt;p/>
 	 * 
 	 * @param fileId             ファイルID
@@ -83,7 +99,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>45</td><td>&nbsp;</td>
+      <td class='line'>55</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void insert(long fileId, long timeId, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -97,11 +113,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 	 */</div><span>	/*...*/</span></td>
     </tr>
     <tr>
-      <td class='line'>53</td><td>&nbsp;</td>
+      <td class='line'>63</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException;</pre></td>
     </tr>
     <tr>
-      <td class='line'>54</td><td>&nbsp;</td>
+      <td class='line'>64</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>}</pre></td>
     </tr>
   </table>

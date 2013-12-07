@@ -23,7 +23,12 @@ public class CrawlingControler {
 		for (Element element : refsElements) {
 			if (!(element instanceof MovableElement)) continue;
 			MovableElement movableElement = (MovableElement)element;
+			
+			crawler.getHistory(url);
 			crawler.move(movableElement);
+			
+			
+			
 		}
 	}
 	

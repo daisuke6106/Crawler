@@ -11,6 +11,7 @@ import jp.co.dk.browzer.PageManager;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.CrawlerErrors;
@@ -120,6 +121,40 @@ public class Crawler extends Browzer{
 	}
 	
 	/**
+	 * 指定の遷移可能要素に遷移し、そのページ情報を保存します。
+	 * 正常に遷移し、ページ情報がセーブできた場合、MoveInfo.MOVEを返却します。
+	 * 
+	 * 指定された遷移可能要素にURLが設定されていなかった場合は、その時点でMoveInfo.NON_MOVEDを返却し、処理を終了します。
+	 * 
+	 * 指定の遷移可能要素に遷移した際に、ページが存在しなかったなどで遷移できなかった場合、本クラスのerrorHandlerメソッドにエラー制御が移譲され、MoveInfo.NON_MOVEDが返却されます。
+	 * 
+	 * 
+	 * @param movable 遷移可能要素
+	 * @return 遷移状態（MOVE=指定のページに遷移済み且つ保存済み、NON_MOVED=未遷移状態）
+	 * @throws CrawlerException errorHandlerメソッドにてエラーにて終了と判定された場合
+	 * @throws DataStoreManagerException データストアへの保存処理に失敗した場合
+	 */
+	public MoveInfo moveWithSave(MovableElement movable) throws CrawlerException, DataStoreManagerException {
+		Page activePage = this.getPage();
+		Url activeUrl   = activePage.getUrl();
+		Url nextUrl;
+		try {
+			nextUrl = new Url(movable.getUrl());
+		} catch (BrowzingException e) {
+			return MoveInfo.NON_MOVED;
+		}
+		try {
+			this.addLinks(activeUrl, nextUrl);
+			this.move(movable);
+			this.save();
+			return MoveInfo.MOVED;
+		} catch (BrowzingException e) {
+			this.errorHandler(activePage, nextUrl, e);
+			return MoveInfo.NON_MOVED;
+		}
+	}
+	
+	/**
 	 * 現在アクティブになっているページを保存する。
 	 * 
 	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
@@ -166,17 +201,9 @@ public class Crawler extends Browzer{
 		HtmlDocument htmlDocument = (HtmlDocument)file;
 		List<Element> elements = htmlDocument.getElement(HtmlElementName.IMG);
 		for (Element element : elements) {
-			String url = null;
-			try {
-				jp.co.dk.browzer.html.element.Image castedElement = (jp.co.dk.browzer.html.element.Image)element;
-				url = castedElement.getSrc();
-				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
-				this.addLinks(activePage.getUrl(), nextPage.getUrl());
-				nextPage.save();
-				this.back();
-			} catch (BrowzingException e) {
-				this.errorHandler(activePage, new Url(url), e);
-			}
+			jp.co.dk.browzer.html.element.Image castedElement = (jp.co.dk.browzer.html.element.Image)element;
+			this.moveWithSave(castedElement);
+			this.back();
 		}
 	}
 	
@@ -208,17 +235,9 @@ public class Crawler extends Browzer{
 			}
 		});
 		for (Element element : elements) {
-			String url = null;
-			try {
-				jp.co.dk.browzer.html.element.Script castedElement = (jp.co.dk.browzer.html.element.Script)element;
-				url = castedElement.getSrc();
-				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
-				this.addLinks(activePage.getUrl(), nextPage.getUrl());
-				nextPage.save();
-				this.back();
-			} catch (BrowzingException e) {
-				this.errorHandler(activePage, new Url(url), e);
-			}
+			jp.co.dk.browzer.html.element.Script castedElement = (jp.co.dk.browzer.html.element.Script)element;
+			this.moveWithSave(castedElement);
+			this.back();
 		}
 	}
 	
@@ -250,17 +269,9 @@ public class Crawler extends Browzer{
 			}
 		});
 		for (Element element : elements) {
-			String url = null;
-			try {
-				jp.co.dk.browzer.html.element.Link castedElement = (jp.co.dk.browzer.html.element.Link)element;
-				url = castedElement.getHref();
-				jp.co.dk.crawler.Page nextPage = (jp.co.dk.crawler.Page)this.move(castedElement);
-				this.addLinks(activePage.getUrl(), nextPage.getUrl());
-				nextPage.save();
-				this.back();
-			} catch (BrowzingException e) {
-				this.errorHandler(activePage, new Url(url), e);
-			}
+			jp.co.dk.browzer.html.element.Link castedElement = (jp.co.dk.browzer.html.element.Link)element;
+			this.moveWithSave(castedElement);
+			this.back();
 		}
 	}
 	
@@ -409,4 +420,3 @@ class CrawlerPageRedirectHandler extends PageRedirectHandler {
 		}
 	}
 }
-

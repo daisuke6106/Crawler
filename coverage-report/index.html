@@ -12,7 +12,7 @@
     <caption>All Packages and Files<div style='font-size: smaller'>Crawler/src</div></caption>
     <tr>
       <th style='cursor: col-resize' onclick='showHideAllFiles()'>Packages: 6</th>
-      <th onclick='location.reload()' style='cursor: n-resize' title='Click on the title for each metric to sort by size (total number of line segments, paths, or fields).'>Files: 19</th>
+      <th onclick='location.reload()' style='cursor: n-resize' title='Click on the title for each metric to sort by size (total number of line segments, paths, or fields).'>Files: 24</th>
       <th onclick='sortTables(1)' style='cursor: n-resize' title='Measures how much of the executable production code was exercised by tests.
 An executable line of code contains one or more executable segments.
 The percentages are calculated as 100*NE/NS, where NS is the number of segments and NE the number of executed segments.'>Line</th>
@@ -27,12 +27,26 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
       <td>
         <table width='100%'>
           <tr>
-            <td class='file'>Crawler.java                            </td>
+            <td class='file'><a target='_blank' href='jp/co/dk/crawler/Crawler.html'>Crawler.java</a>                            </td>
+            <td style='background-color:#42bd00' title='Line segments: 108/146'>74%</td>
+            <td style='background-color:#619e00' title='Paths: 18/29'>62%</td>
+            <td style='background-color:#00ff00' title='Fields: 1/1'>100%</td>
+          </tr>
+          <tr>
+            <td class='file'><a target='_blank' href='jp/co/dk/crawler/Page.html'>Page.java</a>                               </td>
+            <td style='background-color:#37c800' title='Line segments: 117/149'>79%</td>
+            <td style='background-color:#ad5200' title='Paths: 24/75'>32%</td>
+            <td style='background-color:#ff0000' title='Fields: 0/3'>0%</td>
+          </tr>
+          <tr>
+            <td class='file'>PageStatus.java                         </td>
             <td colspan='3' class='unknown'>?</td>
           </tr>
           <tr>
-            <td class='file'>Page.java                               </td>
-            <td colspan='3' class='unknown'>?</td>
+            <td class='file'>TestCrawler.java                        </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/1'>0%</td>
+            <td style='background-color:#ff0000' title='Paths: 0/1'>0%</td>
+            <td class='nocode'>N/A</td>
           </tr>
           <tr>
             <td class='file'>TestCrawlerFoundation.java              </td>
@@ -42,9 +56,9 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
           </tr>
         </table>
       </td>
-      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/11'>0%</td>
-      <td class='pt' style='background-color:#ff0000' title='Paths: 0/9'>0%</td>
-      <td class='nocode'>N/A</td>
+      <td class='pt' style='background-color:#44bb00' title='Line segments: 225/307'>73%</td>
+      <td class='pt' style='background-color:#a15e00' title='Paths: 42/114'>37%</td>
+      <td class='pt' style='background-color:#bf4000' title='Fields: 1/4'>25%</td>
     </tr>
     <tr>
       <td class='file click' onclick='showHideFiles(this)'>jp.co.dk.crawler.dao</td>
@@ -57,10 +71,8 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
             <td style='background-color:#00ff00' title='Fields: 2/2'>100%</td>
           </tr>
           <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/CrawlerErrors.html'>CrawlerErrors.java</a>                      </td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
+            <td class='file'>CrawlerErrors.java                      </td>
+            <td colspan='3' class='unknown'>?</td>
           </tr>
           <tr>
             <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/Documents.html'>Documents.java</a>                          </td>
@@ -104,50 +116,44 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
         <table width='100%'>
           <tr>
             <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/mysql/CrawlerErrorsMysqlImpl.html'>CrawlerErrorsMysqlImpl.java</a>             </td>
-            <td style='background-color:#a65900' title='Line segments: 20/57'>35%</td>
-            <td style='background-color:#c83700' title='Paths: 3/14'>21%</td>
+            <td style='background-color:#748b00' title='Line segments: 31/57'>54%</td>
+            <td style='background-color:#b64900' title='Paths: 4/14'>29%</td>
             <td class='nocode'>N/A</td>
           </tr>
           <tr>
             <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/mysql/DocumentsMysqlImpl.html'>DocumentsMysqlImpl.java</a>                 </td>
-            <td style='background-color:#a45b00' title='Line segments: 20/56'>36%</td>
-            <td style='background-color:#b94600' title='Paths: 3/11'>27%</td>
+            <td style='background-color:#2ed100' title='Line segments: 46/56'>82%</td>
+            <td style='background-color:#5da200' title='Paths: 7/11'>64%</td>
             <td class='nocode'>N/A</td>
           </tr>
           <tr>
             <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/mysql/LinksMysqlImpl.html'>LinksMysqlImpl.java</a>                     </td>
-            <td style='background-color:#cb3400' title='Line segments: 23/113'>20%</td>
-            <td style='background-color:#f60900' title='Paths: 3/85'>4%</td>
+            <td style='background-color:#5fa000' title='Line segments: 71/113'>63%</td>
+            <td style='background-color:#f00f00' title='Paths: 5/85'>6%</td>
             <td class='nocode'>N/A</td>
           </tr>
           <tr>
             <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/mysql/PagesMysqlImpl.html'>PagesMysqlImpl.java</a>                     </td>
-            <td style='background-color:#b54a00' title='Line segments: 28/96'>29%</td>
-            <td style='background-color:#e01f00' title='Paths: 3/25'>12%</td>
+            <td style='background-color:#56a900' title='Line segments: 73/110'>66%</td>
+            <td style='background-color:#d12e00' title='Paths: 6/33'>18%</td>
             <td class='nocode'>N/A</td>
           </tr>
           <tr>
             <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/mysql/RedirectErrorsMysqlImpl.html'>RedirectErrorsMysqlImpl.java</a>            </td>
-            <td style='background-color:#8f7000' title='Line segments: 18/41'>44%</td>
-            <td style='background-color:#9f6000' title='Paths: 3/8'>38%</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'>TestUrlsMysqlImpl.java                  </td>
-            <td style='background-color:#ff0000' title='Line segments: 0/1'>0%</td>
-            <td style='background-color:#ff0000' title='Paths: 0/1'>0%</td>
+            <td style='background-color:#57a800' title='Line segments: 27/41'>66%</td>
+            <td style='background-color:#7f8000' title='Paths: 4/8'>50%</td>
             <td class='nocode'>N/A</td>
           </tr>
           <tr>
             <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/mysql/UrlsMysqlImpl.html'>UrlsMysqlImpl.java</a>                      </td>
-            <td style='background-color:#17e800' title='Line segments: 61/67'>91%</td>
-            <td style='background-color:#6d9200' title='Paths: 12/21'>57%</td>
+            <td style='background-color:#50af00' title='Line segments: 46/67'>69%</td>
+            <td style='background-color:#c23d00' title='Paths: 5/21'>24%</td>
             <td class='nocode'>N/A</td>
           </tr>
         </table>
       </td>
-      <td class='pt' style='background-color:#9a6500' title='Line segments: 170/431'>39%</td>
-      <td class='pt' style='background-color:#d52a00' title='Paths: 27/165'>16%</td>
+      <td class='pt' style='background-color:#56a900' title='Line segments: 294/444'>66%</td>
+      <td class='pt' style='background-color:#d12e00' title='Paths: 31/172'>18%</td>
       <td class='nocode'>N/A</td>
     </tr>
     <tr>
@@ -165,16 +171,22 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
             <td colspan='3' class='unknown'>?</td>
           </tr>
           <tr>
-            <td class='file'>DocumentsRecord.java                    </td>
-            <td colspan='3' class='unknown'>?</td>
+            <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/record/DocumentsRecord.html'>DocumentsRecord.java</a>                    </td>
+            <td style='background-color:#8d7200' title='Line segments: 13/29'>45%</td>
+            <td style='background-color:#a25d00' title='Paths: 4/11'>36%</td>
+            <td style='background-color:#bf4000' title='Fields: 2/8'>25%</td>
           </tr>
           <tr>
-            <td class='file'>LinksRecord.java                        </td>
-            <td colspan='3' class='unknown'>?</td>
+            <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/record/LinksRecord.html'>LinksRecord.java</a>                        </td>
+            <td style='background-color:#a05f00' title='Line segments: 13/35'>37%</td>
+            <td style='background-color:#d82700' title='Paths: 2/13'>15%</td>
+            <td style='background-color:#ff0000' title='Fields: 0/10'>0%</td>
           </tr>
           <tr>
-            <td class='file'>PagesRecord.java                        </td>
-            <td colspan='3' class='unknown'>?</td>
+            <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/record/PagesRecord.html'>PagesRecord.java</a>                        </td>
+            <td style='background-color:#fa0500' title='Line segments: 1/55'>2%</td>
+            <td style='background-color:#f30c00' title='Paths: 1/21'>5%</td>
+            <td style='background-color:#ff0000' title='Fields: 0/16'>0%</td>
           </tr>
           <tr>
             <td class='file'>RedirectErrorsRecord.java               </td>
@@ -182,15 +194,15 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
           </tr>
           <tr>
             <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/record/UrlsRecord.html'>UrlsRecord.java</a>                         </td>
-            <td style='background-color:#58a700' title='Line segments: 19/29'>66%</td>
-            <td style='background-color:#17e800' title='Paths: 10/11'>91%</td>
+            <td style='background-color:#f60900' title='Line segments: 1/29'>3%</td>
+            <td style='background-color:#e81700' title='Paths: 1/11'>9%</td>
             <td style='background-color:#ff0000' title='Fields: 0/8'>0%</td>
           </tr>
         </table>
       </td>
-      <td class='pt' style='background-color:#53ac00' title='Line segments: 25/37'>68%</td>
-      <td class='pt' style='background-color:#22dd00' title='Paths: 13/15'>87%</td>
-      <td class='pt' style='background-color:#cc3300' title='Fields: 2/10'>20%</td>
+      <td class='pt' style='background-color:#c73800' title='Line segments: 34/156'>22%</td>
+      <td class='pt' style='background-color:#d02f00' title='Paths: 11/60'>18%</td>
+      <td class='pt' style='background-color:#e81700' title='Fields: 4/44'>9%</td>
     </tr>
     <tr>
       <td class='file click' onclick='showHideFiles(this)'>jp.co.dk.crawler.exception</td>
@@ -203,14 +215,16 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
             <td class='nocode'>N/A</td>
           </tr>
           <tr>
-            <td class='file'>CrawlerPageRedirectHandlerException.java</td>
-            <td colspan='3' class='unknown'>?</td>
+            <td class='file'><a target='_blank' href='jp/co/dk/crawler/exception/CrawlerPageRedirectHandlerException.html'>CrawlerPageRedirectHandlerException.java</a></td>
+            <td style='background-color:#00ff00' title='Line segments: 4/4'>100%</td>
+            <td style='background-color:#00ff00' title='Paths: 2/2'>100%</td>
+            <td style='background-color:#00ff00' title='Fields: 1/1'>100%</td>
           </tr>
         </table>
       </td>
-      <td class='pt' style='background-color:#d42b00' title='Line segments: 2/12'>17%</td>
-      <td class='pt' style='background-color:#d42b00' title='Paths: 1/6'>17%</td>
-      <td class='nocode'>N/A</td>
+      <td class='pt' style='background-color:#9f6000' title='Line segments: 6/16'>38%</td>
+      <td class='pt' style='background-color:#9f6000' title='Paths: 3/8'>38%</td>
+      <td class='pt' style='background-color:#00ff00' title='Fields: 1/1'>100%</td>
     </tr>
     <tr>
       <td class='file'>jp.co.dk.crawler.message</td>
@@ -230,14 +244,14 @@ The percentages are calculated as 100*NFE/NF, where NF is the number of non-fina
     </tr>
     <tr class='total'>
       <td>Total</td><td>&nbsp;</td>
-      <td class='pt' style='background-color:#946b00' title='Line segments: 231/549'>42%</td>
-      <td class='pt' style='background-color:#c13e00' title='Paths: 57/236'>24%</td>
-      <td class='pt' style='background-color:#aa5500' title='Fields: 4/12'>33%</td>
+      <td class='pt' style='background-color:#659a00' title='Line segments: 593/981'>60%</td>
+      <td class='pt' style='background-color:#bd4200' title='Paths: 103/395'>26%</td>
+      <td class='pt' style='background-color:#d72800' title='Fields: 8/51'>16%</td>
     </tr>
   </table>
   <p>
     <a href='http://code.google.com/p/jmockit'><img src='logo.png'></a>
-    Generated on Sun Dec 08 01:18:27 JST 2013
+    Generated on Tue Dec 10 02:38:15 JST 2013
   </p>
 </body>
 </html>

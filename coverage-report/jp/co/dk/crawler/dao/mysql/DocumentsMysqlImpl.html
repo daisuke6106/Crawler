@@ -69,11 +69,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public DocumentsMysqlImpl(DataStore datastore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>28</td><td class='count'>6</td>
+      <td class='line'>28</td><td class='count'>281</td>
       <td><pre class='prettyprint covered' id='l28s0'>		super(datastore);</pre></td>
     </tr>
     <tr>
-      <td class='line'>29</td><td class='count'>6</td>
+      <td class='line'>29</td><td class='count'>281</td>
       <td><pre class='prettyprint covered' id='l29s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -86,59 +86,59 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public void createTable() throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>33</td><td class='count'>3</td>
+      <td class='line'>33</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l33s0'>		StringBuilder sb = new StringBuilder("CREATE TABLE DOCUMENTS ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>34</td><td class='count'>3</td>
+      <td class='line'>34</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l34s0'>		sb.append('(');</pre></td>
     </tr>
     <tr>
-      <td class='line'>35</td><td class='count'>3</td>
+      <td class='line'>35</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l35s0'>		sb.append("FILEID          BIGINT(8) NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>36</td><td class='count'>3</td>
+      <td class='line'>36</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l36s0'>		sb.append("TIMEID          BIGINT(8) NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>37</td><td class='count'>3</td>
+      <td class='line'>37</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l37s0'>		sb.append("FILENAME        TEXT      NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>38</td><td class='count'>3</td>
+      <td class='line'>38</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l38s0'>		sb.append("EXTENTION       TEXT      NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>39</td><td class='count'>3</td>
+      <td class='line'>39</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l39s0'>		sb.append("LASTUPDATE_DATE DATETIME, ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>40</td><td class='count'>3</td>
+      <td class='line'>40</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l40s0'>		sb.append("DATA            LONGBLOB, ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>41</td><td class='count'>3</td>
+      <td class='line'>41</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l41s0'>		sb.append("CREATE_DATE     DATETIME, ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>42</td><td class='count'>3</td>
+      <td class='line'>42</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l42s0'>		sb.append("UPDATE_DATE     DATETIME, ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>43</td><td class='count'>3</td>
+      <td class='line'>43</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l43s0'>		sb.append("PRIMARY KEY(FILEID, TIMEID))");</pre></td>
     </tr>
     <tr>
-      <td class='line'>44</td><td class='count'>3</td>
+      <td class='line'>44</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l44s0'>		Sql sql = new Sql(sb.toString());</pre></td>
     </tr>
     <tr>
-      <td class='line'>45</td><td class='count'>3</td>
+      <td class='line'>45</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l45s0'>		this.createTable(sql);</pre></td>
     </tr>
     <tr>
-      <td class='line'>46</td><td class='count'>3</td>
+      <td class='line'>46</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l46s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -151,19 +151,19 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>50</td><td class='count'>3</td>
+      <td class='line'>50</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l50s0'>		StringBuilder sb = new StringBuilder("DROP TABLE DOCUMENTS ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>51</td><td class='count'>3</td>
+      <td class='line'>51</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l51s0'>		Sql sql = new Sql(sb.toString());</pre></td>
     </tr>
     <tr>
-      <td class='line'>52</td><td class='count'>3</td>
+      <td class='line'>52</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l52s0'>		this.dropTable(sql);</pre></td>
     </tr>
     <tr>
-      <td class='line'>53</td><td class='count'>3</td>
+      <td class='line'>53</td><td class='count'>5</td>
       <td><pre class='prettyprint covered' id='l53s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -176,36 +176,36 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>0</td>
+      <td></td><td class='count'>23</td>
       <td class='paths'>
-        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/2</span>
+        <span style='cursor:default; background-color:#7f8000' onclick='hidePath()'>Path coverage: 1/2</span>
         <span class='uncovered' onclick="showPath(this,'l57s0 l61s0 l61s1')">A: 0</span>
-        <span class='uncovered' onclick="showPath(this,'l57s0 l61s0 l62s0')">B: 0</span>
+        <span class='covered' onclick="showPath(this,'l57s0 l61s0 l62s0')">B: 23</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>57</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l57s0'>		StringBuilder sb = new StringBuilder("SELECT * FROM DOCUMENTS WHERE FILEID=? ORDER BY TIMEID DESC ");</pre></td>
+      <td class='line'>57</td><td class='count'>23</td>
+      <td><pre class='prettyprint covered' id='l57s0'>		StringBuilder sb = new StringBuilder("SELECT * FROM DOCUMENTS WHERE FILEID=? ORDER BY TIMEID DESC ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>58</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l58s0'>		Sql sql = new Sql(sb.toString());</pre></td>
+      <td class='line'>58</td><td class='count'>23</td>
+      <td><pre class='prettyprint covered' id='l58s0'>		Sql sql = new Sql(sb.toString());</pre></td>
     </tr>
     <tr>
-      <td class='line'>59</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l59s0'>		sql.setParameter(fileId);</pre></td>
+      <td class='line'>59</td><td class='count'>23</td>
+      <td><pre class='prettyprint covered' id='l59s0'>		sql.setParameter(fileId);</pre></td>
     </tr>
     <tr>
-      <td class='line'>60</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l60s0'>		List&lt;DocumentsRecord> documentRecordList = this.selectMulti(sql, new DocumentsRecord());</pre></td>
+      <td class='line'>60</td><td class='count'>23</td>
+      <td><pre class='prettyprint covered' id='l60s0'>		List&lt;DocumentsRecord> documentRecordList = this.selectMulti(sql, new DocumentsRecord());</pre></td>
     </tr>
     <tr>
-      <td class='line'>61</td><td class='count'>0</td>
-      <td><pre class='prettyprint jmp'>		<span id='l61s0' title='Executions: 0' class='uncovered'>if (documentRecordList.size() == 0) return null;</span></pre></td>
+      <td class='line'>61</td><td class='count'>23</td>
+      <td><pre class='prettyprint jmp'>		<span id='l61s0' title='Executions: 23' class='covered'>if (documentRecordList.size() == 0) return null;</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>62</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l62s0'>		return documentRecordList.get(0);</pre></td>
+      <td class='line'>62</td><td class='count'>23</td>
+      <td><pre class='prettyprint covered' id='l62s0'>		return documentRecordList.get(0);</pre></td>
     </tr>
     <tr>
       <td class='line'>63</td><td>&nbsp;</td>
@@ -221,24 +221,24 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>67</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l67s0'>		StringBuilder sb = new StringBuilder("SELECT * FROM DOCUMENTS WHERE FILEID=? AND TIMEID=?");</pre></td>
+      <td class='line'>67</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l67s0'>		StringBuilder sb = new StringBuilder("SELECT * FROM DOCUMENTS WHERE FILEID=? AND TIMEID=?");</pre></td>
     </tr>
     <tr>
-      <td class='line'>68</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l68s0'>		Sql sql = new Sql(sb.toString());</pre></td>
+      <td class='line'>68</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l68s0'>		Sql sql = new Sql(sb.toString());</pre></td>
     </tr>
     <tr>
-      <td class='line'>69</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l69s0'>		sql.setParameter(fileId);</pre></td>
+      <td class='line'>69</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l69s0'>		sql.setParameter(fileId);</pre></td>
     </tr>
     <tr>
-      <td class='line'>70</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l70s0'>		sql.setParameter(timeId);</pre></td>
+      <td class='line'>70</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l70s0'>		sql.setParameter(timeId);</pre></td>
     </tr>
     <tr>
-      <td class='line'>71</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l71s0'>		return this.selectSingle(sql, new DocumentsRecord());</pre></td>
+      <td class='line'>71</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l71s0'>		return this.selectSingle(sql, new DocumentsRecord());</pre></td>
     </tr>
     <tr>
       <td class='line'>72</td><td>&nbsp;</td>
@@ -287,76 +287,76 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public void insert(long fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>0</td>
+      <td></td><td class='count'>248</td>
       <td class='paths'>
-        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/2</span>
-        <span class='uncovered' onclick="showPath(this,'l86s0 l91s0 l94s0 l97s0 l101s0')">A: 0</span>
-        <span class='uncovered' onclick="showPath(this,'l86s0 l91s0 l92s0 l97s0 l101s0')">B: 0</span>
+        <span style='cursor:default; background-color:#00ff00' onclick='hidePath()'>Path coverage: 2/2</span>
+        <span class='covered' onclick="showPath(this,'l86s0 l91s0 l94s0 l97s0 l101s0')">A: 12</span>
+        <span class='covered' onclick="showPath(this,'l86s0 l91s0 l92s0 l97s0 l101s0')">B: 236</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>86</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l86s0'>		Sql sql = new Sql("INSERT INTO DOCUMENTS VALUES (?, ?, ?, ?, ?, ?, ?, ?)");</pre></td>
+      <td class='line'>86</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l86s0'>		Sql sql = new Sql("INSERT INTO DOCUMENTS VALUES (?, ?, ?, ?, ?, ?, ?, ?)");</pre></td>
     </tr>
     <tr>
-      <td class='line'>87</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l87s0'>		sql.setParameter(fileId);</pre></td>
+      <td class='line'>87</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l87s0'>		sql.setParameter(fileId);</pre></td>
     </tr>
     <tr>
-      <td class='line'>88</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l88s0'>		sql.setParameter(timeId);</pre></td>
+      <td class='line'>88</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l88s0'>		sql.setParameter(timeId);</pre></td>
     </tr>
     <tr>
-      <td class='line'>89</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l89s0'>		sql.setParameter(filename);</pre></td>
+      <td class='line'>89</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l89s0'>		sql.setParameter(filename);</pre></td>
     </tr>
     <tr>
-      <td class='line'>90</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l90s0'>		sql.setParameter(extention);</pre></td>
+      <td class='line'>90</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l90s0'>		sql.setParameter(extention);</pre></td>
     </tr>
     <tr>
-      <td class='line'>91</td><td class='count'>0</td>
-      <td><pre class='prettyprint jmp'>		<span id='l91s0' title='Executions: 0' class='uncovered'>if (lastUpdateDate != null)</span> <span id='l91s1' title='Executions: 0' class='uncovered'>{</span></pre></td>
+      <td class='line'>91</td><td class='count'>248</td>
+      <td><pre class='prettyprint jmp'>		<span id='l91s0' title='Executions: 248' class='covered'>if (lastUpdateDate != null)</span> <span id='l91s1' title='Executions: 236' class='covered'>{</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>92</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l92s0'>			sql.setParameter(new Timestamp(lastUpdateDate.getTime()));</pre></td>
+      <td class='line'>92</td><td class='count'>236</td>
+      <td><pre class='prettyprint covered' id='l92s0'>			sql.setParameter(new Timestamp(lastUpdateDate.getTime()));</pre></td>
     </tr>
     <tr>
       <td class='line'>93</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		} else {</pre></td>
     </tr>
     <tr>
-      <td class='line'>94</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l94s0'>			Timestamp tmpTimeStamp = null;</pre></td>
+      <td class='line'>94</td><td class='count'>12</td>
+      <td><pre class='prettyprint covered' id='l94s0'>			Timestamp tmpTimeStamp = null;</pre></td>
     </tr>
     <tr>
-      <td class='line'>95</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l95s0'>			sql.setParameter(tmpTimeStamp);</pre></td>
+      <td class='line'>95</td><td class='count'>12</td>
+      <td><pre class='prettyprint covered' id='l95s0'>			sql.setParameter(tmpTimeStamp);</pre></td>
     </tr>
     <tr>
       <td class='line'>96</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>		}</pre></td>
     </tr>
     <tr>
-      <td class='line'>97</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l97s0'>		sql.setParameter(data);</pre></td>
+      <td class='line'>97</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l97s0'>		sql.setParameter(data);</pre></td>
     </tr>
     <tr>
-      <td class='line'>98</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l98s0'>		sql.setParameter(new Timestamp(createDate.getTime()));</pre></td>
+      <td class='line'>98</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l98s0'>		sql.setParameter(new Timestamp(createDate.getTime()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>99</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l99s0'>		sql.setParameter(new Timestamp(updateDate.getTime()));</pre></td>
+      <td class='line'>99</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l99s0'>		sql.setParameter(new Timestamp(updateDate.getTime()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>100</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l100s0'>		this.insert(sql);</pre></td>
+      <td class='line'>100</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l100s0'>		this.insert(sql);</pre></td>
     </tr>
     <tr>
-      <td class='line'>101</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l101s0'>	}</pre></td>
+      <td class='line'>101</td><td class='count'>248</td>
+      <td><pre class='prettyprint covered' id='l101s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>

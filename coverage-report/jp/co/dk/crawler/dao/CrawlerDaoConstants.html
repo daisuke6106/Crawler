@@ -55,7 +55,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>23</td><td class='count'>6</td>
+      <td class='line'>23</td><td class='count'>281</td>
       <td><pre class='prettyprint covered' id='l23s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -71,7 +71,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>27</td><td class='count'>6</td>
+      <td class='line'>27</td><td class='count'>281</td>
       <td><pre class='prettyprint covered' id='l27s0'>				return new DocumentsMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -128,7 +128,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>42</td><td class='count'>6</td>
+      <td class='line'>42</td><td class='count'>294</td>
       <td><pre class='prettyprint covered' id='l42s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -144,7 +144,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>46</td><td class='count'>6</td>
+      <td class='line'>46</td><td class='count'>294</td>
       <td><pre class='prettyprint covered' id='l46s0'>				return new LinksMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -201,7 +201,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>61</td><td class='count'>6</td>
+      <td class='line'>61</td><td class='count'>529</td>
       <td><pre class='prettyprint covered' id='l61s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -217,7 +217,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>65</td><td class='count'>6</td>
+      <td class='line'>65</td><td class='count'>529</td>
       <td><pre class='prettyprint covered' id='l65s0'>				return new PagesMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -274,7 +274,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>80</td><td class='count'>9</td>
+      <td class='line'>80</td><td class='count'>258</td>
       <td><pre class='prettyprint covered' id='l80s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -290,7 +290,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>84</td><td class='count'>9</td>
+      <td class='line'>84</td><td class='count'>258</td>
       <td><pre class='prettyprint covered' id='l84s0'>				return new UrlsMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -347,7 +347,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>99</td><td class='count'>6</td>
+      <td class='line'>99</td><td class='count'>14</td>
       <td><pre class='prettyprint covered' id='l99s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -363,7 +363,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>103</td><td class='count'>6</td>
+      <td class='line'>103</td><td class='count'>14</td>
       <td><pre class='prettyprint covered' id='l103s0'>				return new RedirectErrorsMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -420,7 +420,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>		public DataAccessObject getDataAccessObject(DataStoreKind kind, DataStore dataStore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>118</td><td class='count'>6</td>
+      <td class='line'>118</td><td class='count'>13</td>
       <td><pre class='prettyprint covered' id='l118s0'>			switch (kind) {</pre></td>
     </tr>
     <tr>
@@ -436,7 +436,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>			case MYSQL:</pre></td>
     </tr>
     <tr>
-      <td class='line'>122</td><td class='count'>6</td>
+      <td class='line'>122</td><td class='count'>13</td>
       <td><pre class='prettyprint covered' id='l122s0'>				return new CrawlerErrorsMysqlImpl(dataStore);</pre></td>
     </tr>
     <tr>
@@ -524,7 +524,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public DataAccessObjectFactory getDataAccessObjectFactory() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>147</td><td class='count'>39</td>
+      <td class='line'>147</td><td class='count'>1389</td>
       <td><pre class='prettyprint covered' id='l147s0'>		return this.factory;</pre></td>
     </tr>
     <tr>
@@ -541,7 +541,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
       <td><pre class='prettyprint'>	public String getName() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>152</td><td class='count'>39</td>
+      <td class='line'>152</td><td class='count'>1389</td>
       <td><pre class='prettyprint covered' id='l152s0'>		return this.name;</pre></td>
     </tr>
     <tr>

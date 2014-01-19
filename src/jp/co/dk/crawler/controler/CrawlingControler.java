@@ -3,13 +3,10 @@ package jp.co.dk.crawler.controler;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
-
 import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.Crawler;
-import jp.co.dk.crawler.MoveInfo;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.Element;
@@ -22,18 +19,14 @@ import jp.co.dk.document.html.constant.HtmlElementName;
 public class CrawlingControler {
 	
 	void control(int sleepTime, Crawler crawler) throws BrowzingException, CrawlerException, DataStoreManagerException {
-		List<Element> refsElements = this.getRefsElements(crawler.getPage());
-		for (Element element : refsElements) {
-			if (!(element instanceof MovableElement)) continue;
-			MovableElement movableElement = (MovableElement)element;
-			MoveInfo moveInfo = crawler.moveWithSave(movableElement);
-			// 遷移していた場合、元のページに戻ります。
-			if (MoveInfo.MOVED == moveInfo) crawler.back();
-		}
-		
-		List<Element> anchorElements = this.getRefsElements(crawler.getPage());
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {}
+		crawler.saveAll();
+		List<Element> anchorElements = this.getAnchorElements(crawler.getPage());
 		for (Element element : anchorElements) {
 			if (!(element instanceof MovableElement)) continue;
+			crawler.move((MovableElement)element);
 			this.control(sleepTime, crawler);
 		}
 	}

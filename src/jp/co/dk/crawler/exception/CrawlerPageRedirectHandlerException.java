@@ -1,7 +1,7 @@
 package jp.co.dk.crawler.exception;
 
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.exception.PageRedirectException;
 
 /**
  * CrawlerPageRedirectHandlerExceptionは、ページリダイレクトハンドラにてHTTPステータスコードを判定した際に発生する例外クラスです。<p/>
@@ -10,7 +10,7 @@ import jp.co.dk.browzer.exception.BrowzingException;
  * @version 1.0
  * @author D.Kanno
  */
-public class CrawlerPageRedirectHandlerException extends BrowzingException {
+public class CrawlerPageRedirectHandlerException extends PageRedirectException {
 
 	/** シリアルバージョンID */
 	private static final long serialVersionUID = -6589147054844498464L;
@@ -25,7 +25,7 @@ public class CrawlerPageRedirectHandlerException extends BrowzingException {
 	 * @param exception 例外オブジェクト
 	 * @param page 例外が発生したページオブジェクト
 	 */
-	public CrawlerPageRedirectHandlerException(BrowzingException exception, jp.co.dk.crawler.Page page) {
+	public CrawlerPageRedirectHandlerException(PageRedirectException exception, jp.co.dk.crawler.Page page) {
 		super(exception.getMessageObj(), exception.getEmbeddedStrList());
 		this.page = page;
 	}

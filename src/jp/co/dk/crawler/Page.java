@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.exception.PageAccessException;
+import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Pages;
@@ -15,7 +17,6 @@ import jp.co.dk.crawler.dao.record.DocumentsRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-import jp.co.dk.document.ByteDump;
 
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
@@ -41,30 +42,12 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * 
 	 * @param url              URL文字列
 	 * @param dataStoreManager データストアマネージャ
-	 * @throws BrowzingException ページ情報の読み込みに失敗した場合
+	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
+	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public Page(String url, DataStoreManager dataStoreManager) throws BrowzingException {
+	public Page(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
 		super(url);
 		this.dataStoreManager = dataStoreManager;
-	}
-	
-	/**
-	 * コンストラクタ<p/>
-	 * すでに保存済みのデータからページのインスタンスを生成します。<br/>
-	 * URLのプロトコルが未知、リクエストヘッダ、レスポンスヘッダが不正である場合などは、例外が発生します。
-	 * 
-	 * @param url            URL文字列
-	 * @param requestHeader  リクエストヘッダ
-	 * @param responseHeader レスポンスヘッダ
-	 * @param data           ページデータ
-	 * @param fileId         ファイルID
-	 * @param timeId         タイムID
-	 * @throws BrowzingException インスタンスの生成に失敗した場合
-	 */
-	public Page (String url, Map<String, String> requestHeader, Map<String, List<String>> responseHeader, ByteDump data, long fileId,long timeId) throws BrowzingException {
-		super(url, requestHeader, responseHeader, data);
-		this.fileId = fileId;
-		this.timeId = timeId;
 	}
 	
 	/**

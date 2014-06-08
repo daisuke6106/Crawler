@@ -1,7 +1,10 @@
 package jp.co.dk.crawler;
 
+import static jp.co.dk.crawler.message.CrawlerMessage.DETASTORETYPE_IS_NOT_SUPPORT;
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.CrawlerErrors;
@@ -10,6 +13,15 @@ import jp.co.dk.crawler.dao.RedirectErrors;
 import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
+import jp.co.dk.crawler.dao.mysql.CrawlerErrorsMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.DocumentsMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.LinksMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.PagesMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.RedirectErrorsMysqlImpl;
+import jp.co.dk.crawler.dao.mysql.UrlsMysqlImpl;
+import jp.co.dk.datastoremanager.DataAccessObject;
+import jp.co.dk.datastoremanager.DataAccessObjectFactory;
+import jp.co.dk.datastoremanager.DataStore;
 import jp.co.dk.datastoremanager.DataStoreKind;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
@@ -19,7 +31,7 @@ import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
 import jp.co.dk.message.exception.AbstractMessageException;
 import jp.co.dk.test.template.TestCaseTemplate;
 
-public class TestCrawlerFoundation extends TestCaseTemplate{
+public class CrawlerFoundationTest extends TestCaseTemplate{
 	/**
 	 * アクセス可能なDBアクセスパラメータを設定したDataBaseAccessParameterを返却します。
 	 * 
@@ -41,20 +53,22 @@ public class TestCrawlerFoundation extends TestCaseTemplate{
 		return new DataBaseAccessParameter(DataStoreKind.MYSQL, DataBaseDriverConstants.MYSQL, "255.255.255.255:3306", "test_db", "test_user", "123456");
 	}
 	
-	protected DataStoreManager getAccessableDataStoreManager()  throws DataStoreManagerException {
-		return new DataStoreManager(getAccessableDataStoreManagerProperty());
+	protected DataStoreManager getAccessableDataStoreManager() {
+		try {
+			return new DataStoreManager(new DataStoreManagerProperty("properties/test/AccessableDataStoreManager.properties"));
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		}
+		return null;
 	}
 	
-	protected DataStoreManager getAccessFaileDataStoreManager()  throws DataStoreManagerException {
-		return new DataStoreManager(getAccessFaileDataStoreManagerProperty());
-	}
-	
-	protected DataStoreManagerProperty getAccessableDataStoreManagerProperty() throws DataStoreManagerException {
-		return new DataStoreManagerProperty("properties/test/AccessableDataStoreManager.properties");
-	}
-	
-	protected DataStoreManagerProperty getAccessFaileDataStoreManagerProperty() throws DataStoreManagerException{
-		return new DataStoreManagerProperty("AccessFaileDataStoreManager.properties");
+	protected DataStoreManager getAccessFaileDataStoreManager() {
+		try {
+			return new DataStoreManager(new DataStoreManagerProperty("AccessFaileDataStoreManager.properties"));
+		} catch (DataStoreManagerException e) {
+			fail(e);
+		}
+		return null;
 	}
 	
 	@Override
@@ -104,5 +118,10 @@ public class TestCrawlerFoundation extends TestCaseTemplate{
 		redirectErrors.dropTable();
 		crawlerErrors.dropTable();
 		manager.finishTrunsaction();
+	}
+	
+	@Test
+	public void brankTest(){
+		
 	}
 }

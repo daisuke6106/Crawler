@@ -39,7 +39,7 @@ public class UrlsMysqlImpl extends AbstractDataBaseAccessObject implements Urls{
 		StringBuilder sb = new StringBuilder("CREATE TABLE URLS ");
 		sb.append('(');
 		sb.append("PROTOCOL        VARCHAR(6)     NOT NULL,");
-		sb.append("HOSTNAME        VARCHAR(256)   NOT NULL,");
+		sb.append("HOSTNAME        VARCHAR(255)   NOT NULL,");
 		sb.append("H_PATH          INT            NOT NULL,");
 		sb.append("H_PARAM         INT            NOT NULL,");
 		sb.append("URL             TEXT           NOT NULL,");

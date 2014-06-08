@@ -39,7 +39,7 @@ public class CrawlerErrorsMysqlImpl extends AbstractDataBaseAccessObject impleme
 		StringBuilder sb = new StringBuilder("CREATE TABLE CRAWLER_ERRORS ");
 		sb.append('(');
 		sb.append("PROTOCOL         VARCHAR(6)   NOT NULL,");
-		sb.append("HOSTNAME         VARCHAR(256) NOT NULL,");
+		sb.append("HOSTNAME         VARCHAR(255) NOT NULL,");
 		sb.append("H_PATH           INT          NOT NULL,");
 		sb.append("H_PARAM          INT          NOT NULL,");
 		sb.append("MESSAGE            TEXT    , ");

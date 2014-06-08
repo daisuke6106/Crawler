@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.dk.crawler.TestCrawlerFoundation;
+import jp.co.dk.crawler.CrawlerFoundationTest;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.CrawlerErrors;
 import jp.co.dk.crawler.dao.Pages;
@@ -21,7 +21,7 @@ import jp.co.dk.datastoremanager.message.DataStoreManagerMessage;
 
 import org.junit.Test;
 
-public class TestCrawlerErrorsMysqlImpl extends TestCrawlerFoundation{
+public class CrawlerErrorsMysqlImplTest extends CrawlerFoundationTest{
 
 	@Test
 	public void insert() throws DataStoreManagerException {

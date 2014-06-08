@@ -15,6 +15,7 @@ import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
@@ -57,9 +58,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * ２．このページの情報を「URLS」、「PAGES」、「DOCUMENTS」テーブルに保存し、trueを返却して処理を終了します。
 	 * 
 	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
-	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
+	 * @throws CrawlerSaveException データストアの登録時に必須項目が設定されていなかった場合
 	 */
-	public boolean save() throws CrawlerException {
+	public boolean save() throws CrawlerSaveException {
 		if (this.isLatest()) return false;
 		this.addUrlRecord();
 		this.addPageRecord();
@@ -73,9 +74,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * すでにレコードが存在した場合、保存は行わない。その場合、falseを返却します。
 	 * 
 	 * @return true=保存をおこなった場合、false=すでにレコードが存在した場合
-	 * @throws CrawlerException データストアへの保存に失敗した場合
+	 * @throws CrawlerSaveException データストアへの保存に失敗した場合
 	 */
-	public boolean addUrlRecord() throws CrawlerException{
+	public boolean addUrlRecord() throws CrawlerSaveException{
 		try {
 			Urls               urls       = (Urls)dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
 			String             url        = this.getURL();
@@ -89,8 +90,8 @@ public class Page extends jp.co.dk.browzer.Page{
 			if (urls.select(protocol, host, pathList, parameter) != null) return false;
 			urls.insert(protocol, host, pathList, parameter, url, fileid, createDate, updateDate);
 			return true;
-		} catch (DataStoreManagerException e) {
-			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+		} catch (DataStoreManagerException | CrawlerException e) {
+			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
 	
@@ -100,9 +101,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * すでにレコードが存在した場合、保存は行わない。その場合、falseを返却します。
 	 * 
 	 * @return true=保存をおこなった場合、false=すでにレコードが存在した場合
-	 * @throws CrawlerException データストアへの保存に失敗した場合
+	 * @throws CrawlerSaveException データストアへの保存に失敗した場合
 	 */
-	public boolean addPageRecord() throws CrawlerException{
+	public boolean addPageRecord() throws CrawlerSaveException{
 		try {
 			Pages     pages     = (Pages)dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 			String                   protocol       = this.getProtocol();
@@ -120,8 +121,8 @@ public class Page extends jp.co.dk.browzer.Page{
 			if (pages.select(protocol, host, pathList, parameter, fileid, timeid) != null) return false;
 			pages.insert(protocol, host, pathList, parameter, requestHeader, responseHeader, httpStatusCode, httpVersion, fileid, timeid, createDate, updateDate);
 			return true;
-		} catch (DataStoreManagerException e) {
-			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+		} catch (DataStoreManagerException | CrawlerException  e) {
+			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
 	
@@ -131,9 +132,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * すでにレコードが存在した場合、保存は行わない。その場合、falseを返却します。
 	 * 
 	 * @return true=保存をおこなった場合、false=すでにレコードが存在した場合
-	 * @throws CrawlerException データストアへの保存に失敗した場合
+	 * @throws CrawlerSaveException データストアへの保存に失敗した場合
 	 */
-	public boolean addDocumentRecord() throws CrawlerException{
+	public boolean addDocumentRecord() throws CrawlerSaveException{
 		try {
 			Documents documents  = (Documents) dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
 			String  filename     = this.getFileName();
@@ -148,7 +149,7 @@ public class Page extends jp.co.dk.browzer.Page{
 			documents.insert(fileid, timeid, filename, extension, lastModified, data, createDate, updateDate);
 			return true;
 		} catch (DataStoreManagerException | BrowzingException e) {
-			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
 	
@@ -156,9 +157,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * このページを保存している履歴の個数を取得します。
 	 * 
 	 * @return 履歴を保持している個数
-	 * @throws CrawlerException データストアへ対する操作にて例外が発生した場合
+	 * @throws CrawlerSaveException データストアへ対する操作にて例外が発生した場合
 	 */
-	public int getCount() throws CrawlerException {
+	public int getCount() throws CrawlerSaveException {
 		try {
 			Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
 			String              protcol   = this.getProtocol();
@@ -168,7 +169,7 @@ public class Page extends jp.co.dk.browzer.Page{
 			int count = pages.count(protcol, host, pathList, parameter);
 			return count;
 		} catch (DataStoreManagerException e) {
-			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
 	
@@ -181,7 +182,7 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * @return 判定結果（true=保存済みである、false=未だに保存されていないページである）
 	 * @throws CrawlerException データストアへ対する操作にて例外が発生した場合
 	 */
-	public boolean isSaved() throws CrawlerException {
+	public boolean isSaved() throws CrawlerSaveException {
 		if(getCount() != 0) return true;
 		return false;
 	}
@@ -197,9 +198,9 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * 　　（更新日付がともにnullも一致と判定、データの差異比較の場合も、同様）
 	 * 
 	 * @return 判定結果（true=最新である、false=最新でない、またはページが保存されていない）
-	 * @throws CrawlerException  データストアへ対する操作にて例外が発生した場合
+	 * @throws CrawlerSaveException  データストアへ対する操作にて例外が発生した場合
 	 */
-	public boolean isLatest() throws CrawlerException {
+	public boolean isLatest() throws CrawlerSaveException {
 		if (!isSaved()) return false;
 		try {
 			Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
@@ -213,7 +214,7 @@ public class Page extends jp.co.dk.browzer.Page{
 			if (this.sameDate(thisLastModified, savedLastModified) && this.sameBytes(thisPageData, savedData)) return true;
 			return false;
 		} catch (DataStoreManagerException | BrowzingException e) {
-			throw new CrawlerException(FAILE_TO_GET_PAGE, this.getURL(), e);
+			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
 	

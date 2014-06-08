@@ -2,7 +2,7 @@ package jp.co.dk.crawler.dao.mysql;
 
 import java.util.Date;
 
-import jp.co.dk.crawler.TestCrawlerFoundation;
+import jp.co.dk.crawler.CrawlerFoundationTest;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.RedirectErrors;
 import jp.co.dk.crawler.dao.record.RedirectErrorsRecord;
@@ -14,7 +14,7 @@ import jp.co.dk.datastoremanager.message.DataStoreManagerMessage;
 
 import org.junit.Test;
 
-public class TestRedirectErrorsMysqlImpl extends TestCrawlerFoundation{
+public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 
 	@Test
 	public void insert() throws DataStoreManagerException {

@@ -1,10 +1,10 @@
 package jp.co.dk.crawler.dao.record;
 
-import jp.co.dk.crawler.TestCrawlerFoundation;
+import jp.co.dk.crawler.CrawlerFoundationTest;
 
 // 実装を変えたため、本試験は不要
 
-public class TestPagesRecord extends TestCrawlerFoundation{
+public class PagesRecordTest extends CrawlerFoundationTest{
 
 //	@Test
 //	public void constractor() {

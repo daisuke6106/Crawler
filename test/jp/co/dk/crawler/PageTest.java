@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.exception.PageAccessException;
+import jp.co.dk.browzer.exception.PageHeaderImproperException;
+import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.Pages;
@@ -14,30 +17,30 @@ import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
 import jp.co.dk.crawler.dao.record.PagesRecord;
 import jp.co.dk.crawler.dao.record.UrlsRecord;
-import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 
 import org.junit.Test;
 
-public class TestPage extends TestCrawlerFoundation{
+public class PageTest extends CrawlerFoundationTest{
 
 	@Test
-	public void constactor() {
+	public void constactor() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
 		try {
-			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page = new Page("http://www.google.com", manager);
 		} catch (BrowzingException e) {
-			fail(e);
-		} catch (DataStoreManagerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 	}
 	
 	@Test
-	public void save() {
+	public void save() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
 		try {
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
-			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
@@ -66,20 +69,20 @@ public class TestPage extends TestCrawlerFoundation{
 			manager.finishTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
-		} catch (BrowzingException e) {
+		} catch ( PageIllegalArgumentException | PageAccessException | CrawlerSaveException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		} catch (DataStoreManagerException e) {
-			fail(e);
-		} catch (CrawlerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 	}
 	
 	@Test
-	public void getCount() {
+	public void getCount() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
 		try {
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
-			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
@@ -94,7 +97,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page2 = new Page("http://www.studyinghttp.net/header", manager);
+			Page page2 = new Page("http://www.ugtop.com/spill.shtml", manager);
 			page2.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -128,20 +131,20 @@ public class TestPage extends TestCrawlerFoundation{
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
 			manager.finishTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-		} catch (BrowzingException e) {
+		} catch ( PageIllegalArgumentException | PageAccessException | CrawlerSaveException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		} catch (DataStoreManagerException e) {
-			fail(e);
-		} catch (CrawlerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 	}
 	
 	@Test
-	public void isSaved() {
+	public void isSaved() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
 		try {
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
-			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
@@ -178,20 +181,20 @@ public class TestPage extends TestCrawlerFoundation{
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
 			manager.finishTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-		} catch (BrowzingException e) {
+		} catch ( PageIllegalArgumentException | PageAccessException | CrawlerSaveException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		} catch (DataStoreManagerException e) {
-			fail(e);
-		} catch (CrawlerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 	}
 	
 	@Test
-	public void isLastest() {
+	public void isLastest() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
 		try {
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
-			DataStoreManager manager = getAccessableDataStoreManager();
 			manager.startTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
@@ -233,17 +236,18 @@ public class TestPage extends TestCrawlerFoundation{
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション終了＝＝＝＝＝＝＝＝＝＝
 			manager.finishTrunsaction();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-		} catch (BrowzingException e) {
+		} catch ( PageIllegalArgumentException | PageAccessException | PageHeaderImproperException | CrawlerSaveException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		} catch (DataStoreManagerException e) {
-			fail(e);
-		} catch (CrawlerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 	}
 	
 	@Test
-	public void sameDate() {
+	public void sameDate() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
 		try {
 			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
 			// NULL２つ設定した場合、trueが返却されること。
@@ -259,15 +263,15 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			assertThat(page.sameDate(new Date(date.getTime()), new Date(date.getTime()+1)), is(false));
 		} catch (BrowzingException e) {
-			fail(e);
-		} catch (DataStoreManagerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 		
 	}
 	
 	@Test
-	public void sameBytes() {
+	public void sameBytes() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
 		try {
 			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
 			// NULL２つ設定した場合、trueが返却されること。
@@ -286,16 +290,15 @@ public class TestPage extends TestCrawlerFoundation{
 			bytes2[0] = 0;
 			assertThat(page.sameBytes(bytes1, bytes2), is(false));
 		} catch (BrowzingException e) {
-			fail(e);
-		} catch (DataStoreManagerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 		
 	}
 	
 	@Test
-	public void getFileId() {
-		
+	public void getFileId() throws DataStoreManagerException {
+		DataStoreManager manager = getAccessableDataStoreManager();
 		// ==========正常にファイルIDが返却されること==========
 		// プロトコル＋ホスト名
 		try {
@@ -315,8 +318,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			assertEquals(page.getFileId(), result.longValue());
 		} catch (BrowzingException e) {
-			fail(e);
-		} catch (DataStoreManagerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 		
@@ -340,8 +342,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			assertEquals(page.getFileId(), result.longValue());
 		} catch (BrowzingException e) {
-			fail(e);
-		} catch (DataStoreManagerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 		
@@ -368,8 +369,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			assertEquals(page.getFileId(), result.longValue());
 		} catch (BrowzingException e) {
-			fail(e);
-		} catch (DataStoreManagerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 		
@@ -393,8 +393,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			assertEquals(page.getFileId(), result.longValue());
 		} catch (BrowzingException e) {
-			fail(e);
-		} catch (DataStoreManagerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 		
@@ -420,8 +419,7 @@ public class TestPage extends TestCrawlerFoundation{
 			
 			assertEquals(page.getFileId(), result.longValue());
 		} catch (BrowzingException e) {
-			fail(e);
-		} catch (DataStoreManagerException e) {
+			manager.finishTrunsaction();
 			fail(e);
 		}
 	}

@@ -51,38 +51,38 @@ public class CrawlerExecuter {
 	}
 	
 	
-	public void crawl(String url, CrawlingControler crawlingRule) throws CrawlerException, BrowzingException, DataStoreManagerException {
-		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
-		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
-		dataStoreManager.startTrunsaction();
-		
-		try {
-			Crawler crawler = new Crawler(url, dataStoreManager);
-			crawler.save();
-			List<Element> refsElements = crawlingRule.getRefsElements(crawler.getPage());
-			for (Element element : refsElements) {
-				
-			}
-		} catch (CrawlerException | BrowzingException e) {
-			throw e;
-		}
-		dataStoreManager.finishTrunsaction();
-	}
-	
-	/**
-	 * 
-	 * @param url
-	 * @throws DataStoreManagerException
-	 * @throws CrawlerException
-	 * @throws BrowzingException
-	 */
-	public void save(String url) throws DataStoreManagerException, CrawlerException, BrowzingException {
-		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
-		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
-		dataStoreManager.startTrunsaction();
-		Crawler crawler = new Crawler(url, dataStoreManager);
-		crawler.saveAll();
-		dataStoreManager.finishTrunsaction();
-	}
+//	public void crawl(String url, CrawlingControler crawlingRule) throws CrawlerException, BrowzingException, DataStoreManagerException {
+//		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
+//		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
+//		dataStoreManager.startTrunsaction();
+//		
+//		try {
+//			Crawler crawler = new Crawler(url, dataStoreManager);
+//			crawler.save();
+//			List<Element> refsElements = crawlingRule.getRefsElements(crawler.getPage());
+//			for (Element element : refsElements) {
+//				
+//			}
+//		} catch (CrawlerException | BrowzingException e) {
+//			throw e;
+//		}
+//		dataStoreManager.finishTrunsaction();
+//	}
+//	
+//	/**
+//	 * 
+//	 * @param url
+//	 * @throws DataStoreManagerException
+//	 * @throws CrawlerException
+//	 * @throws BrowzingException
+//	 */
+//	public void save(String url) throws DataStoreManagerException, CrawlerException, BrowzingException {
+//		DataStoreManagerProperty dataStoreManagerProperty = new DataStoreManagerProperty();
+//		DataStoreManager dataStoreManager = new DataStoreManager(dataStoreManagerProperty);
+//		dataStoreManager.startTrunsaction();
+//		Crawler crawler = new Crawler(url, dataStoreManager);
+//		crawler.saveAll();
+//		dataStoreManager.finishTrunsaction();
+//	}
 	
 }

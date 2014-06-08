@@ -31,7 +31,7 @@ public class CrawlerMessage extends AbstractMessage implements Serializable{
 	public static final CrawlerMessage FAILE_TO_GET_PAGE = new CrawlerMessage("E005");
 	
 	/** データストアマネージャが設定されていません。 */
-	public static final CrawlerMessage DETASTORETYPE_IS_NOT_SET = new CrawlerMessage("E006");
+	public static final CrawlerMessage DATASTOREMANAGER_IS_NOT_SET = new CrawlerMessage("E006");
 	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);

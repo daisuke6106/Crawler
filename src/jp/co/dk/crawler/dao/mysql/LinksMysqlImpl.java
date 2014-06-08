@@ -39,11 +39,11 @@ public class LinksMysqlImpl extends AbstractDataBaseAccessObject implements Link
 		StringBuilder sb = new StringBuilder("CREATE TABLE LINKS ");
 		sb.append('(');
 		sb.append("FROM_PROTOCOL        VARCHAR(6)   NOT NULL,");
-		sb.append("FROM_HOSTNAME        VARCHAR(256) NOT NULL,");
+		sb.append("FROM_HOSTNAME        VARCHAR(255) NOT NULL,");
 		sb.append("FROM_H_PATH          INT          NOT NULL,");
 		sb.append("FROM_H_PARAM         INT          NOT NULL,");
 		sb.append("TO_PROTOCOL          VARCHAR(6)   NOT NULL,");
-		sb.append("TO_HOSTNAME          VARCHAR(256) NOT NULL,");
+		sb.append("TO_HOSTNAME          VARCHAR(255) NOT NULL,");
 		sb.append("TO_H_PATH            INT          NOT NULL,");
 		sb.append("TO_H_PARAM           INT          NOT NULL,");
 		sb.append("CREATE_DATE     DATETIME, ");

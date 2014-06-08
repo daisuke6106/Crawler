@@ -27,7 +27,10 @@ import jp.co.dk.crawler.dao.Urls;
 import jp.co.dk.crawler.dao.record.LinksRecord;
 import jp.co.dk.crawler.dao.record.PagesRecord;
 import jp.co.dk.crawler.exception.CrawlerException;
+import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerPageRedirectHandlerException;
+import jp.co.dk.crawler.exception.CrawlerSaveException;
+import jp.co.dk.crawler.message.CrawlerMessage;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.Element;
@@ -58,105 +61,108 @@ public class Crawler extends Browzer{
 	 * データストアマネージャが設定されていなかった場合、例外を送出する。
 	 * 
 	 * @param dataStoreManager データストアマネージャ
-	 * @throws DataStoreManagerException データストアプロパティの取得に失敗した場合
-	 * @throws BrowzingException ページ情報の読み込みに失敗した場合
+	 * @throws CrawlerInitException クローラの初期化処理に失敗した場合
+	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
+	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public Crawler(String url, DataStoreManager dataStoreManager) throws CrawlerException, BrowzingException { 
+	public Crawler(String url, DataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
 		super(url);
-		this.dsm         = dataStoreManager;
+		if (dataStoreManager == null) throw new CrawlerInitException(CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET);
+		this.dsm                 = dataStoreManager;
+		this.pageRedirectHandler = new CrawlerPageRedirectHandler(dataStoreManager, this.getPageEventHandler());
 	}
 	
-	/**
-	 * 指定のURLのデータストアへ保存履歴を取得します。<p/>
-	 * 
-	 * 指定のURLの状態が以下である場合、記載の通りの結果を返却します。<br/>
-	 * ・一度もアクセスしていない場合：NON_SAVEが１つ設定された値を返却します。<br/>
-	 * ・以前アクセスしているが、サーバにアクセス自体アクセスできないなどのエラーが発生していた場合：CRAWLER_ERRORSが１つ設定されたリストを返却します。<br/>
-	 * ・以前アクセスしているが、サーバアクセスはできたが、HTTPステータス404などのエラーが返却されていた場合、REDIRECT_ERRORSを保持したリストを返却します。<br/>
-	 * ・以前アクセスしている、且つ正常にページアクセスに成功して保存されている場合、SUCCESS_SAVEDを保持したリストを返却します。<br/>
-	 * <br/>
-	 * 例えば指定のURLがすでに保存されており、３履歴分保存済み、且つ、最新の状態ではページが削除されており、404が返却されていた場合
-	 * ・[0]=ERROR_SAVED_BY_REDIRECT
-	 * ・[1]=SUCCESS_SAVED
-	 * ・[2]=SUCCESS_SAVED
-	 * ・[3]=SUCCESS_SAVED
-	 * 
-	 * のようなリストで返却されます。
-	 * 
-	 * @param url 対象のURL
-	 * @return 履歴の一覧
-	 * @throws DataStoreManagerException
-	 * @throws BrowzingException URL文字列がnullまたは、空文字だった場合
-	 */
-	public List<PageStatus> getHistory(String url) throws DataStoreManagerException, BrowzingException {
-		List<PageStatus> history = new ArrayList<PageStatus>();
-		Url urlObj = new Url(url);
-		String protocol               = urlObj.getProtocol();
-		String host                   = urlObj.getHost();
-		List<String> path             = urlObj.getPathList();
-		Map<String, String> parameter = urlObj.getParameter();
-		Urls urls = (Urls)dsm.getDataAccessObject(CrawlerDaoConstants.URLS);
-		if (urls.count(protocol, host, path, parameter) == 0) {
-			history.add(PageStatus.NON_SAVE);
-			return history;
-		}
-		Pages pages = (Pages)dsm.getDataAccessObject(CrawlerDaoConstants.PAGES);
-		int pageCount = pages.count(protocol, host, path, parameter);
-		if (pageCount == 0) {
-			CrawlerErrors redirectErrors = (CrawlerErrors)dsm.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
-			if (redirectErrors.count(protocol, host, path, parameter) != 0){
-				history.add(PageStatus.ERROR_SAVED_BY_CRAWL);
-			}
-		} else {
-			List<PagesRecord> pagesRecords = pages.select(protocol, host, path, parameter);
-			Documents      documents      = (Documents)dsm.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-			RedirectErrors redirectErrors = (RedirectErrors)dsm.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
-			for (PagesRecord pagesRecord : pagesRecords) {
-				long fileId = pagesRecord.getFileid();
-				long timeId = pagesRecord.getTimeid();
-				if (documents.count(fileId, timeId) != 0) {
-					history.add(PageStatus.SUCCESS_SAVED);
-				} else if (redirectErrors.count(fileId, timeId) != 0){
-					history.add(PageStatus.ERROR_SAVED_BY_REDIRECT);
-				}
-			}
-		}
-		return history;
-	}
+//	/**
+//	 * 指定のURLのデータストアへ保存履歴を取得します。<p/>
+//	 * 
+//	 * 指定のURLの状態が以下である場合、記載の通りの結果を返却します。<br/>
+//	 * ・一度もアクセスしていない場合：NON_SAVEが１つ設定された値を返却します。<br/>
+//	 * ・以前アクセスしているが、サーバにアクセス自体アクセスできないなどのエラーが発生していた場合：CRAWLER_ERRORSが１つ設定されたリストを返却します。<br/>
+//	 * ・以前アクセスしているが、サーバアクセスはできたが、HTTPステータス404などのエラーが返却されていた場合、REDIRECT_ERRORSを保持したリストを返却します。<br/>
+//	 * ・以前アクセスしている、且つ正常にページアクセスに成功して保存されている場合、SUCCESS_SAVEDを保持したリストを返却します。<br/>
+//	 * <br/>
+//	 * 例えば指定のURLがすでに保存されており、３履歴分保存済み、且つ、最新の状態ではページが削除されており、404が返却されていた場合
+//	 * ・[0]=ERROR_SAVED_BY_REDIRECT
+//	 * ・[1]=SUCCESS_SAVED
+//	 * ・[2]=SUCCESS_SAVED
+//	 * ・[3]=SUCCESS_SAVED
+//	 * 
+//	 * のようなリストで返却されます。
+//	 * 
+//	 * @param url 対象のURL
+//	 * @return 履歴の一覧
+//	 * @throws DataStoreManagerException
+//	 * @throws BrowzingException URL文字列がnullまたは、空文字だった場合
+//	 */
+//	public List<PageStatus> getHistory(String url) throws DataStoreManagerException, BrowzingException {
+//		List<PageStatus> history = new ArrayList<PageStatus>();
+//		Url urlObj = new Url(url);
+//		String protocol               = urlObj.getProtocol();
+//		String host                   = urlObj.getHost();
+//		List<String> path             = urlObj.getPathList();
+//		Map<String, String> parameter = urlObj.getParameter();
+//		Urls urls = (Urls)dsm.getDataAccessObject(CrawlerDaoConstants.URLS);
+//		if (urls.count(protocol, host, path, parameter) == 0) {
+//			history.add(PageStatus.NON_SAVE);
+//			return history;
+//		}
+//		Pages pages = (Pages)dsm.getDataAccessObject(CrawlerDaoConstants.PAGES);
+//		int pageCount = pages.count(protocol, host, path, parameter);
+//		if (pageCount == 0) {
+//			CrawlerErrors redirectErrors = (CrawlerErrors)dsm.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
+//			if (redirectErrors.count(protocol, host, path, parameter) != 0){
+//				history.add(PageStatus.ERROR_SAVED_BY_CRAWL);
+//			}
+//		} else {
+//			List<PagesRecord> pagesRecords = pages.select(protocol, host, path, parameter);
+//			Documents      documents      = (Documents)dsm.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
+//			RedirectErrors redirectErrors = (RedirectErrors)dsm.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
+//			for (PagesRecord pagesRecord : pagesRecords) {
+//				long fileId = pagesRecord.getFileid();
+//				long timeId = pagesRecord.getTimeid();
+//				if (documents.count(fileId, timeId) != 0) {
+//					history.add(PageStatus.SUCCESS_SAVED);
+//				} else if (redirectErrors.count(fileId, timeId) != 0){
+//					history.add(PageStatus.ERROR_SAVED_BY_REDIRECT);
+//				}
+//			}
+//		}
+//		return history;
+//	}
 	
-	/**
-	 * 指定の遷移可能要素に遷移し、そのページ情報を保存します。
-	 * 正常に遷移し、ページ情報がセーブできた場合、MoveInfo.MOVEを返却します。
-	 * 
-	 * 指定された遷移可能要素にURLが設定されていなかった場合は、その時点でMoveInfo.NON_MOVEDを返却し、処理を終了します。
-	 * 
-	 * 指定の遷移可能要素に遷移した際に、ページが存在しなかったなどで遷移できなかった場合、本クラスのerrorHandlerメソッドにエラー制御が移譲され、MoveInfo.NON_MOVEDが返却されます。
-	 * 
-	 * 
-	 * @param movable 遷移可能要素
-	 * @return 遷移状態（MOVE=指定のページに遷移済み且つ保存済み、NON_MOVED=未遷移状態）
-	 * @throws CrawlerException errorHandlerメソッドにてエラーにて終了と判定された場合
-	 * @throws DataStoreManagerException データストアへの保存処理に失敗した場合
-	 */
-	public MoveInfo moveWithSave(MovableElement movable) throws CrawlerException, DataStoreManagerException {
-		Page activePage = this.getPage();
-		Url activeUrl   = activePage.getUrl();
-		Url nextUrl;
-		try {
-			nextUrl = new Url(movable.getUrl());
-		} catch (BrowzingException e) {
-			return MoveInfo.NON_MOVED;
-		}
-		try {
-			this.addLinks(activeUrl, nextUrl);
-			this.move(movable);
-			this.save();
-			return MoveInfo.MOVED;
-		} catch (BrowzingException e) {
-			this.errorHandler(activePage, nextUrl, e);
-			return MoveInfo.NON_MOVED;
-		}
-	}
+//	/**
+//	 * 指定の遷移可能要素に遷移し、そのページ情報を保存します。
+//	 * 正常に遷移し、ページ情報がセーブできた場合、MoveInfo.MOVEを返却します。
+//	 * 
+//	 * 指定された遷移可能要素にURLが設定されていなかった場合は、その時点でMoveInfo.NON_MOVEDを返却し、処理を終了します。
+//	 * 
+//	 * 指定の遷移可能要素に遷移した際に、ページが存在しなかったなどで遷移できなかった場合、本クラスのerrorHandlerメソッドにエラー制御が移譲され、MoveInfo.NON_MOVEDが返却されます。
+//	 * 
+//	 * 
+//	 * @param movable 遷移可能要素
+//	 * @return 遷移状態（MOVE=指定のページに遷移済み且つ保存済み、NON_MOVED=未遷移状態）
+//	 * @throws CrawlerException errorHandlerメソッドにてエラーにて終了と判定された場合
+//	 * @throws DataStoreManagerException データストアへの保存処理に失敗した場合
+//	 */
+//	public MoveInfo moveWithSave(MovableElement movable) throws CrawlerException, DataStoreManagerException {
+//		Page activePage = this.getPage();
+//		Url activeUrl   = activePage.getUrl();
+//		Url nextUrl;
+//		try {
+//			nextUrl = new Url(movable.getUrl());
+//		} catch (BrowzingException e) {
+//			return MoveInfo.NON_MOVED;
+//		}
+//		try {
+//			this.addLinks(activeUrl, nextUrl);
+//			this.move(movable);
+//			this.save();
+//			return MoveInfo.MOVED;
+//		} catch (BrowzingException e) {
+//			this.errorHandler(activePage, nextUrl, e);
+//			return MoveInfo.NON_MOVED;
+//		}
+//	}
 	
 	/**
 	 * 現在アクティブになっているページを保存する。
@@ -164,124 +170,124 @@ public class Crawler extends Browzer{
 	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
 	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
 	 */
-	public boolean save() throws CrawlerException {
+	public boolean save() throws CrawlerSaveException {
 		jp.co.dk.crawler.Page page = (jp.co.dk.crawler.Page) this.getPage();
 		return page.save();
 	}
 	
-	/**
-	 * 現在アクティブになっているページの情報と、そのページが参照するIMG、SCRIPT、LINKタグが参照するページをデータストアへ保存します。<p/>
-	 * 
-	 * @throws PageAccessException       アクティブになっているページのページデータの取得に失敗した場合
-	 * @throws DocumentException         アクティブになっているページのドキュメントオブジェクトの生成に失敗した場合
-	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
-	 * @throws DataStoreManagerException データストアの操作に失敗した場合
-	 */
-	public void saveAll() throws PageAccessException, DocumentException, CrawlerException, DataStoreManagerException {
-		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
-		activePage.save();
-		this.saveImage();
-		this.saveScript();
-		this.saveLink();
-		this.pageManager.removeChild();
-	}
+//	/**
+//	 * 現在アクティブになっているページの情報と、そのページが参照するIMG、SCRIPT、LINKタグが参照するページをデータストアへ保存します。<p/>
+//	 * 
+//	 * @throws PageAccessException       アクティブになっているページのページデータの取得に失敗した場合
+//	 * @throws DocumentException         アクティブになっているページのドキュメントオブジェクトの生成に失敗した場合
+//	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
+//	 * @throws DataStoreManagerException データストアの操作に失敗した場合
+//	 */
+//	public void saveAll() throws PageAccessException, DocumentException, CrawlerException, DataStoreManagerException {
+//		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
+//		activePage.save();
+//		this.saveImage();
+//		this.saveScript();
+//		this.saveLink();
+//		this.pageManager.removeChild();
+//	}
 	
-	/**
-	 * 現在アクティブになっているページに記載されているすべてのIMGタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
-	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
-	 * <br/>
-	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
-	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
-	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
-	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
-	 * 
-	 * @throws PageAccessException       アクティブになっているページのページデータの取得に失敗した場合
-	 * @throws DocumentException         アクティブになっているページのドキュメントオブジェクトの生成に失敗した場合
-	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
-	 * @throws DataStoreManagerException データストアの操作に失敗した場合
-	 */
-	public void saveImage() throws PageAccessException, DocumentException, CrawlerException, DataStoreManagerException {
-		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
-		File file = activePage.getDocument();
-		if (!(file instanceof HtmlDocument)) return;
-		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(HtmlElementName.IMG);
-		for (Element element : elements) {
-			jp.co.dk.browzer.html.element.Image castedElement = (jp.co.dk.browzer.html.element.Image)element;
-			this.moveWithSave(castedElement);
-			this.back();
-		}
-	}
+//	/**
+//	 * 現在アクティブになっているページに記載されているすべてのIMGタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
+//	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
+//	 * <br/>
+//	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
+//	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
+//	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
+//	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
+//	 * 
+//	 * @throws PageAccessException       アクティブになっているページのページデータの取得に失敗した場合
+//	 * @throws DocumentException         アクティブになっているページのドキュメントオブジェクトの生成に失敗した場合
+//	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
+//	 * @throws DataStoreManagerException データストアの操作に失敗した場合
+//	 */
+//	public void saveImage() throws PageAccessException, DocumentException, CrawlerException, DataStoreManagerException {
+//		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
+//		File file = activePage.getDocument();
+//		if (!(file instanceof HtmlDocument)) return;
+//		HtmlDocument htmlDocument = (HtmlDocument)file;
+//		List<Element> elements = htmlDocument.getElement(HtmlElementName.IMG);
+//		for (Element element : elements) {
+//			jp.co.dk.browzer.html.element.Image castedElement = (jp.co.dk.browzer.html.element.Image)element;
+//			this.moveWithSave(castedElement);
+//			this.back();
+//		}
+//	}
 	
-	/**
-	 * 現在アクティブになっているページに記載されているすべてのSCRIPTタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
-	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
-	 * <br/>
-	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
-	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
-	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
-	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
-	 * 
-	 * @throws PageAccessException       アクティブになっているページのページデータの取得に失敗した場合
-	 * @throws DocumentException         アクティブになっているページのドキュメントオブジェクトの生成に失敗した場合
-	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
-	 * @throws DataStoreManagerException データストアの操作に失敗した場合
-	 */
-	public void saveScript() throws PageAccessException, DocumentException, CrawlerException, DataStoreManagerException {
-		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
-		File file = activePage.getDocument();
-		if (!(file instanceof HtmlDocument)) return;
-		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(new ElementSelector() {
-			@Override
-			public boolean judgment(Element element) {
-				if (!(element instanceof HtmlElement)) return false;
-				HtmlElement htmlElement = (HtmlElement)element;
-				if (htmlElement.getElementType() == HtmlElementName.SCRIPT && htmlElement.hasAttribute("src")) return true;
-				return false;
-			}
-		});
-		for (Element element : elements) {
-			jp.co.dk.browzer.html.element.Script castedElement = (jp.co.dk.browzer.html.element.Script)element;
-			this.moveWithSave(castedElement);
-			this.back();
-		}
-	}
+//	/**
+//	 * 現在アクティブになっているページに記載されているすべてのSCRIPTタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
+//	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
+//	 * <br/>
+//	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
+//	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
+//	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
+//	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
+//	 * 
+//	 * @throws PageAccessException       アクティブになっているページのページデータの取得に失敗した場合
+//	 * @throws DocumentException         アクティブになっているページのドキュメントオブジェクトの生成に失敗した場合
+//	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
+//	 * @throws DataStoreManagerException データストアの操作に失敗した場合
+//	 */
+//	public void saveScript() throws PageAccessException, DocumentException, CrawlerException, DataStoreManagerException {
+//		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
+//		File file = activePage.getDocument();
+//		if (!(file instanceof HtmlDocument)) return;
+//		HtmlDocument htmlDocument = (HtmlDocument)file;
+//		List<Element> elements = htmlDocument.getElement(new ElementSelector() {
+//			@Override
+//			public boolean judgment(Element element) {
+//				if (!(element instanceof HtmlElement)) return false;
+//				HtmlElement htmlElement = (HtmlElement)element;
+//				if (htmlElement.getElementType() == HtmlElementName.SCRIPT && htmlElement.hasAttribute("src")) return true;
+//				return false;
+//			}
+//		});
+//		for (Element element : elements) {
+//			jp.co.dk.browzer.html.element.Script castedElement = (jp.co.dk.browzer.html.element.Script)element;
+//			this.moveWithSave(castedElement);
+//			this.back();
+//		}
+//	}
 	
-	/**
-	 * 現在アクティブになっているページに記載されているすべてのLINKタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
-	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
-	 * <br/>
-	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
-	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
-	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
-	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
-	 * 
-	 * @throws PageAccessException       アクティブになっているページのページデータの取得に失敗した場合
-	 * @throws DocumentException         アクティブになっているページのドキュメントオブジェクトの生成に失敗した場合
-	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
-	 * @throws DataStoreManagerException データストアの操作に失敗した場合
-	 */
-	public void saveLink() throws PageAccessException, DocumentException, CrawlerException, DataStoreManagerException {
-		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
-		File file = activePage.getDocument();
-		if (!(file instanceof HtmlDocument)) return;
-		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(new ElementSelector() {
-			@Override
-			public boolean judgment(Element element) {
-				if (!(element instanceof HtmlElement)) return false;
-				HtmlElement htmlElement = (HtmlElement)element;
-				if (htmlElement.getElementType() == HtmlElementName.LINK && htmlElement.hasAttribute("href")) return true;
-				return false;
-			}
-		});
-		for (Element element : elements) {
-			jp.co.dk.browzer.html.element.Link castedElement = (jp.co.dk.browzer.html.element.Link)element;
-			this.moveWithSave(castedElement);
-			this.back();
-		}
-	}
+//	/**
+//	 * 現在アクティブになっているページに記載されているすべてのLINKタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
+//	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>
+//	 * <br/>
+//	 * アクティブページからページ遷移した場合に、そのページに接続できないなどの状態が発生した場合、「errorHandler」メソッドにエラー処理制御が移譲されます。<br/>
+//	 * 「errorHandler」にてCrawlerExceptionをthrowした場合、その時点で処理が終了します。<br/>
+//	 * 継続させたい場合、なにもthrowさせず、処理を完了させてください。<br/>
+//	 * 「errorHandler」内の処理を定義する場合、本クラスを継承し、「errorHandler」をオーバーライドし、処理を記載してください。<br/>
+//	 * 
+//	 * @throws PageAccessException       アクティブになっているページのページデータの取得に失敗した場合
+//	 * @throws DocumentException         アクティブになっているページのドキュメントオブジェクトの生成に失敗した場合
+//	 * @throws CrawlerException          例外が発生し、「errorHandler」にて処理を停止すると判定された場合
+//	 * @throws DataStoreManagerException データストアの操作に失敗した場合
+//	 */
+//	public void saveLink() throws PageAccessException, DocumentException, CrawlerException, DataStoreManagerException {
+//		jp.co.dk.crawler.Page activePage = (jp.co.dk.crawler.Page)this.getPage();
+//		File file = activePage.getDocument();
+//		if (!(file instanceof HtmlDocument)) return;
+//		HtmlDocument htmlDocument = (HtmlDocument)file;
+//		List<Element> elements = htmlDocument.getElement(new ElementSelector() {
+//			@Override
+//			public boolean judgment(Element element) {
+//				if (!(element instanceof HtmlElement)) return false;
+//				HtmlElement htmlElement = (HtmlElement)element;
+//				if (htmlElement.getElementType() == HtmlElementName.LINK && htmlElement.hasAttribute("href")) return true;
+//				return false;
+//			}
+//		});
+//		for (Element element : elements) {
+//			jp.co.dk.browzer.html.element.Link castedElement = (jp.co.dk.browzer.html.element.Link)element;
+//			this.moveWithSave(castedElement);
+//			this.back();
+//		}
+//	}
 	
 	/**
 	 * クローリング実行中に例外が発生した場合、その際のエラー処理方法を定義します。<p/>
@@ -360,10 +366,6 @@ public class Crawler extends Browzer{
 		return new CrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList, maxNestLevel);
 	}
 	
-	@Override
-	protected PageRedirectHandler createPageRedirectHandler(List<PageEventHandler> pageEventHandlerList) {
-		return new CrawlerPageRedirectHandler(this.dsm);
-	}
 }
 
 class CrawlerPageManager extends PageManager {
@@ -404,9 +406,9 @@ class CrawlerPageRedirectHandler extends PageRedirectHandler {
 	
 	protected DataStoreManager dsm;
 	
-	CrawlerPageRedirectHandler(DataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerException {
+	CrawlerPageRedirectHandler(DataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerInitException {
 		super(eventHandler);
-		if (dsm == null) throw new CrawlerException(DETASTORETYPE_IS_NOT_SET);
+		if (dsm == null) throw new CrawlerInitException(DATASTOREMANAGER_IS_NOT_SET);
 		this.dsm = dsm;
 	}	
 	

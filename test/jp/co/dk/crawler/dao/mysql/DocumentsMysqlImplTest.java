@@ -3,7 +3,7 @@ package jp.co.dk.crawler.dao.mysql;
 import java.text.ParseException;
 import java.util.Date;
 
-import jp.co.dk.crawler.TestCrawlerFoundation;
+import jp.co.dk.crawler.CrawlerFoundationTest;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.Documents;
 import jp.co.dk.crawler.dao.record.DocumentsRecord;
@@ -13,7 +13,7 @@ import jp.co.dk.datastoremanager.message.DataStoreManagerMessage;
 
 import org.junit.Test;
 
-public class TestDocumentsMysqlImpl extends TestCrawlerFoundation{
+public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
 
 	@Test
 	public void createTable_dropTable() {

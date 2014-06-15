@@ -1,6 +1,5 @@
 package jp.co.dk.crawler;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +10,9 @@ import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.PageManager;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.Url;
-import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageRedirectException;
-import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.CrawlerErrors;

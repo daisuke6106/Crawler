@@ -16,7 +16,7 @@ public class CrawlerSaveException extends AbstractMessageException{
 	/**
 	 * シリアルバージョンID
 	 */
-	private static final long serialVersionUID = 7430639691716421728L;	
+	private static final long serialVersionUID = -3254554571231775897L;
 
 	/**
 	 * コンストラクタ<p>
@@ -67,7 +67,7 @@ public class CrawlerSaveException extends AbstractMessageException{
 	 * @since 1.0
 	 */
 	public CrawlerSaveException(MessageInterface msg, String str, Throwable throwable){
-		super(msg, throwable);
+		super(msg, str, throwable);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class CrawlerSaveException extends AbstractMessageException{
 	 * @since 1.0
 	 */
 	public CrawlerSaveException(MessageInterface msg, List<String> list,Throwable throwable){
-		super(msg, throwable);
+		super(msg, list, throwable);
 	}
 	
 	/**
@@ -95,6 +95,6 @@ public class CrawlerSaveException extends AbstractMessageException{
 	 * @since 1.0
 	 */
 	public CrawlerSaveException(MessageInterface msg, String[] str, Throwable throwable){
-		super(msg, throwable);
+		super(msg, str, throwable);
 	}
 }

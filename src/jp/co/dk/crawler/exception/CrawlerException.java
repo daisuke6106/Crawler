@@ -67,7 +67,7 @@ public class CrawlerException extends AbstractMessageException{
 	 * @since 1.0
 	 */
 	public CrawlerException(MessageInterface msg, String str, Throwable throwable){
-		super(msg, throwable);
+		super(msg, str, throwable);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class CrawlerException extends AbstractMessageException{
 	 * @since 1.0
 	 */
 	public CrawlerException(MessageInterface msg, List<String> list,Throwable throwable){
-		super(msg, throwable);
+		super(msg, list, throwable);
 	}
 	
 	/**
@@ -95,6 +95,6 @@ public class CrawlerException extends AbstractMessageException{
 	 * @since 1.0
 	 */
 	public CrawlerException(MessageInterface msg, String[] str, Throwable throwable){
-		super(msg, throwable);
+		super(msg, str, throwable);
 	}
 }

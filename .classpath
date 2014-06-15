@@ -7,9 +7,9 @@
 	<classpathentry kind="lib" path="lib/datastoremanager_all.jar"/>
 	<classpathentry kind="lib" path="lib/message_all.jar"/>
 	<classpathentry kind="lib" path="lib/property_all.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/test/jmockit-coverage.jar"/>
 	<classpathentry kind="lib" path="lib/test/jmockit.jar"/>
 	<classpathentry kind="lib" path="lib/test/testtemplate_all.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

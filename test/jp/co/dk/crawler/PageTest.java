@@ -46,7 +46,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page = new Page("http://www.google.com", manager);
+			Page page = new Page("http://ja.wikipedia.org/wiki/HyperText_Markup_Language", manager);
 			page.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
@@ -159,7 +159,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page2 = new Page("http://www.studyinghttp.net/header", manager);
+			Page page2 = new Page("http://www.htmq.com/html/head.shtml", manager);
 			page2.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -210,7 +210,7 @@ public class PageTest extends CrawlerFoundationTest{
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
 			// 最終更新日付けが設定されていないページの場合
-			Page page2 = new Page("http://www.studyinghttp.net/header", manager);
+			Page page2 = new Page("http://www.htmq.com/html/head.shtml", manager);
 			if (page2.getResponseHeader().getLastModified() == null) {
 				// 保存を実行
 				page2.save();
@@ -308,7 +308,7 @@ public class PageTest extends CrawlerFoundationTest{
 			String protocol              = "http";
 			String host                  = "www.google.com";
 			List<String> pathList        = new ArrayList<String>();
-			String filename              = "default.html";
+			String filename              = "index.html";
 			Map<String,String> parameter = new ParameterMap();
 			BigDecimal result = new BigDecimal(protocol.hashCode());
 			result = result.multiply(new BigDecimal(host.hashCode()));
@@ -332,7 +332,7 @@ public class PageTest extends CrawlerFoundationTest{
 			List<String> pathList        = new ArrayList<String>();
 			pathList.add("doodles");
 			pathList.add("about");
-			String filename              = "default.html";
+			String filename              = "index.html";
 			Map<String,String> parameter = new ParameterMap();
 			BigDecimal result = new BigDecimal(protocol.hashCode());
 			result = result.multiply(new BigDecimal(host.hashCode()));
@@ -381,7 +381,7 @@ public class PageTest extends CrawlerFoundationTest{
 			String protocol              = "https";
 			String host                  = "www.google.co.jp";
 			List<String> pathList        = new ArrayList<String>();
-			String filename              = "default.html";
+			String filename              = "index.html";
 			Map<String,String> parameter = new ParameterMap();
 			parameter.put("gws_rd", "cr");
 			parameter.put("ei", "XVplUvTHH86FkwXcvoCACQ");
@@ -408,7 +408,7 @@ public class PageTest extends CrawlerFoundationTest{
 			pathList.add("fc");
 			pathList.add("domestic");
 			pathList.add("typhoons");
-			String filename              = "default.html";
+			String filename              = "index.html";
 			Map<String,String> parameter = new ParameterMap();
 			parameter.put("id", "6094644");
 			BigDecimal result = new BigDecimal(protocol.hashCode());

@@ -67,7 +67,7 @@ class CrawlerFatalException extends AbstractMessageFatalException{
 	 * @since 1.0
 	 */
 	public CrawlerFatalException(MessageInterface msg, String str, Throwable throwable){
-		super(msg, throwable);
+		super(msg, str, throwable);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ class CrawlerFatalException extends AbstractMessageFatalException{
 	 * @since 1.0
 	 */
 	public CrawlerFatalException(MessageInterface msg, List<String> list,Throwable throwable){
-		super(msg, throwable);
+		super(msg, list, throwable);
 	}
 	
 	/**
@@ -95,6 +95,6 @@ class CrawlerFatalException extends AbstractMessageFatalException{
 	 * @since 1.0
 	 */
 	public CrawlerFatalException(MessageInterface msg, String[] str, Throwable throwable){
-		super(msg, throwable);
+		super(msg, str, throwable);
 	}
 }

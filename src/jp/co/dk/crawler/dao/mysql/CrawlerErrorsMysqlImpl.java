@@ -10,13 +10,10 @@ import java.util.Map;
 import jp.co.dk.crawler.dao.CrawlerErrors;
 import jp.co.dk.crawler.dao.record.CountRecord;
 import jp.co.dk.crawler.dao.record.CrawlerErrorsRecord;
-import jp.co.dk.datastoremanager.DataConvertable;
 import jp.co.dk.datastoremanager.DataStore;
-import jp.co.dk.datastoremanager.Record;
 import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
 import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
 import jp.co.dk.datastoremanager.database.DataBaseDriverConstants;
-import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.database.Sql;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 

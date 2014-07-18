@@ -5,6 +5,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="lib/browzer_all.jar"/>
 	<classpathentry kind="lib" path="lib/datastoremanager_all.jar"/>
+	<classpathentry kind="lib" path="lib/logger_all.jar"/>
+	<classpathentry kind="lib" path="lib/commandframework_all.jar"/>
 	<classpathentry kind="lib" path="lib/message_all.jar"/>
 	<classpathentry kind="lib" path="lib/property_all.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

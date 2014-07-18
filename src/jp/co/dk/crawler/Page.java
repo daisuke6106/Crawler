@@ -18,7 +18,6 @@ import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**

@@ -1,9 +1,5 @@
 package jp.co.dk.crawler.controler;
 
-import java.util.List;
-
-import jp.co.dk.browzer.exception.BrowzingException;
-import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.dao.CrawlerErrors;
 import jp.co.dk.crawler.dao.Documents;
@@ -11,11 +7,9 @@ import jp.co.dk.crawler.dao.RedirectErrors;
 import jp.co.dk.crawler.dao.Links;
 import jp.co.dk.crawler.dao.Pages;
 import jp.co.dk.crawler.dao.Urls;
-import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
-import jp.co.dk.document.Element;
 
 public class CrawlerExecuter {
 	

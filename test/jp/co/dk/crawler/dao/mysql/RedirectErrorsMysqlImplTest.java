@@ -26,7 +26,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 		
 		try {
 			//ファイルID
-			long fileid    = 1234567890L;
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			//タイムID
 			long timeid    = new Date().getTime();
 			// ファイル名
@@ -74,7 +74,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 		
 		try {
 			//ファイルID
-			long fileid    = 1234567890L;
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			//タイムID
 			long timeid    = new Date().getTime();
 			// ファイル名
@@ -94,7 +94,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 				// 登録処理を実行
 				errors.insert(fileid, timeid, message, stackTraceElements, createDate, updateDate);
 				// PK以外NULLを設定した場合、正常に登録されること
-				errors.insert(fileid+1, timeid+1, null, null, createDate, updateDate);
+				errors.insert(fileid, timeid+1, null, null, createDate, updateDate);
 				
 			} catch (DataStoreManagerException e) {
 				fail(e);
@@ -111,8 +111,8 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 				assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getCreateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(createDate));
 				assertEquals(super.getStringByDate_YYYYMMDDHH24MMDD(record.getUpdateDate()), super.getStringByDate_YYYYMMDDHH24MMDD(updateDate));
 				
-				RedirectErrorsRecord record1 = errors.select(fileid+1, timeid+1);
-				assertEquals(record1.getFileId(), fileid+1);
+				RedirectErrorsRecord record1 = errors.select(fileid, timeid+1);
+				assertEquals(record1.getFileId(), fileid);
 				assertEquals(record1.getTimeId(), timeid+1);
 				assertNull(record1.getMessage());
 				assertNull(record1.getStackTraceElements());
@@ -135,7 +135,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 		
 		try {
 			//ファイルID
-			long fileid    = 1234567890L;
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			//タイムID
 			long timeid    = new Date().getTime();
 			// ファイル名
@@ -159,7 +159,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 				// 登録処理を実行
 				errors.insert(fileid, timeid, message, stackTraceElements, createDate, updateDate);
 				// PK以外NULLを設定した場合、正常に登録されること
-				errors.insert(fileid+1, timeid+1, null, null, createDate, updateDate);
+				errors.insert(fileid, timeid+1, null, null, createDate, updateDate);
 				
 			} catch (DataStoreManagerException e) {
 				fail(e);
@@ -169,7 +169,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 			// 引数に正常値を渡した場合、正常に取得できること。
 			try {
 				assertEquals(errors.count(fileid, timeid), 1);
-				assertEquals(errors.count(fileid+1, timeid+1), 1);
+				assertEquals(errors.count(fileid, timeid+1), 1);
 			} catch (DataStoreManagerException e) {
 				fail(e);
 			}

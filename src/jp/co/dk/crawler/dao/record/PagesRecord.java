@@ -31,7 +31,7 @@ public class PagesRecord implements DataConvertable{
 	protected int h_parameter;
 	
 	/** ファイルID */
-	protected long fileid;
+	protected String fileid;
 	
 	/** タイムID */
 	protected long timeid;
@@ -102,7 +102,7 @@ public class PagesRecord implements DataConvertable{
 	 * ファイルIDを取得する。
 	 * @return ファイルID
 	 */
-	public long getFileid() {
+	public String getFileid() {
 		return fileid;
 	}
 	
@@ -170,7 +170,7 @@ public class PagesRecord implements DataConvertable{
 	 * ファイルIDを取得する。
 	 * @return ファイルID
 	 */
-	public long getFileId() {
+	public String getFileId() {
 		return fileid;
 	}
 	
@@ -222,7 +222,7 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.host           = record.getString("HOSTNAME");
 		pagesRecord.h_path         = record.getInt("H_PATH");
 		pagesRecord.h_parameter    = record.getInt("H_PARAM");
-		pagesRecord.fileid         = record.getLong("FILEID");
+		pagesRecord.fileid         = record.getString("FILEID");
 		pagesRecord.timeid         = record.getLong("TIMEID");
 		pagesRecord.path           = (List<String>) record.getObject("PATH");
 		pagesRecord.pathCount      = record.getInt("PATH_COUNT");
@@ -253,7 +253,7 @@ public class PagesRecord implements DataConvertable{
 		pagesRecord.responceHeader = (Map<String,List<String>>) record.getObject(10);
 		pagesRecord.httpStatusCode = record.getString(11);
 		pagesRecord.httpVersion    = record.getString(12);
-		pagesRecord.fileid         = record.getLong(13);
+		pagesRecord.fileid         = record.getString(13);
 		pagesRecord.timeid         = record.getLong(14);
 		pagesRecord.createDate     = record.getDate(15);
 		pagesRecord.updateDate     = record.getDate(16);

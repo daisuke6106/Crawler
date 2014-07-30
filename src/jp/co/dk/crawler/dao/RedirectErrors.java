@@ -29,7 +29,7 @@ public interface RedirectErrors extends DataAccessObject {
 	 * @param timeId タイムID
 	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */
-	public RedirectErrorsRecord select(long fileId, long timeId) throws DataStoreManagerException;
+	public RedirectErrorsRecord select(String fileId, long timeId) throws DataStoreManagerException;
 	
 	/**
 	 * REDIRECT_ERRORテーブルから特定の１レコードを取得する。
@@ -39,7 +39,7 @@ public interface RedirectErrors extends DataAccessObject {
 	 * @return 件数
 	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */
-	public int count(long fileId, long timeId) throws DataStoreManagerException;
+	public int count(String fileId, long timeId) throws DataStoreManagerException;
 	
 	/**
 	 * REDIRECT_ERRORテーブルから指定の１レコードを登録する。<p/>
@@ -52,7 +52,7 @@ public interface RedirectErrors extends DataAccessObject {
 	 * @param updateDate         更新日付
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 */
-	public void insert(long fileId, long timeId, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException;
+	public void insert(String fileId, long timeId, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException;
 	
 	/**
 	 * REDIRECT_ERRORテーブルを削除する。<p/>

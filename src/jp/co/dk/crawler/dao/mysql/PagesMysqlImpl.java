@@ -42,7 +42,7 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		sb.append("HOSTNAME         VARCHAR(255) NOT NULL,");
 		sb.append("H_PATH           INT          NOT NULL,");
 		sb.append("H_PARAM          INT          NOT NULL,");
-		sb.append("FILEID           BIGINT(8)    NOT NULL,");
+		sb.append("FILEID           CHAR(64)     NOT NULL,");
 		sb.append("TIMEID           BIGINT(8)    NOT NULL,");
 		sb.append("PATH             LONGBLOB,");
 		sb.append("PATH_COUNT       INT,");
@@ -94,7 +94,7 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 	
 
 	@Override
-	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter, long fileId, long timeId) throws DataStoreManagerException {
+	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter, String fileId, long timeId) throws DataStoreManagerException {
 		if (path == null) path = new ArrayList<String>();
 		if (parameter == null) parameter = new HashMap<String, String>();
 		StringBuilder sb = new StringBuilder("SELECT * FROM PAGES WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=? AND FILEID=? AND TIMEID=?");
@@ -123,7 +123,7 @@ public class PagesMysqlImpl extends AbstractDataBaseAccessObject implements Page
 		return result.get(0);
 	}
 	@Override
-	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, String httpStatusCode, String httpVersion, String fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
 		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
 		if (path == null) path = new ArrayList<String>();

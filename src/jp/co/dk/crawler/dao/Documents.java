@@ -29,7 +29,7 @@ public interface Documents extends DataAccessObject {
 	 * @param timeId タイムID
 	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */
-	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException;
+	public DocumentsRecord select(String fileId, long timeId) throws DataStoreManagerException;
 	
 	/**
 	 * DOCUMENTSテーブルから特定のレコードの件数を取得する。
@@ -39,7 +39,7 @@ public interface Documents extends DataAccessObject {
 	 * @return 件数
 	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */
-	public int count(long fileId, long timeId) throws DataStoreManagerException;
+	public int count(String fileId, long timeId) throws DataStoreManagerException;
 	
 	/**
 	 * DOCUMENTSテーブルから指定のファイルIDにひもづくレコードで最も最新の１レコードを取得する。
@@ -47,7 +47,7 @@ public interface Documents extends DataAccessObject {
 	 * @param fileId ファイルID
 	 * @throws DataStoreManagerException 取得に失敗した場合
 	 */
-	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException;
+	public DocumentsRecord selectLastest(String fileId) throws DataStoreManagerException;
 	
 	/**
 	 * DOCUMENTSテーブルから指定の１レコードを登録する。<p/>
@@ -62,7 +62,7 @@ public interface Documents extends DataAccessObject {
 	 * @param updateDate     更新日付
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 */
-	public void insert(long fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException;
+	public void insert(String fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException;
 	
 	/**
 	 * DOCUMENTSテーブルを削除する。<p/>

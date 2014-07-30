@@ -31,7 +31,7 @@ public class UrlsRecord implements DataConvertable{
 	protected String url;
 	
 	/** ファイルID */
-	protected long fileid;
+	protected String fileid;
 	
 	/** 作成日時 */
 	protected Date createDate;
@@ -83,7 +83,7 @@ public class UrlsRecord implements DataConvertable{
 	 * ファイルIDを取得する。
 	 * @return ファイルID
 	 */
-	public long getFileId() {
+	public String getFileId() {
 		return fileid;
 	}
 	
@@ -111,7 +111,7 @@ public class UrlsRecord implements DataConvertable{
 		urlsRecord.h_path         = record.getInt("H_PATH");
 		urlsRecord.h_parameter    = record.getInt("H_PARAM");
 		urlsRecord.url            = record.getString("URL");
-		urlsRecord.fileid         = record.getLong("FILEID");
+		urlsRecord.fileid         = record.getString("FILEID");
 		urlsRecord.createDate     = record.getTimestamp("CREATE_DATE");
 		urlsRecord.updateDate     = record.getTimestamp("UPDATE_DATE");
 		return urlsRecord;
@@ -125,7 +125,7 @@ public class UrlsRecord implements DataConvertable{
 		urlsRecord.h_path         = record.getInt(3);
 		urlsRecord.h_parameter    = record.getInt(4);
 		urlsRecord.url            = record.getString(5);
-		urlsRecord.fileid         = record.getLong(6);
+		urlsRecord.fileid         = record.getString(6);
 		urlsRecord.createDate     = record.getDate(7);
 		urlsRecord.updateDate     = record.getDate(8);
 		return urlsRecord;

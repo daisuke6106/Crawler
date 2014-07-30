@@ -16,7 +16,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 public class DocumentsRecord implements DataConvertable{
 	
 	/** ファイルID */
-	protected long fileId;
+	protected String fileId;
 	
 	/** タイムID */
 	protected long timeId;
@@ -43,7 +43,7 @@ public class DocumentsRecord implements DataConvertable{
 	 * ファイルIDを取得する。
 	 * @return ファイルID
 	 */
-	public long getFileId() {
+	public String getFileId() {
 		return fileId;
 	}
 	
@@ -106,7 +106,7 @@ public class DocumentsRecord implements DataConvertable{
 	@Override
 	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {
 		DocumentsRecord pagesRecord    = new DocumentsRecord();
-		pagesRecord.fileId         = record.getLong("FILEID");
+		pagesRecord.fileId         = record.getString("FILEID");
 		pagesRecord.timeId         = record.getLong("TIMEID");
 		pagesRecord.filename       = record.getString("FILENAME");
 		pagesRecord.extention      = record.getString("EXTENTION");
@@ -120,7 +120,7 @@ public class DocumentsRecord implements DataConvertable{
 	@Override
 	public DataConvertable convert(Record record)	throws DataStoreManagerException {
 		DocumentsRecord pagesRecord    = new DocumentsRecord();
-		pagesRecord.fileId     = record.getLong(1);
+		pagesRecord.fileId     = record.getString(1);
 		pagesRecord.timeId     = record.getLong(2);
 		pagesRecord.filename   = record.getString(3);
 		pagesRecord.extention  = record.getString(4);

@@ -57,8 +57,8 @@ public class PagesMysqlImplTest extends CrawlerFoundationTest{
 			String httpStutasCode = "200";
 			// HTTPバージョン
 			String httpVersion = "1.1";
-			// ファイルＩＤ
-			long fileid = 1234567890L;
+			//ファイルID
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			// タイムID
 			long timeid = new Date().getTime();
 			// 作成日時
@@ -185,8 +185,8 @@ public class PagesMysqlImplTest extends CrawlerFoundationTest{
 			String httpStutasCode = "200";
 			// HTTPバージョン
 			String httpVersion = "1.1";
-			// ファイルＩＤ
-			long fileid = 1234567890L;
+			//ファイルID
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			// タイムID
 			long timeid = new Date().getTime();
 			// 作成日時
@@ -318,8 +318,8 @@ public class PagesMysqlImplTest extends CrawlerFoundationTest{
 			String httpStutasCode = "200";
 			// HTTPバージョン
 			String httpVersion = "1.1";
-			// ファイルＩＤ
-			long fileid = 1234567890L;
+			//ファイルID
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			// タイムID
 			long timeid = new Date().getTime();
 			// 作成日時

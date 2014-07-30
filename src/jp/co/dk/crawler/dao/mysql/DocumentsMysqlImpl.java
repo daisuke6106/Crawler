@@ -32,7 +32,7 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 	public void createTable() throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("CREATE TABLE DOCUMENTS ");
 		sb.append('(');
-		sb.append("FILEID          BIGINT(8) NOT NULL,");
+		sb.append("FILEID          CHAR(64)  NOT NULL,");
 		sb.append("TIMEID          BIGINT(8) NOT NULL,");
 		sb.append("FILENAME        TEXT      NOT NULL,");
 		sb.append("EXTENTION       TEXT      NOT NULL,");
@@ -53,7 +53,7 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 	}
 	
 	@Override
-	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException {
+	public DocumentsRecord selectLastest(String fileId) throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("SELECT * FROM DOCUMENTS WHERE FILEID=? ORDER BY TIMEID DESC ");
 		Sql sql = new Sql(sb.toString());
 		sql.setParameter(fileId);
@@ -63,7 +63,7 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 	}
 	
 	@Override
-	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException {
+	public DocumentsRecord select(String fileId, long timeId) throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("SELECT * FROM DOCUMENTS WHERE FILEID=? AND TIMEID=?");
 		Sql sql = new Sql(sb.toString());
 		sql.setParameter(fileId);
@@ -73,7 +73,7 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 	
 
 	@Override
-	public int count(long fileId, long timeId) throws DataStoreManagerException {
+	public int count(String fileId, long timeId) throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM DOCUMENTS WHERE FILEID=? AND TIMEID=?");
 		Sql sql = new Sql(sb.toString());
 		sql.setParameter(fileId);
@@ -82,7 +82,7 @@ public class DocumentsMysqlImpl extends AbstractDataBaseAccessObject implements 
 	}
 
 	@Override
-	public void insert(long fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException {
+	public void insert(String fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException {
 		Sql sql = new Sql("INSERT INTO DOCUMENTS VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		sql.setParameter(fileId);
 		sql.setParameter(timeId);

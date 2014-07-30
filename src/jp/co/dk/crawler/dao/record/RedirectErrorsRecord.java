@@ -16,7 +16,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 public class RedirectErrorsRecord implements DataConvertable{
 	
 	/** ファイルID */
-	protected long fileId;
+	protected String fileId;
 	
 	/** タイムID */
 	protected long timeId;
@@ -37,7 +37,7 @@ public class RedirectErrorsRecord implements DataConvertable{
 	 * ファイルIDを取得する。
 	 * @return ファイルID
 	 */
-	public long getFileId() {
+	public String getFileId() {
 		return fileId;
 	}
 	
@@ -84,7 +84,7 @@ public class RedirectErrorsRecord implements DataConvertable{
 	@Override
 	public DataConvertable convert(DataBaseRecord record)	throws DataStoreManagerException {
 		RedirectErrorsRecord pagesRecord       = new RedirectErrorsRecord();
-		pagesRecord.fileId             = record.getLong("FILEID");
+		pagesRecord.fileId             = record.getString("FILEID");
 		pagesRecord.timeId             = record.getLong("TIMEID");
 		pagesRecord.message            = record.getString("MESSAGE");
 		pagesRecord.stackTraceElements = (StackTraceElement[])record.getObject("STACKTRACEELEMENTS");
@@ -96,7 +96,7 @@ public class RedirectErrorsRecord implements DataConvertable{
 	@Override
 	public DataConvertable convert(Record record)	throws DataStoreManagerException {
 		RedirectErrorsRecord pagesRecord       = new RedirectErrorsRecord();
-		pagesRecord.fileId             = record.getLong(1);
+		pagesRecord.fileId             = record.getString(1);
 		pagesRecord.timeId             = record.getLong(2);
 		pagesRecord.message            = record.getString(3);
 		pagesRecord.stackTraceElements = (StackTraceElement[])record.getObject(4);

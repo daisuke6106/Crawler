@@ -43,7 +43,7 @@ public class UrlsMysqlImpl extends AbstractDataBaseAccessObject implements Urls{
 		sb.append("H_PATH          INT            NOT NULL,");
 		sb.append("H_PARAM         INT            NOT NULL,");
 		sb.append("URL             TEXT           NOT NULL,");
-		sb.append("FILEID          BIGINT(8)      NOT NULL,");
+		sb.append("FILEID          CHAR(64)       NOT NULL,");
 		sb.append("CREATE_DATE     DATETIME, ");
 		sb.append("UPDATE_DATE     DATETIME, ");
 		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_PARAM))");
@@ -84,7 +84,7 @@ public class UrlsMysqlImpl extends AbstractDataBaseAccessObject implements Urls{
 		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();
 	}
 	@Override
-	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, String fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {
 		if (protcol == null || protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");
 		if (host == null    || host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");
 		if (path == null) path = new ArrayList<String>();

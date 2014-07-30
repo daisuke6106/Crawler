@@ -46,8 +46,8 @@ public class UrlsMysqlImplTest extends CrawlerFoundationTest{
 			parameter.put("Parameter_key", "Parameter_value");
 			// URL
 			String url = "http://google.com/doodles/finder/2013/All%20doodles?Parameter_key=Parameter_value";
-			// ファイルID
-			long fileid = 1234567890L;
+			//ファイルID
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			// 作成日時
 			Date createDate = new Date();
 			// 更新日時
@@ -160,8 +160,8 @@ public class UrlsMysqlImplTest extends CrawlerFoundationTest{
 			parameter.put("Parameter_key", "Parameter_value");
 			// URL
 			String url = "http://google.com/doodles/finder/2013/All%20doodles?Parameter_key=Parameter_value";
-			// ファイルID
-			long fileid = 1234567890L;
+			//ファイルID
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			// 作成日時
 			Date createDate = new Date();
 			// 更新日時
@@ -243,8 +243,8 @@ public class UrlsMysqlImplTest extends CrawlerFoundationTest{
 			parameter.put("Parameter_key", "Parameter_value");
 			// URL
 			String url = "http://google.com/doodles/finder/2013/All%20doodles?Parameter_key=Parameter_value";
-			// ファイルID
-			long fileid = 1234567890L;
+			//ファイルID
+			String fileid    = "12345678901234567890123456789012345678901234567890" + "12345678901234";
 			// 作成日時
 			Date createDate = new Date();
 			// 更新日時

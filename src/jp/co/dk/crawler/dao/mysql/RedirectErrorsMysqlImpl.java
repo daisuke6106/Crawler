@@ -31,7 +31,7 @@ public class RedirectErrorsMysqlImpl extends AbstractDataBaseAccessObject implem
 	public void createTable() throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("CREATE TABLE REDIRECT_ERRORS ");
 		sb.append('(');
-		sb.append("FILEID             BIGINT(8) NOT NULL,");
+		sb.append("FILEID             CHAR(64)  NOT NULL,");
 		sb.append("TIMEID             BIGINT(8) NOT NULL,");
 		sb.append("MESSAGE            TEXT    , ");
 		sb.append("STACKTRACEELEMENTS LONGBLOB, ");
@@ -50,7 +50,7 @@ public class RedirectErrorsMysqlImpl extends AbstractDataBaseAccessObject implem
 	}
 	
 	@Override
-	public RedirectErrorsRecord select(long fileId, long timeId) throws DataStoreManagerException {
+	public RedirectErrorsRecord select(String fileId, long timeId) throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("SELECT * FROM REDIRECT_ERRORS WHERE FILEID=? AND TIMEID=?");
 		Sql sql = new Sql(sb.toString());
 		sql.setParameter(fileId);
@@ -59,7 +59,7 @@ public class RedirectErrorsMysqlImpl extends AbstractDataBaseAccessObject implem
 	}
 	
 	@Override
-	public int count(long fileId, long timeId) throws DataStoreManagerException {
+	public int count(String fileId, long timeId) throws DataStoreManagerException {
 		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM REDIRECT_ERRORS WHERE FILEID=? AND TIMEID=?");
 		Sql sql = new Sql(sb.toString());
 		sql.setParameter(fileId);
@@ -68,7 +68,7 @@ public class RedirectErrorsMysqlImpl extends AbstractDataBaseAccessObject implem
 	}
 	
 	@Override
-	public void insert(long fileId, long timeId, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException{
+	public void insert(String fileId, long timeId, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException{
 		Sql sql = new Sql("INSERT INTO REDIRECT_ERRORS VALUES (?, ?, ?, ?, ?, ?)");
 		sql.setParameter(fileId);
 		sql.setParameter(timeId);

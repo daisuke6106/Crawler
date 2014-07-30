@@ -65,7 +65,7 @@ public interface Urls extends DataAccessObject {
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 * @throws CrawlerException 必須パラメータが設定されていない場合
 	 */
-	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, long fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, String url, String fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;
 	
 	/**
 	 * URLSテーブルを削除する。<p/>

@@ -58,7 +58,7 @@ public interface Pages extends DataAccessObject{
 	 * @param timeId    タイムID
 	 * @return 取得したレコードオブジェクト
 	 */
-	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter, long fileId, long timeId) throws DataStoreManagerException ;
+	public PagesRecord select(String protcol, String host, List<String> path, Map<String, String> parameter, String fileId, long timeId) throws DataStoreManagerException ;
 	
 	/**
 	 * PAGESテーブルから指定の条件に合致するレコードを取得する。
@@ -93,7 +93,7 @@ public interface Pages extends DataAccessObject{
 	 * @throws DataStoreManagerException 登録に失敗した場合
 	 * @throws CrawlerException          必須パラメータが設定されていない場合
 	 */
-	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, String httpStatusCode, String httpVersion, long fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;
+	public void insert(String protcol, String host, List<String> path, Map<String, String> parameter, Map<String, String> requestHeader, Map<String, List<String>> responceHeader, String httpStatusCode, String httpVersion, String fileid, long timeid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException ;
 	
 	/**
 	 * PAGESテーブルを削除する。<p/>

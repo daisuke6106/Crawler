@@ -18,25 +18,15 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
-	/* jp.co.dk.crawler */
+
 	CrawlerTest.class,
 	PageTest.class,
 	
-	CrawlerErrorsMysqlImplTest.class,
+	jp.co.dk.crawler.controler.AllTest.class,
+	jp.co.dk.crawler.dao.mysql.AllTest.class,
+	jp.co.dk.crawler.dao.record.AllTest.class,
+	jp.co.dk.crawler.exception.AllTest.class,
 	
-	DocumentsMysqlImplTest.class,
-	LinksMysqlImplTest.class,
-	PagesMysqlImplTest.class,
-	UrlsMysqlImplTest.class,
-	RedirectErrorsMysqlImplTest.class,
-	CrawlerExceptionTest.class,
-	
-	PagesRecordTest.class,
-	
-	CrawlerExceptionTest.class,
-	CrawlerFatalExceptionTest.class,
-	CrawlerInitExceptionTest.class,
-	CrawlerSaveExceptionTest.class,
 })
 public class AllTest {}
  

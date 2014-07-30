@@ -40,7 +40,7 @@ public class CrawlerFoundationTest extends TestCaseTemplate{
 	 */
 	
 	protected DataBaseAccessParameter getAccessableDataBaseAccessParameter() throws DataStoreManagerException {
-		return new DataBaseAccessParameter(DataStoreKind.MYSQL, DataBaseDriverConstants.MYSQL, "192.168.11.101:3306", "test_db", "test_user", "123456");
+		return new DataBaseAccessParameter(DataStoreKind.MYSQL, DataBaseDriverConstants.MYSQL, "192.168.11.102:3306", "test_db", "test_user", "123456");
 	}
 	
 	/**
@@ -120,8 +120,4 @@ public class CrawlerFoundationTest extends TestCaseTemplate{
 		manager.finishTrunsaction();
 	}
 	
-	@Test
-	public void brankTest(){
-		
-	}
 }

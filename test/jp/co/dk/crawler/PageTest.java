@@ -56,7 +56,7 @@ public class PageTest extends CrawlerFoundationTest{
 			String             host      = page.getHost();
 			List<String>       pathList  = page.getPathList();
 			Map<String,String> parameter = page.getParameter();
-			long               fileId    = page.getFileId();
+			String             fileId    = page.getFileId();
 			long               timeId    = page.getTimeId();
 			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
 			Pages     pages     = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
@@ -303,20 +303,7 @@ public class PageTest extends CrawlerFoundationTest{
 		// プロトコル＋ホスト名
 		try {
 			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
-			
-			// 比較値を生成
-			String protocol              = "http";
-			String host                  = "www.google.com";
-			List<String> pathList        = new ArrayList<String>();
-			String filename              = "index.html";
-			Map<String,String> parameter = new ParameterMap();
-			BigDecimal result = new BigDecimal(protocol.hashCode());
-			result = result.multiply(new BigDecimal(host.hashCode()));
-			result = result.multiply(new BigDecimal(pathList.hashCode()));
-			result = result.multiply(new BigDecimal(filename.hashCode()));
-			result = result.multiply(new BigDecimal(parameter.hashCode()));
-			
-			assertEquals(page.getFileId(), result.longValue());
+			assertEquals(page.getFileId(), "51cbb9cc73a2dda8a4bd2dab5087bbe8b0af3d3c04f0f636e4a1144d1b4d0305");
 		} catch (BrowzingException e) {
 			manager.finishTrunsaction();
 			fail(e);

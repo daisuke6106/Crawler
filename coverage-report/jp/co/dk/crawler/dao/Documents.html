@@ -65,7 +65,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>32</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public DocumentsRecord select(long fileId, long timeId) throws DataStoreManagerException;</pre></td>
+      <td><pre class='prettyprint'>	public DocumentsRecord select(String fileId, long timeId) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -81,7 +81,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>42</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public int count(long fileId, long timeId) throws DataStoreManagerException;</pre></td>
+      <td><pre class='prettyprint'>	public int count(String fileId, long timeId) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -95,7 +95,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>50</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public DocumentsRecord selectLastest(long fileId) throws DataStoreManagerException;</pre></td>
+      <td><pre class='prettyprint'>	public DocumentsRecord selectLastest(String fileId) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -116,7 +116,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>65</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public void insert(long fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException;</pre></td>
+      <td><pre class='prettyprint'>	public void insert(String fileId, long timeId, String filename, String extention, Date lastUpdateDate, byte[] data, Date createDate, Date updateDate) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>

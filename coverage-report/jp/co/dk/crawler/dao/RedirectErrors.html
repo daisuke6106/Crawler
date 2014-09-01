@@ -65,7 +65,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>32</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public RedirectErrorsRecord select(long fileId, long timeId) throws DataStoreManagerException;</pre></td>
+      <td><pre class='prettyprint'>	public RedirectErrorsRecord select(String fileId, long timeId) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -81,7 +81,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>42</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public int count(long fileId, long timeId) throws DataStoreManagerException;</pre></td>
+      <td><pre class='prettyprint'>	public int count(String fileId, long timeId) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -100,7 +100,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>55</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public void insert(long fileId, long timeId, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException;</pre></td>
+      <td><pre class='prettyprint'>	public void insert(String fileId, long timeId, String message, StackTraceElement[] stackTraceElements, Date createDate, Date updateDate) throws DataStoreManagerException;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>

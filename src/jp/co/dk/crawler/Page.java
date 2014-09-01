@@ -1,6 +1,5 @@
 package jp.co.dk.crawler;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +17,15 @@ import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+import jp.co.dk.document.exception.DocumentFatalException;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
  * PAGEはクローラにて使用される単一のページを表すクラスです。<p/>
  * 本クラスにて接続先のページ情報のデータストアへの保存、データストアからの読み込みを行います。<br/>
  * 
+ * @version 1.0
+ * @author D.Kanno
  */
 public class Page extends jp.co.dk.browzer.Page{
 	
@@ -31,7 +33,7 @@ public class Page extends jp.co.dk.browzer.Page{
 	protected DataStoreManager dataStoreManager;
 	
 	/** ファイルID */
-	protected long fileId = -1;
+	protected String fileId;
 	
 	/** タイムID */
 	protected long timeId = -1;
@@ -83,13 +85,13 @@ public class Page extends jp.co.dk.browzer.Page{
 			String             host       = this.getHost();
 			List<String>       pathList   = this.getPathList();
 			Map<String,String> parameter  = this.getParameter();
-			long               fileid     = this.getFileId();
+			String             fileid     = this.getFileId();
 			Date               createDate = this.getCreateDate();
 			Date               updateDate = this.getUpdateDate();
 			if (urls.select(protocol, host, pathList, parameter) != null) return false;
 			urls.insert(protocol, host, pathList, parameter, url, fileid, createDate, updateDate);
 			return true;
-		} catch (DataStoreManagerException | CrawlerException e) {
+		} catch (DataStoreManagerException | CrawlerException | DocumentFatalException | PageAccessException e) {
 			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
@@ -109,7 +111,7 @@ public class Page extends jp.co.dk.browzer.Page{
 			String                   host           = this.getHost();
 			List<String>             pathList       = this.getPathList();
 			Map<String,String>       parameter      = this.getParameter();
-			long                     fileid         = this.getFileId();
+			String                   fileid         = this.getFileId();
 			long                     timeid         = this.getTimeId();
 			Date                     createDate     = this.getCreateDate();
 			Date                     updateDate     = this.getUpdateDate();
@@ -120,7 +122,7 @@ public class Page extends jp.co.dk.browzer.Page{
 			if (pages.select(protocol, host, pathList, parameter, fileid, timeid) != null) return false;
 			pages.insert(protocol, host, pathList, parameter, requestHeader, responseHeader, httpStatusCode, httpVersion, fileid, timeid, createDate, updateDate);
 			return true;
-		} catch (DataStoreManagerException | CrawlerException  e) {
+		} catch (DataStoreManagerException | CrawlerException | DocumentFatalException | PageAccessException  e) {
 			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.getURL(), e);
 		}
 	}
@@ -139,7 +141,7 @@ public class Page extends jp.co.dk.browzer.Page{
 			String  filename     = this.getFileName();
 			String  extension    = this.getExtension();
 			byte[]  data         = this.getData().getBytes();
-			long    fileid       = this.getFileId();
+			String  fileid       = this.getFileId();
 			long    timeid       = this.getTimeId();
 			Date    createDate   = this.getCreateDate();
 			Date    updateDate   = this.getUpdateDate();
@@ -252,32 +254,6 @@ public class Page extends jp.co.dk.browzer.Page{
 			return false;
 		}
 	}
-//	protected UrlsRecord getUrlsRecord() throws DataStoreManagerException {
-//		Urls urls = (Urls)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.URLS);
-//		String protcol = super.protocol;
-//		String host    = super.host;
-//		List<String> pathList = super.pathList;
-//		Map<String, String> parameter = super.parameter;
-//		return urls.select(protcol, host, pathList, parameter);
-//	}
-//	
-//	protected List<PagesRecord> getPagesRecord() throws DataStoreManagerException {
-//		Pages pages = (Pages)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.PAGES);
-//		String protcol = super.protocol;
-//		String host    = super.host;
-//		List<String> pathList = super.pathList;
-//		Map<String, String> parameter = super.parameter;
-//		return pages.select(protcol, host, pathList, parameter);
-//	}
-//	
-//	protected DocumentsRecord getDocumentsRecord() throws DataStoreManagerException {
-//		PagesRecord pagesRecord = getPagesRecord();
-//		if (pagesRecord == null) return null;
-//		long fileId = pagesRecord.getFileId();
-//		long timeId = pagesRecord.getTimeId();
-//		Documents documents = (Documents)this.dataStoreManager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-//		return documents.select(fileId, timeId);
-//	}
 	
 	@Override
 	public Map<String, String> getParameter() {
@@ -295,20 +271,12 @@ public class Page extends jp.co.dk.browzer.Page{
 	 * のハッシュ値を上記の順で乗算した結果が返却されます。
 	 * 
 	 * @return ファイルID
+	 * @throws PageAccessException ページデータの取得に失敗した場合
+	 * @throws DocumentFatalException 暗号化処理にて致命的例外が発生した場合
 	 */
-	protected long getFileId() {
-		if (this.fileId != -1) return this.fileId;
-		String protocol              = this.getProtocol();
-		String host                  = this.getHost();
-		List<String> pathList        = this.getPathList();
-		String filename              = this.getFileName();
-		Map<String,String> parameter = this.getParameter();
-		BigDecimal result = new BigDecimal(protocol.hashCode());
-		result = result.multiply(new BigDecimal(host.hashCode()));
-		result = result.multiply(new BigDecimal(pathList.hashCode()));
-		result = result.multiply(new BigDecimal(filename.hashCode()));
-		result = result.multiply(new BigDecimal(parameter.hashCode()));
-		this.fileId = result.longValue();
+	protected String getFileId() throws DocumentFatalException, PageAccessException {
+		if (this.fileId != null) return this.fileId;
+		this.fileId = this.getData().getHash();
 		return this.fileId;
 	}
 	

@@ -46,7 +46,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>19</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	protected long <span class='instance covered' title='Reads: 2 Writes: 2'>fileId</span>;</pre></td>
+      <td><pre class='prettyprint'>	protected String <span class='instance covered' title='Reads: 2 Writes: 2'>fileId</span>;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -103,7 +103,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>40</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public long getFileId() {</pre></td>
+      <td><pre class='prettyprint'>	public String getFileId() {</pre></td>
     </tr>
     <tr>
       <td class='line'>41</td><td class='count'>2</td>
@@ -228,7 +228,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>87</td><td class='count'>2</td>
-      <td><pre class='prettyprint covered' id='l87s0'>		pagesRecord.fileId             = record.getLong("FILEID");</pre></td>
+      <td><pre class='prettyprint covered' id='l87s0'>		pagesRecord.fileId             = record.getString("FILEID");</pre></td>
     </tr>
     <tr>
       <td class='line'>88</td><td class='count'>2</td>
@@ -273,7 +273,7 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
     </tr>
     <tr>
       <td class='line'>99</td><td class='count'>0</td>
-      <td><pre class='prettyprint uncovered' id='l99s0'>		pagesRecord.fileId             = record.getLong(1);</pre></td>
+      <td><pre class='prettyprint uncovered' id='l99s0'>		pagesRecord.fileId             = record.getString(1);</pre></td>
     </tr>
     <tr>
       <td class='line'>100</td><td class='count'>0</td>

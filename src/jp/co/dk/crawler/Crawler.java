@@ -34,6 +34,7 @@ import jp.co.dk.document.Element;
 import jp.co.dk.document.ElementSelector;
 import jp.co.dk.document.File;
 import jp.co.dk.document.exception.DocumentException;
+import jp.co.dk.document.exception.DocumentFatalException;
 import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.HtmlElement;
 import jp.co.dk.document.html.constant.HtmlElementName;
@@ -66,65 +67,7 @@ public class Crawler extends Browzer{
 		this.dsm                 = dataStoreManager;
 		this.pageRedirectHandler = new CrawlerPageRedirectHandler(dataStoreManager, this.getPageEventHandler());
 	}
-	
-//	/**
-//	 * 指定のURLのデータストアへ保存履歴を取得します。<p/>
-//	 * 
-//	 * 指定のURLの状態が以下である場合、記載の通りの結果を返却します。<br/>
-//	 * ・一度もアクセスしていない場合：NON_SAVEが１つ設定された値を返却します。<br/>
-//	 * ・以前アクセスしているが、サーバにアクセス自体アクセスできないなどのエラーが発生していた場合：CRAWLER_ERRORSが１つ設定されたリストを返却します。<br/>
-//	 * ・以前アクセスしているが、サーバアクセスはできたが、HTTPステータス404などのエラーが返却されていた場合、REDIRECT_ERRORSを保持したリストを返却します。<br/>
-//	 * ・以前アクセスしている、且つ正常にページアクセスに成功して保存されている場合、SUCCESS_SAVEDを保持したリストを返却します。<br/>
-//	 * <br/>
-//	 * 例えば指定のURLがすでに保存されており、３履歴分保存済み、且つ、最新の状態ではページが削除されており、404が返却されていた場合
-//	 * ・[0]=ERROR_SAVED_BY_REDIRECT
-//	 * ・[1]=SUCCESS_SAVED
-//	 * ・[2]=SUCCESS_SAVED
-//	 * ・[3]=SUCCESS_SAVED
-//	 * 
-//	 * のようなリストで返却されます。
-//	 * 
-//	 * @param url 対象のURL
-//	 * @return 履歴の一覧
-//	 * @throws DataStoreManagerException
-//	 * @throws BrowzingException URL文字列がnullまたは、空文字だった場合
-//	 */
-//	public List<PageStatus> getHistory(String url) throws DataStoreManagerException, BrowzingException {
-//		List<PageStatus> history = new ArrayList<PageStatus>();
-//		Url urlObj = new Url(url);
-//		String protocol               = urlObj.getProtocol();
-//		String host                   = urlObj.getHost();
-//		List<String> path             = urlObj.getPathList();
-//		Map<String, String> parameter = urlObj.getParameter();
-//		Urls urls = (Urls)dsm.getDataAccessObject(CrawlerDaoConstants.URLS);
-//		if (urls.count(protocol, host, path, parameter) == 0) {
-//			history.add(PageStatus.NON_SAVE);
-//			return history;
-//		}
-//		Pages pages = (Pages)dsm.getDataAccessObject(CrawlerDaoConstants.PAGES);
-//		int pageCount = pages.count(protocol, host, path, parameter);
-//		if (pageCount == 0) {
-//			CrawlerErrors redirectErrors = (CrawlerErrors)dsm.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
-//			if (redirectErrors.count(protocol, host, path, parameter) != 0){
-//				history.add(PageStatus.ERROR_SAVED_BY_CRAWL);
-//			}
-//		} else {
-//			List<PagesRecord> pagesRecords = pages.select(protocol, host, path, parameter);
-//			Documents      documents      = (Documents)dsm.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
-//			RedirectErrors redirectErrors = (RedirectErrors)dsm.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
-//			for (PagesRecord pagesRecord : pagesRecords) {
-//				long fileId = pagesRecord.getFileid();
-//				long timeId = pagesRecord.getTimeid();
-//				if (documents.count(fileId, timeId) != 0) {
-//					history.add(PageStatus.SUCCESS_SAVED);
-//				} else if (redirectErrors.count(fileId, timeId) != 0){
-//					history.add(PageStatus.ERROR_SAVED_BY_REDIRECT);
-//				}
-//			}
-//		}
-//		return history;
-//	}
-	
+		
 	/**
 	 * 指定の遷移可能要素に遷移し、そのページ情報を保存します。
 	 * 正常に遷移し、ページ情報がセーブできた場合、MoveInfo.MOVEを返却します。
@@ -290,17 +233,19 @@ public class Crawler extends Browzer{
 	 * エラー発生後、本メソッドにてハンドリング処理を実施後、処理を停止させる場合、本メソッド内にて例外を送出させてください。
 	 * 
 	 * @param throwable 発生した例外オブジェクト
-	 * @throws CrawlerException エラーハンフドリング後、処理を停止させる場合
+	 * @throws CrawlerException エラーハンドリング後、処理を停止させる場合
 	 * @throws DataStoreManagerException データストア関連処理に失敗した場合
+	 * @throws PageAccessException ページアクセスに失敗した場合
+	 * @throws DocumentFatalException 
 	 */
-	protected void errorHandler (Page beforePage, Url nextPageUrl, Throwable throwable) throws CrawlerException, DataStoreManagerException {
+	protected void errorHandler (Page beforePage, Url nextPageUrl, Throwable throwable) throws CrawlerException, DataStoreManagerException, DocumentFatalException, PageAccessException {
 		if (throwable instanceof CrawlerPageRedirectHandlerException) {
 			CrawlerPageRedirectHandlerException crawlerPageRedirectHandlerException = (CrawlerPageRedirectHandlerException) throwable;
 			jp.co.dk.crawler.Page errorPage = (jp.co.dk.crawler.Page)crawlerPageRedirectHandlerException.getPage();
 			this.addLinks(beforePage.getUrl(), errorPage.getUrl());
 			RedirectErrors errors = (RedirectErrors)this.dsm.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
-			long fileId = errorPage.getFileId();
-			long timeId = errorPage.getTimeId();
+			String fileId = errorPage.getFileId();
+			long   timeId = errorPage.getTimeId();
 			String message = throwable.getMessage();
 			StackTraceElement[] stackTraceElements = throwable.getStackTrace();
 			Date createDate = new Date();

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JMockit Coverage Report - CrawlerException.java</title>
+  <title>JMockit Coverage Report - CrawlerFatalException.java</title>
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
   <link rel='stylesheet' type='text/css' href='../../../../../coverage.css'/>
   <script type='text/javascript' src='../../../../../coverage.js'></script>
@@ -9,7 +9,7 @@
 </head>
 <body onload='prettyPrint()'>
   <table cellpadding='0' cellspacing='1'>
-    <caption>Crawler/src/jp/co/dk/crawler/exception/CrawlerException.java</caption>
+    <caption>Crawler/src/jp/co/dk/crawler/exception/CrawlerFatalException.java</caption>
     <tr>
       <td class='line'>1</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>package jp.co.dk.crawler.exception;</pre></td>
@@ -20,14 +20,14 @@
       <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import java.util.List;
 
 import jp.co.dk.message.MessageInterface;
-import jp.co.dk.message.exception.AbstractMessageException;
+import jp.co.dk.message.exception.AbstractMessageFatalException;
 </div><span>import ...</span></pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td class='comment' onclick='showHideLines(this)'><div>/**
- * CrawlerExceptionは、クローリング処理にて例外が発生したことを通知する例外クラスです。
+ * CrawlerFatalExceptionは、クローリング処理にて致命的例外が発生したことを通知する例外クラスです。
  * 
  * @version 1.0
  * @author D.Kanno
@@ -35,7 +35,7 @@ import jp.co.dk.message.exception.AbstractMessageException;
     </tr>
     <tr>
       <td class='line'>14</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>public class CrawlerException extends AbstractMessageException{</pre></td>
+      <td><pre class='prettyprint'>class CrawlerFatalException extends AbstractMessageFatalException{</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -46,7 +46,7 @@ import jp.co.dk.message.exception.AbstractMessageException;
     </tr>
     <tr>
       <td class='line'>19</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	private static final long serialVersionUID = 7430639691716421728L;	</pre></td>
+      <td><pre class='prettyprint'>	private static final long serialVersionUID = 6738611825099782274L;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -62,14 +62,14 @@ import jp.co.dk.message.exception.AbstractMessageException;
     </tr>
     <tr>
       <td class='line'>29</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public CrawlerException(MessageInterface msg){</pre></td>
+      <td><pre class='prettyprint'>	public CrawlerFatalException(MessageInterface msg){</pre></td>
     </tr>
     <tr>
-      <td class='line'>30</td><td class='count'>7</td>
+      <td class='line'>30</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l30s0'>		super(msg);</pre></td>
     </tr>
     <tr>
-      <td class='line'>31</td><td class='count'>7</td>
+      <td class='line'>31</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l31s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -87,14 +87,14 @@ import jp.co.dk.message.exception.AbstractMessageException;
     </tr>
     <tr>
       <td class='line'>42</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public CrawlerException(MessageInterface msg, String str){</pre></td>
+      <td><pre class='prettyprint'>	public CrawlerFatalException(MessageInterface msg, String str){</pre></td>
     </tr>
     <tr>
-      <td class='line'>43</td><td class='count'>17</td>
+      <td class='line'>43</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l43s0'>		super(msg, str);</pre></td>
     </tr>
     <tr>
-      <td class='line'>44</td><td class='count'>17</td>
+      <td class='line'>44</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l44s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -112,7 +112,7 @@ import jp.co.dk.message.exception.AbstractMessageException;
     </tr>
     <tr>
       <td class='line'>55</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public CrawlerException(MessageInterface msg, Throwable throwable){</pre></td>
+      <td><pre class='prettyprint'>	public CrawlerFatalException(MessageInterface msg, Throwable throwable){</pre></td>
     </tr>
     <tr>
       <td class='line'>56</td><td class='count'>1</td>
@@ -138,7 +138,7 @@ import jp.co.dk.message.exception.AbstractMessageException;
     </tr>
     <tr>
       <td class='line'>69</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public CrawlerException(MessageInterface msg, String str, Throwable throwable){</pre></td>
+      <td><pre class='prettyprint'>	public CrawlerFatalException(MessageInterface msg, String str, Throwable throwable){</pre></td>
     </tr>
     <tr>
       <td class='line'>70</td><td class='count'>1</td>
@@ -164,7 +164,7 @@ import jp.co.dk.message.exception.AbstractMessageException;
     </tr>
     <tr>
       <td class='line'>83</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public CrawlerException(MessageInterface msg, List&lt;String> list,Throwable throwable){</pre></td>
+      <td><pre class='prettyprint'>	public CrawlerFatalException(MessageInterface msg, List&lt;String> list,Throwable throwable){</pre></td>
     </tr>
     <tr>
       <td class='line'>84</td><td class='count'>1</td>
@@ -190,7 +190,7 @@ import jp.co.dk.message.exception.AbstractMessageException;
     </tr>
     <tr>
       <td class='line'>97</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public CrawlerException(MessageInterface msg, String[] str, Throwable throwable){</pre></td>
+      <td><pre class='prettyprint'>	public CrawlerFatalException(MessageInterface msg, String[] str, Throwable throwable){</pre></td>
     </tr>
     <tr>
       <td class='line'>98</td><td class='count'>1</td>

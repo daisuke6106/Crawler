@@ -33,6 +33,9 @@ public class CrawlerMessage extends AbstractMessage implements Serializable{
 	/** データストアマネージャが設定されていません。 */
 	public static final CrawlerMessage DATASTOREMANAGER_IS_NOT_SET = new CrawlerMessage("E006");
 	
+	/** ロガーが設定されていません。 */
+	public static final CrawlerMessage LOGGER_IS_NOT_SET = new CrawlerMessage("E007");
+	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);
 	}

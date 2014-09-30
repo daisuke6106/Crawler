@@ -38,6 +38,7 @@ import jp.co.dk.document.exception.DocumentFatalException;
 import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.HtmlElement;
 import jp.co.dk.document.html.constant.HtmlElementName;
+import jp.co.dk.logger.Logger;
 
 /**
  * Crawlerは、ネットワーク上に存在するHTML、XML、ファイルを巡回し、指定された出力先へ保存を行う処理を制御するクラス。<p/>
@@ -51,6 +52,9 @@ public class Crawler extends Browzer{
 	/** データストアマネージャー */
 	protected DataStoreManager dsm;
 	
+	/** ロガー */
+	protected Logger logger;
+	
 	/**
 	 * コンストラクタ<p/>
 	 * 指定のデータストアマネージャを元に、クローラクラスのインスタンスを生成する。<br/>
@@ -61,11 +65,13 @@ public class Crawler extends Browzer{
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public Crawler(String url, DataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
+	public Crawler(String url, DataStoreManager dataStoreManager, Logger logger) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
 		super(url);
 		if (dataStoreManager == null) throw new CrawlerInitException(CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET);
+		if (logger == null)           throw new CrawlerInitException(CrawlerMessage.LOGGER_IS_NOT_SET);
 		this.dsm                 = dataStoreManager;
 		this.pageRedirectHandler = new CrawlerPageRedirectHandler(dataStoreManager, this.getPageEventHandler());
+		super.pageManager = this.createPageManager(url, this.pageRedirectHandler);
 	}
 		
 	/**
@@ -81,8 +87,10 @@ public class Crawler extends Browzer{
 	 * @return 遷移状態（MOVE=指定のページに遷移済み且つ保存済み、NON_MOVED=未遷移状態）
 	 * @throws CrawlerException errorHandlerメソッドにてエラーにて終了と判定された場合
 	 * @throws DataStoreManagerException データストアへの保存処理に失敗した場合
+	 * @throws PageAccessException ページデータの取得に失敗した場合
+	 * @throws DocumentFatalException 
 	 */
-	public MoveInfo moveWithSave(MovableElement movable) throws CrawlerException, DataStoreManagerException {
+	public MoveInfo moveWithSave(MovableElement movable) throws CrawlerException, DataStoreManagerException, DocumentFatalException, PageAccessException {
 		Page activePage = this.getPage();
 		Url activeUrl   = activePage.getUrl();
 		Url nextUrl;
@@ -236,7 +244,7 @@ public class Crawler extends Browzer{
 	 * @throws CrawlerException エラーハンドリング後、処理を停止させる場合
 	 * @throws DataStoreManagerException データストア関連処理に失敗した場合
 	 * @throws PageAccessException ページアクセスに失敗した場合
-	 * @throws DocumentFatalException 
+	 * @throws DocumentFatalException 暗号化処理にて致命的例外が発生した場合
 	 */
 	protected void errorHandler (Page beforePage, Url nextPageUrl, Throwable throwable) throws CrawlerException, DataStoreManagerException, DocumentFatalException, PageAccessException {
 		if (throwable instanceof CrawlerPageRedirectHandlerException) {

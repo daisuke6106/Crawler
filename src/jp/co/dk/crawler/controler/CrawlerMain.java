@@ -6,11 +6,13 @@ import java.util.List;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.Crawler;
+import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
+import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
 import jp.co.dk.property.exception.PropertyException;
@@ -71,10 +73,10 @@ public class CrawlerMain {
 		
 		Options options = new Options();
 		List<Option> optionList = new ArrayList<Option>();
-		Option  url     = OptionBuilder.isRequired(true ).hasArg(true).withArgName("保存対象のURL").withDescription("保存対象のURL").create( "url" );
-		Option  confirm = OptionBuilder.isRequired(false).withDescription("確認するか").create( "i" );
+		Option  url = OptionBuilder.isRequired(true).hasArg(true).withArgName("保存対象のURL").withDescription("保存対象のURL").create( "url" );
+		Option  all = OptionBuilder.isRequired(false).hasArg(false).withDescription("そのURLに関するデータをすべて保存するか").create( "all" );
 		options.addOption(url);
-		options.addOption(confirm);
+		options.addOption(all);
 		CommandLine cmd = null;
 		try {
 			cmd = new PosixParser().parse(options, args);
@@ -83,7 +85,6 @@ public class CrawlerMain {
 			help.printHelp("crawler", options, true);
 			System.exit(1);
 		}
-		Logger           logger = LoggerFactory.getLogger("CRAWLER");
 		DataStoreManager dsm    = null;
 		try {
 			dsm = new DataStoreManager(new DataStoreManagerProperty());
@@ -97,8 +98,12 @@ public class CrawlerMain {
 		
 		try {
 			dsm.startTrunsaction();
-			Crawler crawler = new Crawler(cmd.getOptionValue("url"), dsm, logger);
-			crawler.save();
+			Crawler crawler = new Crawler(cmd.getOptionValue("url"), dsm);
+			if (cmd.hasOption(all.getOpt())) {
+				crawler.saveAll();
+			} else {
+ 				crawler.save();
+			}
 			dsm.finishTrunsaction();
 		} catch (CrawlerInitException | PageIllegalArgumentException | PageAccessException e) {
 			System.out.println(e.getMessage());
@@ -109,8 +114,17 @@ public class CrawlerMain {
 			e.printStackTrace();
 			System.exit(1);
 		} catch (DataStoreManagerException e) {
-			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
 			e.printStackTrace();
+			System.exit(1);
+		} catch (DocumentException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(1);
+		} catch (CrawlerException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(1);
 		}
 		
 	}

@@ -1,4 +1,4 @@
 #!/bin/sh
-java -classpath \
-"${0%/*}/../crawler_all.jar:./lib/*" \
-jp.co.dk.crawler.controler.CrawlerMain  $*
+CURRENT=$(cd $(dirname $0) && pwd)
+java -classpath "${CURRENT}/../*" jp.co.dk.crawler.controler.CrawlerMain $*
+

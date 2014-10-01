@@ -52,9 +52,6 @@ public class Crawler extends Browzer{
 	/** データストアマネージャー */
 	protected DataStoreManager dsm;
 	
-	/** ロガー */
-	protected Logger logger;
-	
 	/**
 	 * コンストラクタ<p/>
 	 * 指定のデータストアマネージャを元に、クローラクラスのインスタンスを生成する。<br/>
@@ -65,10 +62,9 @@ public class Crawler extends Browzer{
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public Crawler(String url, DataStoreManager dataStoreManager, Logger logger) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
+	public Crawler(String url, DataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
 		super(url);
 		if (dataStoreManager == null) throw new CrawlerInitException(CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET);
-		if (logger == null)           throw new CrawlerInitException(CrawlerMessage.LOGGER_IS_NOT_SET);
 		this.dsm                 = dataStoreManager;
 		this.pageRedirectHandler = new CrawlerPageRedirectHandler(dataStoreManager, this.getPageEventHandler());
 		super.pageManager = this.createPageManager(url, this.pageRedirectHandler);

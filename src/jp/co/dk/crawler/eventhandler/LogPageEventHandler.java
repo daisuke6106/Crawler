@@ -7,7 +7,7 @@ import jp.co.dk.logger.LoggerFactory;
 public class LogPageEventHandler extends PrintPageEventHandler {
 	
 	/** ロガーインスタンス */
-	protected Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected Logger logger = LoggerFactory.getLogger("CRAWLER");
 	
 	@Override
 	protected void print(String str) {

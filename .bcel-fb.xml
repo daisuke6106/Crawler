@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<BugCollection version="2.0.2" sequence="0" timestamp="1412095727567" analysisTimestamp="1412095727580" release="">
+<BugCollection version="2.0.2" sequence="0" timestamp="1412179666606" analysisTimestamp="1412179666616" release="">
   <Project projectName="">
     <Jar>/home/dk/github_workspace/Crawler/crawler.jar</Jar>
     <AuxClasspathEntry>/home/dk/github_workspace/Crawler/lib/browzer_all.jar</AuxClasspathEntry>
@@ -378,11 +378,10 @@
       <StackTrace>edu.umd.cs.findbugs.FindBugs2.main(FindBugs2.java:1298)</StackTrace>
     </Error>
   </Errors>
-  <FindBugsSummary timestamp="Wed, 1 Oct 2014 01:48:47 +0900" total_classes="0" referenced_classes="246" total_bugs="0" total_size="0" num_packages="0" vm_version="25.20-b23" cpu_seconds="1.32" clock_seconds="0.50" peak_mbytes="93.78" alloc_mbytes="1749.50" gc_seconds="0.01">
+  <FindBugsSummary timestamp="Thu, 2 Oct 2014 01:07:46 +0900" total_classes="0" referenced_classes="246" total_bugs="0" total_size="0" num_packages="0" vm_version="25.20-b23" cpu_seconds="1.39" clock_seconds="0.50" peak_mbytes="95.11" alloc_mbytes="1749.50" gc_seconds="0.02">
     <FindBugsProfile>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="176" invocations="333" avgMicrosecondsPerInvocation="530" maxMicrosecondsPerInvocation="11861" standardDeviationMircosecondsPerInvocation="1279"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.impl.ZipCodeBaseFactory" totalMilliseconds="37" invocations="28" avgMicrosecondsPerInvocation="1323" maxMicrosecondsPerInvocation="33520" standardDeviationMircosecondsPerInvocation="6204"/>
-      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="33" invocations="322" avgMicrosecondsPerInvocation="102" maxMicrosecondsPerInvocation="9783" standardDeviationMircosecondsPerInvocation="579"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="143" invocations="333" avgMicrosecondsPerInvocation="430" maxMicrosecondsPerInvocation="11941" standardDeviationMircosecondsPerInvocation="1141"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.impl.ZipCodeBaseFactory" totalMilliseconds="39" invocations="28" avgMicrosecondsPerInvocation="1410" maxMicrosecondsPerInvocation="37797" standardDeviationMircosecondsPerInvocation="7003"/>
     </FindBugsProfile>
   </FindBugsSummary>
   <ClassFeatures></ClassFeatures>

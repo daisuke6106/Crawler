@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="lib/browzer_all.jar"/>
-	<classpathentry kind="lib" path="lib/datastoremanager_all.jar"/>
-	<classpathentry kind="lib" path="lib/logger_all.jar"/>
 	<classpathentry kind="lib" path="lib/commandframework_all.jar"/>
-	<classpathentry kind="lib" path="lib/message_all.jar"/>
-	<classpathentry kind="lib" path="lib/property_all.jar"/>
 	<classpathentry kind="lib" path="lib/test/jmockit-coverage.jar"/>
 	<classpathentry kind="lib" path="lib/test/jmockit.jar"/>
 	<classpathentry kind="lib" path="lib/test/testtemplate_all.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/datastoremanager_1.0.0_all.jar"/>
+	<classpathentry kind="lib" path="lib/logger_1.0.0_all.jar"/>
+	<classpathentry kind="lib" path="lib/message_1.0.0_all.jar"/>
+	<classpathentry kind="lib" path="lib/property_1.0.0_all.jar"/>
+	<classpathentry kind="lib" path="lib/browzer_1.0.0_all.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

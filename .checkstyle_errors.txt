@@ -1,246 +1,266 @@
 Starting audit...
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:41:8: 使用されないインポートです - jp.co.dk.logger.Logger。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:43: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:46: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:50:37: '{' の前にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:51: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:51:1: File contains tab characters (this is the first instance).
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:52: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:53:36: 変数 'dsm' は private とし、アクセッサメソッドを持つべきです。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:54: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:55: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:59: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:63: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65:24: Parameter url should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65:31: 'url' には @param タグが必要です。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65:36: Parameter dataStoreManager should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65:78: CrawlerInitException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65:100: PageIllegalArgumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65:100: 冗長な throws: 'PageIllegalArgumentException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65:130: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:65:130: 冗長な throws: 'PageAccessException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:67: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:67: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:0: ファイルが新しい行で終了していません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:42: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:45: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:49:37: '{' の前にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:50: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:50:1: File contains tab characters (this is the first instance).
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:51: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:52:36: 変数 'dsm' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:53: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:54: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:58: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:62: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64:24: Parameter url should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64:31: 'url' には @param タグが必要です。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64:36: Parameter dataStoreManager should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64:78: CrawlerInitException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64:100: PageIllegalArgumentException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64:100: 冗長な throws: 'PageIllegalArgumentException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64:130: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:64:130: 冗長な throws: 'PageAccessException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:66: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:66: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:68: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:69: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:70: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:72: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:73: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:76: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:78: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:79: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:71: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:72: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:75: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:77: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:78: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:79: Line has trailing spaces.
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:80: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:81: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:87: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:9: メソッド 'moveWithSave' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:38: Parameter movable should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:69: CrawlerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:87: DataStoreManagerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:87: 冗長な throws: 'DataStoreManagerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:114: DocumentFatalException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:114: 冗長な throws: 'DocumentFatalException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:138: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:89:138: 冗長な throws: 'PageAccessException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:103: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:108: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:109: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:111: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:113:12: @throws タグの 'CrawlerException' のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:115:9: メソッド 'save' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:115:38: @throws タグの 'CrawlerSaveException' のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:115:38: CrawlerSaveException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:116: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:119: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:120: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:121: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:122: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:86: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:9: メソッド 'moveWithSave' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:38: Parameter movable should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:69: CrawlerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:87: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:87: 冗長な throws: 'DataStoreManagerException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:114: DocumentFatalException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:114: 冗長な throws: 'DocumentFatalException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:138: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:88:138: 冗長な throws: 'PageAccessException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:102: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:107: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:108: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:110: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:112:12: @throws タグの 'CrawlerException' のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:114:9: メソッド 'save' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:114:38: @throws タグの 'CrawlerSaveException' のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:114:38: CrawlerSaveException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:115: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:118: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:119: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:120: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:121: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:123: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:124: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:125: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:9: メソッド 'saveAll' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:38: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:59: DocumentException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:59: 冗長な throws: 'DocumentException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:78: CrawlerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:78: 冗長な throws: 'CrawlerException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:96: 'CrawlerSaveException' には @throws タグが必要です。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:96: CrawlerSaveException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:96: 冗長な throws: 'CrawlerSaveException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:118: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:127:118: 冗長な throws: 'DataStoreManagerException' が重複しています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:9: メソッド 'saveAll' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:38: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:59: DocumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:59: 冗長な throws: 'DocumentException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:78: CrawlerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:78: 冗長な throws: 'CrawlerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:96: 'CrawlerSaveException' には @throws タグが必要です。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:96: CrawlerSaveException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:96: 冗長な throws: 'CrawlerSaveException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:118: DataStoreManagerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:118: 冗長な throws: 'DataStoreManagerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:129: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:129:75: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:136: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:137: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:141: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:144: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:145: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:128:75: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:135: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:136: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:140: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:143: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:144: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:146: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:147: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:148: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150:9: メソッド 'saveImage' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150:40: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150:61: DocumentException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150:61: 冗長な throws: 'DocumentException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150:80: CrawlerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150:80: 冗長な throws: 'CrawlerException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150:98: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:150:98: 冗長な throws: 'DataStoreManagerException' が重複しています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:9: メソッド 'saveImage' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:40: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:61: DocumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:61: 冗長な throws: 'DocumentException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:80: CrawlerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:80: 冗長な throws: 'CrawlerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:98: DataStoreManagerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:98: 冗長な throws: 'DataStoreManagerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:152: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:152:75: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:154: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:155:59: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:156: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:158: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:158:114: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:163: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:164: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:165: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:168: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:171: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:172: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:151:75: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:153: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:154:59: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:155: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:157: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:157:114: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:162: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:163: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:164: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:167: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:170: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:171: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:173: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:174: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:175: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177:9: メソッド 'saveScript' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177:41: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177:62: DocumentException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177:62: 冗長な throws: 'DocumentException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177:81: CrawlerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177:81: 冗長な throws: 'CrawlerException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177:99: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:177:99: 冗長な throws: 'DataStoreManagerException' が重複しています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:9: メソッド 'saveScript' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:41: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:62: DocumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:62: 冗長な throws: 'DocumentException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:81: CrawlerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:81: 冗長な throws: 'CrawlerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:99: DataStoreManagerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:99: 冗長な throws: 'DataStoreManagerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:179: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:179:75: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:181: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:182:59: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:183: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:185:49: Parameter element should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:186: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:186: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:187:72: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:188: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:188: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:193: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:193:116: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:178:75: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:180: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:181:59: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:182: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:184: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:184:116: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:189: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:190: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:194: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:197: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:198: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:199: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:203: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:206: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:207: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:200: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:201: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204:9: メソッド 'saveLink' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204:39: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204:60: DocumentException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204:60: 冗長な throws: 'DocumentException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204:79: CrawlerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204:79: 冗長な throws: 'CrawlerException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204:97: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:204:97: 冗長な throws: 'DataStoreManagerException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:205: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:205:75: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:207: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:208:59: 'cast' の後にホワイトスペースがありません。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:209: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:210: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213:9: メソッド 'saveLink' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213:39: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213:60: DocumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213:60: 冗長な throws: 'DocumentException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213:79: CrawlerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213:79: 冗長な throws: 'CrawlerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213:97: DataStoreManagerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:213:97: 冗長な throws: 'DataStoreManagerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:214: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:214:75: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:216: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:217:59: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:218: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:220:49: Parameter element should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:221: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:221: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:222:72: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:223: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:223: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:211: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:211:112: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:216: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:217: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:219: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:221: Line has trailing spaces.
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:112: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:233: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:234: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:236: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:238: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:9: メソッド 'errorHandler' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:37: '(' の前にホワイトスペースがあります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:38: Parameter beforePage should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:43: 'beforePage' には @param タグが必要です。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:55: Parameter nextPageUrl should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:59: 'nextPageUrl' には @param タグが必要です。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:72: Parameter throwable should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:100: CrawlerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:118: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:118: 冗長な throws: 'DataStoreManagerException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:145: DocumentFatalException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:145: 冗長な throws: 'DocumentFatalException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:169: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:228:169: 冗長な throws: 'PageAccessException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:230: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:231: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:231:82: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:233: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:233:65: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:237: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:240: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:241:31: ';' の前にホワイトスペースがあります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:244: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:244:63: 'cast' の後にホワイトスペースがありません。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:9: メソッド 'errorHandler' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:37: '(' の前にホワイトスペースがあります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:38: Parameter beforePage should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:43: 'beforePage' には @param タグが必要です。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:55: Parameter nextPageUrl should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:59: 'nextPageUrl' には @param タグが必要です。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:72: Parameter throwable should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:100: CrawlerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:118: DataStoreManagerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:118: 冗長な throws: 'DataStoreManagerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:145: DocumentFatalException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:145: 冗長な throws: 'DocumentFatalException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:169: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:245:169: 冗長な throws: 'PageAccessException' が重複しています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:247: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:248: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:248:82: 'cast' の後にホワイトスペースがありません。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:250: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:250:65: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:254: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:257: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:258:31: ';' の前にホワイトスペースがあります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:261: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:261:63: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:262: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:264: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:265: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:267: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:270: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:272: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:274: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:275: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:278: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:279:12: 'beforePage' に対する使用されない @param タグです。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:280:12: 'toPage' に対する使用されない @param タグです。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285:9: メソッド 'addLinks' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285:36: Parameter beforePageUrl should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285:40: 'beforePageUrl' には @param タグが必要です。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285:55: Parameter toPageUrl should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285:59: 'toPageUrl' には @param タグが必要です。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285:77: DataStoreManagerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285:104: CrawlerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285:104: 冗長な throws: 'CrawlerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:286: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:286:38: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:287:36: 名前 'from_protcol' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:288:36: 名前 'from_host' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:289:36: 名前 'from_path' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:290: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:290:28: ',' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:290:36: 名前 'from_parameter' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:291:36: 名前 'to_protcol' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:292:36: 名前 'to_host' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:293:36: 名前 'to_path' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:294:28: ',' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:294:36: 名前 'to_parameter' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:297: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:298: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:299: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:302: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:303:9: メソッド 'createPageManager' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:304: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:304:49: Parameter url should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:304:61: Parameter handler should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:304:97: PageIllegalArgumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:304:127: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:304:127: 冗長な throws: 'PageAccessException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:305: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:307: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:308:9: メソッド 'createPageManager' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:309: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:309:49: Parameter url should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:309:61: Parameter handler should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:309:90: Parameter maxNestLevel should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:309:115: PageIllegalArgumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:309:145: PageAccessException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:309:145: 冗長な throws: 'PageAccessException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:310: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:312: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:313:9: メソッド 'getPageEventHandler' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:320: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:253: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:255: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:257: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:258: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:261: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:262:12: 'beforePage' に対する使用されない @param タグです。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:263:12: 'toPage' に対する使用されない @param タグです。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268:9: メソッド 'addLinks' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268:36: Parameter beforePageUrl should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268:40: 'beforePageUrl' には @param タグが必要です。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268:55: Parameter toPageUrl should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268:59: 'toPageUrl' には @param タグが必要です。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268:77: DataStoreManagerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268:104: CrawlerException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:268:104: 冗長な throws: 'CrawlerException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:269: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:269:38: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:270:36: 名前 'from_protcol' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:271:36: 名前 'from_host' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:272:36: 名前 'from_path' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:273: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:273:28: ',' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:273:36: 名前 'from_parameter' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:274:36: 名前 'to_protcol' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:275:36: 名前 'to_host' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:276:36: 名前 'to_path' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:277:28: ',' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:277:36: 名前 'to_parameter' はパターン '^[a-z][a-zA-Z0-9]*$' に一致しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:280: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:281: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:282: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:285: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:286:9: メソッド 'createPageManager' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:287: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:287:49: Parameter url should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:287:61: Parameter handler should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:287:97: PageIllegalArgumentException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:287:127: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:287:127: 冗長な throws: 'PageAccessException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:288: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:290: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:291:9: メソッド 'createPageManager' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:292: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:292:49: Parameter url should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:292:61: Parameter handler should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:292:90: Parameter maxNestLevel should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:292:115: PageIllegalArgumentException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:292:145: PageAccessException のクラス情報が取得できません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:292:145: 冗長な throws: 'PageAccessException' が重複しています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:293: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:295: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:296:9: メソッド 'getPageEventHandler' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:303: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:307: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:309:33: Parameter element should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:310: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:313: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:316: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:318:33: Parameter element should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:319: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:320:56: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:321: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:321: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:321:156: ')' の前にホワイトスペースがあります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:324: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:327: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:329:33: Parameter element should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:330: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:331:56: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:332: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:332: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:332:159: ')' の前にホワイトスペースがあります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:337: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:339:33: Parameter element should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:340: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:341:56: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:342: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:342: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:347: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:349:33: Parameter element should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:350: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:351:56: 'cast' の後にホワイトスペースがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:352: 'if' 文では '{}' を使用しなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:352: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/Crawler.java:355: Line has trailing spaces.
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/CrawlerPageManager.java:13: 最初の一文はピリオドで終わらなければなりません。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/CrawlerPageManager.java:15: Line has trailing spaces.
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/CrawlerPageManager.java:20: Line has trailing spaces.
@@ -567,148 +587,44 @@ Starting audit...
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerInitialize.java:37:73: 'cast' の後にホワイトスペースがありません。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerInitialize.java:38: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerInitialize.java:51: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:16:8: 使用されないインポートです - jp.co.dk.logger.Logger。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:17:8: 使用されないインポートです - jp.co.dk.logger.LoggerFactory。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:28: Javadoc コメントがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:28:1: Utility classes should not have a public or default constructor.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:29: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:29:1: File contains tab characters (this is the first instance).
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:30: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:22: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:23: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:23:1: File contains tab characters (this is the first instance).
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:24:9: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:24:27: 変数 'options' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:25: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:26:9: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:26:31: 変数 'cmd' は private とし、アクセッサメソッドを持つべきです。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:27: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:29:9: Javadoc コメントがありません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:29:33: Parameter args should be final.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:29:44: Array brackets at illegal position.
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:32: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:36: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:38: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:33: 最初の一文はピリオドで終わらなければなりません。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:35: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:39: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:41: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:43: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:44: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:46: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:47: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:49: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:51: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:50: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:52: 行が 80 文字を超えています。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:54: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:55: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:61: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:64: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:65: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:69: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:72:33: Parameter args should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:73: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:57: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:58: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:64: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:67: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:68: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:72: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:75:9: メソッド 'execute' は拡張するように設計されていません - abstract か final か空である必要があります。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:75:29: Parameter args should be final.
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:76: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:76:134: '(' の後にホワイトスペースがあります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:76:140: ')' の前にホワイトスペースがあります。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:77: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:77:125: '(' の後にホワイトスペースがあります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:77:131: ')' の前にホワイトスペースがあります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:90: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:98: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:101: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:108: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:129: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:0: ファイルが新しい行で終了していません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:10:8: 使用されないインポートです - jp.co.dk.crawler.dao.CrawlerDaoConstants。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:11:8: 使用されないインポートです - jp.co.dk.crawler.dao.CrawlerErrors。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:12:8: 使用されないインポートです - jp.co.dk.crawler.dao.Documents。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:13:8: 使用されないインポートです - jp.co.dk.crawler.dao.Links。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:14:8: 使用されないインポートです - jp.co.dk.crawler.dao.Pages。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:15:8: 使用されないインポートです - jp.co.dk.crawler.dao.RedirectErrors。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:16:8: 使用されないインポートです - jp.co.dk.crawler.dao.Urls。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:19:8: 使用されないインポートです - jp.co.dk.datastoremanager.DataStoreManager。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:21:8: 使用されないインポートです - jp.co.dk.datastoremanager.property.DataStoreManagerProperty。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:30: Javadoc コメントがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:31: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:31:1: File contains tab characters (this is the first instance).
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:32: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:9: Javadoc コメントがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:9: メソッド 'control' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:22: Parameter sleepTime should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:37: Parameter crawler should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:61: BrowzingException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:80: CrawlerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:80: 冗長な throws: 'CrawlerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:98: DataStoreManagerException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:98: 冗長な throws: 'DataStoreManagerException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:125: DocumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:125: 冗長な throws: 'DocumentException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:144: CrawlerSaveException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:33:144: 冗長な throws: 'CrawlerSaveException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:36:50: 少なくとも1文はあるはずです。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:36:51: '{' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:36:51: '}' の前にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:38: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:40: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:41:54: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:45: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:46: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:54: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:58: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:60: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:60:9: メソッド 'getRefsElements' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:60:39: Parameter page should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:60:57: BrowzingException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:60:76: DocumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:60:76: 冗長な throws: 'DocumentException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:63: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:64:59: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:65: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:66: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:67: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:73: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:74: 最初の一文はピリオドで終わらなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:80: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:84: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:86: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:86:9: メソッド 'getAnchorElements' は拡張するように設計されていません - abstract か final か空である必要があります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:86:41: Parameter page should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:86:59: BrowzingException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:86:78: DocumentException のクラス情報が取得できません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:86:78: 冗長な throws: 'DocumentException' が重複しています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:89: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:90:59: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:91: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:95: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:97: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:98: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:99: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:101: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:105: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:107: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:114: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:116: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:122: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:123: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:124: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:130: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:133: Javadoc コメントがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:135:33: Parameter element should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:136: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:139: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:142: Javadoc コメントがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:144:33: Parameter element should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:145: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:146:56: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:147: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:147: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:147:156: ')' の前にホワイトスペースがあります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:150: Line has trailing spaces.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:153: Javadoc コメントがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:155:33: Parameter element should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:156: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:157:56: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:158: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:158: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:158:159: ')' の前にホワイトスペースがあります。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:163: Javadoc コメントがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:165:33: Parameter element should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:166: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:167:56: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:168: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:168: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:173: Javadoc コメントがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:175:33: Parameter element should be final.
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:176: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:177:56: 'cast' の後にホワイトスペースがありません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:178: 'if' 文では '{}' を使用しなければなりません。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:178: 行が 80 文字を超えています。
-/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlingControler.java:181: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:87: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:95: Line has trailing spaces.
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:98: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:105: 行が 80 文字を超えています。
+/home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/controler/CrawlerMain.java:127: Line has trailing spaces.
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/dao/CrawlerDaoConstants.java:15: '.*' 形式のインポートの使用は避けるべきです - jp.co.dk.crawler.message.CrawlerMessage.*。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/dao/CrawlerDaoConstants.java:17: Javadoc コメントがありません。
 /home/dk/github_workspace/Crawler/src/jp/co/dk/crawler/dao/CrawlerDaoConstants.java:17: 行が 80 文字を超えています。

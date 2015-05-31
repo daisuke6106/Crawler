@@ -1,12 +1,11 @@
 package jp.co.dk.crawler.controler;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
+import jp.co.dk.browzer.exception.PageMovableLimitException;
+import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.exception.CrawlerException;
@@ -15,18 +14,12 @@ import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
-import jp.co.dk.document.Element;
-import jp.co.dk.document.ElementSelector;
-import jp.co.dk.document.File;
 import jp.co.dk.document.exception.DocumentException;
-import jp.co.dk.document.html.HtmlDocument;
-import jp.co.dk.document.html.HtmlElement;
-import jp.co.dk.document.html.constant.HtmlElementName;
+import jp.co.dk.document.html.element.A;
 import jp.co.dk.property.exception.PropertyException;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -34,9 +27,16 @@ import org.apache.commons.cli.PosixParser;
 
 public class CrawlerMain {
 	
+	
+	public static void main(String args[]) {
+		new CrawlerMain().execute(args);
+	}
+	
 	protected Options options = new Options();
 	
 	protected CommandLine cmd;
+	
+	protected CrawlerControler crawlerControler;
 	
 	/**
 	 * ---OptionBuilder---
@@ -80,7 +80,7 @@ public class CrawlerMain {
 	 * 
 	 * @param args 起動引数
 	 */
-	public void main(String[] args) {
+	public void execute(String[] args) {
 		this.options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("保存対象のURL").withDescription("保存対象のURL").create("url"));
 		this.options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("そのURLに関するデータをすべて保存するか").create("all"));
 		try {
@@ -105,7 +105,8 @@ public class CrawlerMain {
 			dsm.startTrunsaction();
 			Crawler crawler = new Crawler(cmd.getOptionValue("url"), dsm);
 			if (cmd.hasOption("all")) {
-				crawler.saveAll();
+				CrawlerControler cc = new CrawlerControler(crawler);
+				cc.crawl();
 			} else {
  				crawler.save();
 			}
@@ -130,109 +131,36 @@ public class CrawlerMain {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			System.exit(1);
+		} catch (PageRedirectException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(1);
+		} catch (PageMovableLimitException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(1);
 		}
-		
-	}
-	
-	
-	/**
-	 * 指定のページが参照している以下の要素を取得します。<p/>
-	 * <br/>
-	 * 指定のページがHTML以外である場合、空のリストを返却します。<br/>
-	 * <br/>
-	 * ・link  （hrefに値が設定されている要素のみ）<br/>
-	 * ・script（srcに値が設定されている要素のみ）<br/>
-	 * ・image （srcに値が設定されている要素のみ）<br/>
-	 * 
-	 * @param page 要素取得先ページ
-	 * @return 要素一覧
-	 * @throws BrowzingException ページ情報の読み込みに失敗した場合
-	 * @throws DocumentException 
-	 */
-	List<Element> getRefsElements(Page page) throws BrowzingException, DocumentException {
-		List<Element> elementList = new ArrayList<Element>();
-		File file = page.getDocument();
-		if (file instanceof HtmlDocument) return elementList;
-		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> links   = htmlDocument.getElement(new LinkElementSelector());
-		List<Element> scripts = htmlDocument.getElement(new ScriptElementSelector());
-		List<Element> imgs    = htmlDocument.getElement(new ImageElementSelector());
-		elementList.addAll(links);
-		elementList.addAll(scripts);
-		elementList.addAll(imgs);
-		return elementList;
-	}
-	
-	/**
-	 * 指定のページが参照している以下の要素を取得します。<p/>
-	 * <br/>
-	 * 指定のページがHTML以外である場合、空のリストを返却します。<br/>
-	 * <br/>
-	 * ・anchor（hrefに値が設定されている要素のみ）<br/>
-	 * 
-	 * @param page 要素取得先ページ
-	 * @return 要素一覧
-	 * @throws BrowzingException ページ情報の読み込みに失敗した場合
-	 * @throws DocumentException 
-	 */
-	List<Element> getAnchorElements(Page page) throws BrowzingException, DocumentException {
-		List<Element> elementList = new ArrayList<Element>();
-		File file = page.getDocument();
-		if (file instanceof HtmlDocument) return elementList;
-		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> anchors = htmlDocument.getElement(new AnchorElementSelector());
-		elementList.addAll(anchors);
-		return elementList;
-	}
-}
-
-class MovableElementSelector implements ElementSelector {
-	@Override
-	public boolean judgment(Element element) {
-		if (element instanceof MovableElement) return true;
-		return false;
 	}
 	
 }
 
-class AnchorElementSelector implements ElementSelector {
-	@Override
-	public boolean judgment(Element element) {
-		if (!(element instanceof HtmlElement)) return false;
-		HtmlElement htmlElement = (HtmlElement)element;
-		if (htmlElement.getElementType() == HtmlElementName.A && htmlElement.hasAttribute("href") && (!htmlElement.getAttribute("href").equals("")) ) return true;
-		return false;
+class CrawlerControler {
+	
+	protected Crawler crawler;
+	
+	CrawlerControler(Crawler crawler) {
+		this.crawler = crawler;
 	}
 	
-}
-
-class LinkElementSelector implements ElementSelector {
-	@Override
-	public boolean judgment(Element element) {
-		if (!(element instanceof HtmlElement)) return false;
-		HtmlElement htmlElement = (HtmlElement)element;
-		if (htmlElement.getElementType() == HtmlElementName.LINK && htmlElement.hasAttribute("href") && (!htmlElement.getAttribute("href").equals("")) ) return true;
-		return false;
+	void crawl() throws PageAccessException, DocumentException, CrawlerException, CrawlerSaveException, DataStoreManagerException, PageIllegalArgumentException, PageRedirectException, PageMovableLimitException {
+		this.crawler.saveAll();
+		this.crawler.getDataStoreManager().commit();
+		List<A> excludeHtmlAnchorList = this.crawler.getPage().getAnchorExcludeHtml();
+		for (A anchor : excludeHtmlAnchorList) {
+			this.crawler.move((MovableElement) anchor);
+			this.crawler.saveAll();
+			this.crawler.getDataStoreManager().commit();
+			this.crawler.back();
+		}
 	}
-}
-
-class ScriptElementSelector implements ElementSelector {
-	@Override
-	public boolean judgment(Element element) {
-		if (!(element instanceof HtmlElement)) return false;
-		HtmlElement htmlElement = (HtmlElement)element;
-		if (htmlElement.getElementType() == HtmlElementName.SCRIPT && htmlElement.hasAttribute("src") && (!htmlElement.getAttribute("src").equals(""))) return true;
-		return false;
-	}
-}
-
-class ImageElementSelector implements ElementSelector {
-	@Override
-	public boolean judgment(Element element) {
-		if (!(element instanceof HtmlElement)) return false;
-		HtmlElement htmlElement = (HtmlElement)element;
-		if (htmlElement.getElementType() == HtmlElementName.IMG && htmlElement.hasAttribute("src") && (!htmlElement.getAttribute("src").equals(""))) return true;
-		return false;
-	}
-	
 }

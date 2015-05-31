@@ -38,7 +38,6 @@ import jp.co.dk.document.exception.DocumentFatalException;
 import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.HtmlElement;
 import jp.co.dk.document.html.constant.HtmlElementName;
-import jp.co.dk.logger.Logger;
 
 /**
  * Crawlerは、ネットワーク上に存在するHTML、XML、ファイルを巡回し、指定された出力先へ保存を行う処理を制御するクラス。<p/>
@@ -153,7 +152,7 @@ public class Crawler extends Browzer{
 		File file = activePage.getDocument();
 		if (!(file instanceof HtmlDocument)) return;
 		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(HtmlElementName.IMG);
+		List<Element> elements = htmlDocument.getElement(new ImageElementSelector());
 		for (Element element : elements) {
 			jp.co.dk.browzer.html.element.Image castedElement = (jp.co.dk.browzer.html.element.Image)element;
 			this.moveWithSave(castedElement);
@@ -180,15 +179,7 @@ public class Crawler extends Browzer{
 		File file = activePage.getDocument();
 		if (!(file instanceof HtmlDocument)) return;
 		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(new ElementSelector() {
-			@Override
-			public boolean judgment(Element element) {
-				if (!(element instanceof HtmlElement)) return false;
-				HtmlElement htmlElement = (HtmlElement)element;
-				if (htmlElement.getElementType() == HtmlElementName.SCRIPT && htmlElement.hasAttribute("src")) return true;
-				return false;
-			}
-		});
+		List<Element> elements = htmlDocument.getElement(new ScriptElementSelector());
 		for (Element element : elements) {
 			jp.co.dk.browzer.html.element.Script castedElement = (jp.co.dk.browzer.html.element.Script)element;
 			this.moveWithSave(castedElement);
@@ -215,15 +206,7 @@ public class Crawler extends Browzer{
 		File file = activePage.getDocument();
 		if (!(file instanceof HtmlDocument)) return;
 		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(new ElementSelector() {
-			@Override
-			public boolean judgment(Element element) {
-				if (!(element instanceof HtmlElement)) return false;
-				HtmlElement htmlElement = (HtmlElement)element;
-				if (htmlElement.getElementType() == HtmlElementName.LINK && htmlElement.hasAttribute("href")) return true;
-				return false;
-			}
-		});
+		List<Element> elements = htmlDocument.getElement(new LinkElementSelector());
 		for (Element element : elements) {
 			jp.co.dk.browzer.html.element.Link castedElement = (jp.co.dk.browzer.html.element.Link)element;
 			this.moveWithSave(castedElement);
@@ -300,6 +283,10 @@ public class Crawler extends Browzer{
 		return true;
 	}
 	
+	public DataStoreManager getDataStoreManager() {
+		return this.dsm;
+	}
+	
 	@Override
 	protected PageManager createPageManager(String url, PageRedirectHandler handler) throws PageIllegalArgumentException, PageAccessException {
 		return new CrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList);
@@ -316,6 +303,72 @@ public class Crawler extends Browzer{
 		list.add(new PrintPageEventHandler());
 		list.add(new LogPageEventHandler());
 		return list;
+	}
+	
+}
+
+
+class MovableElementSelector implements ElementSelector {
+	@Override
+	public boolean judgment(Element element) {
+		if (element instanceof MovableElement) return true;
+		return false;
+	}
+	
+}
+
+class AnchorExcludeHTMLElementSelector implements ElementSelector {
+	@Override
+	public boolean judgment(Element element) {
+		if (!(element instanceof HtmlElement)) return false;
+		HtmlElement htmlElement = (HtmlElement)element;
+		if (htmlElement.getElementType() == HtmlElementName.A 
+			&& htmlElement.hasAttribute("href") 
+			&& !htmlElement.getAttribute("href").equals("")
+			&& (!htmlElement.getAttribute("href").endsWith(".html")
+				|| !htmlElement.getAttribute("href").endsWith(".htm"))
+		) return true;
+		return false;
+	}
+}
+
+class AnchorIncludeHTMLElementSelector implements ElementSelector {
+	@Override
+	public boolean judgment(Element element) {
+		if (!(element instanceof HtmlElement)) return false;
+		HtmlElement htmlElement = (HtmlElement)element;
+		if (htmlElement.getElementType() == HtmlElementName.A && htmlElement.hasAttribute("href") && (!htmlElement.getAttribute("href").equals("")) ) return true;
+		return false;
+	}
+}
+
+class LinkElementSelector implements ElementSelector {
+	@Override
+	public boolean judgment(Element element) {
+		if (!(element instanceof HtmlElement)) return false;
+		HtmlElement htmlElement = (HtmlElement)element;
+		if (htmlElement.getElementType() == HtmlElementName.LINK && htmlElement.hasAttribute("href") && (!htmlElement.getAttribute("href").equals("")) ) return true;
+		return false;
+	}
+}
+
+class ScriptElementSelector implements ElementSelector {
+	@Override
+	public boolean judgment(Element element) {
+		if (!(element instanceof HtmlElement)) return false;
+		HtmlElement htmlElement = (HtmlElement)element;
+		if (htmlElement.getElementType() == HtmlElementName.SCRIPT && htmlElement.hasAttribute("src") && (!htmlElement.getAttribute("src").equals(""))) return true;
+		return false;
+	}
+}
+
+class ImageElementSelector implements ElementSelector {
+	@Override
+	public boolean judgment(Element element) {
+		if (!(element instanceof HtmlElement)) return false;
+		HtmlElement htmlElement = (HtmlElement)element;
+		if (htmlElement.getElementType() == HtmlElementName.IMG && htmlElement.hasAttribute("src") && (!htmlElement.getAttribute("src").equals(""))) return true;
+		return false;
 	}
 	
 }

@@ -3,9 +3,8 @@ package jp.co.dk.crawler.exception;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.co.dk.crawler.CrawlerFoundationTest;
+import jp.co.dk.crawler.rdb.CrawlerFoundationTest;
 import jp.co.dk.message.MessageInterface;
-
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 import org.junit.Test;

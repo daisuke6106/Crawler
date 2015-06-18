@@ -4,8 +4,10 @@ import org.neo4j.graphdb.GraphDatabaseService;
 
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
+import jp.co.dk.crawler.AbstractPage;
+import jp.co.dk.crawler.exception.CrawlerSaveException;
 
-public class Page extends jp.co.dk.browzer.Page {
+public class Page extends AbstractPage {
 
 	/** グラフデータベースサービス */
 	protected GraphDatabaseService graphDB;
@@ -27,5 +29,23 @@ public class Page extends jp.co.dk.browzer.Page {
 	@Override
 	protected Url createUrl(String url) throws PageIllegalArgumentException {
 		return new Url(url, graphDB);
+	}
+
+	@Override
+	public boolean save() throws CrawlerSaveException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isSaved() throws CrawlerSaveException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isLatest() throws CrawlerSaveException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

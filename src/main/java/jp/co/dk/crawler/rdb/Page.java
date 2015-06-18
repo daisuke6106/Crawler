@@ -1,13 +1,13 @@
 package jp.co.dk.crawler.rdb;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
+import jp.co.dk.crawler.AbstractPage;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.rdb.dao.CrawlerDaoConstants;
@@ -27,16 +27,10 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @version 1.0
  * @author D.Kanno
  */
-public class Page extends jp.co.dk.browzer.Page{
+public class Page extends AbstractPage {
 	
 	/** データストアマネージャ */
 	protected DataStoreManager dataStoreManager;
-	
-	/** ファイルID */
-	protected String fileId;
-	
-	/** タイムID */
-	protected long timeId = -1;
 	
 	/**
 	 * コンストラクタ<p/>
@@ -254,87 +248,6 @@ public class Page extends jp.co.dk.browzer.Page{
 			return false;
 		}
 	}
-	
-	@Override
-	public Map<String, String> getParameter() {
-		return new ParameterMap(this.url.getParameter());
-	}
-	
-	/**
-	 * このページのURLからページを一意に特定するためのファイルIDを算出し返却します。<p/>
-	 * 算出はこのページの<br/>
-	 * ・プロトコル<br/>
-	 * ・ホスト名<br/>
-	 * ・パス<br/>
-	 * ・ファイル名<br/>
-	 * ・パラメータ<br/>
-	 * のハッシュ値を上記の順で乗算した結果が返却されます。
-	 * 
-	 * @return ファイルID
-	 * @throws PageAccessException ページデータの取得に失敗した場合
-	 * @throws DocumentFatalException 暗号化処理にて致命的例外が発生した場合
-	 */
-	protected String getFileId() throws DocumentFatalException, PageAccessException {
-		if (this.fileId != null) return this.fileId;
-		this.fileId = this.getData().getHash();
-		return this.fileId;
-	}
-	
-	/**
-	 * この現在の時刻からファイルIDに付随する登録時刻であるタイムIDを算出し返却します。<p/>
-	 * デフォルトではJVMが稼働しているマシンの現在日付をlong値に変換した値が返却されます。<br/>
-	 * 変更する場合はオーバーライドを使用してください。
-	 * 
-	 * @return タイムID
-	 */
-	protected long getTimeId() {
-		if (timeId != -1) return this.timeId;
-		this.timeId = new Date().getTime();
-		return this.timeId;
-	}
-	
-	/**
-	 * 作成日付を生成し、返却します。<p/>
-	 * データストアに登録される際の作成日付を返却します。<br/>
-	 * デフォルトではJVMが稼働しているマシンの現在日付が返却されます。<br/>
-	 * 変更する場合はオーバーライドを使用してください。
-	 * 
-	 * @return 作成日付
-	 */
-	protected Date getCreateDate() {
-		return new Date();
-	}
-	
-	/**
-	 * 更新日付を生成し、返却します。<p/>
-	 * データストアに登録される際の更新日付を返却します。<br/>
-	 * デフォルトではJVMが稼働しているマシンの現在日付が返却されます。<br/>
-	 * 変更する場合はオーバーライドを使用してください。
-	 * 
-	 * @return 更新日付
-	 */
-	protected Date getUpdateDate() {
-		return new Date();
-	}
 }
 
-class ParameterMap extends HashMap<String, String> {
-	
-	/** シリアルバージョンID */
-	private static final long serialVersionUID = 6071724790375396636L;
-	
-	ParameterMap() {
-		super();
-	}
-	
-	ParameterMap(Map<String, String> parameter) {
-		super(parameter);
-	}
-	
-	@Override
-	public int hashCode() {
-		int originalHashCode = super.hashCode();
-		if (originalHashCode == 0) return 1;
-		return originalHashCode;
-	}
-}
+

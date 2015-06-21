@@ -17,6 +17,7 @@ import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageMovableLimitException;
 import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.eventhandler.LogPageEventHandler;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerInitException;
@@ -46,7 +47,7 @@ import jp.co.dk.document.html.constant.HtmlElementName;
  * @version 1.0
  * @author D.Kanno
  */
-public class Crawler extends Browzer{
+public class Crawler extends Browzer {
 	
 	/** データストアマネージャー */
 	protected DataStoreManager dsm;
@@ -282,11 +283,7 @@ public class Crawler extends Browzer{
 		links.insert(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);
 		return true;
 	}
-	
-	public DataStoreManager getDataStoreManager() {
-		return this.dsm;
-	}
-	
+
 	@Override
 	protected PageManager createPageManager(String url, PageRedirectHandler handler) throws PageIllegalArgumentException, PageAccessException {
 		return new CrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList);
@@ -297,12 +294,8 @@ public class Crawler extends Browzer{
 		return new CrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList, maxNestLevel);
 	}
 	
-	@Override
-	protected List<PageEventHandler> getPageEventHandler() {
-		List<PageEventHandler> list = new ArrayList<PageEventHandler>();
-		list.add(new PrintPageEventHandler());
-		list.add(new LogPageEventHandler());
-		return list;
+	public DataStoreManager getDataStoreManager() {
+		return this.dsm;
 	}
 	
 }

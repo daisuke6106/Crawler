@@ -46,22 +46,4 @@ class CrawlerPageRedirectHandler extends PageRedirectHandler {
 		return new jp.co.dk.crawler.dao.gdb.Page(url, this.graphDB);
 	}
 	
-	@Override
-	protected Page redirectBy_SERVER_ERROR(ResponseHeader header, Page page) throws PageRedirectException {
-		try {
-			return super.redirectBy_SERVER_ERROR(header, page);
-		} catch (PageRedirectException e) {
-			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.rdb.Page)page);
-		}
-		
-	}
-	
-	@Override
-	protected Page redirectBy_CLIENT_ERROR(ResponseHeader header, Page page) throws PageRedirectException {
-		try {
-			return super.redirectBy_CLIENT_ERROR(header, page);
-		} catch (PageRedirectException e) {
-			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.rdb.Page)page);
-		}
-	}
 }

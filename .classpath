@@ -6,7 +6,7 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="src" path="src/test/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/browzer_1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/document_1.0.0.jar"/>
@@ -25,5 +25,33 @@
 	<classpathentry kind="lib" path="lib/test/jmockit.jar"/>
 	<classpathentry kind="lib" path="lib/test/junit-4.10.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/neo4j/concurrentlinkedhashmap-lru-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/lucene-core-3.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-consistency-check-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-csv-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-cypher-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-cypher-compiler-1.9-2.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-cypher-compiler-2.0-2.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-cypher-compiler-2.1-2.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-cypher-compiler-2.2-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-cypher-compiler-2.3-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-graph-algo-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-graph-matching-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-import-tool-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-io-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-jmx-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-kernel-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-logging-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-lucene-index-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-primitive-collections-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-shell-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-udc-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-unsafe-2.3.0-M01.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/opencsv-2.3.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/org.apache.servicemix.bundles.jline-0.9.94_1.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/parboiled-core-1.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/parboiled-scala_2.10-1.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/scala-library-2.10.5.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/server-api-2.3.0-M01.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

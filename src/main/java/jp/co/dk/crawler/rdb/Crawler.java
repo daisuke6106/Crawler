@@ -1,24 +1,19 @@
 package jp.co.dk.crawler.rdb;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.PageManager;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.Url;
-import jp.co.dk.browzer.event.PrintPageEventHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageMovableLimitException;
 import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.AbstractCrawler;
-import jp.co.dk.crawler.eventhandler.LogPageEventHandler;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerPageRedirectHandlerException;

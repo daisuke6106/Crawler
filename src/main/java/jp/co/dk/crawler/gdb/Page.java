@@ -1,4 +1,4 @@
-package jp.co.dk.crawler.rdb;
+package jp.co.dk.crawler.gdb;
 
 import java.util.Date;
 import java.util.List;

@@ -84,7 +84,7 @@ public abstract class AbstractPage extends Page {
 	 * @throws PageAccessException ページデータの取得に失敗した場合
 	 * @throws DocumentFatalException 暗号化処理にて致命的例外が発生した場合
 	 */
-	protected String getFileId() throws DocumentFatalException, PageAccessException {
+	public String getFileId() throws DocumentFatalException, PageAccessException {
 		if (this.fileId != null) return this.fileId;
 		this.fileId = this.getData().getHash();
 		return this.fileId;
@@ -97,7 +97,7 @@ public abstract class AbstractPage extends Page {
 	 * 
 	 * @return タイムID
 	 */
-	protected long getTimeId() {
+	public long getTimeId() {
 		if (timeId != -1) return this.timeId;
 		this.timeId = new Date().getTime();
 		return this.timeId;
@@ -111,7 +111,7 @@ public abstract class AbstractPage extends Page {
 	 * 
 	 * @return 作成日付
 	 */
-	protected Date getCreateDate() {
+	public Date getCreateDate() {
 		return new Date();
 	}
 	
@@ -123,7 +123,7 @@ public abstract class AbstractPage extends Page {
 	 * 
 	 * @return 更新日付
 	 */
-	protected Date getUpdateDate() {
+	public Date getUpdateDate() {
 		return new Date();
 	}
 	

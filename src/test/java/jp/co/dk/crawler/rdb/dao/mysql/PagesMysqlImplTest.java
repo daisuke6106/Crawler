@@ -24,7 +24,7 @@ public class PagesMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void insert() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		
 		Pages pages = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
@@ -153,7 +153,7 @@ public class PagesMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void select() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		
 		Pages pages = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);
@@ -285,7 +285,7 @@ public class PagesMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void count() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		
 		Pages pages = (Pages)manager.getDataAccessObject(CrawlerDaoConstants.PAGES);

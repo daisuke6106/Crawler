@@ -26,7 +26,7 @@ public class CrawlerErrorsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void insert() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		CrawlerErrors crawlerErrors = (CrawlerErrors)manager.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
 		
@@ -84,7 +84,7 @@ public class CrawlerErrorsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void select() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		CrawlerErrors crawlerErrors = (CrawlerErrors)manager.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
 		try {
@@ -164,7 +164,7 @@ public class CrawlerErrorsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void count() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		CrawlerErrors crawlerErrors = (CrawlerErrors)manager.getDataAccessObject(CrawlerDaoConstants.CRAWLER_ERRORS);
 		try {

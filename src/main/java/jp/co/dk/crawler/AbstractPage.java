@@ -127,6 +127,42 @@ public abstract class AbstractPage extends Page {
 		return new Date();
 	}
 	
+	/**
+	 * 引数に設定された日付が同じものかどうか判定します。
+	 * 
+	 * @param date1 日付１
+	 * @param date2 日付２
+	 * @return 判定結果（true=一致、false=不一致）
+	 */
+	protected boolean sameDate(Date date1, Date date2) {
+		if (date1 == null && date2 == null) return true; 
+		if (date1 == null && date2 != null) return false;
+		if (date1 != null && date2 == null) return false;
+		if (date1.equals(date2)) return true;
+		return false;
+	}
+	
+	/**
+	 * 引数に設定されたバイト配列が同じものかどうか判定します。
+	 * 
+	 * @param bytes1 バイト配列１
+	 * @param bytes2 バイト配列２
+	 * @return 判定結果（true=一致、false=不一致）
+	 */
+	protected boolean sameBytes(byte[] bytes1, byte[] bytes2) {
+		if (bytes1 == null && bytes2 == null) return true; 
+		if (bytes1 == null && bytes2 != null) return false;
+		if (bytes1 != null && bytes2 == null) return false;
+		if (bytes1.length == bytes2.length) {
+			for (int i=0; i<bytes1.length; i++) {
+				if (bytes1[i] != bytes2[i]) return false; 
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	@Override
 	public Map<String, String> getParameter() {
 		return new ParameterMap(this.url.getParameter());

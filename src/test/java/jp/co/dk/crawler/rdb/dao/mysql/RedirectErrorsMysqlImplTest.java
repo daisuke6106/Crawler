@@ -20,7 +20,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 	public void insert() throws DataStoreManagerException {
 		
 		// ========================================準備========================================
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		RedirectErrors errors = (RedirectErrors)manager.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
 		
@@ -68,7 +68,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void select() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		RedirectErrors errors = (RedirectErrors)manager.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
 		
@@ -129,7 +129,7 @@ public class RedirectErrorsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void count() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		RedirectErrors errors = (RedirectErrors)manager.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
 		

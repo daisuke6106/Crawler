@@ -30,7 +30,7 @@ public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void insert() {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			manager.startTrunsaction();
 			Documents documents = (Documents)manager.getDataAccessObject(CrawlerDaoConstants.DOCUMENTS);
@@ -87,7 +87,7 @@ public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
 	
 	@Test
 	public void select() {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			manager.startTrunsaction();
 		
@@ -168,7 +168,7 @@ public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void count() {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			manager.startTrunsaction();
 			
@@ -235,7 +235,7 @@ public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void selectLastest() throws DataStoreManagerException, ParseException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			manager.startTrunsaction();
 		

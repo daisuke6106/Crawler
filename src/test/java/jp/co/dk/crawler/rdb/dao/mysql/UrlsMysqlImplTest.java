@@ -24,7 +24,7 @@ public class UrlsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void insert() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		Urls pages = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		
@@ -139,7 +139,7 @@ public class UrlsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void select() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		Urls pages = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		try {
@@ -222,7 +222,7 @@ public class UrlsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void count() throws DataStoreManagerException {
 		
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		manager.startTrunsaction();
 		Urls pages = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);
 		try {

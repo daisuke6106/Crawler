@@ -1,8 +1,8 @@
-package jp.co.dk.crawler.dao.gdb;
+package jp.co.dk.crawler.gdb;
 
 import static org.junit.Assert.*;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
-import jp.co.dk.crawler.dao.gdb.Url;
+import jp.co.dk.crawler.gdb.Url;
 import jp.co.dk.crawler.rdb.CrawlerFoundationTest;
 
 import org.junit.Test;

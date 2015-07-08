@@ -28,7 +28,7 @@ public class PageTest extends CrawlerFoundationTest{
 
 	@Test
 	public void constactor() throws DataStoreManagerException {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			Page page = new Page("http://www.google.com", manager);
 		} catch (BrowzingException e) {
@@ -39,7 +39,7 @@ public class PageTest extends CrawlerFoundationTest{
 	
 	@Test
 	public void save() throws DataStoreManagerException {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			manager.startTrunsaction();
@@ -81,7 +81,7 @@ public class PageTest extends CrawlerFoundationTest{
 	
 	@Test
 	public void getCount() throws DataStoreManagerException {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			manager.startTrunsaction();
@@ -143,7 +143,7 @@ public class PageTest extends CrawlerFoundationTest{
 	
 	@Test
 	public void isSaved() throws DataStoreManagerException {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			manager.startTrunsaction();
@@ -193,7 +193,7 @@ public class PageTest extends CrawlerFoundationTest{
 	
 	@Test
 	public void isLastest() throws DataStoreManagerException {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			// ＝＝＝＝＝＝＝＝＝＝トランザクション開始＝＝＝＝＝＝＝＝＝＝
 			manager.startTrunsaction();
@@ -248,9 +248,9 @@ public class PageTest extends CrawlerFoundationTest{
 	
 	@Test
 	public void sameDate() throws DataStoreManagerException {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
-			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page = new Page("http://www.google.com", getMysqlAccessableDataStoreManager());
 			// NULL２つ設定した場合、trueが返却されること。
 			assertThat(page.sameDate(null, null), is(true));
 			
@@ -272,9 +272,9 @@ public class PageTest extends CrawlerFoundationTest{
 	
 	@Test
 	public void sameBytes() throws DataStoreManagerException {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
-			Page page = new Page("http://www.google.com", getAccessableDataStoreManager());
+			Page page = new Page("http://www.google.com", getMysqlAccessableDataStoreManager());
 			// NULL２つ設定した場合、trueが返却されること。
 			assertThat(page.sameBytes(null, null), is(true));
 			
@@ -299,10 +299,10 @@ public class PageTest extends CrawlerFoundationTest{
 	
 	@Test
 	public void getFileId() throws DataStoreManagerException {
-		DataStoreManager manager = getAccessableDataStoreManager();
+		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		// ==========正常にファイルIDが返却されること==========
 		try {
-			Page page = new Page("http://ja.wikipedia.org/wiki/HyperText_Markup_Language", getAccessableDataStoreManager());
+			Page page = new Page("http://ja.wikipedia.org/wiki/HyperText_Markup_Language", getMysqlAccessableDataStoreManager());
 			assertEquals(page.getFileId(), "74782a262a7cdd3c38a52135793c29f5450f4722c125bdacdfc549a6194bc0d6");
 		} catch (BrowzingException e) {
 			manager.finishTrunsaction();

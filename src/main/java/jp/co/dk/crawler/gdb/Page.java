@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
@@ -34,9 +35,6 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  */
 public class Page extends AbstractPage {
 	
-	/** データストアマネージャ */
-	protected DataStoreManager dataStoreManager;
-	
 	/** アクセス日付フォーマット */
 	protected SimpleDateFormat accessDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	
@@ -50,17 +48,17 @@ public class Page extends AbstractPage {
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
 	public Page(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
-		super(url);
-		this.dataStoreManager = dataStoreManager;
+		super(url, dataStoreManager);
 	}
 
 	@Override
 	public boolean save() throws CrawlerSaveException {
 		try {
 			jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dataStoreManager.getDataAccessObject("PAGE");
-			Cypher pageData = new Cypher("CREATE(PAGE{url:{1},accessdate:{2},data:{3}})");
+			Cypher pageData = new Cypher("CREATE(PAGE{url:{1},accessdate:{2},sha256:{3},data:{4}})");
 			pageData.setParameter(this.url.toString());
-			pageData.setParameter(accessDateFormat.format(this.getCreateDate()));
+			pageData.setParameter(this.accessDateFormat.format(this.getCreateDate()));
+			pageData.setParameter(this.getData().getHash());
 			pageData.setParameter(this.getData().getBytesToBase64String());
 			dataStore.execute(pageData);
 		} catch (ClassCastException | DataStoreManagerException e) {
@@ -81,6 +79,11 @@ public class Page extends AbstractPage {
 	public boolean isLatest() throws CrawlerSaveException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	protected Url createUrl(String url) throws PageIllegalArgumentException {
+		return new jp.co.dk.crawler.gdb.Url(url, this.dataStoreManager);
 	}
 	
 }

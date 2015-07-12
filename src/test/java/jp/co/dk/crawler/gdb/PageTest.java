@@ -32,7 +32,6 @@ public class PageTest {
 			try {
 				DataStoreManager dsm = getNeo4JAccessableDataStoreManager();
 				Page page = new Page("http://www.google.com", dsm);
-				assertThat(page.dataStoreManager, is(dsm));
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			} catch (PageAccessException e) {
@@ -51,7 +50,7 @@ public class PageTest {
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Page("http://moeerolibrary.com/132445.html", dsm);
+				this.sut = new Page("http://ftp.riken.jp/net/apache/logging/log4j/2.3/apache-log4j-2.3-bin.tar.gz", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			} catch (PageAccessException e) {

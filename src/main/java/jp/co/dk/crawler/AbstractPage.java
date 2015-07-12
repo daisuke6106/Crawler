@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jp.co.dk.browzer.Page;
+import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
+import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.document.exception.DocumentFatalException;
 
 /**
@@ -20,16 +22,21 @@ import jp.co.dk.document.exception.DocumentFatalException;
  */
 public abstract class AbstractPage extends Page {
 	
+	/** データストアマネージャ */
+	protected DataStoreManager dataStoreManager;
+	
 	/**
 	 * コンストラクタ<p/>
 	 * 指定のURL、データストアマネージャのインスタンスを元に、ページオブジェクトのインスタンスを生成します。
 	 * 
 	 * @param url URL文字列
+	 * @param dataStoreManager データストアマネージャ
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public AbstractPage(String url) throws PageIllegalArgumentException, PageAccessException {
+	public AbstractPage(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
 		super(url);
+		this.dataStoreManager = dataStoreManager;
 	}
 
 	/** ファイルID */
@@ -69,6 +76,9 @@ public abstract class AbstractPage extends Page {
 	 * @throws CrawlerSaveException  データストアへ対する操作にて例外が発生した場合
 	 */
 	public abstract boolean isLatest() throws CrawlerSaveException ;
+	
+	@Override
+	protected abstract Url createUrl(String url) throws PageIllegalArgumentException;
 	
 	/**
 	 * このページのURLからページを一意に特定するためのファイルIDを算出し返却します。<p/>

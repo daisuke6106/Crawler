@@ -71,7 +71,19 @@ public class Page extends AbstractPage {
 
 	@Override
 	public boolean isSaved() throws CrawlerSaveException {
-		// TODO Auto-generated method stub
+		try {
+			jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dataStoreManager.getDataAccessObject("PAGE");
+			Cypher pageData = new Cypher("MATCH(page:PAGE{url:{1},accessdate:{2},sha256:{3},data:{4}})");
+			pageData.setParameter(this.url.toString());
+			pageData.setParameter(this.accessDateFormat.format(this.getCreateDate()));
+			pageData.setParameter(this.getData().getHash());
+			pageData.setParameter(this.getData().getBytesToBase64String());
+			dataStore.execute(pageData);
+		} catch (ClassCastException | DataStoreManagerException e) {
+			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
+		} catch (PageAccessException e) {
+			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.url.toString());
+		}
 		return false;
 	}
 

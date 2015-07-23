@@ -9,7 +9,7 @@
 </head>
 <body onload='prettyPrint()'>
   <table cellpadding='0' cellspacing='1'>
-    <caption>Crawler/src/jp/co/dk/crawler/dao/mysql/UrlsMysqlImpl.java</caption>
+    <caption>Crawler/src/main/java/jp/co/dk/crawler/dao/mysql/UrlsMysqlImpl.java</caption>
     <tr>
       <td class='line'>1</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>package jp.co.dk.crawler.dao.mysql;</pre></td>
@@ -75,11 +75,11 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public UrlsMysqlImpl(DataStore datastore) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>34</td><td class='count'>76</td>
+      <td class='line'>34</td><td class='count'>2</td>
       <td><pre class='prettyprint covered' id='l34s0'>		super(datastore);</pre></td>
     </tr>
     <tr>
-      <td class='line'>35</td><td class='count'>76</td>
+      <td class='line'>35</td><td class='count'>2</td>
       <td><pre class='prettyprint covered' id='l35s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -92,59 +92,59 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public void createTable() throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>39</td><td class='count'>32</td>
+      <td class='line'>39</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l39s0'>		StringBuilder sb = new StringBuilder("CREATE TABLE URLS ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>40</td><td class='count'>32</td>
+      <td class='line'>40</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l40s0'>		sb.append('(');</pre></td>
     </tr>
     <tr>
-      <td class='line'>41</td><td class='count'>32</td>
+      <td class='line'>41</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l41s0'>		sb.append("PROTOCOL        VARCHAR(6)     NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>42</td><td class='count'>32</td>
+      <td class='line'>42</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l42s0'>		sb.append("HOSTNAME        VARCHAR(255)   NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>43</td><td class='count'>32</td>
+      <td class='line'>43</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l43s0'>		sb.append("H_PATH          INT            NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>44</td><td class='count'>32</td>
+      <td class='line'>44</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l44s0'>		sb.append("H_PARAM         INT            NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>45</td><td class='count'>32</td>
+      <td class='line'>45</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l45s0'>		sb.append("URL             TEXT           NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>46</td><td class='count'>32</td>
+      <td class='line'>46</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l46s0'>		sb.append("FILEID          CHAR(64)       NOT NULL,");</pre></td>
     </tr>
     <tr>
-      <td class='line'>47</td><td class='count'>32</td>
+      <td class='line'>47</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l47s0'>		sb.append("CREATE_DATE     DATETIME, ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>48</td><td class='count'>32</td>
+      <td class='line'>48</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l48s0'>		sb.append("UPDATE_DATE     DATETIME, ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>49</td><td class='count'>32</td>
+      <td class='line'>49</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l49s0'>		sb.append("PRIMARY KEY(PROTOCOL, HOSTNAME, H_PATH, H_PARAM))");</pre></td>
     </tr>
     <tr>
-      <td class='line'>50</td><td class='count'>32</td>
+      <td class='line'>50</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l50s0'>		Sql sql = new Sql(sb.toString());</pre></td>
     </tr>
     <tr>
-      <td class='line'>51</td><td class='count'>32</td>
+      <td class='line'>51</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l51s0'>		this.createTable(sql);</pre></td>
     </tr>
     <tr>
-      <td class='line'>52</td><td class='count'>32</td>
+      <td class='line'>52</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l52s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -157,19 +157,19 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public void dropTable() throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td class='line'>56</td><td class='count'>32</td>
+      <td class='line'>56</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l56s0'>		StringBuilder sb = new StringBuilder("DROP TABLE URLS ");</pre></td>
     </tr>
     <tr>
-      <td class='line'>57</td><td class='count'>32</td>
+      <td class='line'>57</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l57s0'>		Sql sql = new Sql(sb.toString());</pre></td>
     </tr>
     <tr>
-      <td class='line'>58</td><td class='count'>32</td>
+      <td class='line'>58</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l58s0'>		this.dropTable(sql);</pre></td>
     </tr>
     <tr>
-      <td class='line'>59</td><td class='count'>32</td>
+      <td class='line'>59</td><td class='count'>1</td>
       <td><pre class='prettyprint covered' id='l59s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -182,50 +182,50 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public UrlsRecord select(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>11</td>
+      <td></td><td class='count'>0</td>
       <td class='paths'>
-        <span style='cursor:default; background-color:#7f8000' onclick='hidePath()'>Path coverage: 2/4</span>
-        <span class='covered' onclick="showPath(this,'l63s0 l64s0 l65s0 l71s0')">A: 10</span>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/4</span>
+        <span class='uncovered' onclick="showPath(this,'l63s0 l64s0 l65s0 l71s0')">A: 0</span>
         <span class='uncovered' onclick="showPath(this,'l63s0 l64s0 l64s1 l65s0 l71s0')">B: 0</span>
         <span class='uncovered' onclick="showPath(this,'l63s0 l63s1 l64s0 l65s0 l71s0')">C: 0</span>
-        <span class='covered' onclick="showPath(this,'l63s0 l63s1 l64s0 l64s1 l65s0 l71s0')">D: 1</span>
+        <span class='uncovered' onclick="showPath(this,'l63s0 l63s1 l64s0 l64s1 l65s0 l71s0')">D: 0</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>63</td><td class='count'>11</td>
-      <td><pre class='prettyprint jmp'>		<span id='l63s0' title='Executions: 11' class='covered'>if (path == null)</span> <span id='l63s1' title='Executions: 1' class='covered'>path = new ArrayList&lt;String>();</span></pre></td>
+      <td class='line'>63</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l63s0' title='Executions: 0' class='uncovered'>if (path == null)</span> <span id='l63s1' title='Executions: 0' class='uncovered'>path = new ArrayList&lt;String>();</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>64</td><td class='count'>11</td>
-      <td><pre class='prettyprint jmp'>		<span id='l64s0' title='Executions: 11' class='covered'>if (parameter == null)</span> <span id='l64s1' title='Executions: 1' class='covered'>parameter = new HashMap&lt;String, String>();</span></pre></td>
+      <td class='line'>64</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l64s0' title='Executions: 0' class='uncovered'>if (parameter == null)</span> <span id='l64s1' title='Executions: 0' class='uncovered'>parameter = new HashMap&lt;String, String>();</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>65</td><td class='count'>11</td>
-      <td><pre class='prettyprint covered' id='l65s0'>		StringBuilder sb = new StringBuilder("SELECT * FROM URLS WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");</pre></td>
+      <td class='line'>65</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l65s0'>		StringBuilder sb = new StringBuilder("SELECT * FROM URLS WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");</pre></td>
     </tr>
     <tr>
-      <td class='line'>66</td><td class='count'>11</td>
-      <td><pre class='prettyprint covered' id='l66s0'>		Sql sql = new Sql(sb.toString());</pre></td>
+      <td class='line'>66</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l66s0'>		Sql sql = new Sql(sb.toString());</pre></td>
     </tr>
     <tr>
-      <td class='line'>67</td><td class='count'>11</td>
-      <td><pre class='prettyprint covered' id='l67s0'>		sql.setParameter(protcol);</pre></td>
+      <td class='line'>67</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l67s0'>		sql.setParameter(protcol);</pre></td>
     </tr>
     <tr>
-      <td class='line'>68</td><td class='count'>11</td>
-      <td><pre class='prettyprint covered' id='l68s0'>		sql.setParameter(host);</pre></td>
+      <td class='line'>68</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l68s0'>		sql.setParameter(host);</pre></td>
     </tr>
     <tr>
-      <td class='line'>69</td><td class='count'>11</td>
-      <td><pre class='prettyprint covered' id='l69s0'>		sql.setParameter(path.hashCode());</pre></td>
+      <td class='line'>69</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l69s0'>		sql.setParameter(path.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>70</td><td class='count'>11</td>
-      <td><pre class='prettyprint covered' id='l70s0'>		sql.setParameter(parameter.hashCode());</pre></td>
+      <td class='line'>70</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l70s0'>		sql.setParameter(parameter.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>71</td><td class='count'>11</td>
-      <td><pre class='prettyprint covered' id='l71s0'>		return this.selectSingle(sql, new UrlsRecord());</pre></td>
+      <td class='line'>71</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l71s0'>		return this.selectSingle(sql, new UrlsRecord());</pre></td>
     </tr>
     <tr>
       <td class='line'>72</td><td>&nbsp;</td>
@@ -241,50 +241,50 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public int count(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter) throws DataStoreManagerException {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>4</td>
+      <td></td><td class='count'>0</td>
       <td class='paths'>
-        <span style='cursor:default; background-color:#7f8000' onclick='hidePath()'>Path coverage: 2/4</span>
-        <span class='covered' onclick="showPath(this,'l76s0 l77s0 l78s0 l84s0')">A: 3</span>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/4</span>
+        <span class='uncovered' onclick="showPath(this,'l76s0 l77s0 l78s0 l84s0')">A: 0</span>
         <span class='uncovered' onclick="showPath(this,'l76s0 l77s0 l77s1 l78s0 l84s0')">B: 0</span>
         <span class='uncovered' onclick="showPath(this,'l76s0 l76s1 l77s0 l78s0 l84s0')">C: 0</span>
-        <span class='covered' onclick="showPath(this,'l76s0 l76s1 l77s0 l77s1 l78s0 l84s0')">D: 1</span>
+        <span class='uncovered' onclick="showPath(this,'l76s0 l76s1 l77s0 l77s1 l78s0 l84s0')">D: 0</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>76</td><td class='count'>4</td>
-      <td><pre class='prettyprint jmp'>		<span id='l76s0' title='Executions: 4' class='covered'>if (path == null)</span> <span id='l76s1' title='Executions: 1' class='covered'>path = new ArrayList&lt;String>();</span></pre></td>
+      <td class='line'>76</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l76s0' title='Executions: 0' class='uncovered'>if (path == null)</span> <span id='l76s1' title='Executions: 0' class='uncovered'>path = new ArrayList&lt;String>();</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>77</td><td class='count'>4</td>
-      <td><pre class='prettyprint jmp'>		<span id='l77s0' title='Executions: 4' class='covered'>if (parameter == null)</span> <span id='l77s1' title='Executions: 1' class='covered'>parameter = new HashMap&lt;String, String>();</span></pre></td>
+      <td class='line'>77</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l77s0' title='Executions: 0' class='uncovered'>if (parameter == null)</span> <span id='l77s1' title='Executions: 0' class='uncovered'>parameter = new HashMap&lt;String, String>();</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>78</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l78s0'>		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM URLS WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");</pre></td>
+      <td class='line'>78</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l78s0'>		StringBuilder sb = new StringBuilder("SELECT COUNT(*) AS RESULT FROM URLS WHERE PROTOCOL=? AND HOSTNAME=? AND H_PATH=? AND H_PARAM=?");</pre></td>
     </tr>
     <tr>
-      <td class='line'>79</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l79s0'>		Sql sql = new Sql(sb.toString());</pre></td>
+      <td class='line'>79</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l79s0'>		Sql sql = new Sql(sb.toString());</pre></td>
     </tr>
     <tr>
-      <td class='line'>80</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l80s0'>		sql.setParameter(protcol);</pre></td>
+      <td class='line'>80</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l80s0'>		sql.setParameter(protcol);</pre></td>
     </tr>
     <tr>
-      <td class='line'>81</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l81s0'>		sql.setParameter(host);</pre></td>
+      <td class='line'>81</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l81s0'>		sql.setParameter(host);</pre></td>
     </tr>
     <tr>
-      <td class='line'>82</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l82s0'>		sql.setParameter(path.hashCode());</pre></td>
+      <td class='line'>82</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l82s0'>		sql.setParameter(path.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>83</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l83s0'>		sql.setParameter(parameter.hashCode());</pre></td>
+      <td class='line'>83</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l83s0'>		sql.setParameter(parameter.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>84</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l84s0'>		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();</pre></td>
+      <td class='line'>84</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l84s0'>		return this.selectSingle(sql, new CountRecord("RESULT")).getCount();</pre></td>
     </tr>
     <tr>
       <td class='line'>85</td><td>&nbsp;</td>
@@ -299,78 +299,78 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
       <td><pre class='prettyprint'>	public void insert(String protcol, String host, List&lt;String> path, Map&lt;String, String> parameter, String url, String fileid, Date createDate, Date updateDate) throws DataStoreManagerException, CrawlerException {</pre></td>
     </tr>
     <tr>
-      <td></td><td class='count'>18</td>
+      <td></td><td class='count'>0</td>
       <td class='paths'>
-        <span style='cursor:default; background-color:#609f00' onclick='hidePath()'>Path coverage: 5/8</span>
-        <span class='covered' onclick="showPath(this,'l88s0 l88s2')">A: 1</span>
-        <span class='covered' onclick="showPath(this,'l88s0 l88s1 l88s2')">B: 1</span>
-        <span class='covered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s2')">C: 1</span>
-        <span class='covered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s1 l89s2')">D: 1</span>
-        <span class='covered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s1 l90s0 l91s0 l92s0 l102s0')">E: 14</span>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/8</span>
+        <span class='uncovered' onclick="showPath(this,'l88s0 l88s2')">A: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l88s0 l88s1 l88s2')">B: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s2')">C: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s1 l89s2')">D: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s1 l90s0 l91s0 l92s0 l102s0')">E: 0</span>
         <span class='uncovered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s1 l90s0 l91s0 l91s1 l92s0 l102s0')">F: 0</span>
         <span class='uncovered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s1 l90s0 l90s1 l91s0 l92s0 l102s0')">G: 0</span>
         <span class='uncovered' onclick="showPath(this,'l88s0 l88s1 l89s0 l89s1 l90s0 l90s1 l91s0 l91s1 l92s0 l102s0')">H: 0</span>
       </td>
     </tr>
     <tr>
-      <td class='line'>88</td><td class='count'>19</td>
-      <td><pre class='prettyprint jmp'>		<span id='l88s0' title='Executions: 19' class='covered'>if (protcol == null</span> || <span id='l88s1' title='Executions: 18' class='covered'>protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");</span></pre></td>
+      <td class='line'>88</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l88s0' title='Executions: 0' class='uncovered'>if (protcol == null</span> || <span id='l88s1' title='Executions: 0' class='uncovered'>protcol.equals("")) throw new CrawlerException(PARAMETER_IS_NOT_SET, "protocol");</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>89</td><td class='count'>17</td>
-      <td><pre class='prettyprint jmp'>		<span id='l89s0' title='Executions: 17' class='covered'>if (host == null</span>    || <span id='l89s1' title='Executions: 16' class='covered'>host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");</span></pre></td>
+      <td class='line'>89</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l89s0' title='Executions: 0' class='uncovered'>if (host == null</span>    || <span id='l89s1' title='Executions: 0' class='uncovered'>host.equals(""))    throw new CrawlerException(PARAMETER_IS_NOT_SET, "host");</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>90</td><td class='count'>15</td>
-      <td><pre class='prettyprint jmp'>		<span id='l90s0' title='Executions: 15' class='covered'>if (path == null)</span> <span id='l90s1' title='Executions: 0' class='uncovered'>path = new ArrayList&lt;String>();</span></pre></td>
+      <td class='line'>90</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l90s0' title='Executions: 0' class='uncovered'>if (path == null)</span> <span id='l90s1' title='Executions: 0' class='uncovered'>path = new ArrayList&lt;String>();</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>91</td><td class='count'>15</td>
-      <td><pre class='prettyprint jmp'>		<span id='l91s0' title='Executions: 15' class='covered'>if (parameter == null)</span> <span id='l91s1' title='Executions: 0' class='uncovered'>parameter = new HashMap&lt;String, String>();</span></pre></td>
+      <td class='line'>91</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l91s0' title='Executions: 0' class='uncovered'>if (parameter == null)</span> <span id='l91s1' title='Executions: 0' class='uncovered'>parameter = new HashMap&lt;String, String>();</span></pre></td>
     </tr>
     <tr>
-      <td class='line'>92</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l92s0'>		Sql sql = new Sql("INSERT INTO URLS VALUES (?, ?, ?, ?, ?, ?, ?, ?)");</pre></td>
+      <td class='line'>92</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l92s0'>		Sql sql = new Sql("INSERT INTO URLS VALUES (?, ?, ?, ?, ?, ?, ?, ?)");</pre></td>
     </tr>
     <tr>
-      <td class='line'>93</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l93s0'>		sql.setParameter(protcol);</pre></td>
+      <td class='line'>93</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l93s0'>		sql.setParameter(protcol);</pre></td>
     </tr>
     <tr>
-      <td class='line'>94</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l94s0'>		sql.setParameter(host);</pre></td>
+      <td class='line'>94</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l94s0'>		sql.setParameter(host);</pre></td>
     </tr>
     <tr>
-      <td class='line'>95</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l95s0'>		sql.setParameter(path.hashCode());</pre></td>
+      <td class='line'>95</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l95s0'>		sql.setParameter(path.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>96</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l96s0'>		sql.setParameter(parameter.hashCode());</pre></td>
+      <td class='line'>96</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l96s0'>		sql.setParameter(parameter.hashCode());</pre></td>
     </tr>
     <tr>
-      <td class='line'>97</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l97s0'>		sql.setParameter(url);</pre></td>
+      <td class='line'>97</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l97s0'>		sql.setParameter(url);</pre></td>
     </tr>
     <tr>
-      <td class='line'>98</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l98s0'>		sql.setParameter(fileid);</pre></td>
+      <td class='line'>98</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l98s0'>		sql.setParameter(fileid);</pre></td>
     </tr>
     <tr>
-      <td class='line'>99</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l99s0'>		sql.setParameter(new Timestamp(createDate.getTime()));</pre></td>
+      <td class='line'>99</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l99s0'>		sql.setParameter(new Timestamp(createDate.getTime()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>100</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l100s0'>		sql.setParameter(new Timestamp(updateDate.getTime()));</pre></td>
+      <td class='line'>100</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l100s0'>		sql.setParameter(new Timestamp(updateDate.getTime()));</pre></td>
     </tr>
     <tr>
-      <td class='line'>101</td><td class='count'>15</td>
-      <td><pre class='prettyprint covered' id='l101s0'>		this.insert(sql);</pre></td>
+      <td class='line'>101</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l101s0'>		this.insert(sql);</pre></td>
     </tr>
     <tr>
-      <td class='line'>102</td><td class='count'>14</td>
-      <td><pre class='prettyprint covered' id='l102s0'>	}</pre></td>
+      <td class='line'>102</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l102s0'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>

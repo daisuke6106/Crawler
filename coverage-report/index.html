@@ -1,167 +1,298 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JMockit Coverage Report</title>
+  <title>Code Coverage Report</title>
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
   <link rel='stylesheet' type='text/css' href='coverage.css'/>
+  <link rel='shortcut icon' type='image/png' href='logo.png'/>
   <script type='text/javascript' src='coverage.js'></script>
 </head>
 <body>
-  <h1>JMockit Coverage Report</h1>
   <table id='packages'>
-    <caption>All Packages and Files<div style='font-size: smaller'>Crawler/src</div></caption>
+    <caption>All Packages and Files<div style='font-size: smaller'>Crawler/src/main/java, Crawler/src</div></caption>
     <tr>
-      <th style='cursor: col-resize' onclick='showHideAllFiles()'>Packages: 4</th>
-      <th onclick='location.reload()' style='cursor: n-resize' title='Click on the title for each metric to sort by size (total number of line segments, paths, or fields).'>Files: 15</th>
+      <th style='cursor: col-resize' onclick='showHideAllFiles()'>Packages: 12</th>
+      <th onclick='location.reload()' style='cursor: n-resize' title='Click on the title for each metric to sort by size (total number of line segments, paths, or fields).'>Files: 38</th>
       <th onclick='sortTables(1)' style='cursor: n-resize' title='Measures how much of the executable production code was exercised by tests.
 An executable line of code contains one or more executable segments.
 The percentages are calculated as 100*NE/NS, where NS is the number of segments and NE the number of executed segments.'>Line</th>
-      <th onclick='sortTables(2)' style='cursor: n-resize' title='Measures how many of the possible execution paths through method/constructor bodies were actually executed by tests.
-The percentages are calculated as 100*NPE/NP, where NP is the number of possible paths and NPE the number of fully executed paths.'>Path</th>
-      <th onclick='sortTables(3)' style='cursor: n-resize' title='Measures how many of the instance and static non-final fields were fully exercised by the test run.
-To be fully exercised, a field must have the last value assigned to it read by at least one test.
-The percentages are calculated as 100*NFE/NF, where NF is the number of non-final fields and NFE the number of fully exercised fields.'>Data</th>
     </tr>
     <tr>
-      <td class='file'>jp.co.dk.crawler.dao.gdb</td>
+      <td class='package click' onclick='showHideFiles(this)'>jp.co.dk.crawler</td>
       <td>
         <table width='100%'>
           <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/dao/gdb/Url.html'>Url.java</a>                    </td>
-            <td style='background-color:#0ef100' title='Line segments: 52/55'>95%</td>
-            <td style='background-color:#9f6000' title='Paths: 6/16'>38%</td>
-            <td style='background-color:#7f8000' title='Fields: 1/2'>50%</td>
+            <td class='file abstractClass'><a target='_blank' href='jp/co/dk/crawler/AbstractCrawler.html'>AbstractCrawler.java</a>                    </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/6'>0%</td>
+          </tr>
+          <tr>
+            <td class='file abstractClass'><a target='_blank' href='jp/co/dk/crawler/AbstractPage.html'>AbstractPage.java</a>                       </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/50'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/AbstractPageManager.html'>AbstractPageManager.java</a>                </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/3'>0%</td>
+          </tr>
+          <tr>
+            <td class='file abstractClass'><a target='_blank' href='jp/co/dk/crawler/AbstractPageRedirectHandler.html'>AbstractPageRedirectHandler.java</a>        </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/2'>0%</td>
+          </tr>
+          <tr>
+            <td class='file abstractClass'><a target='_blank' href='jp/co/dk/crawler/AbstractUrl.html'>AbstractUrl.java</a>                        </td>
+            <td style='background-color:#00ff00' title='Line segments: 3/3'>100%</td>
           </tr>
         </table>
-      </td>
-      <td class='pt' style='background-color:#0ef100' title='Line segments: 52/55'>95%</td>
-      <td class='pt' style='background-color:#9f6000' title='Paths: 6/16'>38%</td>
-      <td class='pt' style='background-color:#7f8000' title='Fields: 1/2'>50%</td>
+        <span>(5 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#f30c00' title='Line segments: 3/64'>5%</td>
     </tr>
     <tr>
-      <td class='file'>jp.co.dk.crawler.exception</td>
+      <td class='package'>jp.co.dk.crawler.eventhandler</td>
       <td>
         <table width='100%'>
           <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/exception/CrawlerException.html'>CrawlerException.java</a>       </td>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/eventhandler/LogPageEventHandler.html'>LogPageEventHandler.java</a>                </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/4'>0%</td>
+          </tr>
+        </table>
+        <span>(1 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/4'>0%</td>
+    </tr>
+    <tr>
+      <td class='package click' onclick='showHideFiles(this)'>jp.co.dk.crawler.exception</td>
+      <td>
+        <table width='100%'>
+          <tr>
+            <td class='file exception'><a target='_blank' href='jp/co/dk/crawler/exception/CommandException.html'>CommandException.java</a>                   </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/4'>0%</td>
+          </tr>
+          <tr>
+            <td class='file exception'><a target='_blank' href='jp/co/dk/crawler/exception/CommandFatalException.html'>CommandFatalException.java</a>              </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/4'>0%</td>
+          </tr>
+          <tr>
+            <td class='file exception'><a target='_blank' href='jp/co/dk/crawler/exception/CrawlerFatalException.html'>CrawlerFatalException.java</a>              </td>
             <td style='background-color:#ff0000' title='Line segments: 0/12'>0%</td>
-            <td style='background-color:#ff0000' title='Paths: 0/6'>0%</td>
-            <td class='nocode'>N/A</td>
+          </tr>
+          <tr>
+            <td class='file exception'><a target='_blank' href='jp/co/dk/crawler/exception/CrawlerPageRedirectHandlerException.html'>CrawlerPageRedirectHandlerException.java</a></td>
+            <td style='background-color:#ff0000' title='Line segments: 0/4'>0%</td>
+          </tr>
+          <tr>
+            <td class='file exception'><a target='_blank' href='jp/co/dk/crawler/exception/CrawlerSaveException.html'>CrawlerSaveException.java</a>               </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/12'>0%</td>
           </tr>
         </table>
-      </td>
-      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/12'>0%</td>
-      <td class='pt' style='background-color:#ff0000' title='Paths: 0/6'>0%</td>
-      <td class='nocode'>N/A</td>
+        <span>(5 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/36'>0%</td>
     </tr>
     <tr>
-      <td class='file click' onclick='showHideFiles(this)'>jp.co.dk.crawler.rdb.dao</td>
+      <td class='package click' onclick='showHideFiles(this)'>jp.co.dk.crawler.gdb</td>
       <td>
         <table width='100%'>
           <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/CrawlerDaoConstants.html'>CrawlerDaoConstants.java</a>    </td>
-            <td style='background-color:#7d8200' title='Line segments: 25/49'>51%</td>
-            <td style='background-color:#9f6000' title='Paths: 15/40'>38%</td>
-            <td style='background-color:#00ff00' title='Fields: 2/2'>100%</td>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/gdb/Page.html'>Page.java</a>                               </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/29'>0%</td>
           </tr>
           <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/CrawlerErrors.html'>CrawlerErrors.java</a>          </td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/Documents.html'>Documents.java</a>              </td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/Links.html'>Links.java</a>                  </td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/Pages.html'>Pages.java</a>                  </td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/RedirectErrors.html'>RedirectErrors.java</a>         </td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/Urls.html'>Urls.java</a>                   </td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
-            <td class='nocode'>N/A</td>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/gdb/Url.html'>Url.java</a>                                </td>
+            <td style='background-color:#11ee00' title='Line segments: 43/46'>93%</td>
           </tr>
         </table>
-      </td>
-      <td class='pt' style='background-color:#7d8200' title='Line segments: 25/49'>51%</td>
-      <td class='pt' style='background-color:#9f6000' title='Paths: 15/40'>38%</td>
-      <td class='pt' style='background-color:#00ff00' title='Fields: 2/2'>100%</td>
+        <span>(2 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#6d9200' title='Line segments: 43/75'>57%</td>
     </tr>
     <tr>
-      <td class='file click' onclick='showHideFiles(this)'>jp.co.dk.crawler.rdb.dao.mysql</td>
+      <td class='package'>jp.co.dk.crawler.gdb.dao</td>
       <td>
         <table width='100%'>
           <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/CrawlerErrorsMysqlImpl.html'>CrawlerErrorsMysqlImpl.java</a> </td>
-            <td style='background-color:#a65900' title='Line segments: 20/57'>35%</td>
-            <td style='background-color:#c83700' title='Paths: 3/14'>21%</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/DocumentsMysqlImpl.html'>DocumentsMysqlImpl.java</a>     </td>
-            <td style='background-color:#a65900' title='Line segments: 20/57'>35%</td>
-            <td style='background-color:#b94600' title='Paths: 3/11'>27%</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/LinksMysqlImpl.html'>LinksMysqlImpl.java</a>         </td>
-            <td style='background-color:#cb3400' title='Line segments: 23/113'>20%</td>
-            <td style='background-color:#f60900' title='Paths: 3/85'>4%</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/PagesMysqlImpl.html'>PagesMysqlImpl.java</a>         </td>
-            <td style='background-color:#be4100' title='Line segments: 28/110'>25%</td>
-            <td style='background-color:#e81700' title='Paths: 3/33'>9%</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/RedirectErrorsMysqlImpl.html'>RedirectErrorsMysqlImpl.java</a></td>
-            <td style='background-color:#8f7000' title='Line segments: 18/41'>44%</td>
-            <td style='background-color:#9f6000' title='Paths: 3/8'>38%</td>
-            <td class='nocode'>N/A</td>
-          </tr>
-          <tr>
-            <td class='file'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/UrlsMysqlImpl.html'>UrlsMysqlImpl.java</a>          </td>
-            <td style='background-color:#b34c00' title='Line segments: 20/67'>30%</td>
-            <td style='background-color:#db2400' title='Paths: 3/21'>14%</td>
-            <td class='nocode'>N/A</td>
+            <td class='file enum'><a target='_blank' href='jp/co/dk/crawler/gdb/dao/CrawlerDaoConstants.html'>CrawlerDaoConstants.java</a>                </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/14'>0%</td>
           </tr>
         </table>
-      </td>
-      <td class='pt' style='background-color:#b54a00' title='Line segments: 129/445'>29%</td>
-      <td class='pt' style='background-color:#e41b00' title='Paths: 18/172'>10%</td>
-      <td class='nocode'>N/A</td>
+        <span>(1 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/14'>0%</td>
+    </tr>
+    <tr>
+      <td class='package'>jp.co.dk.crawler.message</td>
+      <td>
+        <table width='100%'>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/message/CrawlerMessage.html'>CrawlerMessage.java</a>                     </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/10'>0%</td>
+          </tr>
+        </table>
+        <span>(1 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/10'>0%</td>
+    </tr>
+    <tr>
+      <td class='package'>jp.co.dk.crawler.property</td>
+      <td>
+        <table width='100%'>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/property/CrawlerProperty.html'>CrawlerProperty.java</a>                    </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/3'>0%</td>
+          </tr>
+        </table>
+        <span>(1 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/3'>0%</td>
+    </tr>
+    <tr>
+      <td class='package click' onclick='showHideFiles(this)'>jp.co.dk.crawler.rdb</td>
+      <td>
+        <table width='100%'>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/Crawler.html'>Crawler.java</a>                            </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/156'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/CrawlerPageManager.html'>CrawlerPageManager.java</a>                 </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/15'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/CrawlerPageRedirectHandler.html'>CrawlerPageRedirectHandler.java</a>         </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/12'>0%</td>
+          </tr>
+          <tr>
+            <td class='file enum'><a target='_blank' href='jp/co/dk/crawler/rdb/MoveInfo.html'>MoveInfo.java</a>                           </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/2'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/Page.html'>Page.java</a>                               </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/111'>0%</td>
+          </tr>
+          <tr>
+            <td class='file enum'><a target='_blank' href='jp/co/dk/crawler/rdb/PageStatus.html'>PageStatus.java</a>                         </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/2'>0%</td>
+          </tr>
+        </table>
+        <span>(6 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/298'>0%</td>
+    </tr>
+    <tr>
+      <td class='package click' onclick='showHideFiles(this)'>jp.co.dk.crawler.rdb.controler</td>
+      <td>
+        <table width='100%'>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/controler/CrawlerInitialize.html'>CrawlerInitialize.java</a>                  </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/21'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/controler/CrawlerMain.html'>CrawlerMain.java</a>                        </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/68'>0%</td>
+          </tr>
+        </table>
+        <span>(2 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/89'>0%</td>
+    </tr>
+    <tr>
+      <td class='package'>jp.co.dk.crawler.rdb.dao</td>
+      <td>
+        <table width='100%'>
+          <tr>
+            <td class='file enum'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/CrawlerDaoConstants.html'>CrawlerDaoConstants.java</a>                </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/49'>0%</td>
+          </tr>
+        </table>
+        <span>(1 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/49'>0%</td>
+    </tr>
+    <tr>
+      <td class='package click' onclick='showHideFiles(this)'>jp.co.dk.crawler.rdb.dao.mysql</td>
+      <td>
+        <table width='100%'>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/CrawlerErrorsMysqlImpl.html'>CrawlerErrorsMysqlImpl.java</a>             </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/6'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/DocumentsMysqlImpl.html'>DocumentsMysqlImpl.java</a>                 </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/7'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/LinksMysqlImpl.html'>LinksMysqlImpl.java</a>                     </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/7'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/PagesMysqlImpl.html'>PagesMysqlImpl.java</a>                     </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/8'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/RedirectErrorsMysqlImpl.html'>RedirectErrorsMysqlImpl.java</a>            </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/6'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/mysql/UrlsMysqlImpl.html'>UrlsMysqlImpl.java</a>                      </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/6'>0%</td>
+          </tr>
+        </table>
+        <span>(6 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/40'>0%</td>
+    </tr>
+    <tr>
+      <td class='package click' onclick='showHideFiles(this)'>jp.co.dk.crawler.rdb.dao.record</td>
+      <td>
+        <table width='100%'>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/record/CountRecord.html'>CountRecord.java</a>                        </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/4'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/record/CrawlerErrorsRecord.html'>CrawlerErrorsRecord.java</a>                </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/11'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/record/DocumentsRecord.html'>DocumentsRecord.java</a>                    </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/11'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/record/LinksRecord.html'>LinksRecord.java</a>                        </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/13'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/record/PagesRecord.html'>PagesRecord.java</a>                        </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/21'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/record/RedirectErrorsRecord.html'>RedirectErrorsRecord.java</a>               </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/9'>0%</td>
+          </tr>
+          <tr>
+            <td class='file class'><a target='_blank' href='jp/co/dk/crawler/rdb/dao/record/UrlsRecord.html'>UrlsRecord.java</a>                         </td>
+            <td style='background-color:#ff0000' title='Line segments: 0/11'>0%</td>
+          </tr>
+        </table>
+        <span>(7 source files)</span>
+  </td>
+      <td class='pt' style='background-color:#ff0000' title='Line segments: 0/80'>0%</td>
     </tr>
     <tr class='total'>
       <td>Total</td><td>&nbsp;</td>
-      <td class='pt' style='background-color:#a15e00' title='Line segments: 206/561'>37%</td>
-      <td class='pt' style='background-color:#d42b00' title='Paths: 39/234'>17%</td>
-      <td class='pt' style='background-color:#40bf00' title='Fields: 3/4'>75%</td>
+      <td class='pt' style='background-color:#f00f00' title='Line segments: 46/762'>6%</td>
     </tr>
   </table>
+  <br/>Redundant tests:
+  <ol title="Tests are regarded as redundant when they don't cover any additional line segments or paths that haven't already been covered by a previous test.
+Note this means the list of redundant tests depends on the order of test execution.
+Such a test can be removed without weakening the test suite, as long as another test for the same scenario performs its assertions.">
+    <li>正常にインスタンスが生成できた場合＿０３.save</li>
+    <li>正常にインスタンスが生成できた場合＿０４.save</li>
+    <li>正常にインスタンスが生成できた場合＿０５.save</li>
+  </ol>
   <p>
-    <a href='http://code.google.com/p/jmockit'><img src='logo.png'></a>
-    Generated on Thu Jun 18 02:01:51 JST 2015
+    <a href='http://jmockit.org'><img src='logo.png'></a>
+    Generated on Fri Jul 24 02:08:49 JST 2015
   </p>
 </body>
 </html>

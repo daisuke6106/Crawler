@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JMockit Coverage Report - CrawlerPageRedirectHandlerException.java</title>
+  <title>CrawlerPageRedirectHandlerException.java</title>
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
   <link rel='stylesheet' type='text/css' href='../../../../../coverage.css'/>
+  <link rel='shortcut icon' type='image/png' href='../../../../../logo.png'/>
   <script type='text/javascript' src='../../../../../coverage.js'></script>
   <script type='text/javascript' src='../../../../../prettify.js'></script>
 </head>
 <body onload='prettyPrint()'>
   <table cellpadding='0' cellspacing='1'>
-    <caption>Crawler/src/jp/co/dk/crawler/exception/CrawlerPageRedirectHandlerException.java</caption>
+    <caption>Crawler/src/main/java/jp/co/dk/crawler/exception/CrawlerPageRedirectHandlerException.java</caption>
     <tr>
       <td class='line'>1</td><td>&nbsp;</td>
       <td><pre class='prettyprint'>package jp.co.dk.crawler.exception;</pre></td>
@@ -18,7 +19,7 @@
     <tr>
       <td class='line'></td><td>&nbsp;</td>
       <td><pre class='imports prettyprint' onclick='showHideLines(this)'><div>import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.exception.BrowzingException;
+import jp.co.dk.browzer.exception.PageRedirectException;
 </div><span>import ...</span></pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
@@ -34,7 +35,7 @@ import jp.co.dk.browzer.exception.BrowzingException;
     </tr>
     <tr>
       <td class='line'>13</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>public class CrawlerPageRedirectHandlerException extends BrowzingException {</pre></td>
+      <td><pre class='prettyprint'>public class CrawlerPageRedirectHandlerException extends PageRedirectException {</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -52,7 +53,7 @@ import jp.co.dk.browzer.exception.BrowzingException;
     </tr>
     <tr>
       <td class='line'>19</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	private jp.co.dk.crawler.Page <span class='instance covered' title='Reads: 4 Writes: 4'>page</span>;</pre></td>
+      <td><pre class='prettyprint'>	private jp.co.dk.crawler.rdb.Page page;</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -67,19 +68,19 @@ import jp.co.dk.browzer.exception.BrowzingException;
     </tr>
     <tr>
       <td class='line'>28</td><td>&nbsp;</td>
-      <td><pre class='prettyprint'>	public CrawlerPageRedirectHandlerException(BrowzingException exception, jp.co.dk.crawler.Page page) {</pre></td>
+      <td><pre class='prettyprint'>	public CrawlerPageRedirectHandlerException(PageRedirectException exception, jp.co.dk.crawler.rdb.Page page) {</pre></td>
     </tr>
     <tr>
-      <td class='line'>29</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l29s0'>		super(exception.getMessageObj(), exception.getEmbeddedStrList());</pre></td>
+      <td class='line'>29</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		super(exception.getMessageObj(), exception.getEmbeddedStrList());</pre></td>
     </tr>
     <tr>
-      <td class='line'>30</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l30s0'>		this.page = page;</pre></td>
+      <td class='line'>30</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		this.page = page;</pre></td>
     </tr>
     <tr>
-      <td class='line'>31</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l31s0'>	}</pre></td>
+      <td class='line'>31</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
     </tr>
     <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
     <tr>
@@ -94,8 +95,8 @@ import jp.co.dk.browzer.exception.BrowzingException;
       <td><pre class='prettyprint'>	public Page getPage() {</pre></td>
     </tr>
     <tr>
-      <td class='line'>38</td><td class='count'>4</td>
-      <td><pre class='prettyprint covered' id='l38s0'>		return page;</pre></td>
+      <td class='line'>38</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		return page;</pre></td>
     </tr>
     <tr>
       <td class='line'>39</td><td>&nbsp;</td>

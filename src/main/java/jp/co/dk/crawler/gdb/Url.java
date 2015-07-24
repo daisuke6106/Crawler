@@ -6,6 +6,7 @@ import static jp.co.dk.datastoremanager.message.DataStoreManagerMessage.METHOD_T
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractUrl;
@@ -80,8 +81,13 @@ public class Url extends AbstractUrl {
 			
 			if (this.getParameter().size() != 0) {
 				NodeCypher parameterNode = new NodeCypher("(parameter:PARAMETER{", "(parameter)");
-				for (Map.Entry<String, String> param : this.getParameter().entrySet()) 
+				Set<Map.Entry<String, String>> params = this.getParameter().entrySet();
+				int index = 0;
+				for (Map.Entry<String, String> param : params) { 
 					parameterNode.append(param.getKey()).append(":").append("?").setParameter(param.getValue());
+					if (index != params.size()-1) parameterNode.append(",");
+					index++;
+				}
 				parameterNode.append("})");
 				
 				CountComvertable pathCount = dataStore.executeWithRetuen(

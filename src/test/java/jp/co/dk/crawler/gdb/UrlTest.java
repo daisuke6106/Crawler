@@ -209,7 +209,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com?aaa=bbb", dsm);
+				this.sut = new Url("http://test.com?aaa=bbb&ccc=ddd", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -234,32 +234,149 @@ public class UrlTest extends CrawlerFoundationTest{
 			}
 		}
 	}
-//	@Test
-//	public void save() {
-//		GraphDatabaseService graphDB = new GraphDatabaseFactory().newEmbeddedDatabase("/tmp/neo4j_sample");
-//		Transaction tx = graphDB.beginTx();
-//		try {
-//			Url url1 = new Url("http://test.com", graphDB);
-//			url1.save();
-//			Url url2 = new Url("http://test.com/path1", graphDB);
-//			url2.save();
-//			Url url3 = new Url("http://test.com/path2", graphDB);
-//			url3.save();
-//			Url url4 = new Url("http://test.com/path1/path1-1", graphDB);
-//			url4.save();
-//			Url url5 = new Url("http://test.com/path1/path1-1/test.html", graphDB);
-//			url5.save();
-//			Url url6 = new Url("http://test.com/path1/path1-1/test.html?key1=value1", graphDB);
-//			url6.save();
-//			Url url7 = new Url("http://test.com/path1/path1-1/test.html?key1=value1&key2=value2", graphDB);
-//			url7.save();
-//			tx.success();
-//		} catch (PageIllegalArgumentException e) {
-//			fail(e);
-//		} finally {
-//			tx.finish();
-//			graphDB.shutdown();
-//		}
-//	}
-
+	
+	
+	public static class 正常にインスタンスが生成できた場合＿０７ extends CrawlerFoundationTest{
+		
+		protected Url sut;
+		
+		protected DataStoreManager dsm;
+		
+		@Before
+		public void init() throws DocumentException {
+			try {
+				this.dsm = getNeo4JAccessableDataStoreManager();
+				this.sut = new Url("http://test.com/test1?aaa=bbb&ccc=ddd", dsm);
+			} catch (PageIllegalArgumentException e) {
+				fail(e);
+			}
+		}
+		
+		@Test
+		public void save() {
+			try {
+				this.dsm.startTrunsaction();
+				this.sut.save();
+				this.dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}finally {
+				try {
+					this.dsm.finishTrunsaction();
+				} catch (DataStoreManagerException e) {
+					fail(e);
+				}
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿０８ extends CrawlerFoundationTest{
+		
+		protected Url sut;
+		
+		protected DataStoreManager dsm;
+		
+		@Before
+		public void init() throws DocumentException {
+			try {
+				this.dsm = getNeo4JAccessableDataStoreManager();
+				this.sut = new Url("http://test.com/test1/test1-1?aaa=bbb&ccc=ddd", dsm);
+			} catch (PageIllegalArgumentException e) {
+				fail(e);
+			}
+		}
+		
+		@Test
+		public void save() {
+			try {
+				this.dsm.startTrunsaction();
+				this.sut.save();
+				this.dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}finally {
+				try {
+					this.dsm.finishTrunsaction();
+				} catch (DataStoreManagerException e) {
+					fail(e);
+				}
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿０９ extends CrawlerFoundationTest{
+		
+		protected Url sut;
+		
+		protected DataStoreManager dsm;
+		
+		@Before
+		public void init() throws DocumentException {
+			try {
+				this.dsm = getNeo4JAccessableDataStoreManager();
+				this.sut = new Url("http://test.com/test1/test1-1/test1-1-1?aaa=bbb&ccc=ddd", dsm);
+			} catch (PageIllegalArgumentException e) {
+				fail(e);
+			}
+		}
+		
+		@Test
+		public void save() {
+			try {
+				this.dsm.startTrunsaction();
+				this.sut.save();
+				this.dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}finally {
+				try {
+					this.dsm.finishTrunsaction();
+				} catch (DataStoreManagerException e) {
+					fail(e);
+				}
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿１０ extends CrawlerFoundationTest{
+		
+		protected Url sut;
+		
+		protected DataStoreManager dsm;
+		
+		@Before
+		public void init() throws DocumentException {
+			try {
+				this.dsm = getNeo4JAccessableDataStoreManager();
+				this.sut = new Url("http://test.com/test1/test1-1/test1-1-2?aaa=bbb&ccc=ddd", dsm);
+			} catch (PageIllegalArgumentException e) {
+				fail(e);
+			}
+		}
+		
+		@Test
+		public void save() {
+			try {
+				this.dsm.startTrunsaction();
+				this.sut.save();
+				this.dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (DataStoreManagerException e) {
+				fail(e);
+			}finally {
+				try {
+					this.dsm.finishTrunsaction();
+				} catch (DataStoreManagerException e) {
+					fail(e);
+				}
+			}
+		}
+	}
 }

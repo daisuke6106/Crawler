@@ -33,7 +33,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @version 1.0
  * @author D.Kanno
  */
-public class Page extends AbstractPage {
+public class GPage extends AbstractPage {
 	
 	/** アクセス日付フォーマット */
 	protected SimpleDateFormat accessDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -47,7 +47,7 @@ public class Page extends AbstractPage {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public Page(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
+	public GPage(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
 		super(url, dataStoreManager);
 	}
 
@@ -95,7 +95,7 @@ public class Page extends AbstractPage {
 
 	@Override
 	protected Url createUrl(String url) throws PageIllegalArgumentException {
-		return new jp.co.dk.crawler.gdb.Url(url, this.dataStoreManager);
+		return new jp.co.dk.crawler.gdb.GUrl(url, this.dataStoreManager);
 	}
 	
 }

@@ -6,11 +6,11 @@ import java.util.List;
 
 import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.PageEventHandler;
-import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.browzer.http.header.ResponseHeader;
+import jp.co.dk.crawler.AbstractPageRedirectHandler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerPageRedirectHandlerException;
 import jp.co.dk.datastoremanager.DataStoreManager;
@@ -21,7 +21,7 @@ import jp.co.dk.datastoremanager.DataStoreManager;
  * @version 1.0
  * @author D.Kanno
  */
-class CrawlerPageRedirectHandler extends PageRedirectHandler {
+class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 	
 	protected DataStoreManager dsm;
 	
@@ -33,7 +33,7 @@ class CrawlerPageRedirectHandler extends PageRedirectHandler {
 	 * @param eventHandler イベントハンドラ一覧
 	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
 	 */
-	CrawlerPageRedirectHandler(DataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerInitException {
+	GCrawlerPageRedirectHandler(DataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerInitException {
 		super(eventHandler);
 		if (dsm == null) throw new CrawlerInitException(DATASTOREMANAGER_IS_NOT_SET);
 		this.dsm = dsm;
@@ -41,7 +41,7 @@ class CrawlerPageRedirectHandler extends PageRedirectHandler {
 	
 	@Override
 	protected Page ceatePage(String url)  throws PageIllegalArgumentException, PageAccessException  {
-		return new jp.co.dk.crawler.rdb.Page(url, this.dsm);
+		return new GPage(url, this.dsm);
 	}
 	
 	@Override

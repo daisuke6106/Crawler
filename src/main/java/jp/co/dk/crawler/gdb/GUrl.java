@@ -17,9 +17,9 @@ import jp.co.dk.datastoremanager.gdb.Cypher;
 import jp.co.dk.datastoremanager.gdb.DataBaseNode;
 import jp.co.dk.datastoremanager.gdb.DataConvertable;
 
-public class Url extends AbstractUrl {
+public class GUrl extends AbstractUrl {
 
-	public Url(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException {
+	public GUrl(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException {
 		super(url, dataStoreManager);
 	}
 

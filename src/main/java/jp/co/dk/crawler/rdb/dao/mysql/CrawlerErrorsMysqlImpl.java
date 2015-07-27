@@ -11,19 +11,18 @@ import jp.co.dk.crawler.rdb.dao.CrawlerErrors;
 import jp.co.dk.crawler.rdb.dao.record.CountRecord;
 import jp.co.dk.crawler.rdb.dao.record.CrawlerErrorsRecord;
 import jp.co.dk.datastoremanager.DataStore;
-import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
-import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
 import jp.co.dk.datastoremanager.database.DataBaseDriverConstants;
-import jp.co.dk.datastoremanager.database.Sql;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+import jp.co.dk.datastoremanager.rdb.DataBaseAccessParameter;
+import jp.co.dk.datastoremanager.rdb.Sql;
 
-public class CrawlerErrorsMysqlImpl extends AbstractDataBaseAccessObject implements CrawlerErrors{
+public class CrawlerErrorsMysqlImpl extends jp.co.dk.datastoremanager.rdb.AbstractDataBaseAccessObject implements CrawlerErrors{
 	
 	public CrawlerErrorsMysqlImpl(DataBaseAccessParameter parameter) throws DataStoreManagerException {
 		super(parameter);
 	}
 	
-	public CrawlerErrorsMysqlImpl(DataBaseDriverConstants driver, String url,String sid, String user, String password) throws DataStoreManagerException {
+	public CrawlerErrorsMysqlImpl(jp.co.dk.datastoremanager.DataBaseDriverConstants driver, String url,String sid, String user, String password) throws DataStoreManagerException {
 		super(driver, url, sid, user, password);
 	}
 	

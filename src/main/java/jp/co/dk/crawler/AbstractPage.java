@@ -178,6 +178,14 @@ public abstract class AbstractPage extends Page {
 		return new ParameterMap(this.url.getParameter());
 	}
 	
+	/** 
+	 * データストアマネージャを設定する。
+	 * 
+	 * @param dataStoreManager データストアマネージャー
+	 */
+	public void setDataStoreManager(DataStoreManager dataStoreManager) {
+		this.dataStoreManager = dataStoreManager;
+	}
 }
 
 class ParameterMap extends HashMap<String, String> {

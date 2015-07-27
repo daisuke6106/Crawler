@@ -31,7 +31,7 @@ public class PageTest {
 		public void 正常にインスタンスが生成できること() throws IOException {
 			try {
 				DataStoreManager dsm = getNeo4JAccessableDataStoreManager();
-				Page page = new Page("http://www.google.com", dsm);
+				GPage page = new GPage("http://www.google.com", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			} catch (PageAccessException e) {
@@ -42,7 +42,7 @@ public class PageTest {
 	
 	public static class 正常にインスタンスが生成できた場合 extends CrawlerFoundationTest{
 		
-		protected Page sut;
+		protected GPage sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -50,7 +50,7 @@ public class PageTest {
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Page("http://ftp.riken.jp/net/apache/logging/log4j/2.3/apache-log4j-2.3-bin.tar.gz", dsm);
+				this.sut = new GPage("http://ftp.riken.jp/net/apache/logging/log4j/2.3/apache-log4j-2.3-bin.tar.gz", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			} catch (PageAccessException e) {

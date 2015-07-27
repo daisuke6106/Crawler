@@ -16,7 +16,10 @@ import jp.co.dk.datastoremanager.DataStoreManager;
  * @version 1.0
  * @author D.Kanno
  */
-public class AbstractPageManager extends PageManager {
+public abstract class AbstractPageManager extends PageManager {
+	
+	/** データストアマネージャ */
+	protected DataStoreManager dsm;
 	
 	/**
 	 * コンストラクタ<p/>
@@ -29,10 +32,11 @@ public class AbstractPageManager extends PageManager {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	AbstractPageManager(String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException, PageAccessException {
+	protected AbstractPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException, PageAccessException {
 		super(url, pageRedirectHandler, pageEventHandlerList);
-		jp.co.dk.crawler.rdb.Page page = (jp.co.dk.crawler.rdb.Page)super.getPage();
-		page.dataStoreManager = dsm;
+		this.dsm = dsm;
+		jp.co.dk.crawler.AbstractPage page = (jp.co.dk.crawler.AbstractPage)super.getPage();
+		page.setDataStoreManager(dsm);
 	}
 	
 	/**
@@ -47,11 +51,11 @@ public class AbstractPageManager extends PageManager {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	AbstractPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
+	protected AbstractPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
 		super(url, pageRedirectHandler, pageEventHandlerList, maxNestLevel);
 		this.dsm = dsm;
-		jp.co.dk.crawler.rdb.Page page = (jp.co.dk.crawler.rdb.Page)super.getPage();
-		page.dataStoreManager = dsm;
+		jp.co.dk.crawler.AbstractPage page = (jp.co.dk.crawler.AbstractPage)super.getPage();
+		page.setDataStoreManager(dsm);
 	}
 	
 	/**
@@ -66,20 +70,17 @@ public class AbstractPageManager extends PageManager {
 	 * @param nestLevel            現在のページ遷移数
 	 * @param maxNestLevel         ページ遷移上限数
 	 */
-	AbstractPageManager(DataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nestLevel, int maxNestLevel){
+	protected AbstractPageManager(DataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nestLevel, int maxNestLevel){
 		super(parentPage, page, pageRedirectHandler, pageEventHandlerList, nestLevel, maxNestLevel);
 		this.dsm = dsm;
 	}
 	
 	@Override
-	public Page createPage(String url) throws PageIllegalArgumentException, PageAccessException {
-		return new jp.co.dk.crawler.rdb.Page(url, this.dsm);
-	}
+	protected abstract PageManager createPageManager(PageManager pageManager, Page page, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nextLevel, int maxNestLevel) ;
 	
 	@Override
-	protected PageManager createPageManager(PageManager pageManager, Page page, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nextLevel, int maxNestLevel) {
-		return new AbstractPageManager(this.dsm, pageManager, page, pageRedirectHandler, pageEventHandlerList, nextLevel, maxNestLevel);
-	}
+	public abstract Page createPage(String url) throws PageIllegalArgumentException, PageAccessException;
+	
 }
 
 

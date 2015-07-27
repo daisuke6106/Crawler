@@ -15,7 +15,7 @@ import jp.co.dk.crawler.exception.CrawlerInitException;
  * @version 1.0
  * @author D.Kanno
  */
-abstract class AbstractPageRedirectHandler extends PageRedirectHandler {
+public abstract class AbstractPageRedirectHandler extends PageRedirectHandler {
 	
 	/**
 	 * コンストラクタ<p/>
@@ -25,7 +25,7 @@ abstract class AbstractPageRedirectHandler extends PageRedirectHandler {
 	 * @param eventHandler イベントハンドラ一覧
 	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
 	 */
-	AbstractPageRedirectHandler(List<PageEventHandler> eventHandler) throws CrawlerInitException {
+	protected AbstractPageRedirectHandler(List<PageEventHandler> eventHandler) throws CrawlerInitException {
 		super(eventHandler);
 	}	
 	

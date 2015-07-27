@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.crawler.gdb.Url;
+import jp.co.dk.crawler.gdb.GUrl;
 import jp.co.dk.crawler.rdb.CrawlerFoundationTest;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
@@ -20,7 +20,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０１ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -28,7 +28,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com", dsm);
+				this.sut = new GUrl("http://test.com", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -57,7 +57,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０２ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -65,7 +65,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com/test1", dsm);
+				this.sut = new GUrl("http://test.com/test1", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -93,7 +93,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０３ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -101,7 +101,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com/test1/test1-1", dsm);
+				this.sut = new GUrl("http://test.com/test1/test1-1", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -129,7 +129,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０４ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -137,7 +137,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com/test1/test1-1/test1-1-1", dsm);
+				this.sut = new GUrl("http://test.com/test1/test1-1/test1-1-1", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -165,7 +165,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０５ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -173,7 +173,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com/test1/test1-1/test1-1-2", dsm);
+				this.sut = new GUrl("http://test.com/test1/test1-1/test1-1-2", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -201,7 +201,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０６ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -209,7 +209,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com?aaa=bbb&ccc=ddd", dsm);
+				this.sut = new GUrl("http://test.com?aaa=bbb&ccc=ddd", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -238,7 +238,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０７ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -246,7 +246,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com/test1?aaa=bbb&ccc=ddd", dsm);
+				this.sut = new GUrl("http://test.com/test1?aaa=bbb&ccc=ddd", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -274,7 +274,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０８ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -282,7 +282,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com/test1/test1-1?aaa=bbb&ccc=ddd", dsm);
+				this.sut = new GUrl("http://test.com/test1/test1-1?aaa=bbb&ccc=ddd", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -310,7 +310,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０９ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -318,7 +318,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com/test1/test1-1/test1-1-1?aaa=bbb&ccc=ddd", dsm);
+				this.sut = new GUrl("http://test.com/test1/test1-1/test1-1-1?aaa=bbb&ccc=ddd", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}
@@ -346,7 +346,7 @@ public class UrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿１０ extends CrawlerFoundationTest{
 		
-		protected Url sut;
+		protected GUrl sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -354,7 +354,7 @@ public class UrlTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new Url("http://test.com/test1/test1-1/test1-1-2?aaa=bbb&ccc=ddd", dsm);
+				this.sut = new GUrl("http://test.com/test1/test1-1/test1-1-2?aaa=bbb&ccc=ddd", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			}

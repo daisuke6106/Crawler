@@ -1,7 +1,6 @@
 package jp.co.dk.crawler.gdb;
 
 import static jp.co.dk.crawler.message.CrawlerMessage.DATASTOREMANAGER_CAN_NOT_CREATE;
-import static jp.co.dk.datastoremanager.message.DataStoreManagerMessage.METHOD_TO_CONVERT_A_RESULT_IS_UNDEFINED;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import jp.co.dk.datastoremanager.gdb.DataBaseNode;
 import jp.co.dk.datastoremanager.gdb.DataConvertable;
 
 public class GUrl extends AbstractUrl {
-
+	
 	public GUrl(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException {
 		super(url, dataStoreManager);
 	}
@@ -105,6 +104,5 @@ public class GUrl extends AbstractUrl {
 		
 		return false;
 	}
-	
 	
 }

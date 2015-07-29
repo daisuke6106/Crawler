@@ -1,5 +1,7 @@
 package jp.co.dk.crawler.gdb;
 
+import static jp.co.dk.crawler.message.CrawlerMessage.DATASTOREMANAGER_CAN_NOT_CREATE;
+import static jp.co.dk.crawler.message.CrawlerMessage.FAILE_TO_GET_PAGE;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
@@ -11,6 +13,8 @@ import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.message.CrawlerMessage;
 import jp.co.dk.datastoremanager.DataStoreManager;
+import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+import jp.co.dk.datastoremanager.gdb.Cypher;
 
 /**
  * Crawlerは、ネットワーク上に存在するHTML、XML、ファイルを巡回し、指定された出力先へ保存を行う処理を制御するクラス。<p/>
@@ -44,12 +48,23 @@ public class GCrawler extends AbstractCrawler {
 	
 	@Override
 	public boolean save() throws CrawlerSaveException {
-		AbstractPage beforePage = (AbstractPage)this.pageManager.getParentPage();
-		AbstractPage activePage = (AbstractPage)this.getPage();
+		GPage beforePage = (GPage)this.pageManager.getParentPage();
+		GPage activePage = (GPage)this.getPage();
 		activePage.save();
 		if (beforePage != null) {
-			
+			int beforePageID = beforePage.getID();
+			int activePageID = activePage.getID();
+			try {
+				jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dsm.getDataAccessObject("PAGE");
+				Cypher pageData = new Cypher("MATCH(beforepage:PAGE) WHERE ID(beforepage)=? MATCH(activepage:PAGE) WHERE ID(activepage)=? CREATE(beforepage)-[:LINK]->(activepage)");
+				pageData.setParameter(beforePageID);
+				pageData.setParameter(activePageID);
+				dataStore.execute(pageData);
+			} catch (ClassCastException | DataStoreManagerException e) {
+				throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
+			}
 		}
+		return true;
 	}
 	
 	@Override

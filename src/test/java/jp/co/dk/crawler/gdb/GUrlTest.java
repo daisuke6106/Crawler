@@ -16,7 +16,7 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 @RunWith(Enclosed.class)
-public class UrlTest extends CrawlerFoundationTest{
+public class GUrlTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合＿０１ extends CrawlerFoundationTest{
 		

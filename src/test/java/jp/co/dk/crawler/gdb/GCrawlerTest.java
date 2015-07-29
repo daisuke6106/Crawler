@@ -17,6 +17,7 @@ import jp.co.dk.test.template.TestCaseTemplate;
 import mockit.Expectations;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -24,14 +25,14 @@ import org.junit.runner.RunWith;
 import static jp.co.dk.document.message.DocumentMessage.*;
 
 @RunWith(Enclosed.class)
-public class PageTest {
+public class GCrawlerTest extends CrawlerFoundationTest{
 	
 	public static class コンストラクタ extends CrawlerFoundationTest{
 		@Test
 		public void 正常にインスタンスが生成できること() throws IOException {
 			try {
 				DataStoreManager dsm = getNeo4JAccessableDataStoreManager();
-				GPage page = new GPage("http://www.google.com", dsm);
+				GCrawler crawler = new GCrawler("http://www.google.com", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			} catch (PageAccessException e) {
@@ -42,7 +43,7 @@ public class PageTest {
 	
 	public static class 正常にインスタンスが生成できた場合 extends CrawlerFoundationTest{
 		
-		protected GPage sut;
+		protected GCrawler sut;
 		
 		protected DataStoreManager dsm;
 		
@@ -50,7 +51,7 @@ public class PageTest {
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new GPage("http://ftp.riken.jp/net/apache/logging/log4j/2.3/apache-log4j-2.3-bin.tar.gz", dsm);
+				this.sut = new GCrawler("http://gigazine.net/", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			} catch (PageAccessException e) {
@@ -76,6 +77,5 @@ public class PageTest {
 				}
 			}
 		}
-		
 	}
 }

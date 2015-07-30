@@ -1,31 +1,18 @@
 package jp.co.dk.crawler.gdb;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import jp.co.dk.browzer.Url;
-import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractPage;
-import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.crawler.rdb.dao.CrawlerDaoConstants;
-import jp.co.dk.crawler.rdb.dao.Documents;
-import jp.co.dk.crawler.rdb.dao.Pages;
-import jp.co.dk.crawler.rdb.dao.Urls;
-import jp.co.dk.crawler.rdb.dao.record.DocumentsRecord;
-import jp.co.dk.datastoremanager.DaoConstants;
-import jp.co.dk.datastoremanager.DataAccessObjectFactory;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-import jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject;
 import jp.co.dk.datastoremanager.gdb.Cypher;
 import jp.co.dk.datastoremanager.gdb.DataBaseNode;
 import jp.co.dk.datastoremanager.gdb.DataConvertable;
-import jp.co.dk.document.exception.DocumentFatalException;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
@@ -108,12 +95,12 @@ public class GPage extends AbstractPage {
 	}
 	
 	/**
-	 * このページ情報のＩＤを取得する。
+	 * このページ情報の最新のＩＤを取得する。
 	 * 
 	 * @return このページ情報のＩＤ
 	 * @throws CrawlerSaveException 
 	 */
-	public int getID() throws CrawlerSaveException {
+	public int getLatestID() throws CrawlerSaveException {
 		class IDComvertable implements DataConvertable {
 			private String countname;
 			private int    id;
@@ -129,22 +116,39 @@ public class GPage extends AbstractPage {
 				return this.id;
 			}
 		}
+		
+		class StringComvertable implements DataConvertable {
+			private String countname;
+			private String result;
+			StringComvertable(String countname){
+				this.countname = countname;
+			}
+			@Override
+			public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
+				this.result = dataBaseNode.getString(this.countname);
+				return this;
+			}
+			String getString() {
+				return this.result;
+			}
+		}
+		
 		try {
 			jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dataStoreManager.getDataAccessObject("PAGE");
-			Cypher pageData = new Cypher("MATCH(page:PAGE{url:?,sha256:?}) RETURN ID(page) as PAGEID");
+			Cypher pageData = new Cypher("MATCH(page:PAGE{url:?}) RETURN MAX(page.accessdate) as ACCESSDATE");
 			pageData.setParameter(this.url.toString());
-			pageData.setParameter(this.getData().getHash());
-			List<IDComvertable> resultID = dataStore.executeWithRetuen(pageData, new IDComvertable("PAGEID"));
-			if (resultID.size() == 0) {
+			List<StringComvertable> resultList = dataStore.executeWithRetuen(pageData, new StringComvertable("ACCESSDATE"));
+			if (resultList.size() == 0 || resultList.get(0).getString() == null) {
 				return -1;
 			} else {
-				return resultID.get(0).getID();
+				Cypher pageIDData = new Cypher("MATCH(page:PAGE{url:?, accessdate:?}) RETURN ID(page) as PAGEID");
+				pageIDData.setParameter(this.url.toString());
+				pageIDData.setParameter(resultList.get(0).getString());
+				return dataStore.executeWithRetuen(pageIDData, new IDComvertable("PAGEID")).get(0).getID();
 			}
 			
 		} catch (ClassCastException | DataStoreManagerException e) {
 			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
-		} catch (PageAccessException e) {
-			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.url.toString());
 		}
 	}
 	

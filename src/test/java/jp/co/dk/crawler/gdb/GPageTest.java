@@ -51,7 +51,7 @@ public class GPageTest extends CrawlerFoundationTest{
 		public void init() throws DocumentException {
 			try {
 				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new GPage("http://gigazine.net/news/20150729-spot-the-drowning-child/", dsm);
+				this.sut = new GPage("https://ja.wikipedia.org/wiki/HyperText_Markup_Language", dsm);
 			} catch (PageIllegalArgumentException e) {
 				fail(e);
 			} catch (PageAccessException e) {
@@ -78,10 +78,10 @@ public class GPageTest extends CrawlerFoundationTest{
 		}
 		
 		@Test
-		public void oder02_getID() {
+		public void oder02_getLatestID() {
 			try {
 				this.dsm.startTrunsaction();
-				assertThat(this.sut.getID(), is(-1));
+				assertThat(this.sut.getLatestID(), is(-1));
 			} catch (CrawlerSaveException e) {
 				fail(e);
 			} catch (DataStoreManagerException e) {
@@ -133,10 +133,10 @@ public class GPageTest extends CrawlerFoundationTest{
 		}
 
 		@Test
-		public void oder05_getID() {
+		public void oder05_getLatestID() {
 			try {
 				this.dsm.startTrunsaction();
-				assertThat(this.sut.getID(), not(-1));
+				assertThat(this.sut.getLatestID(), not(-1));
 			} catch (CrawlerSaveException e) {
 				fail(e);
 			} catch (DataStoreManagerException e) {

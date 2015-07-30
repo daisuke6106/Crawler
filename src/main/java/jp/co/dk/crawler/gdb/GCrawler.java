@@ -52,8 +52,8 @@ public class GCrawler extends AbstractCrawler {
 		GPage activePage = (GPage)this.getPage();
 		activePage.save();
 		if (beforePage != null) {
-			int beforePageID = beforePage.getID();
-			int activePageID = activePage.getID();
+			int beforePageID = beforePage.getLatestID();
+			int activePageID = activePage.getLatestID();
 			try {
 				jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dsm.getDataAccessObject("PAGE");
 				Cypher pageData = new Cypher("MATCH(beforepage:PAGE) WHERE ID(beforepage)=? MATCH(activepage:PAGE) WHERE ID(activepage)=? CREATE(beforepage)-[:LINK]->(activepage)");

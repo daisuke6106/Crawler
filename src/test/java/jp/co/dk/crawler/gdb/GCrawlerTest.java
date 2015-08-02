@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
+import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.rdb.CrawlerFoundationTest;
 import jp.co.dk.datastoremanager.DataStoreManager;
@@ -29,7 +30,7 @@ public class GCrawlerTest extends CrawlerFoundationTest{
 	
 	public static class コンストラクタ extends CrawlerFoundationTest{
 		@Test
-		public void 正常にインスタンスが生成できること() throws IOException {
+		public void 正常にインスタンスが生成できること() throws IOException, DataStoreManagerException {
 			try {
 				DataStoreManager dsm = getNeo4JAccessableDataStoreManager();
 				GCrawler crawler = new GCrawler("http://www.google.com", dsm);
@@ -43,20 +44,14 @@ public class GCrawlerTest extends CrawlerFoundationTest{
 	
 	public static class 正常にインスタンスが生成できた場合 extends CrawlerFoundationTest{
 		
-		protected GCrawler sut;
+		protected static GCrawler sut;
 		
-		protected DataStoreManager dsm;
+		protected static DataStoreManager dsm;
 		
-		@Before
-		public void init() throws DocumentException {
-			try {
-				this.dsm = getNeo4JAccessableDataStoreManager();
-				this.sut = new GCrawler("http://gigazine.net/", dsm);
-			} catch (PageIllegalArgumentException e) {
-				fail(e);
-			} catch (PageAccessException e) {
-				fail(e);
-			}
+		@BeforeClass
+		public static void init() throws DocumentException, DataStoreManagerException, CrawlerInitException, PageIllegalArgumentException, PageAccessException {
+			dsm = getNeo4JAccessableDataStoreManager();
+			sut = new GCrawler("http://gigazine.net/", dsm);
 		}
 		
 		@Test

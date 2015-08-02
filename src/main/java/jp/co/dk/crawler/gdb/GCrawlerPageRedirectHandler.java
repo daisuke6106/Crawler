@@ -33,11 +33,26 @@ class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 	 * @param eventHandler イベントハンドラ一覧
 	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
 	 */
+	GCrawlerPageRedirectHandler(List<PageEventHandler> eventHandler) throws CrawlerInitException {
+		super(eventHandler);
+	}
+	
+	/**
+	 * コンストラクタ<p/>
+	 * 指定のイベントハンドラ一覧を元にページリダイレクトハンドラを生成します。
+	 * 
+	 * @param dsm データストアマネージャ
+	 * @param eventHandler イベントハンドラ一覧
+	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
+	 */
 	GCrawlerPageRedirectHandler(DataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerInitException {
 		super(eventHandler);
-		if (dsm == null) throw new CrawlerInitException(DATASTOREMANAGER_IS_NOT_SET);
 		this.dsm = dsm;
-	}	
+	}
+	
+	void setDataStoreManager(DataStoreManager dsm) {
+		this.dsm = dsm;
+	}
 	
 	@Override
 	protected Page ceatePage(String url)  throws PageIllegalArgumentException, PageAccessException  {

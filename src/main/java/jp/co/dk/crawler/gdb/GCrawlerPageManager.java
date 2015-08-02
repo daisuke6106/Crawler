@@ -19,6 +19,9 @@ import jp.co.dk.datastoremanager.DataStoreManager;
  */
 class GCrawlerPageManager extends AbstractPageManager {
 	
+	/** データストアマネージャ */
+	protected DataStoreManager dsm;
+	
 	/**
 	 * コンストラクタ<p/>
 	 * 指定のページを元に本ページ管理マネージャーを生成します。
@@ -31,7 +34,9 @@ class GCrawlerPageManager extends AbstractPageManager {
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
 	GCrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException, PageAccessException {
-		super(dsm, url, pageRedirectHandler, pageEventHandlerList);
+		super(url, pageRedirectHandler, pageEventHandlerList);
+		this.dsm = dsm;
+		((jp.co.dk.crawler.gdb.GPage)this.getPage()).setDataStoreManager(dsm);
 	}
 	
 	/**
@@ -47,14 +52,16 @@ class GCrawlerPageManager extends AbstractPageManager {
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
 	GCrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
-		super(dsm, url, pageRedirectHandler, pageEventHandlerList, maxNestLevel);
+		super(url, pageRedirectHandler, pageEventHandlerList, maxNestLevel);
+		this.dsm = dsm;
+		((jp.co.dk.crawler.gdb.GPage)this.getPage()).setDataStoreManager(dsm);
 	}
 	
 	/**
 	 * コンストラクタ<p/>
 	 * 指定のページ、現在のページ遷移数、ページ遷移上限数を元に本ページ管理マネージャーを生成します。
 	 * 
-	 * @param dsm データストアマネージャ
+	 * @param dsm                  データストアマネージャ
 	 * @param parentPage           遷移元ページのページマネージャ
 	 * @param page                 遷移先のページオブジェクト
 	 * @param pageRedirectHandler  ページリダイレクト制御オブジェクト
@@ -63,7 +70,16 @@ class GCrawlerPageManager extends AbstractPageManager {
 	 * @param maxNestLevel         ページ遷移上限数
 	 */
 	GCrawlerPageManager(DataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nestLevel, int maxNestLevel){
-		super(dsm, parentPage, page, pageRedirectHandler, pageEventHandlerList, nestLevel, maxNestLevel);
+		super(parentPage, page, pageRedirectHandler, pageEventHandlerList, nestLevel, maxNestLevel);
+	}
+	
+	/**
+	 * データストアマネージャを設定します。
+	 * @param dsm データストアマネージャ
+	 */
+	void setDataStoreManager(DataStoreManager dsm) {
+		this.dsm = dsm;
+		((GPage)this.page).setDataStoreManager(dsm);
 	}
 	
 	@Override

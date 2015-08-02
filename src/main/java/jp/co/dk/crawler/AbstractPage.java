@@ -22,21 +22,16 @@ import jp.co.dk.document.exception.DocumentFatalException;
  */
 public abstract class AbstractPage extends Page {
 	
-	/** データストアマネージャ */
-	protected DataStoreManager dataStoreManager;
-	
 	/**
 	 * コンストラクタ<p/>
 	 * 指定のURL、データストアマネージャのインスタンスを元に、ページオブジェクトのインスタンスを生成します。
 	 * 
 	 * @param url URL文字列
-	 * @param dataStoreManager データストアマネージャ
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public AbstractPage(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
+	public AbstractPage(String url) throws PageIllegalArgumentException, PageAccessException {
 		super(url);
-		this.dataStoreManager = dataStoreManager;
 	}
 
 	/** ファイルID */
@@ -178,14 +173,6 @@ public abstract class AbstractPage extends Page {
 		return new ParameterMap(this.url.getParameter());
 	}
 	
-	/** 
-	 * データストアマネージャを設定する。
-	 * 
-	 * @param dataStoreManager データストアマネージャー
-	 */
-	public void setDataStoreManager(DataStoreManager dataStoreManager) {
-		this.dataStoreManager = dataStoreManager;
-	}
 }
 
 class ParameterMap extends HashMap<String, String> {

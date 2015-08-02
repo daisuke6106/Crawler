@@ -24,6 +24,9 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  */
 public class GPage extends AbstractPage {
 	
+	/** データストアマネージャ */
+	protected DataStoreManager dataStoreManager;
+	
 	/** アクセス日付フォーマット */
 	protected SimpleDateFormat accessDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	
@@ -37,7 +40,8 @@ public class GPage extends AbstractPage {
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
 	public GPage(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
-		super(url, dataStoreManager);
+		super(url);
+		this.dataStoreManager = dataStoreManager;
 	}
 
 	@Override
@@ -162,7 +166,16 @@ public class GPage extends AbstractPage {
 	protected Url createUrl(String url) throws PageIllegalArgumentException {
 		return new jp.co.dk.crawler.gdb.GUrl(url, this.dataStoreManager);
 	}
-	
+
+	/** 
+	 * データストアマネージャを設定する。
+	 * 
+	 * @param dataStoreManager データストアマネージャー
+	 */
+	public void setDataStoreManager(DataStoreManager dataStoreManager) {
+		this.dataStoreManager = dataStoreManager;
+		((GUrl)this.url).setDataStoreManager(dataStoreManager);
+	}
 }
 
 

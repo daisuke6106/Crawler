@@ -18,10 +18,23 @@ import jp.co.dk.datastoremanager.gdb.DataConvertable;
 
 public class GUrl extends AbstractUrl {
 	
+	/** データストアマネージャ */
+	protected DataStoreManager dataStoreManager;
+	
 	public GUrl(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException {
-		super(url, dataStoreManager);
+		super(url);
+		this.dataStoreManager = dataStoreManager;
 	}
-
+	
+	/** 
+	 * データストアマネージャを設定する。
+	 * 
+	 * @param dataStoreManager データストアマネージャー
+	 */
+	public void setDataStoreManager(DataStoreManager dataStoreManager) {
+		this.dataStoreManager = dataStoreManager;
+	}
+	
 	@Override
 	public boolean save() throws CrawlerSaveException {
 		try {

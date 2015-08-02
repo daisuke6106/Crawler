@@ -7,12 +7,8 @@ import jp.co.dk.datastoremanager.DataStoreManager;
 
 public abstract class AbstractUrl extends Url {
 	
-	/** データストアマネージャ */
-	protected DataStoreManager dataStoreManager;
-	
-	public AbstractUrl(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException {
+	public AbstractUrl(String url) throws PageIllegalArgumentException {
 		super(url);
-		this.dataStoreManager = dataStoreManager;
 	}
 	
 	/**

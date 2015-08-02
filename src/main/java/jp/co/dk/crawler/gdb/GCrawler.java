@@ -41,18 +41,18 @@ public class GCrawler extends AbstractCrawler {
 	public GCrawler(String url, DataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
 		super(url);
 		if (dataStoreManager == null) throw new CrawlerInitException(CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET);
-		this.dsm                 = dataStoreManager;
-		this.pageRedirectHandler = this.createPageRedirectHandler();
-		super.pageManager        = this.createPageManager(url, this.pageRedirectHandler);
+		this.dsm = dataStoreManager;
+		((GCrawlerPageManager)this.pageManager).setDataStoreManager(dataStoreManager);
+		((GCrawlerPageRedirectHandler)this.pageRedirectHandler).setDataStoreManager(dataStoreManager);
+		
 	}
 	
 	@Override
 	public boolean save() throws CrawlerSaveException {
-		GPage beforePage = (GPage)this.pageManager.getParentPage();
 		GPage activePage = (GPage)this.getPage();
 		activePage.save();
-		if (beforePage != null) {
-			int beforePageID = beforePage.getLatestID();
+		if (this.pageManager != null) {
+			int beforePageID = ((GPage)this.pageManager.getPage()).getLatestID();
 			int activePageID = activePage.getLatestID();
 			try {
 				jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dsm.getDataAccessObject("PAGE");
@@ -82,6 +82,10 @@ public class GCrawler extends AbstractCrawler {
 		return new GCrawlerPageRedirectHandler(this.dsm, this.getPageEventHandler());
 	}
 	
+	/**
+	 * データストアマネージャを設定します。
+	 * @param dsm データストアマネージャ
+	 */
 	public DataStoreManager getDataStoreManager() {
 		return this.dsm;
 	}

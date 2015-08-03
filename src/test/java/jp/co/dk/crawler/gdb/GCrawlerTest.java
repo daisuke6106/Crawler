@@ -1,8 +1,6 @@
 package jp.co.dk.crawler.gdb;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
@@ -12,18 +10,11 @@ import jp.co.dk.crawler.rdb.CrawlerFoundationTest;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.exception.DocumentException;
-import jp.co.dk.document.exception.DocumentFatalException;
-import jp.co.dk.document.message.DocumentMessage;
-import jp.co.dk.test.template.TestCaseTemplate;
-import mockit.Expectations;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
-
-import static jp.co.dk.document.message.DocumentMessage.*;
 
 @RunWith(Enclosed.class)
 public class GCrawlerTest extends CrawlerFoundationTest{

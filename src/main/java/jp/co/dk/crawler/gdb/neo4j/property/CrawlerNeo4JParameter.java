@@ -17,13 +17,13 @@ public class CrawlerNeo4JParameter {
 	/** 認証情報が設定有無 */
 	protected boolean isAuthSet = false;
 	
-	CrawlerNeo4JParameter(String crawlerNeo4jServer) throws CrawlerNeo4JException {
+	public CrawlerNeo4JParameter(String crawlerNeo4jServer) throws CrawlerNeo4JException {
 		if (crawlerNeo4jServer == null || crawlerNeo4jServer.equals("")) throw new CrawlerNeo4JException(NEO4JSERVER_IS_NOT_SET);
 		this.crawlerNeo4jServer = crawlerNeo4jServer;
 		this.isAuthSet = false;
 	}
 	
-	CrawlerNeo4JParameter(String crawlerNeo4jServer, String crawlerNeo4jUser, String crawlerNeo4jPass) throws CrawlerNeo4JException {
+	public CrawlerNeo4JParameter(String crawlerNeo4jServer, String crawlerNeo4jUser, String crawlerNeo4jPass) throws CrawlerNeo4JException {
 		if (crawlerNeo4jServer == null || crawlerNeo4jServer.equals("")) throw new CrawlerNeo4JException(NEO4JSERVER_IS_NOT_SET);
 		if (crawlerNeo4jUser   == null || crawlerNeo4jUser.equals(""))   throw new CrawlerNeo4JException(NEO4JUSERNAME_IS_NOT_SET);
 		if (crawlerNeo4jPass   == null || crawlerNeo4jPass.equals(""))   throw new CrawlerNeo4JException(NEO4JPASSWORD_IS_NOT_SET);

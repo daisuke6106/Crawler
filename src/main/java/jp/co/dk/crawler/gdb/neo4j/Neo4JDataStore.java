@@ -4,7 +4,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.neo4j.graphdb.Node;
+
 import jp.co.dk.crawler.gdb.neo4j.cypher.Cypher;
+import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JCypherException;
 import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JException;
 import jp.co.dk.crawler.gdb.neo4j.property.CrawlerNeo4JParameter;
 import jp.co.dk.logger.Logger;
@@ -49,7 +52,19 @@ public class Neo4JDataStore {
 	public void startTransaction() throws CrawlerNeo4JException {
 		this.transaction = new Transaction(this.dataBaseAccessParameter);
 	}
-
+	
+	public Node createNode() {
+		return this.transaction.createNode();
+	}
+	
+	public Node selectNode(Cypher cypher) throws CrawlerNeo4JCypherException {
+		return this.transaction.selectNode(cypher);
+	}
+	
+	public List<Node> selectNodes(Cypher cypher) throws CrawlerNeo4JCypherException {
+		return this.transaction.selectNodes(cypher);
+	}
+	
 	public void commit() throws CrawlerNeo4JException {
 		if (this.transaction == null) throw new CrawlerNeo4JException(TRANSACTION_IS_NOT_START);
 		this.transaction.commit();

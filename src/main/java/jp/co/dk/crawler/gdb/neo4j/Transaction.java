@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.soap.Node;
-
 import jp.co.dk.crawler.gdb.neo4j.cypher.Cypher;
 import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JCypherException;
 import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JException;
 import jp.co.dk.crawler.gdb.neo4j.message.CrawlerNeo4JMessage;
 import jp.co.dk.crawler.gdb.neo4j.property.CrawlerNeo4JParameter;
 
+import org.neo4j.graphdb.Node;
 import org.neo4j.rest.graphdb.RestAPIFacade;
 import org.neo4j.rest.graphdb.RestGraphDatabase;
 import org.neo4j.rest.graphdb.query.RestCypherQueryEngine;
@@ -45,6 +44,10 @@ public class Transaction implements Closeable {
 	
 	public void rollback() {
 		this.transaction.failure();
+	}
+	
+	public Node createNode() {
+		return this.graphDatabaseService.createNode();
 	}
 	
 	public Node selectNode(Cypher cypher) throws CrawlerNeo4JCypherException {

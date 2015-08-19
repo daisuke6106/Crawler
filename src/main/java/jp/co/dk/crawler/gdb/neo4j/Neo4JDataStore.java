@@ -1,10 +1,7 @@
 package jp.co.dk.crawler.gdb.neo4j;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.neo4j.graphdb.Node;
 
 import jp.co.dk.crawler.gdb.neo4j.cypher.Cypher;
 import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JCypherException;

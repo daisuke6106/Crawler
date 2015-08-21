@@ -10,20 +10,20 @@ import java.util.Set;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.datastoremanager.DataStoreManager;
-import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-import jp.co.dk.datastoremanager.gdb.Cypher;
-import jp.co.dk.datastoremanager.gdb.DataBaseNode;
-import jp.co.dk.datastoremanager.gdb.DataConvertable;
+import jp.co.dk.crawler.gdb.neo4j.Neo4JDataStore;
+import jp.co.dk.crawler.gdb.neo4j.Node;
+import jp.co.dk.crawler.gdb.neo4j.NodeSelector;
+import jp.co.dk.crawler.gdb.neo4j.cypher.Cypher;
+import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JCypherException;
 
 public class GUrl extends AbstractUrl {
 	
 	/** データストアマネージャ */
-	protected DataStoreManager dataStoreManager;
+	protected Neo4JDataStore dataStore;
 	
-	public GUrl(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException {
+	public GUrl(String url, Neo4JDataStore dataStore) throws PageIllegalArgumentException {
 		super(url);
-		this.dataStoreManager = dataStoreManager;
+		this.dataStore = dataStore;
 	}
 	
 	/** 
@@ -31,88 +31,70 @@ public class GUrl extends AbstractUrl {
 	 * 
 	 * @param dataStoreManager データストアマネージャー
 	 */
-	public void setDataStoreManager(DataStoreManager dataStoreManager) {
-		this.dataStoreManager = dataStoreManager;
+	public void setDataStoreManager(Neo4JDataStore dataStore) {
+		this.dataStore = dataStore;
 	}
 	
 	@Override
 	public boolean save() throws CrawlerSaveException {
 		try {
-			jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dataStoreManager.getDataAccessObject("URL");
-			
-			class CountComvertable implements DataConvertable {
-				private String countname;
-				private int    count;
-				CountComvertable(String countname){
-					this.countname = countname;
-				}
-				@Override
-				public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
-					this.count = dataBaseNode.getInt(this.countname);
-					return this;
-				}
-				int getCount() {
-					return this.count;
+			Node endnode = dataStore.selectNode(new Cypher("MATCH(host:HOST{name:?})RETURN host").setParameter(this.getHost()));
+			if (endnode == null) {
+				endnode = dataStore.createNode();
+				endnode.setLabel();
+				endnode.setProperty("name", this.getHost());
+			}
+			for(String path : this.getPathList()){
+				if (endnode.getOutGoingNodes().stream().filter(pathNode->pathNode.getProperty("name").equals(path)).count() == 0) {
+					endnode = dataStore.createNode();
+					endnode.setProperty("name", path);
 				}
 			}
 			
-			class NodeCypher extends jp.co.dk.datastoremanager.gdb.Cypher {
-				private String varName;
-				NodeCypher(String cypher, String varName) throws DataStoreManagerException {
-					super(cypher);
-					this.varName = varName;
-				}
-				String getVarName() {
-					return this.varName;
-				}
-			}
 			
-			Cypher hostNode = new NodeCypher("(host:HOST{name:?})", "(host)").setParameter(this.getHost());
-			CountComvertable hostCount = dataStore.executeWithRetuen(new Cypher("MATCH").append(hostNode).append("RETURN COUNT(host)"), new CountComvertable("COUNT(host)")).get(0);
-			if (hostCount.getCount() == 0) dataStore.execute(new Cypher("CREATE").append(hostNode));
 			
-			List<NodeCypher> pathNodes = new ArrayList<>();
-			List<String> pathList = this.getPathList();
-			for (int i=0; i<this.getPathList().size(); i++) pathNodes.add((NodeCypher) new NodeCypher("(path" + i + ":PATH{name:?})", "(path" + i + ")").setParameter(pathList.get(i)));
+//			List<NodeCypher> pathNodes = new ArrayList<>();
+//			List<String> pathList = this.getPathList();
+//			for (int i=0; i<this.getPathList().size(); i++) pathNodes.add((NodeCypher) new NodeCypher("(path" + i + ":PATH{name:?})", "(path" + i + ")").setParameter(pathList.get(i)));
+//			
+//			List<Cypher> existNode    = new ArrayList<>();
+//			existNode.add(hostNode);
+//			
+//			Cypher countCypher  = hostNode.clone();
+//			String lastVarName  = "(host)";
+//			for (int i=0; i < pathNodes.size(); i++) {
+//				Cypher tmpCountCypher = countCypher.clone();
+//				tmpCountCypher.append("-[:CHILD]->").append(pathNodes.get(i));
+//				CountComvertable pathCount = dataStore.executeWithRetuen(new Cypher("MATCH").append(tmpCountCypher).append("RETURN COUNT(*)"), new CountComvertable("COUNT(*)")).get(0);
+//				if (pathCount.getCount() == 0) {
+//					dataStore.execute(new Cypher("MATCH").append(countCypher).append("CREATE").append(lastVarName).append("-[:CHILD]->").append(pathNodes.get(i)));
+//				}
+//				countCypher = tmpCountCypher;
+//				lastVarName = pathNodes.get(i).getVarName();
+//			}
+//			
+//			if (this.getParameter().size() != 0) {
+//				NodeCypher parameterNode = new NodeCypher("(parameter:PARAMETER{", "(parameter)");
+//				Set<Map.Entry<String, String>> params = this.getParameter().entrySet();
+//				int index = 0;
+//				for (Map.Entry<String, String> param : params) { 
+//					parameterNode.append(param.getKey()).append(":").append("?").setParameter(param.getValue());
+//					if (index != params.size()-1) parameterNode.append(",");
+//					index++;
+//				}
+//				parameterNode.append("})");
+//				
+//				CountComvertable pathCount = dataStore.executeWithRetuen(
+//						new Cypher("MATCH").append(countCypher).append("-[:CHILD]->").append(parameterNode).append("RETURN COUNT(*)"),
+//						new CountComvertable("COUNT(*)")
+//					).get(0);
+//				if (pathCount.getCount() == 0) {
+//					dataStore.execute(new Cypher("MATCH").append(countCypher).append("CREATE").append(lastVarName).append("-[:CHILD]->").append(parameterNode));
+//				}
+//			}
 			
-			List<Cypher> existNode    = new ArrayList<>();
-			existNode.add(hostNode);
-			
-			Cypher countCypher  = hostNode.clone();
-			String lastVarName  = "(host)";
-			for (int i=0; i < pathNodes.size(); i++) {
-				Cypher tmpCountCypher = countCypher.clone();
-				tmpCountCypher.append("-[:CHILD]->").append(pathNodes.get(i));
-				CountComvertable pathCount = dataStore.executeWithRetuen(new Cypher("MATCH").append(tmpCountCypher).append("RETURN COUNT(*)"), new CountComvertable("COUNT(*)")).get(0);
-				if (pathCount.getCount() == 0) {
-					dataStore.execute(new Cypher("MATCH").append(countCypher).append("CREATE").append(lastVarName).append("-[:CHILD]->").append(pathNodes.get(i)));
-				}
-				countCypher = tmpCountCypher;
-				lastVarName = pathNodes.get(i).getVarName();
-			}
-			
-			if (this.getParameter().size() != 0) {
-				NodeCypher parameterNode = new NodeCypher("(parameter:PARAMETER{", "(parameter)");
-				Set<Map.Entry<String, String>> params = this.getParameter().entrySet();
-				int index = 0;
-				for (Map.Entry<String, String> param : params) { 
-					parameterNode.append(param.getKey()).append(":").append("?").setParameter(param.getValue());
-					if (index != params.size()-1) parameterNode.append(",");
-					index++;
-				}
-				parameterNode.append("})");
-				
-				CountComvertable pathCount = dataStore.executeWithRetuen(
-						new Cypher("MATCH").append(countCypher).append("-[:CHILD]->").append(parameterNode).append("RETURN COUNT(*)"),
-						new CountComvertable("COUNT(*)")
-					).get(0);
-				if (pathCount.getCount() == 0) {
-					dataStore.execute(new Cypher("MATCH").append(countCypher).append("CREATE").append(lastVarName).append("-[:CHILD]->").append(parameterNode));
-				}
-			}
-			
-		} catch (ClassCastException | DataStoreManagerException e) {
-			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
+		} catch (CrawlerNeo4JCypherException e) {
+			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE, e);
 		}
 		
 		return false;

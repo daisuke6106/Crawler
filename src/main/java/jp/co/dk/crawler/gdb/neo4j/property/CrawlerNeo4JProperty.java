@@ -28,7 +28,7 @@ public class CrawlerNeo4JProperty extends AbstractProperty {
 	 * @param key プロパティキー
 	 */
 	protected CrawlerNeo4JProperty (String key) throws PropertyException {
-		super(new File("properties/CrawlerNeo4JProperty.properties"), key);
+		super(new File("CrawlerNeo4JProperty.properties"), key);
 	}
 	
 	public CrawlerNeo4JParameter getParameter() throws CrawlerNeo4JException {

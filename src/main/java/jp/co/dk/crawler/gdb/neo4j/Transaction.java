@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import jp.co.dk.crawler.gdb.neo4j.cypher.Cypher;
 import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JCypherException;
@@ -52,7 +53,11 @@ public class Transaction implements Closeable {
 	public Node selectNode(Cypher cypher) throws CrawlerNeo4JCypherException {
 		if (cypher == null) throw new CrawlerNeo4JCypherException(CrawlerNeo4JMessage.CYPHER_IS_NOT_SET);
 		RestCypherQueryEngine queryEngine = new RestCypherQueryEngine(this.restApiFacade);
-		return new Node(queryEngine.query(cypher.getCypher(), cypher.getParameter()).to(org.neo4j.graphdb.Node.class).single());
+		try {
+			return new Node(queryEngine.query(cypher.getCypher(), cypher.getParameter()).to(org.neo4j.graphdb.Node.class).single());
+		} catch (NoSuchElementException e) {
+			return null;
+		}
 	}
 	
 	public List<Node> selectNodes(Cypher cypher) throws CrawlerNeo4JCypherException {

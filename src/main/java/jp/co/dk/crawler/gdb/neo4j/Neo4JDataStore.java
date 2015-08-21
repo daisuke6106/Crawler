@@ -41,7 +41,7 @@ public class Neo4JDataStore {
 	 * 
 	 * @param dataBaseAccessParameter データベースアクセスパラメータ
 	 */
-	Neo4JDataStore(CrawlerNeo4JParameter dataBaseAccessParameter) {
+	public Neo4JDataStore(CrawlerNeo4JParameter dataBaseAccessParameter) {
 		this.logger.constractor(this.getClass(), dataBaseAccessParameter);
 		this.dataBaseAccessParameter = dataBaseAccessParameter;
 	}

@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.RelationshipType;
+
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
@@ -41,63 +44,48 @@ public class GUrl extends AbstractUrl {
 			Node endnode = dataStore.selectNode(new Cypher("MATCH(host:HOST{name:?})RETURN host").setParameter(this.getHost()));
 			if (endnode == null) {
 				endnode = dataStore.createNode();
-				endnode.addLabel();
+				endnode.addLabel(CrawlerNodeLabel.HOST);
 				endnode.setProperty("name", this.getHost());
 			}
 			for(String path : this.getPathList()){
 				if (endnode.getOutGoingNodes().stream().filter(pathNode->pathNode.getProperty("name").equals(path)).count() == 0) {
 					endnode = dataStore.createNode();
+					endnode.addLabel(CrawlerNodeLabel.PATH);
 					endnode.setProperty("name", path);
 				}
 			}
-			
-			
-			
-//			List<NodeCypher> pathNodes = new ArrayList<>();
-//			List<String> pathList = this.getPathList();
-//			for (int i=0; i<this.getPathList().size(); i++) pathNodes.add((NodeCypher) new NodeCypher("(path" + i + ":PATH{name:?})", "(path" + i + ")").setParameter(pathList.get(i)));
-//			
-//			List<Cypher> existNode    = new ArrayList<>();
-//			existNode.add(hostNode);
-//			
-//			Cypher countCypher  = hostNode.clone();
-//			String lastVarName  = "(host)";
-//			for (int i=0; i < pathNodes.size(); i++) {
-//				Cypher tmpCountCypher = countCypher.clone();
-//				tmpCountCypher.append("-[:CHILD]->").append(pathNodes.get(i));
-//				CountComvertable pathCount = dataStore.executeWithRetuen(new Cypher("MATCH").append(tmpCountCypher).append("RETURN COUNT(*)"), new CountComvertable("COUNT(*)")).get(0);
-//				if (pathCount.getCount() == 0) {
-//					dataStore.execute(new Cypher("MATCH").append(countCypher).append("CREATE").append(lastVarName).append("-[:CHILD]->").append(pathNodes.get(i)));
-//				}
-//				countCypher = tmpCountCypher;
-//				lastVarName = pathNodes.get(i).getVarName();
-//			}
-//			
-//			if (this.getParameter().size() != 0) {
-//				NodeCypher parameterNode = new NodeCypher("(parameter:PARAMETER{", "(parameter)");
-//				Set<Map.Entry<String, String>> params = this.getParameter().entrySet();
-//				int index = 0;
-//				for (Map.Entry<String, String> param : params) { 
-//					parameterNode.append(param.getKey()).append(":").append("?").setParameter(param.getValue());
-//					if (index != params.size()-1) parameterNode.append(",");
-//					index++;
-//				}
-//				parameterNode.append("})");
-//				
-//				CountComvertable pathCount = dataStore.executeWithRetuen(
-//						new Cypher("MATCH").append(countCypher).append("-[:CHILD]->").append(parameterNode).append("RETURN COUNT(*)"),
-//						new CountComvertable("COUNT(*)")
-//					).get(0);
-//				if (pathCount.getCount() == 0) {
-//					dataStore.execute(new Cypher("MATCH").append(countCypher).append("CREATE").append(lastVarName).append("-[:CHILD]->").append(parameterNode));
-//				}
-//			}
-			
+			Map<String, String> parameter = this.getParameter();
+			if (parameter.size() != 0) {
+				int parameterID = parameter.hashCode();
+				if (endnode.getOutGoingNodes(new NodeSelector() {
+						@Override
+						public boolean isSelect(org.neo4j.graphdb.Node node) {
+							int id = ((Integer)node.getProperty("id")).intValue();
+							if (id == parameterID) return true;
+							return false;
+						}
+					}).size() == 0
+				) {
+					endnode = dataStore.createNode();
+					endnode.addLabel(CrawlerNodeLabel.PARAMETER);
+					endnode.setProperty(parameter);
+				}
+			}
 		} catch (CrawlerNeo4JCypherException e) {
 			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE, e);
 		}
-		
 		return false;
 	}
 	
+}
+
+enum CrawlerNodeLabel implements Label {
+	HOST,
+	PATH,
+	PARAMETER,
+	PAGE,
+}
+
+enum CrawlerRelationshipLabel implements RelationshipType {
+	CHILD
 }

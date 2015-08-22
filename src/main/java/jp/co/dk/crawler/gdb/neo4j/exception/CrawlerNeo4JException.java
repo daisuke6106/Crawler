@@ -21,4 +21,28 @@ public class CrawlerNeo4JException  extends AbstractMessageException {
 	public CrawlerNeo4JException(CrawlerNeo4JMessage msg){
 		super(msg);
 	}
+	
+	/**
+	 * コンストラクタ<p>
+	 * 
+	 * 指定のメッセージで例外を生成します。
+	 * 
+	 * @param msg メッセージ定数インスタンス
+	 * @since 1.0
+	 */
+	public CrawlerNeo4JException(CrawlerNeo4JMessage msg, String param){
+		super(msg, param);
+	}
+	
+	/**
+	 * コンストラクタ<p>
+	 * 
+	 * 指定のメッセージで例外を生成します。
+	 * 
+	 * @param msg メッセージ定数インスタンス
+	 * @since 1.0
+	 */
+	public CrawlerNeo4JException(CrawlerNeo4JMessage msg, String... param){
+		super(msg, param);
+	}
 }

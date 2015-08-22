@@ -33,6 +33,9 @@ public class CrawlerNeo4JMessage extends AbstractMessage implements Serializable
 	/** トランザクションが開始されていません。 */
 	public static final CrawlerNeo4JMessage TRANSACTION_IS_NOT_START = new CrawlerNeo4JMessage("E005");
 	
+	/** パラメータが不正です。KEY=[{0}],PARAMETER=[{1}] */
+	public static final CrawlerNeo4JMessage PARAMETER_IS_FRAUD = new CrawlerNeo4JMessage("E006");
+	
 	protected CrawlerNeo4JMessage(String messageId) {
 		super(messageId);
 	}

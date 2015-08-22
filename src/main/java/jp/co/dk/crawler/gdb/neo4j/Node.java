@@ -38,6 +38,10 @@ public class Node {
 		return nodeList;
 	}
 	
+	public void addLabel(org.neo4j.graphdb.Label label) {
+		this.node.addLabel(label);
+	}
+
 	public void setProperty(String key, String value) {
 		this.node.setProperty(key, value);
 	}

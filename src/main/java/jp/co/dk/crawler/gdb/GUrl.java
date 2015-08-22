@@ -41,7 +41,7 @@ public class GUrl extends AbstractUrl {
 			Node endnode = dataStore.selectNode(new Cypher("MATCH(host:HOST{name:?})RETURN host").setParameter(this.getHost()));
 			if (endnode == null) {
 				endnode = dataStore.createNode();
-				endnode.setLabel();
+				endnode.addLabel();
 				endnode.setProperty("name", this.getHost());
 			}
 			for(String path : this.getPathList()){

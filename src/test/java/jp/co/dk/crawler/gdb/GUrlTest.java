@@ -78,328 +78,227 @@ public class GUrlTest extends CrawlerFoundationTest{
 		}
 	}
 
-//	public static class 正常にインスタンスが生成できた場合＿０２ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				dsm = getNeo4JAccessableDataStoreManager();
-//				sut = new GUrl("http://test.com/test1", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
-//	
-//	public static class 正常にインスタンスが生成できた場合＿０３ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				this.dsm = getNeo4JAccessableDataStoreManager();
-//				this.sut = new GUrl("http://test.com/test1/test1-1", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
-//	
-//	public static class 正常にインスタンスが生成できた場合＿０４ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				this.dsm = getNeo4JAccessableDataStoreManager();
-//				this.sut = new GUrl("http://test.com/test1/test1-1/test1-1-1", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
-//	
-//	public static class 正常にインスタンスが生成できた場合＿０５ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				this.dsm = getNeo4JAccessableDataStoreManager();
-//				this.sut = new GUrl("http://test.com/test1/test1-1/test1-1-2", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
-//	
-//	public static class 正常にインスタンスが生成できた場合＿０６ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				this.dsm = getNeo4JAccessableDataStoreManager();
-//				this.sut = new GUrl("http://test.com?aaa=bbb&ccc=ddd", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
-//	
-//	
-//	public static class 正常にインスタンスが生成できた場合＿０７ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				this.dsm = getNeo4JAccessableDataStoreManager();
-//				this.sut = new GUrl("http://test.com/test1?aaa=bbb&ccc=ddd", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
-//	
-//	public static class 正常にインスタンスが生成できた場合＿０８ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				this.dsm = getNeo4JAccessableDataStoreManager();
-//				this.sut = new GUrl("http://test.com/test1/test1-1?aaa=bbb&ccc=ddd", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
-//	
-//	public static class 正常にインスタンスが生成できた場合＿０９ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				this.dsm = getNeo4JAccessableDataStoreManager();
-//				this.sut = new GUrl("http://test.com/test1/test1-1/test1-1-1?aaa=bbb&ccc=ddd", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
-//	
-//	public static class 正常にインスタンスが生成できた場合＿１０ extends CrawlerFoundationTest{
-//		
-//		protected static GUrl sut;
-//		
-//		protected static DataStoreManager dsm;
-//		
-//		@BeforeClass
-//		public static void init() throws DocumentException {
-//			try {
-//				this.dsm = getNeo4JAccessableDataStoreManager();
-//				this.sut = new GUrl("http://test.com/test1/test1-1/test1-1-2?aaa=bbb&ccc=ddd", dsm);
-//			} catch (PageIllegalArgumentException e) {
-//				fail(e);
-//			}
-//		}
-//		
-//		@Test
-//		public void save() {
-//			try {
-//				this.dsm.startTrunsaction();
-//				this.sut.save();
-//				this.dsm.commit();
-//			} catch (CrawlerSaveException e) {
-//				fail(e);
-//			} catch (DataStoreManagerException e) {
-//				fail(e);
-//			}finally {
-//				try {
-//					this.dsm.finishTrunsaction();
-//				} catch (DataStoreManagerException e) {
-//					fail(e);
-//				}
-//			}
-//		}
-//	}
+	public static class 正常にインスタンスが生成できた場合＿０３ extends CrawlerFoundationTest{
+		
+		protected static GUrl sut;
+		
+		protected static Neo4JDataStore dsm;
+		
+		@BeforeClass
+		public static void init() throws CrawlerNeo4JException, PageIllegalArgumentException{
+			dsm = new Neo4JDataStore(new CrawlerNeo4JParameter("http://localhost:7474/db/data"));
+			sut = new GUrl("http://test.com/test1/test1-1", dsm);
+		}
+		
+		@Test
+		public void save() throws CrawlerNeo4JException {
+			try {
+				dsm.startTransaction();
+				sut.save();
+				dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (RuntimeException e) {
+				fail(e);
+			} finally {
+				dsm.finishTransaction();
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿０４ extends CrawlerFoundationTest{
+		
+		protected static GUrl sut;
+		
+		protected static Neo4JDataStore dsm;
+		
+		@BeforeClass
+		public static void init() throws CrawlerNeo4JException, PageIllegalArgumentException{
+			dsm = new Neo4JDataStore(new CrawlerNeo4JParameter("http://localhost:7474/db/data"));
+			sut = new GUrl("http://test.com/test1/test1-1/test1-1-1", dsm);
+		}
+		
+		@Test
+		public void save() throws CrawlerNeo4JException {
+			try {
+				dsm.startTransaction();
+				sut.save();
+				dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (RuntimeException e) {
+				fail(e);
+			} finally {
+				dsm.finishTransaction();
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿０５ extends CrawlerFoundationTest{
+		
+		protected static GUrl sut;
+		
+		protected static Neo4JDataStore dsm;
+		
+		@BeforeClass
+		public static void init() throws CrawlerNeo4JException, PageIllegalArgumentException{
+			dsm = new Neo4JDataStore(new CrawlerNeo4JParameter("http://localhost:7474/db/data"));
+			sut = new GUrl("http://test.com/test1/test1-1/test1-1-2", dsm);
+		}
+		
+		@Test
+		public void save() throws CrawlerNeo4JException {
+			try {
+				dsm.startTransaction();
+				sut.save();
+				dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (RuntimeException e) {
+				fail(e);
+			} finally {
+				dsm.finishTransaction();
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿０６ extends CrawlerFoundationTest{
+		
+		protected static GUrl sut;
+		
+		protected static Neo4JDataStore dsm;
+		
+		@BeforeClass
+		public static void init() throws CrawlerNeo4JException, PageIllegalArgumentException{
+			dsm = new Neo4JDataStore(new CrawlerNeo4JParameter("http://localhost:7474/db/data"));
+			sut = new GUrl("http://test.com?aaa=bbb&ccc=ddd", dsm);
+		}
+		
+		@Test
+		public void save() throws CrawlerNeo4JException {
+			try {
+				dsm.startTransaction();
+				sut.save();
+				dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (RuntimeException e) {
+				fail(e);
+			} finally {
+				dsm.finishTransaction();
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿０７ extends CrawlerFoundationTest{
+		
+		protected static GUrl sut;
+		
+		protected static Neo4JDataStore dsm;
+		
+		@BeforeClass
+		public static void init() throws CrawlerNeo4JException, PageIllegalArgumentException{
+			dsm = new Neo4JDataStore(new CrawlerNeo4JParameter("http://localhost:7474/db/data"));
+			sut = new GUrl("http://test.com/test1?aaa=bbb&ccc=ddd", dsm);
+		}
+		
+		@Test
+		public void save() throws CrawlerNeo4JException {
+			try {
+				dsm.startTransaction();
+				sut.save();
+				dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (RuntimeException e) {
+				fail(e);
+			} finally {
+				dsm.finishTransaction();
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿０８ extends CrawlerFoundationTest{
+		
+		protected static GUrl sut;
+		
+		protected static Neo4JDataStore dsm;
+		
+		@BeforeClass
+		public static void init() throws CrawlerNeo4JException, PageIllegalArgumentException{
+			dsm = new Neo4JDataStore(new CrawlerNeo4JParameter("http://localhost:7474/db/data"));
+			sut = new GUrl("http://test.com/test1/test1-1?aaa=bbb&ccc=ddd", dsm);
+		}
+		
+		@Test
+		public void save() throws CrawlerNeo4JException {
+			try {
+				dsm.startTransaction();
+				sut.save();
+				dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (RuntimeException e) {
+				fail(e);
+			} finally {
+				dsm.finishTransaction();
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿０９ extends CrawlerFoundationTest{
+		
+		protected static GUrl sut;
+		
+		protected static Neo4JDataStore dsm;
+		
+		@BeforeClass
+		public static void init() throws CrawlerNeo4JException, PageIllegalArgumentException{
+			dsm = new Neo4JDataStore(new CrawlerNeo4JParameter("http://localhost:7474/db/data"));
+			sut = new GUrl("http://test.com/test1/test1-1/test1-1-1?aaa=bbb&ccc=ddd", dsm);
+		}
+		
+		@Test
+		public void save() throws CrawlerNeo4JException {
+			try {
+				dsm.startTransaction();
+				sut.save();
+				dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (RuntimeException e) {
+				fail(e);
+			} finally {
+				dsm.finishTransaction();
+			}
+		}
+	}
+	
+	public static class 正常にインスタンスが生成できた場合＿１０ extends CrawlerFoundationTest{
+		
+		protected static GUrl sut;
+		
+		protected static Neo4JDataStore dsm;
+		
+		@BeforeClass
+		public static void init() throws CrawlerNeo4JException, PageIllegalArgumentException{
+			dsm = new Neo4JDataStore(new CrawlerNeo4JParameter("http://localhost:7474/db/data"));
+			sut = new GUrl("http://test.com/test1/test1-1/test1-1-2?aaa=bbb&ccc=ddd", dsm);
+		}
+		
+		@Test
+		public void save() throws CrawlerNeo4JException {
+			try {
+				dsm.startTransaction();
+				sut.save();
+				dsm.commit();
+			} catch (CrawlerSaveException e) {
+				fail(e);
+			} catch (RuntimeException e) {
+				fail(e);
+			} finally {
+				dsm.finishTransaction();
+			}
+		}
+	}
 }

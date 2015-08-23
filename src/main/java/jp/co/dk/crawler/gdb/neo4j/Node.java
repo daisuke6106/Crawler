@@ -5,11 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.relation.RelationType;
+
 import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JException;
 import jp.co.dk.crawler.gdb.neo4j.message.CrawlerNeo4JMessage;
 
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
 
 public class Node {
 	
@@ -77,5 +80,9 @@ public class Node {
 	
 	public String getProperty(String key) {
 		return (String)this.node.getProperty(key);
+	}
+	
+	public void addOutGoingRelation(RelationshipType label, Node node) {
+		this.node.createRelationshipTo(node.node, label);
 	}
 }

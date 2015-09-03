@@ -13,7 +13,6 @@
 	<classpathentry kind="lib" path="lib/jericho-html-3.2.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.26-bin.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="lib/logger_1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/message_1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/property_1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-configuration-1.8.jar"/>
@@ -44,5 +43,8 @@
 	<classpathentry kind="lib" path="lib/neo4j-kernel-2.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/neo4j-lucene-index-2.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/neo4j-rest-graphdb-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/log5j-2.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j_datastoremanager_0.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/logger_1.0.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

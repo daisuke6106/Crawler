@@ -1,12 +1,10 @@
 package jp.co.dk.crawler.gdb;
 
-import static jp.co.dk.crawler.message.CrawlerMessage.DATASTOREMANAGER_CAN_NOT_CREATE;
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.neo4j.graphdb.Label;
@@ -15,21 +13,22 @@ import org.neo4j.graphdb.RelationshipType;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.crawler.gdb.neo4j.Neo4JDataStore;
-import jp.co.dk.crawler.gdb.neo4j.Node;
-import jp.co.dk.crawler.gdb.neo4j.NodeSelector;
-import jp.co.dk.crawler.gdb.neo4j.cypher.Cypher;
-import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JCypherException;
-import jp.co.dk.crawler.gdb.neo4j.exception.CrawlerNeo4JException;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
+import jp.co.dk.neo4jdatastoremanager.Node;
+import jp.co.dk.neo4jdatastoremanager.NodeSelector;
+import jp.co.dk.neo4jdatastoremanager.cypher.Cypher;
+import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerCypherException;
+import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerException;
 
 public class GUrl extends AbstractUrl {
 	
 	/** データストアマネージャ */
-	protected Neo4JDataStore dataStore;
+	protected Neo4JDataStoreManager dataStoreManager;
 	
-	public GUrl(String url, Neo4JDataStore dataStore) throws PageIllegalArgumentException {
+	public GUrl(String url, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException {
 		super(url);
-		this.dataStore = dataStore;
+		this.dataStoreManager = dataStoreManager;
 	}
 	
 	/** 
@@ -37,13 +36,14 @@ public class GUrl extends AbstractUrl {
 	 * 
 	 * @param dataStoreManager データストアマネージャー
 	 */
-	public void setDataStoreManager(Neo4JDataStore dataStore) {
-		this.dataStore = dataStore;
+	public void setDataStoreManager(Neo4JDataStoreManager dataStoreManager) {
+		this.dataStoreManager = dataStoreManager;
 	}
 	
 	@Override
 	public boolean save() throws CrawlerSaveException {
 		try {
+			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
 			Node endnode = dataStore.selectNode(new Cypher("MATCH(host:HOST{name:?})RETURN host").setParameter(this.getHost()));
 			if (endnode == null) {
 				endnode = dataStore.createNode();
@@ -82,7 +82,7 @@ public class GUrl extends AbstractUrl {
 					endnode = newEndnode;
 				}
 			}
-		} catch (CrawlerNeo4JException | CrawlerNeo4JCypherException e) {
+		} catch (Neo4JDataStoreManagerException | Neo4JDataStoreManagerCypherException e) {
 			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE, e);
 		}
 		return false;

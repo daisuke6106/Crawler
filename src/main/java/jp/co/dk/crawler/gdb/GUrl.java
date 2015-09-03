@@ -51,7 +51,16 @@ public class GUrl extends AbstractUrl {
 				endnode.setProperty("name", this.getHost());
 			}
 			for(String path : this.getPathList()){
-				List<Node> findNodes = endnode.getOutGoingNodes().stream().filter(pathNode->pathNode.getProperty("name").equals(path)).collect(Collectors.toList());
+				List<Node> findNodes = endnode.getOutGoingNodes(new NodeSelector(){
+					@Override
+					public boolean isSelect(org.neo4j.graphdb.Node node) {
+						if (node.hasProperty("name")) {
+							String pathName = (String)node.getProperty("name");
+							if (path.equals(pathName)) return true;
+						}
+						return false;
+					}
+				});
 				if (findNodes.size() == 0) {
 					Node newEndnode = dataStore.createNode();
 					newEndnode.addLabel(CrawlerNodeLabel.PATH);
@@ -68,8 +77,10 @@ public class GUrl extends AbstractUrl {
 				if (endnode.getOutGoingNodes(new NodeSelector() {
 						@Override
 						public boolean isSelect(org.neo4j.graphdb.Node node) {
-							int id = ((Integer)node.getProperty("parameter_id")).intValue();
-							if (id == parameterID) return true;
+							if (node.hasProperty("parameter_id")) {
+								int id = ((Integer)node.getProperty("parameter_id")).intValue();
+								if (id == parameterID) return true;
+							}
 							return false;
 						}
 					}).size() == 0

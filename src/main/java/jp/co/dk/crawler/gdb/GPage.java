@@ -13,6 +13,8 @@ import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.gdb.Cypher;
 import jp.co.dk.datastoremanager.gdb.DataBaseNode;
 import jp.co.dk.datastoremanager.gdb.DataConvertable;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
@@ -25,7 +27,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 public class GPage extends AbstractPage {
 	
 	/** データストアマネージャ */
-	protected DataStoreManager dataStoreManager;
+	protected Neo4JDataStoreManager dataStoreManager;
 	
 	/** アクセス日付フォーマット */
 	protected SimpleDateFormat accessDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -39,7 +41,7 @@ public class GPage extends AbstractPage {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public GPage(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
+	public GPage(String url, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
 		super(url);
 		this.dataStoreManager = dataStoreManager;
 	}
@@ -48,7 +50,7 @@ public class GPage extends AbstractPage {
 	public boolean save() throws CrawlerSaveException {
 		if (this.isSaved()) return false;
 		try {
-			jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dataStoreManager.getDataAccessObject("PAGE");
+			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
 			Cypher pageData = new Cypher("CREATE(:PAGE{url:?,accessdate:?,sha256:?,data:?})");
 			pageData.setParameter(this.url.toString());
 			pageData.setParameter(this.accessDateFormat.format(this.getCreateDate()));

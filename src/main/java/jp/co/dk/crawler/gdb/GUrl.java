@@ -5,7 +5,6 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.RelationshipType;
@@ -44,6 +43,10 @@ public class GUrl extends AbstractUrl {
 	public boolean save() throws CrawlerSaveException {
 		try {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
+			
+			Node urlNode = dataStore.selectNode(new Cypher("MATCH(url:URL{url_id:?})RETURN url").setParameter(this.hashCode()));
+			if (urlNode == null) return false;
+			
 			Node endnode = dataStore.selectNode(new Cypher("MATCH(host:HOST{name:?})RETURN host").setParameter(this.getHost()));
 			if (endnode == null) {
 				endnode = dataStore.createNode();
@@ -93,10 +96,26 @@ public class GUrl extends AbstractUrl {
 					endnode = newEndnode;
 				}
 			}
+			
+			List<Node> urlNodeList = endnode.getOutGoingNodes(new NodeSelector(){
+				@Override
+				public boolean isSelect(org.neo4j.graphdb.Node node) {
+					if (node.hasLabel(CrawlerNodeLabel.URL)) return true;
+					return false;
+				}
+			});
+			if (urlNodeList.size() == 0) {
+				Node newUrlNode = dataStore.createNode();
+				newUrlNode.addLabel(CrawlerNodeLabel.URL);
+				newUrlNode.setProperty("url_id", this.hashCode());
+				newUrlNode.setProperty("url", this.toString());
+				endnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, newUrlNode);
+				endnode = newUrlNode;
+			}
 		} catch (Neo4JDataStoreManagerException | Neo4JDataStoreManagerCypherException e) {
 			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE, e);
 		}
-		return false;
+		return true;
 	}
 	
 }
@@ -105,6 +124,7 @@ enum CrawlerNodeLabel implements Label {
 	HOST,
 	PATH,
 	PARAMETER,
+	URL,
 	PAGE,
 }
 

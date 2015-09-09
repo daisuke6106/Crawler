@@ -45,7 +45,7 @@ public class GUrl extends AbstractUrl {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
 			
 			Node urlNode = dataStore.selectNode(new Cypher("MATCH(url:URL{url_id:?})RETURN url").setParameter(this.hashCode()));
-			if (urlNode == null) return false;
+			if (urlNode != null) return false;
 			
 			Node endnode = dataStore.selectNode(new Cypher("MATCH(host:HOST{name:?})RETURN host").setParameter(this.getHost()));
 			if (endnode == null) {
@@ -118,6 +118,10 @@ public class GUrl extends AbstractUrl {
 		return true;
 	}
 	
+	public Node getUrlNode() throws Neo4JDataStoreManagerCypherException {
+		Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
+		return dataStore.selectNode(new Cypher("MATCH(url:URL{url_id:?})RETURN url").setParameter(this.hashCode()));
+	}
 }
 
 enum CrawlerNodeLabel implements Label {

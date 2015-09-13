@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.crawler.exception.CrawlerException;
-import jp.co.dk.datastoremanager.DataConvertable;
-import jp.co.dk.datastoremanager.Record;
-import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+import jp.co.dk.datastoremanager.rdb.DataBaseRecord;
+import jp.co.dk.datastoremanager.rdb.DataConvertable;
+import jp.co.dk.datastoremanager.rdb.Record;
 
 /**
  * PagesRecordは、PAGESテーブルの単一のレコードを表すクラス。

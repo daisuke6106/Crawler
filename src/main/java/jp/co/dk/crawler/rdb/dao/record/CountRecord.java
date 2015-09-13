@@ -1,9 +1,9 @@
 package jp.co.dk.crawler.rdb.dao.record;
 
-import jp.co.dk.datastoremanager.DataConvertable;
-import jp.co.dk.datastoremanager.Record;
-import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+import jp.co.dk.datastoremanager.rdb.DataBaseRecord;
+import jp.co.dk.datastoremanager.rdb.DataConvertable;
+import jp.co.dk.datastoremanager.rdb.Record;
 
 /**
  * CountRecordは、各テーブルで実行したカウントを取得する処理の結果を保持する単一のレコードを表すクラス。

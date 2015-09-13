@@ -6,12 +6,12 @@ import java.util.Date;
 import jp.co.dk.crawler.rdb.dao.RedirectErrors;
 import jp.co.dk.crawler.rdb.dao.record.CountRecord;
 import jp.co.dk.crawler.rdb.dao.record.RedirectErrorsRecord;
+import jp.co.dk.datastoremanager.DataBaseDriverConstants;
 import jp.co.dk.datastoremanager.DataStore;
-import jp.co.dk.datastoremanager.database.AbstractDataBaseAccessObject;
-import jp.co.dk.datastoremanager.database.DataBaseAccessParameter;
-import jp.co.dk.datastoremanager.database.DataBaseDriverConstants;
-import jp.co.dk.datastoremanager.database.Sql;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+import jp.co.dk.datastoremanager.rdb.AbstractDataBaseAccessObject;
+import jp.co.dk.datastoremanager.rdb.DataBaseAccessParameter;
+import jp.co.dk.datastoremanager.rdb.Sql;
 
 public class RedirectErrorsMysqlImpl extends AbstractDataBaseAccessObject implements RedirectErrors{
 	

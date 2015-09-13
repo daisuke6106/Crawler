@@ -2,10 +2,10 @@ package jp.co.dk.crawler.rdb.dao.record;
 
 import java.util.Date;
 
-import jp.co.dk.datastoremanager.DataConvertable;
-import jp.co.dk.datastoremanager.Record;
-import jp.co.dk.datastoremanager.database.DataBaseRecord;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
+import jp.co.dk.datastoremanager.rdb.DataBaseRecord;
+import jp.co.dk.datastoremanager.rdb.DataConvertable;
+import jp.co.dk.datastoremanager.rdb.Record;
 
 /**
  * RedirectErrorsRecordは、REDIRECT_ERRORSテーブルの単一のレコードを表すクラス。

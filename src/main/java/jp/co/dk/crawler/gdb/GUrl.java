@@ -133,5 +133,6 @@ enum CrawlerNodeLabel implements Label {
 }
 
 enum CrawlerRelationshipLabel implements RelationshipType {
-	CHILD
+	DATA,
+	CHILD,
 }

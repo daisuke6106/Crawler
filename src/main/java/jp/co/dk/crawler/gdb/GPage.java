@@ -1,20 +1,17 @@
 package jp.co.dk.crawler.gdb;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractPage;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.datastoremanager.DataStoreManager;
-import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-import jp.co.dk.datastoremanager.gdb.Cypher;
-import jp.co.dk.datastoremanager.gdb.DataBaseNode;
-import jp.co.dk.datastoremanager.gdb.DataConvertable;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
+import jp.co.dk.neo4jdatastoremanager.Node;
+import jp.co.dk.neo4jdatastoremanager.cypher.Cypher;
+import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerCypherException;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
@@ -44,6 +41,7 @@ public class GPage extends AbstractPage {
 	public GPage(String url, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
 		super(url);
 		this.dataStoreManager = dataStoreManager;
+		((GUrl)this.url).setDataStoreManager(dataStoreManager);
 	}
 
 	@Override
@@ -51,14 +49,17 @@ public class GPage extends AbstractPage {
 		if (this.isSaved()) return false;
 		try {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
-			Cypher pageData = new Cypher("CREATE(:PAGE{url:?,accessdate:?,sha256:?,data:?})");
-			pageData.setParameter(this.url.toString());
-			pageData.setParameter(this.accessDateFormat.format(this.getCreateDate()));
-			pageData.setParameter(this.getData().getHash());
-			pageData.setParameter(this.getData().getBytesToBase64String());
-			dataStore.execute(pageData);
-		} catch (ClassCastException | DataStoreManagerException e) {
-			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
+			Node pageNode = dataStore.createNode();
+			pageNode.addLabel(CrawlerNodeLabel.PAGE);
+			pageNode.setProperty("hash"      , this.getData().getHash());
+			pageNode.setProperty("data"      , this.getData().getBytesToBase64String());
+			pageNode.setProperty("accessdate", this.accessDateFormat.format(this.getCreateDate()));
+			GUrl url = (GUrl)this.getUrl();
+			url.save();
+			Node urlNode = url.getUrlNode();
+			urlNode.addOutGoingRelation(CrawlerRelationshipLabel.DATA, pageNode);
+		} catch (Neo4JDataStoreManagerCypherException e) {
+			throw new CrawlerSaveException(FAILE_TO_SAVE_PAGE, this.url.toString());
 		} catch (PageAccessException e) {
 			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.url.toString());
 		}
@@ -67,34 +68,16 @@ public class GPage extends AbstractPage {
 	
 	@Override
 	public boolean isSaved() throws CrawlerSaveException {
-		class CountComvertable implements DataConvertable {
-			private String countname;
-			private int    count;
-			CountComvertable(String countname){
-				this.countname = countname;
-			}
-			@Override
-			public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
-				this.count = dataBaseNode.getInt(this.countname);
-				return this;
-			}
-			int getCount() {
-				return this.count;
-			}
-		}
 		try {
-			jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dataStoreManager.getDataAccessObject("PAGE");
-			Cypher pageData = new Cypher("MATCH(page:PAGE{url:?,sha256:?}) RETURN COUNT(page) AS PAGECOUNT");
-			pageData.setParameter(this.url.toString());
-			pageData.setParameter(this.getData().getHash());
-			int count = dataStore.executeWithRetuen(pageData, new CountComvertable("PAGECOUNT")).get(0).getCount();
+			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
+			int count = dataStore.selectInt(new Cypher("MATCH(page:PAGE{hash:?})RETURN COUNT(page)").setParameter(this.getData().getHash())).intValue();
 			if (count == 0) {
 				return false;
 			} else {
 				return true;
 			}
-		} catch (ClassCastException | DataStoreManagerException e) {
-			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
+		} catch (Neo4JDataStoreManagerCypherException e) {
+			throw new CrawlerSaveException(FAILE_TO_SAVE_PAGE, this.url.toString());
 		} catch (PageAccessException e) {
 			throw new CrawlerSaveException(FAILE_TO_GET_PAGE, this.url.toString());
 		}
@@ -107,55 +90,56 @@ public class GPage extends AbstractPage {
 	 * @throws CrawlerSaveException 
 	 */
 	public int getLatestID() throws CrawlerSaveException {
-		class IDComvertable implements DataConvertable {
-			private String countname;
-			private int    id;
-			IDComvertable(String countname){
-				this.countname = countname;
-			}
-			@Override
-			public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
-				this.id = dataBaseNode.getInt(this.countname);
-				return this;
-			}
-			int getID() {
-				return this.id;
-			}
-		}
+//		class IDComvertable implements DataConvertable {
+//			private String countname;
+//			private int    id;
+//			IDComvertable(String countname){
+//				this.countname = countname;
+//			}
+//			@Override
+//			public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
+//				this.id = dataBaseNode.getInt(this.countname);
+//				return this;
+//			}
+//			int getID() {
+//				return this.id;
+//			}
+//		}
+//		
+//		class StringComvertable implements DataConvertable {
+//			private String countname;
+//			private String result;
+//			StringComvertable(String countname){
+//				this.countname = countname;
+//			}
+//			@Override
+//			public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
+//				this.result = dataBaseNode.getString(this.countname);
+//				return this;
+//			}
+//			String getString() {
+//				return this.result;
+//			}
+//		}
 		
-		class StringComvertable implements DataConvertable {
-			private String countname;
-			private String result;
-			StringComvertable(String countname){
-				this.countname = countname;
-			}
-			@Override
-			public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
-				this.result = dataBaseNode.getString(this.countname);
-				return this;
-			}
-			String getString() {
-				return this.result;
-			}
-		}
-		
-		try {
-			jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dataStoreManager.getDataAccessObject("PAGE");
-			Cypher pageData = new Cypher("MATCH(page:PAGE{url:?}) RETURN MAX(page.accessdate) as ACCESSDATE");
-			pageData.setParameter(this.url.toString());
-			List<StringComvertable> resultList = dataStore.executeWithRetuen(pageData, new StringComvertable("ACCESSDATE"));
-			if (resultList.size() == 0 || resultList.get(0).getString() == null) {
-				return -1;
-			} else {
-				Cypher pageIDData = new Cypher("MATCH(page:PAGE{url:?, accessdate:?}) RETURN ID(page) as PAGEID");
-				pageIDData.setParameter(this.url.toString());
-				pageIDData.setParameter(resultList.get(0).getString());
-				return dataStore.executeWithRetuen(pageIDData, new IDComvertable("PAGEID")).get(0).getID();
-			}
-			
-		} catch (ClassCastException | DataStoreManagerException e) {
-			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
-		}
+//		try {
+//			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
+//			Cypher pageData = new Cypher("MATCH(page:PAGE{url:?}) RETURN MAX(page.accessdate) as ACCESSDATE");
+//			pageData.setParameter(this.url.toString());
+//			List<StringComvertable> resultList = dataStore.executeWithRetuen(pageData, new StringComvertable("ACCESSDATE"));
+//			if (resultList.size() == 0 || resultList.get(0).getString() == null) {
+//				return -1;
+//			} else {
+//				Cypher pageIDData = new Cypher("MATCH(page:PAGE{url:?, accessdate:?}) RETURN ID(page) as PAGEID");
+//				pageIDData.setParameter(this.url.toString());
+//				pageIDData.setParameter(resultList.get(0).getString());
+//				return dataStore.executeWithRetuen(pageIDData, new IDComvertable("PAGEID")).get(0).getID();
+//			}
+//			
+//		} catch (ClassCastException | DataStoreManagerException e) {
+//			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
+//		}
+		return 0;
 	}
 	
 	@Override
@@ -174,7 +158,7 @@ public class GPage extends AbstractPage {
 	 * 
 	 * @param dataStoreManager データストアマネージャー
 	 */
-	public void setDataStoreManager(DataStoreManager dataStoreManager) {
+	public void setDataStoreManager(Neo4JDataStoreManager dataStoreManager) {
 		this.dataStoreManager = dataStoreManager;
 		((GUrl)this.url).setDataStoreManager(dataStoreManager);
 	}

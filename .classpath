@@ -6,6 +6,9 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Document"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Browzer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Neo4JDataStoreManager"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/browzer_1.0.0.jar"/>
@@ -25,7 +28,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/neo4j-jdbc-2.0.1-SNAPSHOT-jar-with-dependencies.jar"/>
 	<classpathentry kind="lib" path="lib/aspectjrt.jar"/>
-	<classpathentry kind="lib" path="lib/datastoremanager_1.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-core-1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
@@ -46,5 +48,6 @@
 	<classpathentry kind="lib" path="lib/log5j-2.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/neo4j_datastoremanager_0.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/logger_1.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/datastoremanager_1.2.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

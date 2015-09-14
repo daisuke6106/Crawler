@@ -99,7 +99,7 @@ public class GUrlTest extends CrawlerFoundationTest{
 
 	public static class 正常にインスタンスが生成できた場合＿０３ extends CrawlerFoundationTest{
 		
-protected static GUrl sut;
+		protected static GUrl sut;
 		
 		protected static Neo4JDataStoreManager dsm;
 		
@@ -159,7 +159,7 @@ protected static GUrl sut;
 	
 	public static class 正常にインスタンスが生成できた場合＿０５ extends CrawlerFoundationTest{
 		
-protected static GUrl sut;
+		protected static GUrl sut;
 		
 		protected static Neo4JDataStoreManager dsm;
 		
@@ -249,7 +249,7 @@ protected static GUrl sut;
 	
 	public static class 正常にインスタンスが生成できた場合＿０８ extends CrawlerFoundationTest{
 		
-protected static GUrl sut;
+		protected static GUrl sut;
 		
 		protected static Neo4JDataStoreManager dsm;
 		

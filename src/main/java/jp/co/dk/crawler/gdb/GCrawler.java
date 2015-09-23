@@ -1,20 +1,20 @@
 package jp.co.dk.crawler.gdb;
 
-import static jp.co.dk.crawler.message.CrawlerMessage.DATASTOREMANAGER_CAN_NOT_CREATE;
-import static jp.co.dk.crawler.message.CrawlerMessage.FAILE_TO_GET_PAGE;
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
+import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractCrawler;
-import jp.co.dk.crawler.AbstractPage;
 import jp.co.dk.crawler.AbstractPageManager;
 import jp.co.dk.crawler.AbstractPageRedirectHandler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.message.CrawlerMessage;
-import jp.co.dk.datastoremanager.DataStoreManager;
-import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-import jp.co.dk.datastoremanager.gdb.Cypher;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
+import jp.co.dk.neo4jdatastoremanager.cypher.Cypher;
+import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerCypherException;
 
 /**
  * Crawlerは、ネットワーク上に存在するHTML、XML、ファイルを巡回し、指定された出力先へ保存を行う処理を制御するクラス。<p/>
@@ -26,7 +26,7 @@ import jp.co.dk.datastoremanager.gdb.Cypher;
 public class GCrawler extends AbstractCrawler {
 	
 	/** データストアマネージャー */
-	protected DataStoreManager dsm;
+	protected Neo4JDataStoreManager dsm;
 	
 	/**
 	 * コンストラクタ<p/>
@@ -38,7 +38,7 @@ public class GCrawler extends AbstractCrawler {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public GCrawler(String url, DataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
+	public GCrawler(String url, Neo4JDataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
 		super(url);
 		if (dataStoreManager == null) throw new CrawlerInitException(CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET);
 		this.dsm = dataStoreManager;
@@ -51,16 +51,19 @@ public class GCrawler extends AbstractCrawler {
 	public boolean save() throws CrawlerSaveException {
 		GPage activePage = (GPage)this.getPage();
 		activePage.save();
-		if (this.pageManager != null) {
-			int beforePageID = ((GPage)this.pageManager.getPage()).getLatestID();
-			int activePageID = activePage.getLatestID();
+		
+		GPage beforePage = (GPage)this.pageManager.getParentPage();
+		if (beforePage != null) {
 			try {
-				jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject dataStore = (jp.co.dk.datastoremanager.gdb.AbstractDataBaseAccessObject)this.dsm.getDataAccessObject("PAGE");
-				Cypher pageData = new Cypher("MATCH(beforepage:PAGE) WHERE ID(beforepage)=? MATCH(activepage:PAGE) WHERE ID(activepage)=? CREATE(beforepage)-[:LINK]->(activepage)");
-				pageData.setParameter(beforePageID);
-				pageData.setParameter(activePageID);
-				dataStore.execute(pageData);
-			} catch (ClassCastException | DataStoreManagerException e) {
+				String beforePage_LatestAccessDate = beforePage.getLatestAccessDate();
+				String activePage_LatestAccessDate = activePage.getLatestAccessDate();
+				
+				Neo4JDataStore dataStore = this.dsm.getDataAccessObject("PAGE");
+				Cypher pageData = new Cypher("MATCH(beforepage:PAGE) WHERE beforepage.accessdate=?").setParameter(beforePage_LatestAccessDate);
+				pageData.append("MATCH(activepage:PAGE) WHERE activepage.accessdate=?").setParameter(activePage_LatestAccessDate);
+				pageData.append("CREATE(beforepage)-[:LINK]->(activepage)");
+				dataStore.selectNode(pageData);
+			} catch (Neo4JDataStoreManagerCypherException e) {
 				throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
 			}
 		}
@@ -86,7 +89,7 @@ public class GCrawler extends AbstractCrawler {
 	 * データストアマネージャを設定します。
 	 * @param dsm データストアマネージャ
 	 */
-	public DataStoreManager getDataStoreManager() {
+	public Neo4JDataStoreManager getDataStoreManager() {
 		return this.dsm;
 	}
 }

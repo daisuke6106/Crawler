@@ -1,6 +1,6 @@
 package jp.co.dk.crawler.gdb;
 
-import static jp.co.dk.crawler.message.CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET;
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.AbstractPageRedirectHandler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerPageRedirectHandlerException;
-import jp.co.dk.datastoremanager.DataStoreManager;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
 
 /**
  * CrawlerPageRedirectHandlerは、ページ接続完了後、その結果に対してのイベントを定義するクラスです。
@@ -23,7 +23,7 @@ import jp.co.dk.datastoremanager.DataStoreManager;
  */
 class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 	
-	protected DataStoreManager dsm;
+	protected Neo4JDataStoreManager dsm;
 	
 	/**
 	 * コンストラクタ<p/>
@@ -45,12 +45,12 @@ class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 	 * @param eventHandler イベントハンドラ一覧
 	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
 	 */
-	GCrawlerPageRedirectHandler(DataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerInitException {
+	GCrawlerPageRedirectHandler(Neo4JDataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerInitException {
 		super(eventHandler);
 		this.dsm = dsm;
 	}
 	
-	void setDataStoreManager(DataStoreManager dsm) {
+	void setDataStoreManager(Neo4JDataStoreManager dsm) {
 		this.dsm = dsm;
 	}
 	

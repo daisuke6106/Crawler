@@ -10,7 +10,6 @@ import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.document.exception.DocumentFatalException;
 
 /**

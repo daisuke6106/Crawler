@@ -120,7 +120,7 @@ public class GUrl extends AbstractUrl {
 	
 	public Node getUrlNode() throws Neo4JDataStoreManagerCypherException {
 		Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
-		return dataStore.selectNode(new Cypher("MATCH(url:URL{url_id:?})RETURN url").setParameter(this.hashCode()));
+		return dataStore.selectNode(new Cypher("MATCH(url:URL{url:?})RETURN url").setParameter(this.toString()));
 	}
 }
 

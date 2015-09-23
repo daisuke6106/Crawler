@@ -53,6 +53,8 @@ public class GPage extends AbstractPage {
 			pageNode.addLabel(CrawlerNodeLabel.PAGE);
 			pageNode.setProperty("hash"      , this.getData().getHash());
 			pageNode.setProperty("data"      , this.getData().getBytesToBase64String());
+			pageNode.setProperty("size"      , this.getData().length());
+			
 			pageNode.setProperty("accessdate", this.accessDateFormat.format(this.getCreateDate()));
 			GUrl url = (GUrl)this.getUrl();
 			url.save();
@@ -87,59 +89,11 @@ public class GPage extends AbstractPage {
 	 * このページ情報の最新のＩＤを取得する。
 	 * 
 	 * @return このページ情報のＩＤ
-	 * @throws CrawlerSaveException 
+	 * @throws Neo4JDataStoreManagerCypherException 
 	 */
-	public int getLatestID() throws CrawlerSaveException {
-//		class IDComvertable implements DataConvertable {
-//			private String countname;
-//			private int    id;
-//			IDComvertable(String countname){
-//				this.countname = countname;
-//			}
-//			@Override
-//			public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
-//				this.id = dataBaseNode.getInt(this.countname);
-//				return this;
-//			}
-//			int getID() {
-//				return this.id;
-//			}
-//		}
-//		
-//		class StringComvertable implements DataConvertable {
-//			private String countname;
-//			private String result;
-//			StringComvertable(String countname){
-//				this.countname = countname;
-//			}
-//			@Override
-//			public DataConvertable convert(DataBaseNode dataBaseNode) throws DataStoreManagerException {
-//				this.result = dataBaseNode.getString(this.countname);
-//				return this;
-//			}
-//			String getString() {
-//				return this.result;
-//			}
-//		}
-		
-//		try {
-//			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
-//			Cypher pageData = new Cypher("MATCH(page:PAGE{url:?}) RETURN MAX(page.accessdate) as ACCESSDATE");
-//			pageData.setParameter(this.url.toString());
-//			List<StringComvertable> resultList = dataStore.executeWithRetuen(pageData, new StringComvertable("ACCESSDATE"));
-//			if (resultList.size() == 0 || resultList.get(0).getString() == null) {
-//				return -1;
-//			} else {
-//				Cypher pageIDData = new Cypher("MATCH(page:PAGE{url:?, accessdate:?}) RETURN ID(page) as PAGEID");
-//				pageIDData.setParameter(this.url.toString());
-//				pageIDData.setParameter(resultList.get(0).getString());
-//				return dataStore.executeWithRetuen(pageIDData, new IDComvertable("PAGEID")).get(0).getID();
-//			}
-//			
-//		} catch (ClassCastException | DataStoreManagerException e) {
-//			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE);
-//		}
-		return 0;
+	public String getLatestAccessDate() throws Neo4JDataStoreManagerCypherException {
+		Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
+		return dataStore.selectString(new Cypher("MATCH(url:URL{url:?})-[:DATA]->(page:PAGE) return MAX(page.accessdate) ").setParameter(this.url.toString()));
 	}
 	
 	@Override

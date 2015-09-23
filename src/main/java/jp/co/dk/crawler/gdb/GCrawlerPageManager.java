@@ -9,7 +9,7 @@ import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractPageManager;
-import jp.co.dk.datastoremanager.DataStoreManager;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
 
 /**
  * CrawlerPageManagerは、クローラー専用のページ遷移状態管理を行うページ管理クラスです。
@@ -20,7 +20,7 @@ import jp.co.dk.datastoremanager.DataStoreManager;
 class GCrawlerPageManager extends AbstractPageManager {
 	
 	/** データストアマネージャ */
-	protected DataStoreManager dsm;
+	protected Neo4JDataStoreManager dsm;
 	
 	/**
 	 * コンストラクタ<p/>
@@ -33,7 +33,7 @@ class GCrawlerPageManager extends AbstractPageManager {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	GCrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException, PageAccessException {
+	GCrawlerPageManager(Neo4JDataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException, PageAccessException {
 		super(url, pageRedirectHandler, pageEventHandlerList);
 		this.dsm = dsm;
 		((jp.co.dk.crawler.gdb.GPage)this.getPage()).setDataStoreManager(dsm);
@@ -51,7 +51,7 @@ class GCrawlerPageManager extends AbstractPageManager {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	GCrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
+	GCrawlerPageManager(Neo4JDataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
 		super(url, pageRedirectHandler, pageEventHandlerList, maxNestLevel);
 		this.dsm = dsm;
 		((jp.co.dk.crawler.gdb.GPage)this.getPage()).setDataStoreManager(dsm);
@@ -69,7 +69,7 @@ class GCrawlerPageManager extends AbstractPageManager {
 	 * @param nestLevel            現在のページ遷移数
 	 * @param maxNestLevel         ページ遷移上限数
 	 */
-	GCrawlerPageManager(DataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nestLevel, int maxNestLevel){
+	GCrawlerPageManager(Neo4JDataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nestLevel, int maxNestLevel){
 		super(parentPage, page, pageRedirectHandler, pageEventHandlerList, nestLevel, maxNestLevel);
 	}
 	
@@ -77,7 +77,7 @@ class GCrawlerPageManager extends AbstractPageManager {
 	 * データストアマネージャを設定します。
 	 * @param dsm データストアマネージャ
 	 */
-	void setDataStoreManager(DataStoreManager dsm) {
+	void setDataStoreManager(Neo4JDataStoreManager dsm) {
 		this.dsm = dsm;
 		((GPage)this.page).setDataStoreManager(dsm);
 	}

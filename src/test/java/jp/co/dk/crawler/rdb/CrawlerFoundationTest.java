@@ -3,6 +3,9 @@ package jp.co.dk.crawler.rdb;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.datastoremanager.property.DataStoreManagerProperty;
+import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
+import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerException;
+import jp.co.dk.neo4jdatastoremanager.property.Neo4JDataStoreManagerProperty;
 import jp.co.dk.test.template.TestCaseTemplate;
 
 public class CrawlerFoundationTest extends TestCaseTemplate{
@@ -15,12 +18,12 @@ public class CrawlerFoundationTest extends TestCaseTemplate{
 		return new DataStoreManager(new DataStoreManagerProperty("properties/test/mysql/AccessFaileDataStoreManager.properties"));
 	}
 	
-	protected static DataStoreManager getNeo4JAccessableDataStoreManager() throws DataStoreManagerException {
-		return new DataStoreManager(new DataStoreManagerProperty("properties/test/neo4j/AccessableDataStoreManager.properties"));
+	protected static Neo4JDataStoreManager getNeo4JAccessableDataStoreManager() throws Neo4JDataStoreManagerException {
+		return new Neo4JDataStoreManager(new Neo4JDataStoreManagerProperty("properties/test/neo4j/AccessableDataStoreManager.properties"));
 	}
 	
-	protected static DataStoreManager getNeo4JAccessFaileDataStoreManager() throws DataStoreManagerException{
-		return new DataStoreManager(new DataStoreManagerProperty("properties/test/neo4j/AccessFaileDataStoreManager.properties"));
+	protected static Neo4JDataStoreManager getNeo4JAccessFaileDataStoreManager() throws Neo4JDataStoreManagerException{
+		return new Neo4JDataStoreManager(new Neo4JDataStoreManagerProperty("properties/test/neo4j/AccessFaileDataStoreManager.properties"));
 	}
 	
 	@Override

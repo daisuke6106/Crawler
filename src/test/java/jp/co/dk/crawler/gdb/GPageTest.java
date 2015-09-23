@@ -48,7 +48,7 @@ public class GPageTest extends CrawlerFoundationTest{
 		}
 		
 		@Test
-		public void oder01_isSaved() {
+		public void save() {
 			try {
 				dsm.startTrunsaction();
 				sut.save();

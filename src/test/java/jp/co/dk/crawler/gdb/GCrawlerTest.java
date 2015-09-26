@@ -44,7 +44,7 @@ public class GCrawlerTest extends CrawlerFoundationTest{
 		@BeforeClass
 		public static void init() throws DocumentException, Neo4JDataStoreManagerException, CrawlerInitException, PageIllegalArgumentException, PageAccessException {
 			dsm = getNeo4JAccessableDataStoreManager();
-			sut = new GCrawler("http://gigazine.net/", dsm);
+			sut = new GCrawler("http://gigazine.net/news/20150230-headline/", dsm);
 		}
 		
 		@Test

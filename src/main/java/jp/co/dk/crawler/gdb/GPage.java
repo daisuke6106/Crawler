@@ -72,7 +72,11 @@ public class GPage extends AbstractPage {
 	public boolean isSaved() throws CrawlerSaveException {
 		try {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
-			int count = dataStore.selectInt(new Cypher("MATCH(page:PAGE{hash:?})RETURN COUNT(page)").setParameter(this.getData().getHash())).intValue();
+			int count = dataStore.selectInt(
+					new Cypher("MATCH(url:URL{url:?})-[:DATA]->(page:PAGE{hash:?}) RETURN COUNT(page)")
+					.setParameter(this.url.toString())
+					.setParameter(this.getData().getHash())
+				).intValue();
 			if (count == 0) {
 				return false;
 			} else {

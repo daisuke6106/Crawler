@@ -1,6 +1,8 @@
 package jp.co.dk.crawler.gdb;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 
 import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.PageAccessException;
@@ -51,9 +53,27 @@ public class GPage extends AbstractPage {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
 			Node pageNode = dataStore.createNode();
 			pageNode.addLabel(CrawlerNodeLabel.PAGE);
+			pageNode.setProperty("http_statuscode", this.getResponseHeader().getResponseRecord().getHttpStatusCode().getCode());
+			pageNode.setProperty("http_version"   , this.getResponseHeader().getResponseRecord().getHttpVersion());
+			pageNode.setProperty("content_type"   , this.getResponseHeader().getContentsType().getType());
+			pageNode.setProperty("content_subtype", this.getResponseHeader().getContentsType().getSubType());
 			pageNode.setProperty("hash"      , this.getData().getHash());
 			pageNode.setProperty("data"      , this.getData().getBytesToBase64String());
 			pageNode.setProperty("size"      , this.getData().length());
+			
+			Node requestHeaderNode = dataStore.createNode();
+			requestHeaderNode.addLabel(CrawlerNodeLabel.REQUEST_HEADER);
+			for (Map.Entry<String, String> requestHeaderProperty : this.getRequestHeader().getHeaderMap().entrySet()){
+				requestHeaderNode.setProperty(requestHeaderProperty.getKey(), requestHeaderProperty.getValue());
+			}
+			pageNode.addOutGoingRelation(CrawlerRelationshipLabel.REQUEST_HEADER, requestHeaderNode);
+			
+			Node responseHeaderNode = dataStore.createNode();
+			responseHeaderNode.addLabel(CrawlerNodeLabel.RESPONSE_HEADER);
+			for (Map.Entry<String, List<String>> responseHeaderProperty : this.getResponseHeader().getHeaderMap().entrySet()){
+				responseHeaderNode.setProperty(responseHeaderProperty.getKey(), responseHeaderProperty.getValue().toString());
+			}
+			pageNode.addOutGoingRelation(CrawlerRelationshipLabel.RESPONSE_HEADER, responseHeaderNode);
 			
 			pageNode.setProperty("accessdate", this.accessDateFormat.format(this.getCreateDate()));
 			GUrl url = (GUrl)this.getUrl();

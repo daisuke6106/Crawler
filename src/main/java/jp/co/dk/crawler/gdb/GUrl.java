@@ -130,9 +130,13 @@ enum CrawlerNodeLabel implements Label {
 	PARAMETER,
 	URL,
 	PAGE,
+	REQUEST_HEADER,
+	RESPONSE_HEADER,
 }
 
 enum CrawlerRelationshipLabel implements RelationshipType {
 	DATA,
 	CHILD,
+	REQUEST_HEADER,
+	RESPONSE_HEADER,
 }

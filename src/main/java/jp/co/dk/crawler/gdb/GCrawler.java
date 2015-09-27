@@ -1,7 +1,6 @@
 package jp.co.dk.crawler.gdb;
 
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
-import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;

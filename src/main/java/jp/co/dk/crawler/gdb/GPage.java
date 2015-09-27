@@ -7,6 +7,9 @@ import java.util.Map;
 import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
+import jp.co.dk.browzer.http.header.ContentsType;
+import jp.co.dk.browzer.http.header.ResponseHeader;
+import jp.co.dk.browzer.http.header.record.ResponseRecord;
 import jp.co.dk.crawler.AbstractPage;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
@@ -53,13 +56,24 @@ public class GPage extends AbstractPage {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
 			Node pageNode = dataStore.createNode();
 			pageNode.addLabel(CrawlerNodeLabel.PAGE);
-			pageNode.setProperty("http_statuscode", this.getResponseHeader().getResponseRecord().getHttpStatusCode().getCode());
-			pageNode.setProperty("http_version"   , this.getResponseHeader().getResponseRecord().getHttpVersion());
-			pageNode.setProperty("content_type"   , this.getResponseHeader().getContentsType().getType());
-			pageNode.setProperty("content_subtype", this.getResponseHeader().getContentsType().getSubType());
-			pageNode.setProperty("hash"      , this.getData().getHash());
-			pageNode.setProperty("data"      , this.getData().getBytesToBase64String());
-			pageNode.setProperty("size"      , this.getData().length());
+			ResponseHeader responseHeader = this.getResponseHeader();
+			
+			ResponseRecord responseRecord = responseHeader.getResponseRecord();
+			pageNode.setProperty("http_statuscode", responseRecord.getHttpStatusCode().getCode());
+			pageNode.setProperty("http_version"   , responseRecord.getHttpVersion());
+			
+			ContentsType contentsType = responseHeader.getContentsType();
+			if (contentsType != null) {
+				pageNode.setProperty("content_type"   , contentsType.getType()   );
+				pageNode.setProperty("content_subtype", contentsType.getSubType());
+			} else {
+				pageNode.setProperty("content_type"   , "");
+				pageNode.setProperty("content_subtype", "");
+			}
+			
+			pageNode.setProperty("hash"           , this.getData().getHash());
+			pageNode.setProperty("data"           , this.getData().getBytesToBase64String());
+			pageNode.setProperty("size"           , this.getData().length());
 			
 			Node requestHeaderNode = dataStore.createNode();
 			requestHeaderNode.addLabel(CrawlerNodeLabel.REQUEST_HEADER);

@@ -27,7 +27,6 @@ import org.apache.commons.cli.PosixParser;
 
 public class CrawlerMain {
 	
-	
 	public static void main(String args[]) {
 		new CrawlerMain().execute(args);
 	}
@@ -139,28 +138,6 @@ public class CrawlerMain {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			System.exit(1);
-		}
-	}
-	
-}
-
-class CrawlerControler {
-	
-	protected Crawler crawler;
-	
-	CrawlerControler(Crawler crawler) {
-		this.crawler = crawler;
-	}
-	
-	void crawl() throws PageAccessException, DocumentException, CrawlerException, CrawlerSaveException, DataStoreManagerException, PageIllegalArgumentException, PageRedirectException, PageMovableLimitException {
-		this.crawler.saveAll();
-		this.crawler.getDataStoreManager().commit();
-		List<A> excludeHtmlAnchorList = this.crawler.getPage().getAnchorExcludeHtml();
-		for (A anchor : excludeHtmlAnchorList) {
-			this.crawler.move((MovableElement) anchor);
-			this.crawler.saveAll();
-			this.crawler.getDataStoreManager().commit();
-			this.crawler.back();
 		}
 	}
 }

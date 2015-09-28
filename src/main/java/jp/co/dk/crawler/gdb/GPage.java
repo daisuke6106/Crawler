@@ -32,7 +32,7 @@ public class GPage extends AbstractPage {
 	protected Neo4JDataStoreManager dataStoreManager;
 	
 	/** アクセス日付フォーマット */
-	protected SimpleDateFormat accessDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	protected static SimpleDateFormat accessDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	
 	/**
 	 * コンストラクタ<p/>
@@ -89,7 +89,7 @@ public class GPage extends AbstractPage {
 			}
 			pageNode.addOutGoingRelation(CrawlerRelationshipLabel.RESPONSE_HEADER, responseHeaderNode);
 			
-			pageNode.setProperty("accessdate", this.accessDateFormat.format(this.getCreateDate()));
+			pageNode.setProperty("accessdate", accessDateFormat.format(this.getCreateDate()));
 			GUrl url = (GUrl)this.getUrl();
 			url.save();
 			Node urlNode = url.getUrlNode();

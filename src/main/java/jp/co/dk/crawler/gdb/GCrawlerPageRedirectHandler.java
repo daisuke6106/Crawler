@@ -64,7 +64,7 @@ class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 		try {
 			return super.redirectBy_SERVER_ERROR(header, page);
 		} catch (PageRedirectException e) {
-			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.rdb.Page)page);
+			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.rdb.RPage)page);
 		}
 		
 	}
@@ -74,7 +74,7 @@ class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 		try {
 			return super.redirectBy_CLIENT_ERROR(header, page);
 		} catch (PageRedirectException e) {
-			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.rdb.Page)page);
+			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.rdb.RPage)page);
 		}
 	}
 }

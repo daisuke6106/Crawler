@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
@@ -16,6 +17,7 @@ import jp.co.dk.crawler.rdb.dao.Pages;
 import jp.co.dk.crawler.rdb.dao.Urls;
 import jp.co.dk.crawler.rdb.dao.record.DocumentsRecord;
 import jp.co.dk.datastoremanager.DaoConstants;
+import jp.co.dk.datastoremanager.DataAccessObjectFactory;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
 import jp.co.dk.document.exception.DocumentFatalException;
@@ -28,7 +30,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @version 1.0
  * @author D.Kanno
  */
-public class Page extends AbstractPage implements DaoConstants {
+public class RPage extends AbstractPage implements DaoConstants {
 	
 	/** データストアマネージャ */
 	protected DataStoreManager dataStoreManager;
@@ -42,7 +44,7 @@ public class Page extends AbstractPage implements DaoConstants {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public Page(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
+	public RPage(String url, DataStoreManager dataStoreManager) throws PageIllegalArgumentException, PageAccessException {
 		super(url);
 		this.dataStoreManager = dataStoreManager;
 	}
@@ -248,6 +250,24 @@ public class Page extends AbstractPage implements DaoConstants {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public DataAccessObjectFactory getDataAccessObjectFactory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected Url createUrl(String url) throws PageIllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

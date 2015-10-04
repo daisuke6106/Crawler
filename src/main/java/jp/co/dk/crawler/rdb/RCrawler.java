@@ -16,6 +16,7 @@ import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.AbstractPageManager;
+import jp.co.dk.crawler.AbstractPageRedirectHandler;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerPageRedirectHandlerException;
@@ -44,7 +45,7 @@ import jp.co.dk.document.html.constant.HtmlElementName;
  * @version 1.0
  * @author D.Kanno
  */
-public class Crawler extends AbstractCrawler {
+public class RCrawler extends AbstractCrawler {
 	
 	/** データストアマネージャー */
 	protected DataStoreManager dsm;
@@ -59,17 +60,17 @@ public class Crawler extends AbstractCrawler {
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	public Crawler(String url, DataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
+	public RCrawler(String url, DataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException { 
 		super(url);
 		if (dataStoreManager == null) throw new CrawlerInitException(CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET);
 		this.dsm                 = dataStoreManager;
-		this.pageRedirectHandler = new CrawlerPageRedirectHandler(dataStoreManager, this.getPageEventHandler());
+		this.pageRedirectHandler = new RCrawlerPageRedirectHandler(dataStoreManager, this.getPageEventHandler());
 		super.pageManager = this.createPageManager(url, this.pageRedirectHandler);
 	}
 	
 	@Override
 	public boolean save() throws CrawlerSaveException {
-		jp.co.dk.crawler.rdb.Page page = (jp.co.dk.crawler.rdb.Page) this.getPage();
+		jp.co.dk.crawler.rdb.RPage page = (jp.co.dk.crawler.rdb.RPage) this.getPage();
 		return page.save();
 	}
 	
@@ -88,7 +89,7 @@ public class Crawler extends AbstractCrawler {
 	protected void errorHandler (Page beforePage, Url nextPageUrl, Throwable throwable) throws CrawlerException, DataStoreManagerException, DocumentFatalException, PageAccessException {
 		if (throwable instanceof CrawlerPageRedirectHandlerException) {
 			CrawlerPageRedirectHandlerException crawlerPageRedirectHandlerException = (CrawlerPageRedirectHandlerException) throwable;
-			jp.co.dk.crawler.rdb.Page errorPage = (jp.co.dk.crawler.rdb.Page)crawlerPageRedirectHandlerException.getPage();
+			jp.co.dk.crawler.rdb.RPage errorPage = (jp.co.dk.crawler.rdb.RPage)crawlerPageRedirectHandlerException.getPage();
 			this.addLinks(beforePage.getUrl(), errorPage.getUrl());
 			RedirectErrors errors = (RedirectErrors)this.dsm.getDataAccessObject(CrawlerDaoConstants.REDIRECT_ERRORS);
 			String fileId = errorPage.getFileId();
@@ -145,16 +146,21 @@ public class Crawler extends AbstractCrawler {
 
 	@Override
 	protected AbstractPageManager createPageManager(String url, PageRedirectHandler handler) throws PageIllegalArgumentException, PageAccessException {
-		return new CrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList);
+		return new RCrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList);
 	}
 	
 	@Override
 	protected AbstractPageManager createPageManager(String url, PageRedirectHandler handler, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
-		return new CrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList, maxNestLevel);
+		return new RCrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList, maxNestLevel);
 	}
 	
 	public DataStoreManager getDataStoreManager() {
 		return this.dsm;
+	}
+
+	@Override
+	protected AbstractPageRedirectHandler createPageRedirectHandler() {
+		return new RCrawlerPageRedirectHandler(this.dsm, this.getPageEventHandler());
 	}
 	
 }

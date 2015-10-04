@@ -11,7 +11,7 @@ import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageHeaderImproperException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.crawler.rdb.Page;
+import jp.co.dk.crawler.rdb.RPage;
 import jp.co.dk.crawler.rdb.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.rdb.dao.Documents;
 import jp.co.dk.crawler.rdb.dao.Pages;
@@ -30,7 +30,7 @@ public class PageTest extends CrawlerFoundationTest{
 	public void constactor() throws DataStoreManagerException {
 		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
-			Page page = new Page("http://www.google.com", manager);
+			RPage page = new RPage("http://www.google.com", manager);
 		} catch (BrowzingException e) {
 			manager.finishTrunsaction();
 			fail(e);
@@ -47,7 +47,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page = new Page("http://ja.wikipedia.org/wiki/HyperText_Markup_Language", manager);
+			RPage page = new RPage("http://ja.wikipedia.org/wiki/HyperText_Markup_Language", manager);
 			page.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			
@@ -89,7 +89,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page1 = new Page("http://www.google.com", manager);
+			RPage page1 = new RPage("http://www.google.com", manager);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト結果確認
@@ -98,7 +98,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page2 = new Page("http://www.ugtop.com/spill.shtml", manager);
+			RPage page2 = new RPage("http://www.ugtop.com/spill.shtml", manager);
 			page2.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -108,7 +108,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page3 = new Page("http://www.google.com", manager);
+			RPage page3 = new RPage("http://www.google.com", manager);
 			page3.save();
 			page3.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -120,7 +120,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page4 = new Page("http://gigazine.net/news/20131103-four-elements-of-company-building/", manager);
+			RPage page4 = new RPage("http://gigazine.net/news/20131103-four-elements-of-company-building/", manager);
 			page4.save();
 			page4.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -151,7 +151,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page1 = new Page("http://www.google.com", manager);
+			RPage page1 = new RPage("http://www.google.com", manager);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト結果確認
@@ -160,7 +160,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page2 = new Page("http://www.htmq.com/html/head.shtml", manager);
+			RPage page2 = new RPage("http://www.htmq.com/html/head.shtml", manager);
 			page2.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -170,7 +170,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page3 = new Page("http://www.google.com", manager);
+			RPage page3 = new RPage("http://www.google.com", manager);
 			page3.save();
 			page3.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -201,7 +201,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page1 = new Page("http://www.google.com", manager);
+			RPage page1 = new RPage("http://www.google.com", manager);
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト結果確認
@@ -211,7 +211,7 @@ public class PageTest extends CrawlerFoundationTest{
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
 			// 最終更新日付けが設定されていないページの場合
-			Page page2 = new Page("http://www.htmq.com/html/head.shtml", manager);
+			RPage page2 = new RPage("http://www.htmq.com/html/head.shtml", manager);
 			if (page2.getResponseHeader().getLastModified() == null) {
 				// 保存を実行
 				page2.save();
@@ -225,7 +225,7 @@ public class PageTest extends CrawlerFoundationTest{
 			
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 			// テスト実行
-			Page page3 = new Page("http://www.google.com", manager);
+			RPage page3 = new RPage("http://www.google.com", manager);
 			page3.save();
 			page3.save();
 			// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -250,7 +250,7 @@ public class PageTest extends CrawlerFoundationTest{
 	public void sameDate() throws DataStoreManagerException {
 		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
-			Page page = new Page("http://www.google.com", getMysqlAccessableDataStoreManager());
+			RPage page = new RPage("http://www.google.com", getMysqlAccessableDataStoreManager());
 			// NULL２つ設定した場合、trueが返却されること。
 			assertThat(page.sameDate(null, null), is(true));
 			
@@ -274,7 +274,7 @@ public class PageTest extends CrawlerFoundationTest{
 	public void sameBytes() throws DataStoreManagerException {
 		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
-			Page page = new Page("http://www.google.com", getMysqlAccessableDataStoreManager());
+			RPage page = new RPage("http://www.google.com", getMysqlAccessableDataStoreManager());
 			// NULL２つ設定した場合、trueが返却されること。
 			assertThat(page.sameBytes(null, null), is(true));
 			
@@ -302,7 +302,7 @@ public class PageTest extends CrawlerFoundationTest{
 		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		// ==========正常にファイルIDが返却されること==========
 		try {
-			Page page = new Page("http://ja.wikipedia.org/wiki/HyperText_Markup_Language", getMysqlAccessableDataStoreManager());
+			RPage page = new RPage("http://ja.wikipedia.org/wiki/HyperText_Markup_Language", getMysqlAccessableDataStoreManager());
 			assertEquals(page.getFileId(), "74782a262a7cdd3c38a52135793c29f5450f4722c125bdacdfc549a6194bc0d6");
 		} catch (BrowzingException e) {
 			manager.finishTrunsaction();

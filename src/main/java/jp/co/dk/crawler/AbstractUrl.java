@@ -3,7 +3,6 @@ package jp.co.dk.crawler;
 import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.datastoremanager.DataStoreManager;
 
 public abstract class AbstractUrl extends Url {
 	

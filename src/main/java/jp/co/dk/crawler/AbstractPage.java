@@ -72,7 +72,7 @@ public abstract class AbstractPage extends Page {
 	public abstract boolean isLatest() throws CrawlerSaveException ;
 	
 	@Override
-	protected abstract Url createUrl(String url) throws PageIllegalArgumentException;
+	protected abstract AbstractUrl createUrl(String url) throws PageIllegalArgumentException;
 	
 	/**
 	 * このページのURLからページを一意に特定するためのファイルIDを算出し返却します。<p/>

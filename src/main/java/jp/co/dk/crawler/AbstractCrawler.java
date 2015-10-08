@@ -23,6 +23,7 @@ import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.HtmlElement;
 import jp.co.dk.document.html.constant.HtmlElementName;
+import jp.co.dk.document.html.element.A;
 
 public abstract class AbstractCrawler extends Browzer {
 	
@@ -75,7 +76,7 @@ public abstract class AbstractCrawler extends Browzer {
 		this.saveLink();
 		this.pageManager.removeChild();
 	}
-
+	
 	/**
 	 * 現在アクティブになっているページに記載されているすべてのIMGタグを元にそのページに遷移し、データストアへの保存を実施します。<p/>
 	 * アクティブページがHTMLでない場合、何もせずに処理を終了します。<br/>

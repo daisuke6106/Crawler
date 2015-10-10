@@ -19,7 +19,7 @@ public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
 	@Test
 	public void createTable_dropTable() {
 		try {
-			Documents documents = new DocumentsMysqlImpl(super.getAccessableDataBaseAccessParameter());
+			Documents documents = new DocumentsMysqlImpl(getMysqlAccessableDataStoreManager());
 			documents.dropTable();
 			documents.createTable();
 		} catch (DataStoreManagerException e) {

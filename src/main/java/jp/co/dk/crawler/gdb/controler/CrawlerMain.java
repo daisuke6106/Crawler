@@ -10,6 +10,7 @@ import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.gdb.GCrawler;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
+import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerCypherException;
 import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerException;
 import jp.co.dk.neo4jdatastoremanager.property.Neo4JDataStoreManagerProperty;
 import jp.co.dk.property.exception.PropertyException;
@@ -101,6 +102,8 @@ public class CrawlerMain {
 			GCrawler crawler = new GCrawler(cmd.getOptionValue("url"), dsm);
 			if (cmd.hasOption("all")) {
 				crawler.saveAll();
+				crawler.saveAllUrl();
+				
 			} else {
  				crawler.save();
 			}
@@ -121,6 +124,9 @@ public class CrawlerMain {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (Neo4JDataStoreManagerException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		} catch (Neo4JDataStoreManagerCypherException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}

@@ -10,6 +10,7 @@ import jp.co.dk.crawler.AbstractPageRedirectHandler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.message.CrawlerMessage;
+import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
 import jp.co.dk.neo4jdatastoremanager.cypher.Cypher;
@@ -44,6 +45,11 @@ public class GCrawler extends AbstractCrawler {
 		((GCrawlerPageManager)this.pageManager).setDataStoreManager(dataStoreManager);
 		((GCrawlerPageRedirectHandler)this.pageRedirectHandler).setDataStoreManager(dataStoreManager);
 		
+	}
+	
+	public void saveAllUrl() throws PageAccessException, PageIllegalArgumentException, DocumentException, CrawlerSaveException, Neo4JDataStoreManagerCypherException {
+		GPage activePage = (GPage)this.getPage();
+		activePage.saveAllUrl();
 	}
 	
 	@Override

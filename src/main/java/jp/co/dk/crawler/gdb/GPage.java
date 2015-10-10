@@ -4,14 +4,17 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.http.header.ContentsType;
 import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.browzer.http.header.record.ResponseRecord;
 import jp.co.dk.crawler.AbstractPage;
+import jp.co.dk.crawler.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
+import jp.co.dk.document.exception.DocumentException;
+import jp.co.dk.document.exception.DocumentFatalException;
+import jp.co.dk.document.html.element.A;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
 import jp.co.dk.neo4jdatastoremanager.Node;
@@ -123,6 +126,20 @@ public class GPage extends AbstractPage {
 		}
 	}
 	
+	public void saveAllUrl() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerSaveException, Neo4JDataStoreManagerCypherException {
+		List<A> anchorList = this.getAnchor();
+		Node pageNode = this.getPageNode();
+		for (A anchor : anchorList) {
+			String url = anchor.getHref();
+			if (!url.equals("")) {
+				GUrl gUrl = (GUrl)this.createUrl(url);
+				gUrl.save();
+				Node urlNode = gUrl.getUrlNode();
+				pageNode.addOutGoingRelation(CrawlerRelationshipLabel.ANCHOR, urlNode);
+			}
+		}
+	}
+	
 	/**
 	 * このページ情報の最新のＩＤを取得する。
 	 * 
@@ -134,6 +151,11 @@ public class GPage extends AbstractPage {
 		return dataStore.selectString(new Cypher("MATCH(url:URL{url:?})-[:DATA]->(page:PAGE) return MAX(page.accessdate) ").setParameter(this.url.toString()));
 	}
 	
+	public Node getPageNode() throws DocumentFatalException, PageAccessException, Neo4JDataStoreManagerCypherException {
+		Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
+		return dataStore.selectNode(new Cypher("MATCH(page:PAGE{hash:?}) return page").setParameter(this.getData().getHash()));
+	}
+	
 	@Override
 	public boolean isLatest() throws CrawlerSaveException {
 		// TODO Auto-generated method stub
@@ -141,7 +163,7 @@ public class GPage extends AbstractPage {
 	}
 
 	@Override
-	protected Url createUrl(String url) throws PageIllegalArgumentException {
+	protected AbstractUrl createUrl(String url) throws PageIllegalArgumentException {
 		return new jp.co.dk.crawler.gdb.GUrl(url, this.dataStoreManager);
 	}
 

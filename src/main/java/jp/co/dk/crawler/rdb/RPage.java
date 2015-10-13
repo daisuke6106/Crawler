@@ -9,6 +9,7 @@ import jp.co.dk.browzer.exception.BrowzingException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractPage;
+import jp.co.dk.crawler.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.rdb.dao.CrawlerDaoConstants;
@@ -265,7 +266,7 @@ public class RPage extends AbstractPage implements DaoConstants {
 	}
 
 	@Override
-	protected Url createUrl(String url) throws PageIllegalArgumentException {
+	protected AbstractUrl createUrl(String url) throws PageIllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

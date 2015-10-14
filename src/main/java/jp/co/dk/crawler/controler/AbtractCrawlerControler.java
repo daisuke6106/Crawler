@@ -1,40 +1,20 @@
 package jp.co.dk.crawler.controler;
 
-import java.util.List;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
-import jp.co.dk.browzer.exception.PageAccessException;
-import jp.co.dk.browzer.exception.PageIllegalArgumentException;
-import jp.co.dk.browzer.exception.PageMovableLimitException;
-import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.crawler.AbstractCrawler;
-import jp.co.dk.crawler.exception.CrawlerInitException;
-import jp.co.dk.crawler.exception.CrawlerSaveException;
-import jp.co.dk.crawler.gdb.GCrawler;
-import jp.co.dk.document.exception.DocumentException;
-import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
-import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerCypherException;
-import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerException;
-import jp.co.dk.neo4jdatastoremanager.property.Neo4JDataStoreManagerProperty;
-import jp.co.dk.property.exception.PropertyException;
 
 public abstract class AbtractCrawlerControler {
-	
-	protected AbstractCrawler crawler;
 	
 	protected Options options = new Options();
 	
 	protected CommandLine cmd;
 	
-	AbtractCrawlerControler(String url) {
-		this.crawler = this.createCrawler(url);
-	}
+	protected AbstractCrawler crawler;
 	
 	public void execute(String[] args) {
 		
@@ -47,61 +27,12 @@ public abstract class AbtractCrawlerControler {
 			help.printHelp("crawler", options, true);
 			System.exit(1);
 		}
-		Neo4JDataStoreManager dsm    = null;
-		try {
-			dsm = new Neo4JDataStoreManager(new Neo4JDataStoreManagerProperty());
-		} catch (Neo4JDataStoreManagerException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PropertyException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		}
 		
-		try {
-			dsm.startTrunsaction();
-			GCrawler crawler = new GCrawler(cmd.getOptionValue("url"), dsm);
-			if (cmd.hasOption("all")) {
-				crawler.saveAll();
-				crawler.saveAllUrl();
-				
-			} else {
- 				crawler.save();
-			}
-			dsm.finishTrunsaction();
-		} catch (CrawlerInitException | PageIllegalArgumentException | PageAccessException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (CrawlerSaveException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (DocumentException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PageRedirectException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PageMovableLimitException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (Neo4JDataStoreManagerException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (Neo4JDataStoreManagerCypherException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		}
+		this.execute();
 	}
 	
-	public void save() throws CrawlerSaveException {
-		this.crawler.save();
-	}
+	public abstract void execute();
 	
-	public void saveAll() throws CrawlerSaveException, PageAccessException, PageIllegalArgumentException, PageRedirectException, PageMovableLimitException, DocumentException {
-		this.crawler.saveAll();
-	}
-	
-
 	/**
 	 * ---OptionBuilder---
 	 * 
@@ -146,5 +77,4 @@ public abstract class AbtractCrawlerControler {
 	 */
 	protected abstract void getOptions(Options options);
 	
-	protected abstract AbstractCrawler createCrawler(String url) throws CrawlerInitException ;
 }

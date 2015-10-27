@@ -1,7 +1,5 @@
 package jp.co.dk.crawler.gdb;
 
-import static jp.co.dk.crawler.message.CrawlerMessage.*;
-
 import java.util.List;
 
 import jp.co.dk.browzer.Page;

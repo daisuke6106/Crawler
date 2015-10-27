@@ -23,7 +23,6 @@ import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.HtmlElement;
 import jp.co.dk.document.html.constant.HtmlElementName;
-import jp.co.dk.document.html.element.A;
 
 public abstract class AbstractCrawler extends Browzer {
 	

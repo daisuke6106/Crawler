@@ -135,7 +135,7 @@ public class GPage extends AbstractPage {
 				GUrl gUrl = (GUrl)this.createUrl(url);
 				gUrl.save();
 				Node urlNode = gUrl.getUrlNode();
-				pageNode.addOutGoingRelation(CrawlerRelationshipLabel.ANCHOR, urlNode);
+				pageNode.addOutGoingRelation(CrawlerRelationshipLabel.ANCHOR, urlNode, "url", url);
 			}
 		}
 	}

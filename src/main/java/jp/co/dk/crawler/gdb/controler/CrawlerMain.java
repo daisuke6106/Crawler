@@ -33,8 +33,8 @@ public class CrawlerMain extends AbtractCrawlerControler {
 				crawler.saveAllUrl();
 			} else {
  				crawler.save();
+ 				crawler.saveAllUrl();
 			}
-			dsm.finishTrunsaction();
 		} catch (CrawlerInitException | PageIllegalArgumentException | PageAccessException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);

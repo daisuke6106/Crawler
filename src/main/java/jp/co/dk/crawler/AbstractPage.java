@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.exception.CrawlerException;

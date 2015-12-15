@@ -6,7 +6,6 @@ import java.util.Date;
 import jp.co.dk.crawler.rdb.CrawlerFoundationTest;
 import jp.co.dk.crawler.rdb.dao.CrawlerDaoConstants;
 import jp.co.dk.crawler.rdb.dao.Documents;
-import jp.co.dk.crawler.rdb.dao.mysql.DocumentsMysqlImpl;
 import jp.co.dk.crawler.rdb.dao.record.DocumentsRecord;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
@@ -15,20 +14,9 @@ import jp.co.dk.datastoremanager.message.DataStoreManagerMessage;
 import org.junit.Test;
 
 public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
-
-	@Test
-	public void createTable_dropTable() {
-		try {
-			Documents documents = new DocumentsMysqlImpl(getMysqlAccessableDataStoreManager());
-			documents.dropTable();
-			documents.createTable();
-		} catch (DataStoreManagerException e) {
-			fail(e);
-		}
-	}
 	
 	@Test
-	public void insert() {
+	public void insert() throws DataStoreManagerException {
 		
 		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
@@ -86,7 +74,7 @@ public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
 	}
 	
 	@Test
-	public void select() {
+	public void select() throws DataStoreManagerException {
 		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {
 			manager.startTrunsaction();
@@ -166,7 +154,7 @@ public class DocumentsMysqlImplTest extends CrawlerFoundationTest{
 	}
 	
 	@Test
-	public void count() {
+	public void count() throws DataStoreManagerException {
 		
 		DataStoreManager manager = getMysqlAccessableDataStoreManager();
 		try {

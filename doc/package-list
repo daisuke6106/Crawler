@@ -1,9 +1,0 @@
-jp.co.dk.crawler
-jp.co.dk.crawler.controler
-jp.co.dk.crawler.dao
-jp.co.dk.crawler.dao.mysql
-jp.co.dk.crawler.dao.record
-jp.co.dk.crawler.eventhandler
-jp.co.dk.crawler.exception
-jp.co.dk.crawler.message
-jp.co.dk.crawler.property

@@ -2,13 +2,18 @@ package jp.co.dk.crawler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.Page;
+import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
+import jp.co.dk.browzer.http.header.RequestHeader;
+import jp.co.dk.browzer.http.header.ResponseHeader;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
+import jp.co.dk.document.ByteDump;
 import jp.co.dk.document.exception.DocumentFatalException;
 
 /**
@@ -21,7 +26,7 @@ import jp.co.dk.document.exception.DocumentFatalException;
 public abstract class AbstractPage extends Page {
 	
 	/**
-	 * コンストラクタ<p/>
+	 * <p>コンストラクタ</p>
 	 * 指定のURL、データストアマネージャのインスタンスを元に、ページオブジェクトのインスタンスを生成します。
 	 * 
 	 * @param url URL文字列
@@ -30,6 +35,22 @@ public abstract class AbstractPage extends Page {
 	 */
 	public AbstractPage(String url) throws PageIllegalArgumentException, PageAccessException {
 		super(url);
+	}
+	
+	/**
+	 * <p>コンストラクタ</p>
+	 * 指定のURL、リクエストヘッダ、レスポンスヘッダ、データ、イベントハンドラを基にページオブジェクトのインスタンスを生成します。
+	 * 本コンストラクタはすでに保存されているページ情報からページオブジェクトを復元する際に使用します。
+	 * 
+	 * @param url URL文字列
+	 * @param requestHeader リクエストヘッダ
+	 * @param responseHeader レスポンスヘッダ
+	 * @param data データオブジェクト
+	 * @param pageEventHandlerList イベントハンドラ
+	 * @throws PageIllegalArgumentException データが不正、もしくは不足していた場合
+	 */
+	protected AbstractPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, ByteDump data, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException {
+		super(url, requestHeader, responseHeader, data, pageEventHandlerList);
 	}
 
 	/** ファイルID */

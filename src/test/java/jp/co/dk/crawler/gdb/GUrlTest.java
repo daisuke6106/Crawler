@@ -53,7 +53,7 @@ public class GUrlTest extends CrawlerFoundationTest{
 			try {
 				dsm.startTrunsaction();
 				Node findUrlNode = sut.getUrlNode();
-				assertThat(findUrlNode.getProperty("url"), is("http://test.com"));
+				assertThat(findUrlNode.getPropertyString("url"), is("http://test.com"));
 				dsm.commit();
 			} catch (Neo4JDataStoreManagerException | Neo4JDataStoreManagerCypherException e) {
 				fail(e);

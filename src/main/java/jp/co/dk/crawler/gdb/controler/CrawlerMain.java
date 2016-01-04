@@ -35,6 +35,7 @@ public class CrawlerMain extends AbtractCrawlerControler {
  				crawler.save();
  				crawler.saveAllUrl();
 			}
+			System.exit(0);
 		} catch (CrawlerInitException | PageIllegalArgumentException | PageAccessException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
@@ -62,6 +63,10 @@ public class CrawlerMain extends AbtractCrawlerControler {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
+		} catch (RuntimeException e) {
+			System.out.println(e.getMessage());
+			this.logger.error(e);
+			System.exit(255);
 		}
 	}
 	

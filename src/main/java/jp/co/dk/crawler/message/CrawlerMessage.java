@@ -39,6 +39,9 @@ public class CrawlerMessage extends AbstractMessage implements Serializable{
 	/** データストアマネージャの生成に失敗しました。 */
 	public static final CrawlerMessage DATASTOREMANAGER_CAN_NOT_CREATE = new CrawlerMessage("E008");
 	
+	/** ページ情報の読込に失敗しました。URL=[{0}] */
+	public static final CrawlerMessage FAILE_TO_READ_PAGE = new CrawlerMessage("E009");
+	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);
 	}

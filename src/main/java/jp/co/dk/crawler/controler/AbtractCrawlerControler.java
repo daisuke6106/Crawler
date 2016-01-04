@@ -7,8 +7,13 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
 import jp.co.dk.crawler.AbstractCrawler;
+import jp.co.dk.logger.Logger;
+import jp.co.dk.logger.LoggerFactory;
 
 public abstract class AbtractCrawlerControler {
+
+	/** ロガーインスタンス */
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	protected Options options = new Options();
 	

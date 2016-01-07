@@ -49,8 +49,8 @@ public abstract class AbstractPage extends Page {
 	 * @param pageEventHandlerList イベントハンドラ
 	 * @throws PageIllegalArgumentException データが不正、もしくは不足していた場合
 	 */
-	protected AbstractPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, ByteDump data, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException {
-		super(url, requestHeader, responseHeader, data, pageEventHandlerList);
+	protected AbstractPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, Date accessDate, ByteDump data, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException {
+		super(url, requestHeader, responseHeader, accessDate, data, pageEventHandlerList);
 	}
 
 	/** ファイルID */

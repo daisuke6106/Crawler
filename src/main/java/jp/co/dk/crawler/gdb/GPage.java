@@ -1,8 +1,10 @@
 package jp.co.dk.crawler.gdb;
 
 import java.io.ByteArrayInputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,13 +103,16 @@ public class GPage extends AbstractPage {
 					savedValue.add(value);
 				}
 				
+				// アクセス日付を取得する
+				Date accessDate = accessDateFormat.parse(pageNode.getPropertyString("accessdate"));
+				
 				// データ本体を取得する
 				String dataStr = pageNode.getPropertyString("data");
 				ByteDump data = ByteDump.getByteDumpFromBase64String(dataStr);
 				List<PageEventHandler> pageEventHandlerList = new ArrayList<PageEventHandler>();
-				gpageList.add(new GPage(url, new RequestHeader(requestHeader), new ResponseHeader(responseHeaderMap), data, pageEventHandlerList, dataStoreManager));
+				gpageList.add(new GPage(url, new RequestHeader(requestHeader), new ResponseHeader(responseHeaderMap), accessDate, data, pageEventHandlerList, dataStoreManager));
 			}
-		} catch (Neo4JDataStoreManagerCypherException | PageIllegalArgumentException | PageHeaderImproperException e) {
+		} catch (Neo4JDataStoreManagerCypherException | PageIllegalArgumentException | PageHeaderImproperException | ParseException e) {
 			throw new CrawlerReadException(FAILE_TO_READ_PAGE, url, e);
 		}
 		return gpageList;
@@ -126,8 +131,8 @@ public class GPage extends AbstractPage {
 	 * @param dataStoreManager データストアマネージャ
 	 * @throws PageIllegalArgumentException データが不正、もしくは不足していた場合
 	 */
-	private GPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, ByteDump data, List<PageEventHandler> pageEventHandlerList, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException {
-		super(url, requestHeader, responseHeader, data, pageEventHandlerList);
+	private GPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, Date accessDate, ByteDump data, List<PageEventHandler> pageEventHandlerList, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException {
+		super(url, requestHeader, responseHeader, accessDate, data, pageEventHandlerList);
 		this.dataStoreManager = dataStoreManager;
 	}
 	
@@ -188,7 +193,7 @@ public class GPage extends AbstractPage {
 			}
 			pageNode.addOutGoingRelation(CrawlerRelationshipLabel.RESPONSE_HEADER, responseHeaderNode);
 			
-			pageNode.setProperty("accessdate", accessDateFormat.format(this.getCreateDate()));
+			pageNode.setProperty("accessdate", accessDateFormat.format(this.getAccessDate()));
 			GUrl url = (GUrl)this.getUrl();
 			url.save();
 			Node urlNode = url.getUrlNode();

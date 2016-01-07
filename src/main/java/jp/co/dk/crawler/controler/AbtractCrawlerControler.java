@@ -38,6 +38,8 @@ public abstract class AbtractCrawlerControler {
 	
 	public abstract void execute();
 	
+	protected abstract String getCommandName();
+	
 	/**
 	 * ---OptionBuilder---
 	 * 

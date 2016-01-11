@@ -4,7 +4,14 @@ import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.controler.AbtractCrawlerControler;
+import jp.co.dk.document.Element;
+import jp.co.dk.document.File;
 import jp.co.dk.document.exception.DocumentException;
+import jp.co.dk.document.html.HtmlDocument;
+import jp.co.dk.document.html.element.A;
+import jp.co.dk.document.html.element.selector.ImageHasSrcElementSelector;
+import jp.co.dk.document.html.element.selector.LinkHasRefElementSelector;
+import jp.co.dk.document.html.element.selector.ScriptHasSrcElementSelector;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -21,7 +28,28 @@ public class PageInfoMain extends AbtractCrawlerControler {
 			if (cmd.hasOption("a")) System.out.println("ACCESS_DATE:" + page.getAccessDate());
 			if (cmd.hasOption("h")) System.out.println("HASH:" + page.getData().getHash());
 			if (cmd.hasOption("d")) System.out.println(page.getDocument().toString());
-		
+			if (cmd.hasOption("A")) for (A anchor : page.getAnchor()) System.out.println(anchor.getHref());
+			if (cmd.hasOption("I")) {
+				File file = page.getDocument();
+				if (file instanceof HtmlDocument) {
+					HtmlDocument htmlDocument = (HtmlDocument)file;
+					for (Element element : htmlDocument.getElement(new ImageHasSrcElementSelector())) System.out.println(element.getAttribute("src"));
+				}
+			}
+			if (cmd.hasOption("S")) {
+				File file = page.getDocument();
+				if (file instanceof HtmlDocument) {
+					HtmlDocument htmlDocument = (HtmlDocument)file;
+					for (Element element : htmlDocument.getElement(new ScriptHasSrcElementSelector())) System.out.println(element.getAttribute("src"));
+				}
+			}
+			if (cmd.hasOption("L")) {
+				File file = page.getDocument();
+				if (file instanceof HtmlDocument) {
+					HtmlDocument htmlDocument = (HtmlDocument)file;
+					for (Element element : htmlDocument.getElement(new LinkHasRefElementSelector())) System.out.println(element.getAttribute("href"));
+				}
+			}
 		} catch (PageIllegalArgumentException | PageAccessException | DocumentException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
@@ -44,6 +72,10 @@ public class PageInfoMain extends AbtractCrawlerControler {
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("アクセス日付を表示").withDescription("アクセス日付を表示").create("a"));
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("データハッシュを表示").withDescription("データハッシュを表示").create("h"));
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("データ本体を表示").withDescription("データ本体を表示").create("d"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("アンカー情報を表示").withDescription("アンカー情報を表示").create("A"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("イメージ情報を表示").withDescription("イメージ情報を表示").create("I"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("スクリプト情報を表示").withDescription("スクリプト情報を表示").create("S"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("リンク情報を表示").withDescription("リンク情報を表示").create("L"));
 	}
 	
 	public static void main(String[] args) {

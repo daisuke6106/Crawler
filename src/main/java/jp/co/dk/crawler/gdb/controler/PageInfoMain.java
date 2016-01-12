@@ -50,6 +50,13 @@ public class PageInfoMain extends AbtractCrawlerControler {
 					for (Element element : htmlDocument.getElement(new LinkHasRefElementSelector())) System.out.println(element.getAttribute("href"));
 				}
 			}
+			if (cmd.hasOption("C")) {
+				File file = page.getDocument();
+				if (file instanceof HtmlDocument) {
+					HtmlDocument htmlDocument = (HtmlDocument)file;
+					System.out.println(htmlDocument.getContent());
+				}
+			}
 		} catch (PageIllegalArgumentException | PageAccessException | DocumentException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
@@ -76,6 +83,7 @@ public class PageInfoMain extends AbtractCrawlerControler {
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("イメージ情報を表示").withDescription("イメージ情報を表示").create("I"));
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("スクリプト情報を表示").withDescription("スクリプト情報を表示").create("S"));
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("リンク情報を表示").withDescription("リンク情報を表示").create("L"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("ページ表示情報を表示").withDescription("ページ表示情報を表示").create("C"));
 	}
 	
 	public static void main(String[] args) {

@@ -23,6 +23,9 @@ import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.HtmlElement;
 import jp.co.dk.document.html.constant.HtmlElementName;
+import jp.co.dk.document.html.element.selector.ImageHasSrcElementSelector;
+import jp.co.dk.document.html.element.selector.LinkHasRefElementSelector;
+import jp.co.dk.document.html.element.selector.ScriptHasSrcElementSelector;
 
 public abstract class AbstractCrawler extends Browzer {
 	
@@ -97,7 +100,7 @@ public abstract class AbstractCrawler extends Browzer {
 		File file = activePage.getDocument();
 		if (!(file instanceof HtmlDocument)) return;
 		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(new ImageElementSelector());
+		List<Element> elements = htmlDocument.getElement(new ImageHasSrcElementSelector());
 		for (Element element : elements) {
 			jp.co.dk.browzer.html.element.Image castedElement = (jp.co.dk.browzer.html.element.Image)element;
 			this.move(castedElement);
@@ -127,7 +130,7 @@ public abstract class AbstractCrawler extends Browzer {
 		File file = activePage.getDocument();
 		if (!(file instanceof HtmlDocument)) return;
 		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(new ScriptElementSelector());
+		List<Element> elements = htmlDocument.getElement(new ScriptHasSrcElementSelector());
 		for (Element element : elements) {
 			jp.co.dk.browzer.html.element.Script castedElement = (jp.co.dk.browzer.html.element.Script)element;
 			this.move(castedElement);
@@ -155,7 +158,7 @@ public abstract class AbstractCrawler extends Browzer {
 		File file = activePage.getDocument();
 		if (!(file instanceof HtmlDocument)) return;
 		HtmlDocument htmlDocument = (HtmlDocument)file;
-		List<Element> elements = htmlDocument.getElement(new LinkElementSelector());
+		List<Element> elements = htmlDocument.getElement(new LinkHasRefElementSelector());
 		for (Element element : elements) {
 			jp.co.dk.browzer.html.element.Link castedElement = (jp.co.dk.browzer.html.element.Link)element;
 			this.move(castedElement);
@@ -202,36 +205,6 @@ class AnchorIncludeHTMLElementSelector implements ElementSelector {
 		if (!(element instanceof HtmlElement)) return false;
 		HtmlElement htmlElement = (HtmlElement)element;
 		if (htmlElement.getElementType() == HtmlElementName.A && htmlElement.hasAttribute("href") && (!htmlElement.getAttribute("href").equals("")) ) return true;
-		return false;
-	}
-}
-
-class LinkElementSelector implements ElementSelector {
-	@Override
-	public boolean judgment(Element element) {
-		if (!(element instanceof HtmlElement)) return false;
-		HtmlElement htmlElement = (HtmlElement)element;
-		if (htmlElement.getElementType() == HtmlElementName.LINK && htmlElement.hasAttribute("href") && (!htmlElement.getAttribute("href").equals("")) ) return true;
-		return false;
-	}
-}
-
-class ScriptElementSelector implements ElementSelector {
-	@Override
-	public boolean judgment(Element element) {
-		if (!(element instanceof HtmlElement)) return false;
-		HtmlElement htmlElement = (HtmlElement)element;
-		if (htmlElement.getElementType() == HtmlElementName.SCRIPT && htmlElement.hasAttribute("src") && (!htmlElement.getAttribute("src").equals(""))) return true;
-		return false;
-	}
-}
-
-class ImageElementSelector implements ElementSelector {
-	@Override
-	public boolean judgment(Element element) {
-		if (!(element instanceof HtmlElement)) return false;
-		HtmlElement htmlElement = (HtmlElement)element;
-		if (htmlElement.getElementType() == HtmlElementName.IMG && htmlElement.hasAttribute("src") && (!htmlElement.getAttribute("src").equals(""))) return true;
 		return false;
 	}
 }

@@ -2,12 +2,14 @@ package jp.co.dk.crawler.gdb;
 
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractUrl;
+import jp.co.dk.crawler.exception.CrawlerReadException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
@@ -22,6 +24,14 @@ public class GUrl extends AbstractUrl {
 	/** データストアマネージャ */
 	protected Neo4JDataStoreManager dataStoreManager;
 	
+	/**
+	 * <p>コンストラクタ</p>
+	 * 指定のURL文字列、データストアマネージャをを基にＵＲＬを表すインスタンスを生成する。
+	 * 
+	 * @param url URL文字列
+	 * @param dataStoreManager データストアマネージャ
+	 * @throws PageIllegalArgumentException URL文字列がnullまたは、空文字だった場合
+	 */
 	public GUrl(String url, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException {
 		super(url);
 		this.dataStoreManager = dataStoreManager;
@@ -115,8 +125,48 @@ public class GUrl extends AbstractUrl {
 		return true;
 	}
 	
+	/**
+	 * このURLを表すノードオブジェクトを取得し返却します。
+	 * 
+	 * @return URLを表すノードオブジェクト
+	 * @throws Neo4JDataStoreManagerCypherException データストアからの読み込みに失敗した場合
+	 */
 	public Node getUrlNode() throws Neo4JDataStoreManagerCypherException {
 		Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
 		return dataStore.selectNode(new Cypher("MATCH(url:URL{url:?})RETURN url").setParameter(this.toString()));
+	}
+	
+	/**
+	 * このURLと同じホストにあるURLを一覧にして返却します。
+	 * 同じホストが存在しない場合、空のインスタンスを返却します。
+	 * 
+	 * @return 同じホストのURL
+	 * @throws CrawlerReadException データストアからの読み込みに失敗した場合
+	 */
+	public List<GUrl> getAllUrlBySameHost() throws CrawlerReadException {
+		List<GUrl> childUrlList = new ArrayList<GUrl>();
+		Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
+		try {
+			List<Node> urlNodeList = dataStore.selectNodeList(new Cypher("match(host:HOST{name:?})-[:CHILD*1..]->(url:URL) return url").setParameter(this.getHost()));
+			for (Node urlNode : urlNodeList) childUrlList.add(new GUrl(urlNode.getPropertyString("url"), this.dataStoreManager));
+		} catch (Neo4JDataStoreManagerCypherException | PageIllegalArgumentException e) {
+			throw new CrawlerReadException(FAILE_TO_READ_URL, this.getHost(), e);
+		}
+		return childUrlList;
+	}
+	
+	/**
+	 * このURLのページ情報ですでに保存している件数を取得します。
+	 * 
+	 * @return 保存済みの件数
+	 * @throws CrawlerReadException データストアからの読み込みに失敗した場合
+	 */
+	public int getSavedCount() throws CrawlerReadException {
+		Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
+		try {
+			return dataStore.selectInt(new Cypher("MATCH(url:URL{url:?})-->(page:PAGE) RETURN COUNT(page)").setParameter(this.toString())).intValue();
+		} catch (Neo4JDataStoreManagerCypherException e) {
+			throw new CrawlerReadException(FAILE_TO_READ_URL, this.getHost(), e);
+		}
 	}
 }

@@ -25,6 +25,27 @@ public class GUrl extends AbstractUrl {
 	protected Neo4JDataStoreManager dataStoreManager;
 	
 	/**
+	 * <p>指定のURLパターンに合致するURLを一覧にして返却します。</p>
+	 * URLパターンは正規表現を使用することができ、そのパターンに合致するURLを検索し、一覧にして返却します。
+	 * 
+	 * @param url 検索対象のURLパターン
+	 * @param dataStoreManager データストアマネージャ
+	 * @return 検索対象のURLパターンに合致するURL一覧
+	 * @throws CrawlerReadException URL情報の読み込みに失敗した場合
+	 */
+	public static List<GUrl> wellKnownUrlList(String url, Neo4JDataStoreManager dataStoreManager) throws CrawlerReadException {
+		try {
+			List<GUrl> urlList = new ArrayList<GUrl>();
+			Neo4JDataStore dataStore = dataStoreManager.getDataAccessObject("URL");
+			List<Node> urlNodeList = dataStore.selectNodeList(new Cypher("MATCH(url:URL) WHERE url.url=~? RETURN url").setParameter(url));
+			for (Node urlNode : urlNodeList) urlList.add(new GUrl(urlNode.getPropertyString("url"), dataStoreManager));
+			return urlList;
+		} catch (Neo4JDataStoreManagerCypherException | PageIllegalArgumentException e) {
+			throw new CrawlerReadException(FAILE_TO_READ_URL, url,e); 
+		}
+	}
+	
+	/**
 	 * <p>コンストラクタ</p>
 	 * 指定のURL文字列、データストアマネージャをを基にＵＲＬを表すインスタンスを生成する。
 	 * 

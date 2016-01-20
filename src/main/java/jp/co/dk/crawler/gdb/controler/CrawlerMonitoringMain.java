@@ -109,10 +109,39 @@ public class CrawlerMonitoringMain extends AbtractCrawlerControler {
 	
 	@Override
 	protected void getOptions(Options options){
-		options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("保存対象のURL").withDescription("保存対象のURL").create("url"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("そのURLに関するデータをすべて保存するか").create("all"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("永続的に監視する").create("p"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("永続的に監視する際のインターバル（単位：秒）").create("i"));
+		options.addOption(
+			OptionBuilder
+				.isRequired(true)
+				.hasArg(true)
+				.withArgName("URL")
+				.withDescription("保存対象のURL")
+				.withLongOpt("url")
+				.create("u")
+		);
+		options.addOption(
+			OptionBuilder
+				.isRequired(false)
+				.hasArg(false)
+				.withDescription("そのURLに関するデータをすべて保存するか")
+				.withLongOpt("all")
+				.create("a")
+		);
+		options.addOption(
+			OptionBuilder
+				.isRequired(false)
+				.hasArg(false)
+				.withDescription("永続的に監視するか")
+				.withLongOpt("permanence")
+				.create("p")
+		);
+		options.addOption(
+			OptionBuilder
+				.isRequired(false)
+				.hasArg(false)
+				.withArgName("minuts")
+				.withDescription("永続的に監視する際のインターバル（単位：秒）")
+				.withLongOpt("interval")
+				.create("i"));
 	}
 	
 	public static void main(String[] args) {

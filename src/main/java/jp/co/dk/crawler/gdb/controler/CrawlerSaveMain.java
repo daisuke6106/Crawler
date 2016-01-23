@@ -76,8 +76,23 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 	
 	@Override
 	protected void getOptions(Options options){
-		options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("保存対象のURL").withDescription("保存対象のURL").create("url"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("そのURLに関するデータをすべて保存するか").create("all"));
+		options.addOption(
+			OptionBuilder
+				.isRequired(true)
+				.hasArg(true)
+				.withArgName("URL")
+				.withDescription("保存対象のURL")
+				.withLongOpt("url")
+				.create("u")
+		);
+		options.addOption(
+			OptionBuilder
+				.isRequired(false)
+				.hasArg(false)
+				.withDescription("そのURLに関するデータをすべて保存するか")
+				.withLongOpt("all")
+				.create("a")
+		);
 	}
 	
 	public static void main(String[] args) {

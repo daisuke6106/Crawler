@@ -24,6 +24,7 @@ import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.document.ByteDump;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.document.exception.DocumentFatalException;
+import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.element.A;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
@@ -228,15 +229,23 @@ public class GPage extends AbstractPage {
 	}
 	
 	public void saveAllUrl() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerSaveException, Neo4JDataStoreManagerCypherException {
-		List<A> anchorList = this.getAnchor();
-		Node pageNode = this.getPageNode();
-		for (A anchor : anchorList) {
-			String url = anchor.getHref();
-			if (!url.equals("")) {
-				GUrl gUrl = (GUrl)this.createUrl(url);
-				gUrl.save();
-				Node urlNode = gUrl.getUrlNode();
-				pageNode.addOutGoingRelation(CrawlerRelationshipLabel.ANCHOR, urlNode, "url", url);
+		jp.co.dk.document.File document = this.getDocument();
+		if (document instanceof HtmlDocument) {
+			List<A> anchorList = this.getAnchor();
+			Node pageNode = this.getPageNode();
+			for (A anchor : anchorList) {
+				String url = anchor.getHref();
+				if (!url.equals("")) {
+					GUrl gUrl;
+					try {
+						gUrl = (GUrl)this.createUrl(url);
+					} catch (PageIllegalArgumentException e) {
+						continue;
+					}
+					gUrl.save();
+					Node urlNode = gUrl.getUrlNode();
+					pageNode.addOutGoingRelation(CrawlerRelationshipLabel.ANCHOR, urlNode, "url", url);
+				}
 			}
 		}
 	}

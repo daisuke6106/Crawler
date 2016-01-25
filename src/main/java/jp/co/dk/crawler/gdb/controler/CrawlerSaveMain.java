@@ -27,8 +27,8 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 		
 		try (Neo4JDataStoreManager dsm = new Neo4JDataStoreManager(new Neo4JDataStoreManagerProperty())) {
 			dsm.startTrunsaction();
-			GCrawler crawler = new GCrawler(cmd.getOptionValue("url"), dsm);
-			if (cmd.hasOption("all")) {
+			GCrawler crawler = new GCrawler(cmd.getOptionValue("u"), dsm);
+			if (cmd.hasOption("a")) {
 				crawler.saveAll();
  				crawler.saveAllUrl();
 			} else {
@@ -64,7 +64,7 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (RuntimeException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			System.exit(255);
 		}
 	}

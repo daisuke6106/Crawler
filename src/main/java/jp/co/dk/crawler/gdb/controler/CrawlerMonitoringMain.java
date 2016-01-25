@@ -30,21 +30,18 @@ public class CrawlerMonitoringMain extends AbtractCrawlerControler {
 		
 		try (Neo4JDataStoreManager dsm = new Neo4JDataStoreManager(new Neo4JDataStoreManagerProperty())) {
 			dsm.startTrunsaction();
-			boolean    isAllOption      = cmd.hasOption("all");
+			boolean    isAllOption      = cmd.hasOption("a");
 			boolean    isPersistent     = cmd.hasOption("p");
 			long       intervalTime     = 0;
-			if (cmd.hasOption("i")) {
-				String intervalStr = cmd.getOptionValue("i");
-				if (intervalStr == null || intervalStr.equals("")) {
-					intervalTime = 10;
-				} else {
-					intervalTime = Long.parseLong(cmd.getOptionValue("i"));
-				}
+			
+			String intervalStr = cmd.getOptionValue("i");
+			if (intervalStr != null) {
+				intervalTime = Long.parseLong(intervalStr);
 			} else {
 				intervalTime = 10;
 			}
 			do {
-				List<GUrl> wellKnownUrlList = GUrl.wellKnownUrlList(cmd.getOptionValue("url"), dsm);
+				List<GUrl> wellKnownUrlList = GUrl.wellKnownUrlList(cmd.getOptionValue("u"), dsm);
 				for (GUrl url : wellKnownUrlList) {
 					System.out.println("[" + new Date() + "]:" + url.getURL());
 					GCrawler crawler = new GCrawler(url.getURL(), dsm);
@@ -97,7 +94,7 @@ public class CrawlerMonitoringMain extends AbtractCrawlerControler {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (RuntimeException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			System.exit(255);
 		}
 	}
@@ -137,7 +134,7 @@ public class CrawlerMonitoringMain extends AbtractCrawlerControler {
 		options.addOption(
 			OptionBuilder
 				.isRequired(false)
-				.hasArg(false)
+				.hasArg(true)
 				.withArgName("minuts")
 				.withDescription("永続的に監視する際のインターバル（単位：秒）")
 				.withLongOpt("interval")

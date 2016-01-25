@@ -13,7 +13,7 @@ public aspect MethodTrace {
 	before(): methodTrace() {
 		nestlevel++;
 		StringBuilder head = new StringBuilder();
-		for (int i=0; i<nestlevel; i++)head.append("  ");
+		for (int i=0; i<nestlevel; i++)head.append("|       ");
 		org.aspectj.lang.Signature sig = thisJoinPoint.getSignature();
 		
 		StringBuilder traceStr = new StringBuilder(head);
@@ -46,7 +46,7 @@ public aspect MethodTrace {
 	after() returning(Object o): methodTrace() {
 		
 		StringBuilder head = new StringBuilder();
-		for (int i=0; i<nestlevel; i++)head.append("  ");
+		for (int i=0; i<nestlevel; i++)head.append("|       ");
 		
 		// org.aspectj.lang.Signature sig = thisJoinPoint.getSignature();
 		
@@ -65,7 +65,7 @@ public aspect MethodTrace {
     after() throwing(Exception e): methodTrace() {
     	
     	StringBuilder head = new StringBuilder();
-		for (int i=0; i<nestlevel; i++)head.append("  ");
+		for (int i=0; i<nestlevel; i++)head.append("|       ");
 		
         StringBuilder traceStr = new StringBuilder(head);
 		traceStr.append("[ FIN ] ERROR( ").append(new java.util.Date().getTime() - timeStack.pop().longValue()).append(" msec )");

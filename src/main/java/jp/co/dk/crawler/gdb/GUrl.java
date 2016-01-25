@@ -75,12 +75,33 @@ public class GUrl extends AbstractUrl {
 			Node urlNode = dataStore.selectNode(new Cypher("MATCH(url:URL{url:?})RETURN url").setParameter(this.toString()));
 			if (urlNode != null) return false;
 			
-			Node endnode = dataStore.selectNode(new Cypher("MATCH(host:HOST{name:?})RETURN host").setParameter(this.getHost()));
-			if (endnode == null) {
+			Node protocolnode = dataStore.selectNode(new Cypher("MATCH(protocol:PROTOCOL{name:?})RETURN protocol").setParameter(this.getProtocol()));
+			if (protocolnode == null) {
+				protocolnode = dataStore.createNode();
+				protocolnode.addLabel(CrawlerNodeLabel.PROTOCOL);
+				protocolnode.setProperty("name", this.getProtocol());
+			}
+			
+			String hostname = this.getHost();
+			List<Node> hostNodeList = protocolnode.getOutGoingNodes(new NodeSelector() {
+				@Override
+				public boolean isSelect(org.neo4j.graphdb.Node node) {
+					if (hostname.equals(node.getProperty("name"))) return true;
+					return false;
+				}
+			});
+			
+			Node endnode;
+			if (hostNodeList.size() == 0) {
 				endnode = dataStore.createNode();
 				endnode.addLabel(CrawlerNodeLabel.HOST);
 				endnode.setProperty("name", this.getHost());
+				protocolnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, endnode);
+			} else {
+				endnode = hostNodeList.get(0);
 			}
+			
+			
 			for(String path : this.getPathList()){
 				List<Node> findNodes = endnode.getOutGoingNodes(new NodeSelector(){
 					@Override

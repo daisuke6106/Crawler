@@ -146,18 +146,20 @@ public class GUrl extends AbstractUrl {
 				}
 			}
 			
+			boolean trailingSlash = this.hasTrailingSlash();
 			List<Node> urlNodeList = endnode.getOutGoingNodes(new NodeSelector(){
 				@Override
 				public boolean isSelect(org.neo4j.graphdb.Node node) {
-					if (node.hasLabel(CrawlerNodeLabel.URL)) return true;
+					if (node.hasLabel(CrawlerNodeLabel.URL) && new Boolean(trailingSlash).equals(node.getProperty("trailing_slash"))) return true;
 					return false;
 				}
 			});
 			if (urlNodeList.size() == 0) {
 				Node newUrlNode = dataStore.createNode();
 				newUrlNode.addLabel(CrawlerNodeLabel.URL);
-				newUrlNode.setProperty("url_id", this.hashCode());
-				newUrlNode.setProperty("url", this.toString());
+				newUrlNode.setProperty("url_id"        , this.hashCode());
+				newUrlNode.setProperty("url"           , this.toString());
+				newUrlNode.setProperty("trailing_slash", this.hasTrailingSlash());
 				endnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, newUrlNode);
 				endnode = newUrlNode;
 			}

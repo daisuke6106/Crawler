@@ -25,6 +25,20 @@ public class GUrl extends AbstractUrl {
 	protected Neo4JDataStoreManager dataStoreManager;
 	
 	/**
+	 * <p>URLに関するインデックスを作成する。</>
+	 * @param dataStoreManager データストアマネージャ
+	 * @throws Neo4JDataStoreManagerCypherException Cypherの実行に失敗した場合
+	 */
+	public static void createIndex(Neo4JDataStoreManager dataStoreManager) throws Neo4JDataStoreManagerCypherException {
+		Neo4JDataStore dataStore = dataStoreManager.getDataAccessObject("URL");
+		dataStore.selectString(new Cypher("CREATE INDEX ON :PROTOCOL(name)"));
+		dataStore.selectString(new Cypher("CREATE INDEX ON :HOST(name)"));
+		dataStore.selectString(new Cypher("CREATE INDEX ON :PATH(name)"));
+		dataStore.selectString(new Cypher("CREATE INDEX ON :PARAMETER(parameter_id)"));
+		dataStore.selectString(new Cypher("CREATE INDEX ON :URL(url)"));
+	}
+	
+	/**
 	 * <p>指定のURLパターンに合致するURLを一覧にして返却します。</p>
 	 * URLパターンは正規表現を使用することができ、そのパターンに合致するURLを検索し、一覧にして返却します。
 	 * 
@@ -72,6 +86,8 @@ public class GUrl extends AbstractUrl {
 		try {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("URL");
 			
+			Node endnode;
+			
 			Node urlNode = dataStore.selectNode(new Cypher("MATCH(url:URL{url:?})RETURN url").setParameter(this.toString()));
 			if (urlNode != null) return false;
 			
@@ -81,29 +97,20 @@ public class GUrl extends AbstractUrl {
 				protocolnode.addLabel(CrawlerNodeLabel.PROTOCOL);
 				protocolnode.setProperty("name", this.getProtocol());
 			}
-			
-			String hostname = this.getHost();
-			List<Node> hostNodeList = protocolnode.getOutGoingNodes(new NodeSelector() {
-				@Override
-				public boolean isSelect(org.neo4j.graphdb.Node node) {
-					if (hostname.equals(node.getProperty("name"))) return true;
-					return false;
-				}
-			});
-			
-			Node endnode;
-			if (hostNodeList.size() == 0) {
-				endnode = dataStore.createNode();
-				endnode.addLabel(CrawlerNodeLabel.HOST);
-				endnode.setProperty("name", this.getHost());
-				protocolnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, endnode);
+
+			Node hostnode = dataStore.selectNode(new Cypher("MATCH(protocol:PROTOCOL{name:?})-->(host:HOST{name:?})RETURN host").setParameter(this.getProtocol()).setParameter(this.getHost()));
+			if (hostnode == null) {
+				hostnode = dataStore.createNode();
+				hostnode.addLabel(CrawlerNodeLabel.HOST);
+				hostnode.setProperty("name", this.getHost());
+				protocolnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, hostnode);
+				endnode = hostnode;
 			} else {
-				endnode = hostNodeList.get(0);
+				endnode = hostnode;
 			}
 			
-			
 			for(String path : this.getPathList()){
-				List<Node> findNodes = endnode.getOutGoingNodes(new NodeSelector(){
+				Node endPathNode = endnode.getOutGoingNode(new NodeSelector(){
 					@Override
 					public boolean isSelect(org.neo4j.graphdb.Node node) {
 						if (node.hasProperty("name")) {
@@ -113,20 +120,22 @@ public class GUrl extends AbstractUrl {
 						return false;
 					}
 				});
-				if (findNodes.size() == 0) {
-					Node newEndnode = dataStore.createNode();
-					newEndnode.addLabel(CrawlerNodeLabel.PATH);
-					newEndnode.setProperty("name", path);
-					endnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, newEndnode);
-					endnode = newEndnode;
+				if (endPathNode == null) {
+					endPathNode = dataStore.createNode();
+					endPathNode.addLabel(CrawlerNodeLabel.PATH);
+					endPathNode.setProperty("name", path);
+					endnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, endPathNode);
+					endnode = endPathNode;
 				} else {
-					endnode = findNodes.get(0);
+					endnode = endPathNode;
 				}
 			}
+			
+			
 			Map<String, Object> parameter = new HashMap<String, Object>(this.getParameter());
 			if (parameter.size() != 0) {
 				int parameterID = parameter.hashCode();
-				if (endnode.getOutGoingNodes(new NodeSelector() {
+				if (endnode.getOutGoingNode(new NodeSelector() {
 						@Override
 						public boolean isSelect(org.neo4j.graphdb.Node node) {
 							if (node.hasProperty("parameter_id")) {
@@ -135,7 +144,7 @@ public class GUrl extends AbstractUrl {
 							}
 							return false;
 						}
-					}).size() == 0
+					}) == null
 				) {
 					Node newEndnode = dataStore.createNode();
 					newEndnode.addLabel(CrawlerNodeLabel.PARAMETER);

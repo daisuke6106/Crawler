@@ -263,7 +263,9 @@ public class GPage extends AbstractPage {
 	
 	public Node getPageNode() throws DocumentFatalException, PageAccessException, Neo4JDataStoreManagerCypherException {
 		Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
-		return dataStore.selectNode(new Cypher("MATCH(page:PAGE{hash:?}) return page").setParameter(this.getData().getHash()));
+		return dataStore.selectNode(new Cypher("MATCH(url:URL{url:?})-[:DATA]->(page:PAGE{hash:?}) return page")
+		.setParameter(this.url.toString())
+		.setParameter(this.getData().getHash()));
 	}
 	
 	@Override

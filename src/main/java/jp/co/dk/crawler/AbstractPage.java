@@ -1,5 +1,6 @@
 package jp.co.dk.crawler;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,7 @@ public abstract class AbstractPage extends Page {
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
 	public AbstractPage(String url) throws PageIllegalArgumentException, PageAccessException {
-		super(url);
+		super(url, new HashMap<String,String>(), false, new ArrayList<PageEventHandler>());
 	}
 	
 	/**

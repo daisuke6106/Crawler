@@ -44,15 +44,20 @@ public class CrawlerMonitoringMain extends AbtractCrawlerControler {
 				List<GUrl> wellKnownUrlList = GUrl.wellKnownUrlList(cmd.getOptionValue("u"), dsm);
 				for (GUrl url : wellKnownUrlList) {
 					System.out.println("[" + new Date() + "]:" + url.getURL());
-					GCrawler crawler = new GCrawler(url.getURL(), dsm);
-					if (isAllOption) {
-						crawler.saveAll();
-						crawler.saveAllUrl();
-					} else {
-						crawler.save();
-						crawler.saveAllUrl();
-					}
-					Thread.sleep(intervalTime * 1000);
+					
+					try {
+						GCrawler crawler = new GCrawler(url.getURL(), dsm);
+						if (isAllOption) {
+							crawler.saveAll();
+							crawler.saveAllUrl();
+						} else {
+							crawler.save();
+							crawler.saveAllUrl();
+						}
+						Thread.sleep(intervalTime * 1000);
+					} catch (PageAccessException e) {
+						System.out.println("[" + new Date() + "]:" + e.toString());
+					} 
 				}
 				dsm.commit();
 			} while (isPersistent);
@@ -70,9 +75,6 @@ public class CrawlerMonitoringMain extends AbtractCrawlerControler {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (PageIllegalArgumentException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PageAccessException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (InterruptedException e) {

@@ -1,6 +1,5 @@
 package jp.co.dk.crawler.gdb;
 
-import java.io.ByteArrayInputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -58,21 +58,49 @@ class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 	}
 	
 	@Override
-	protected Page redirectBy_SERVER_ERROR(ResponseHeader header, Page page) throws PageRedirectException {
+	protected Page redirectBy_INFOMATIONAL(ResponseHeader header, Page page) throws PageRedirectException {
 		try {
-			return super.redirectBy_SERVER_ERROR(header, page);
+			return super.redirectBy_INFOMATIONAL(header, page);
 		} catch (PageRedirectException e) {
-			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.rdb.RPage)page);
+			throw new CrawlerPageRedirectHandlerException(e, page);
 		}
-		
 	}
 	
+	@Override
+	protected Page redirectBy_SUCCESS(ResponseHeader header, Page page) throws PageRedirectException {
+		try {
+			return super.redirectBy_SUCCESS(header, page);
+		} catch (PageRedirectException e) {
+			throw new CrawlerPageRedirectHandlerException(e, page);
+		}
+	}
+	
+	@Override
+	protected Page redirectBy_REDIRECTION(ResponseHeader header, Page page) throws PageRedirectException {
+		try {
+			return super.redirectBy_REDIRECTION(header, page);
+		} catch (PageRedirectException e) {
+			throw new CrawlerPageRedirectHandlerException(e, page);
+		}
+	}
+
 	@Override
 	protected Page redirectBy_CLIENT_ERROR(ResponseHeader header, Page page) throws PageRedirectException {
 		try {
 			return super.redirectBy_CLIENT_ERROR(header, page);
 		} catch (PageRedirectException e) {
-			throw new CrawlerPageRedirectHandlerException(e, (jp.co.dk.crawler.rdb.RPage)page);
+			throw new CrawlerPageRedirectHandlerException(e, page);
 		}
 	}
+	
+	@Override
+	protected Page redirectBy_SERVER_ERROR(ResponseHeader header, Page page) throws PageRedirectException {
+		try {
+			return super.redirectBy_SERVER_ERROR(header, page);
+		} catch (PageRedirectException e) {
+			throw new CrawlerPageRedirectHandlerException(e, page);
+		}
+		
+	}
+	
 }

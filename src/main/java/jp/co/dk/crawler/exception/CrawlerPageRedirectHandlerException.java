@@ -16,7 +16,7 @@ public class CrawlerPageRedirectHandlerException extends PageRedirectException {
 	private static final long serialVersionUID = -6589147054844498464L;
 	
 	/** エラー発生ページオブジェクト */
-	private jp.co.dk.crawler.rdb.RPage page;
+	private jp.co.dk.browzer.Page page;
 	
 	/**
 	 * コンストラクタ<p/>
@@ -25,7 +25,7 @@ public class CrawlerPageRedirectHandlerException extends PageRedirectException {
 	 * @param exception 例外オブジェクト
 	 * @param page 例外が発生したページオブジェクト
 	 */
-	public CrawlerPageRedirectHandlerException(PageRedirectException exception, jp.co.dk.crawler.rdb.RPage page) {
+	public CrawlerPageRedirectHandlerException(PageRedirectException exception, jp.co.dk.browzer.Page page) {
 		super(exception.getMessageObj(), exception.getEmbeddedStrList());
 		this.page = page;
 	}

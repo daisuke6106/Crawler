@@ -156,6 +156,11 @@ public class GPage extends AbstractPage {
 		if (this.isSaved()) return false;
 		try {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
+			
+			GUrl url = (GUrl)this.getUrl();
+			url.save();
+			Node urlNode = url.getUrlNode();
+			
 			Node pageNode = dataStore.createNode();
 			pageNode.addLabel(CrawlerNodeLabel.PAGE);
 			ResponseHeader responseHeader = this.getResponseHeader();
@@ -173,9 +178,25 @@ public class GPage extends AbstractPage {
 				pageNode.setProperty("content_subtype", "");
 			}
 			
-			pageNode.setProperty("hash"           , this.getData().getHash());
-			pageNode.setProperty("data"           , this.getData().getBytesToBase64String());
-			pageNode.setProperty("size"           , this.getData().length());
+			switch(responseRecord.getHttpStatusCode().getStatusType()) {
+				case INFOMATIONAL:
+				case SUCCESS:
+				case REDIRECTION:
+					pageNode.setProperty("hash"           , this.getData().getHash());
+					pageNode.setProperty("data"           , this.getData().getBytesToBase64String());
+					pageNode.setProperty("size"           , this.getData().length());
+					break;
+				case CLIENT_ERROR:
+				case SERVER_ERROR:
+					pageNode.setProperty("hash"           , "");
+					pageNode.setProperty("data"           , "");
+					pageNode.setProperty("size"           , 0 );
+					break;
+			}
+			
+			pageNode.setProperty("accessdate", accessDateFormat.format(this.getAccessDate()));
+			
+			urlNode.addOutGoingRelation(CrawlerRelationshipLabel.DATA, pageNode);
 			
 			Node requestHeaderNode = dataStore.createNode();
 			requestHeaderNode.addLabel(CrawlerNodeLabel.REQUEST_HEADER);
@@ -193,11 +214,6 @@ public class GPage extends AbstractPage {
 			}
 			pageNode.addOutGoingRelation(CrawlerRelationshipLabel.RESPONSE_HEADER, responseHeaderNode);
 			
-			pageNode.setProperty("accessdate", accessDateFormat.format(this.getAccessDate()));
-			GUrl url = (GUrl)this.getUrl();
-			url.save();
-			Node urlNode = url.getUrlNode();
-			urlNode.addOutGoingRelation(CrawlerRelationshipLabel.DATA, pageNode);
 		} catch (Neo4JDataStoreManagerCypherException e) {
 			throw new CrawlerSaveException(FAILE_TO_SAVE_PAGE, this.url.toString());
 		} catch (PageAccessException e) {
@@ -210,11 +226,20 @@ public class GPage extends AbstractPage {
 	public boolean isSaved() throws CrawlerSaveException {
 		try {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
-			int count = dataStore.selectInt(
-					new Cypher("MATCH(url:URL{url:?})-[:DATA]->(page:PAGE{hash:?}) RETURN COUNT(page)")
-					.setParameter(this.url.toString())
-					.setParameter(this.getData().getHash())
-				).intValue();
+			Cypher pageCountCypher = new Cypher("MATCH(url:URL{url:?})-[:DATA]->(page:PAGE{hash:?}) RETURN COUNT(page)").setParameter(this.url.toString());
+			switch(this.getResponseHeader().getResponseRecord().getHttpStatusCode().getStatusType()) {
+				case INFOMATIONAL:
+				case SUCCESS:
+				case REDIRECTION:
+					pageCountCypher.setParameter(this.getData().getHash());
+					break;
+				case CLIENT_ERROR:
+				case SERVER_ERROR:
+					pageCountCypher.setParameter("");
+					break;
+			}
+			
+			int count = dataStore.selectInt(pageCountCypher).intValue();
 			if (count == 0) {
 				return false;
 			} else {
@@ -228,25 +253,35 @@ public class GPage extends AbstractPage {
 	}
 	
 	public void saveAllUrl() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerSaveException, Neo4JDataStoreManagerCypherException {
-		jp.co.dk.document.File document = this.getDocument();
-		if (document instanceof HtmlDocument) {
-			List<A> anchorList = this.getAnchor();
-			Node pageNode = this.getPageNode();
-			for (A anchor : anchorList) {
-				String url = anchor.getHref();
-				if (!url.equals("")) {
-					GUrl gUrl;
-					try {
-						gUrl = (GUrl)this.createUrl(url);
-					} catch (PageIllegalArgumentException e) {
-						continue;
+		switch(this.getResponseHeader().getResponseRecord().getHttpStatusCode().getStatusType()) {
+			case INFOMATIONAL:
+			case SUCCESS:
+			case REDIRECTION:
+				jp.co.dk.document.File document = this.getDocument();
+				if (document instanceof HtmlDocument) {
+					List<A> anchorList = this.getAnchor();
+					Node pageNode = this.getPageNode();
+					for (A anchor : anchorList) {
+						String url = anchor.getHref();
+						if (!url.equals("")) {
+							GUrl gUrl;
+							try {
+								gUrl = (GUrl)this.createUrl(url);
+							} catch (PageIllegalArgumentException e) {
+								continue;
+							}
+							gUrl.save();
+							Node urlNode = gUrl.getUrlNode();
+							pageNode.addOutGoingRelation(CrawlerRelationshipLabel.ANCHOR, urlNode, "url", url);
+						}
 					}
-					gUrl.save();
-					Node urlNode = gUrl.getUrlNode();
-					pageNode.addOutGoingRelation(CrawlerRelationshipLabel.ANCHOR, urlNode, "url", url);
 				}
-			}
+				break;
+			case CLIENT_ERROR:
+			case SERVER_ERROR:
+				break;
 		}
+		
 	}
 	
 	/**

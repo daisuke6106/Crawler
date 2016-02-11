@@ -180,6 +180,10 @@ public class GPage extends AbstractPage {
 			
 			switch(responseRecord.getHttpStatusCode().getStatusType()) {
 				case INFOMATIONAL:
+					pageNode.setProperty("hash"           , "");
+					pageNode.setProperty("data"           , "");
+					pageNode.setProperty("size"           , 0 );
+					break;
 				case SUCCESS:
 				case REDIRECTION:
 					pageNode.setProperty("hash"           , this.getData().getHash());
@@ -229,6 +233,8 @@ public class GPage extends AbstractPage {
 			Cypher pageCountCypher = new Cypher("MATCH(url:URL{url:?})-[:DATA]->(page:PAGE{hash:?}) RETURN COUNT(page)").setParameter(this.url.toString());
 			switch(this.getResponseHeader().getResponseRecord().getHttpStatusCode().getStatusType()) {
 				case INFOMATIONAL:
+					pageCountCypher.setParameter("");
+					break;
 				case SUCCESS:
 				case REDIRECTION:
 					pageCountCypher.setParameter(this.getData().getHash());
@@ -255,6 +261,7 @@ public class GPage extends AbstractPage {
 	public void saveAllUrl() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerSaveException, Neo4JDataStoreManagerCypherException {
 		switch(this.getResponseHeader().getResponseRecord().getHttpStatusCode().getStatusType()) {
 			case INFOMATIONAL:
+				break;
 			case SUCCESS:
 			case REDIRECTION:
 				jp.co.dk.document.File document = this.getDocument();

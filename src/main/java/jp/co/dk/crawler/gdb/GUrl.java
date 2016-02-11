@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.RowFilter.Entry;
+
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerReadException;
@@ -134,24 +136,27 @@ public class GUrl extends AbstractUrl {
 			
 			Map<String, Object> parameter = new HashMap<String, Object>(this.getParameter());
 			if (parameter.size() != 0) {
-				int parameterID = parameter.hashCode();
-				if (endnode.getOutGoingNode(new NodeSelector() {
-						@Override
-						public boolean isSelect(org.neo4j.graphdb.Node node) {
-							if (node.hasProperty("parameter_id")) {
-								int id = ((Integer)node.getProperty("parameter_id")).intValue();
-								if (id == parameterID) return true;
-							}
-							return false;
+				int parameterID = parameter.entrySet().stream().mapToInt(entry->(entry.getKey().hashCode() * entry.getValue().hashCode())).sum();
+				Node endParamNode = endnode.getOutGoingNode(new NodeSelector() {
+					@Override
+					public boolean isSelect(org.neo4j.graphdb.Node node) {
+						if (node.hasLabel(CrawlerNodeLabel.PARAMETER)) {
+							int id = ((Integer)node.getProperty("parameter_id")).intValue();
+							if (id == parameterID) return true;
 						}
-					}) == null
-				) {
-					Node newEndnode = dataStore.createNode();
-					newEndnode.addLabel(CrawlerNodeLabel.PARAMETER);
-					newEndnode.setProperty("parameter_id", parameter.hashCode());
-					newEndnode.setProperty(parameter);
-					endnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, newEndnode);
-					endnode = newEndnode;
+						return false;
+					}
+				});
+				
+				if (endParamNode == null) {
+					endParamNode = dataStore.createNode();
+					endParamNode.addLabel(CrawlerNodeLabel.PARAMETER);
+					endParamNode.setProperty("parameter_id", parameter.hashCode());
+					endParamNode.setProperty(parameter);
+					endnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, endParamNode);
+					endnode = endParamNode;
+				} else {
+					endnode = endParamNode;
 				}
 			}
 			

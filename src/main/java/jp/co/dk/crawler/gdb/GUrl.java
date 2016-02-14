@@ -3,12 +3,10 @@ package jp.co.dk.crawler.gdb;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.RowFilter.Entry;
-
+import jp.co.dk.browzer.Parameter;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerReadException;
@@ -19,7 +17,6 @@ import jp.co.dk.neo4jdatastoremanager.Node;
 import jp.co.dk.neo4jdatastoremanager.NodeSelector;
 import jp.co.dk.neo4jdatastoremanager.cypher.Cypher;
 import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerCypherException;
-import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerException;
 
 public class GUrl extends AbstractUrl {
 	
@@ -134,9 +131,9 @@ public class GUrl extends AbstractUrl {
 			}
 			
 			
-			Map<String, Object> parameter = new HashMap<String, Object>(this.getParameter());
-			if (parameter.size() != 0) {
-				int parameterID = parameter.entrySet().stream().mapToInt(entry->(entry.getKey().hashCode() * entry.getValue().hashCode())).sum();
+			Parameter parameter = this.getParameter();
+			if (!parameter.isEmpty()) {
+				int parameterID = parameter.hashCode();
 				Node endParamNode = endnode.getOutGoingNode(new NodeSelector() {
 					@Override
 					public boolean isSelect(org.neo4j.graphdb.Node node) {
@@ -152,7 +149,7 @@ public class GUrl extends AbstractUrl {
 					endParamNode = dataStore.createNode();
 					endParamNode.addLabel(CrawlerNodeLabel.PARAMETER);
 					endParamNode.setProperty("parameter_id", parameter.hashCode());
-					endParamNode.setProperty(parameter);
+					for (Map.Entry<String, String> paramEntry : parameter.getParameter().entrySet()) endParamNode.setProperty(paramEntry.getKey(), paramEntry.getValue());
 					endnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, endParamNode);
 					endnode = endParamNode;
 				} else {
@@ -177,7 +174,7 @@ public class GUrl extends AbstractUrl {
 				endnode.addOutGoingRelation(CrawlerRelationshipLabel.CHILD, newUrlNode);
 				endnode = newUrlNode;
 			}
-		} catch (Neo4JDataStoreManagerException | Neo4JDataStoreManagerCypherException e) {
+		} catch (Neo4JDataStoreManagerCypherException e) {
 			throw new CrawlerSaveException(DATASTOREMANAGER_CAN_NOT_CREATE, e);
 		}
 		return true;

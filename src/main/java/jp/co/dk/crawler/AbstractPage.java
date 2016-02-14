@@ -188,30 +188,4 @@ public abstract class AbstractPage extends Page {
 		}
 	}
 	
-	@Override
-	public Map<String, String> getParameter() {
-		return new ParameterMap(this.url.getParameter());
-	}
-	
-}
-
-class ParameterMap extends HashMap<String, String> {
-	
-	/** シリアルバージョンID */
-	private static final long serialVersionUID = 6071724790375396636L;
-	
-	ParameterMap() {
-		super();
-	}
-	
-	ParameterMap(Map<String, String> parameter) {
-		super(parameter);
-	}
-	
-	@Override
-	public int hashCode() {
-		int originalHashCode = super.hashCode();
-		if (originalHashCode == 0) return 1;
-		return originalHashCode;
-	}
 }

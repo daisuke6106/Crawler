@@ -46,8 +46,8 @@
 	<classpathentry kind="lib" path="lib/log5j-2.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/logger_1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/datastoremanager_1.2.2.jar"/>
-	<classpathentry kind="lib" path="lib/neo4j_datastoremanager_0.3.0a.jar"/>
 	<classpathentry kind="lib" path="lib/browzer_0.1.4a.jar"/>
 	<classpathentry kind="lib" path="lib/document_0.1.0a.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j_datastoremanager_0.3.0a.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

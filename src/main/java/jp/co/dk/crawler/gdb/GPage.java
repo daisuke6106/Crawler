@@ -67,16 +67,17 @@ public class GPage extends AbstractPage {
 			for (Node pageNode : pageNodeList) {
 				
 				// リクエストヘッダを取得する。
-				Map<String, String> requestHeader = pageNode.getOutGoingNodes(new NodeSelector() {
+				Map<String, String> requestHeader = new HashMap<String, String>();
+				pageNode.getOutGoingNodes(new NodeSelector() {
 					@Override
 					public boolean isSelect(org.neo4j.graphdb.Node node) {
 						if (node.hasLabel(CrawlerNodeLabel.REQUEST_HEADER)) return true;
 						return false;
 					}
-				}).get(0).getProperty();
+				}).get(0).getProperty().entrySet().forEach((entry)->requestHeader.put(entry.getKey(), entry.getValue().toString()));
 				
 				// レスポンスヘッダを取得する。
-				Map<String, String> responseHeader = pageNode.getOutGoingNodes(new NodeSelector() {
+				Map<String, Object> responseHeader = pageNode.getOutGoingNodes(new NodeSelector() {
 					@Override
 					public boolean isSelect(org.neo4j.graphdb.Node node) {
 						if (node.hasLabel(CrawlerNodeLabel.RESPONSE_HEADER)) return true;
@@ -85,9 +86,9 @@ public class GPage extends AbstractPage {
 				}).get(0).getProperty();
 				
 				Map<String, List<String>> responseHeaderMap = new HashMap<String, List<String>>();
-				for (Map.Entry<String, String> responseHeaderEntry : responseHeader.entrySet()) {
+				for (Map.Entry<String, Object> responseHeaderEntry : responseHeader.entrySet()) {
 					String keyWithIndex = responseHeaderEntry.getKey();
-					String value        = responseHeaderEntry.getValue();
+					String value        = (String)responseHeaderEntry.getValue();
 					
 					String[] splitedKey = keyWithIndex.split("\\$");
 					String   key        = splitedKey[0];

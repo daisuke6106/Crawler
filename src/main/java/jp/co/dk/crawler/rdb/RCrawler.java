@@ -106,7 +106,7 @@ public class RCrawler extends AbstractCrawler {
 			String protcol                = nextPageUrl.getProtocol();
 			String host                   = nextPageUrl.getHost();
 			List<String> path             = nextPageUrl.getPathList();
-			Map<String, String> parameter = nextPageUrl.getParameter();
+			Map<String, String> parameter = nextPageUrl.getParameter().getParameter();
 			String message                = throwable.getMessage();
 			StackTraceElement[] stackTraceElements = throwable.getStackTrace();
 			Date createDate = new Date();
@@ -131,11 +131,11 @@ public class RCrawler extends AbstractCrawler {
 		String             from_protcol   = beforePageUrl.getProtocol();
 		String             from_host      = beforePageUrl.getHost();
 		List<String>       from_path      = beforePageUrl.getPathList();
-		Map<String,String> from_parameter = beforePageUrl.getParameter();
+		Map<String,String> from_parameter = beforePageUrl.getParameter().getParameter();
 		String             to_protcol     = toPageUrl.getProtocol();
 		String             to_host        = toPageUrl.getHost();
 		List<String>       to_path        = toPageUrl.getPathList();
-		Map<String,String> to_parameter   = toPageUrl.getParameter();
+		Map<String,String> to_parameter   = toPageUrl.getParameter().getParameter();
 		Date createDate = new Date();
 		Date updateDate = new Date();
 		LinksRecord savedLinksRecord = links.select(from_protcol, from_host, from_path, from_parameter, to_protcol, to_host, to_path, to_parameter, createDate, updateDate);

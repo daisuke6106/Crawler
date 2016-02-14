@@ -56,7 +56,7 @@ public class PageTest extends CrawlerFoundationTest{
 			String             protocol  = page.getProtocol();
 			String             host      = page.getHost();
 			List<String>       pathList  = page.getPathList();
-			Map<String,String> parameter = page.getParameter();
+			Map<String,String> parameter = page.getParameter().getParameter();
 			String             fileId    = page.getFileId();
 			long               timeId    = page.getTimeId();
 			Urls      urls      = (Urls)manager.getDataAccessObject(CrawlerDaoConstants.URLS);

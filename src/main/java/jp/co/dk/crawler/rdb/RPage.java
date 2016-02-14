@@ -82,7 +82,7 @@ public class RPage extends AbstractPage implements DaoConstants {
 			String             protocol   = this.getProtocol();
 			String             host       = this.getHost();
 			List<String>       pathList   = this.getPathList();
-			Map<String,String> parameter  = this.getParameter();
+			Map<String,String> parameter  = this.getParameter().getParameter();
 			String             fileid     = this.getFileId();
 			Date               createDate = this.getCreateDate();
 			Date               updateDate = this.getUpdateDate();
@@ -108,7 +108,7 @@ public class RPage extends AbstractPage implements DaoConstants {
 			String                   protocol       = this.getProtocol();
 			String                   host           = this.getHost();
 			List<String>             pathList       = this.getPathList();
-			Map<String,String>       parameter      = this.getParameter();
+			Map<String,String>       parameter      = this.getParameter().getParameter();
 			String                   fileid         = this.getFileId();
 			long                     timeid         = this.getTimeId();
 			Date                     createDate     = this.getCreateDate();
@@ -164,7 +164,7 @@ public class RPage extends AbstractPage implements DaoConstants {
 			String              protcol   = this.getProtocol();
 			String              host      = this.getHost();
 			List<String>        pathList  = this.getPathList();
-			Map<String, String> parameter = this.getParameter();
+			Map<String, String> parameter = this.getParameter().getParameter();
 			int count = pages.count(protcol, host, pathList, parameter);
 			return count;
 		} catch (DataStoreManagerException e) {

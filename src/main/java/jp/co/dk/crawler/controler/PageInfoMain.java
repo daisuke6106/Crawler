@@ -11,6 +11,8 @@ import jp.co.dk.document.html.element.A;
 import jp.co.dk.document.html.element.selector.ImageHasSrcElementSelector;
 import jp.co.dk.document.html.element.selector.LinkHasRefElementSelector;
 import jp.co.dk.document.html.element.selector.ScriptHasSrcElementSelector;
+import jp.co.dk.document.json.JsonDocument;
+import jp.co.dk.document.xml.XmlDocument;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -54,6 +56,12 @@ public class PageInfoMain extends AbtractCrawlerControler {
 				if (file instanceof HtmlDocument) {
 					HtmlDocument htmlDocument = (HtmlDocument)file;
 					System.out.println(htmlDocument.getContent());
+				} else if (file instanceof XmlDocument) {
+					XmlDocument xmlDocument = (XmlDocument)file;
+					System.out.println(xmlDocument.toString());
+				} else if (file instanceof JsonDocument) {
+					JsonDocument jsonDocument = (JsonDocument)file;
+					System.out.println(jsonDocument.toString());
 				}
 			}
 		} catch (PageIllegalArgumentException | PageAccessException | DocumentException e) {

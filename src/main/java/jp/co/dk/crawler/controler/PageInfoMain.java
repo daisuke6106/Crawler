@@ -1,5 +1,7 @@
 package jp.co.dk.crawler.controler;
 
+import java.util.List;
+
 import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
@@ -16,6 +18,7 @@ import jp.co.dk.document.xml.XmlDocument;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+import org.apache.commons.configuration.plist.Token;
 
 public class PageInfoMain extends AbtractCrawlerControler {
 
@@ -64,6 +67,8 @@ public class PageInfoMain extends AbtractCrawlerControler {
 					System.out.println(jsonDocument.toString());
 				}
 			}
+			List<jp.co.dk.morphologicalanalysis.Token> tokens = page.getNounsByTitle();
+			for (jp.co.dk.morphologicalanalysis.Token tolken : tokens)System.out.println(tolken.toString());
 		} catch (PageIllegalArgumentException | PageAccessException | DocumentException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);

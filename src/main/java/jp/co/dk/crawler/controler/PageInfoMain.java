@@ -68,13 +68,14 @@ public class PageInfoMain extends AbtractCrawlerControler {
 				}
 			}
 			if (cmd.hasOption("N")) {
+				page.getDocument(); // サーバへのドキュメント取得のため、一時的に読み込む
 				List<jp.co.dk.morphologicalanalysis.Token> tokens = page.getNouns();
 				for (jp.co.dk.morphologicalanalysis.Token tolken : tokens) {
 					System.out.println(tolken.toString());
 				}
 			}
 		} catch (PageIllegalArgumentException | PageAccessException | DocumentException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			System.exit(1);
 		}
 		System.exit(0);

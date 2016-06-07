@@ -67,8 +67,12 @@ public class PageInfoMain extends AbtractCrawlerControler {
 					System.out.println(jsonDocument.toString());
 				}
 			}
-			List<jp.co.dk.morphologicalanalysis.Token> tokens = page.getNounsByTitle();
-			for (jp.co.dk.morphologicalanalysis.Token tolken : tokens)System.out.println(tolken.toString());
+			if (cmd.hasOption("N")) {
+				List<jp.co.dk.morphologicalanalysis.Token> tokens = page.getNouns();
+				for (jp.co.dk.morphologicalanalysis.Token tolken : tokens) {
+					System.out.println(tolken.toString());
+				}
+			}
 		} catch (PageIllegalArgumentException | PageAccessException | DocumentException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
@@ -96,6 +100,7 @@ public class PageInfoMain extends AbtractCrawlerControler {
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("スクリプト情報を表示").withDescription("スクリプト情報を表示").create("S"));
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("リンク情報を表示").withDescription("リンク情報を表示").create("L"));
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("ページ表示情報を表示").withDescription("ページ表示情報を表示").create("C"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("ページ表示情報にある名詞を表示").withDescription("ページ表示情報にある名詞を表示").create("N"));
 	}
 	
 	public static void main(String[] args) {

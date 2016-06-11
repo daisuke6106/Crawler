@@ -18,14 +18,13 @@ import jp.co.dk.document.xml.XmlDocument;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
-import org.apache.commons.configuration.plist.Token;
 
 public class PageInfoMain extends AbtractCrawlerControler {
 
 	@Override
 	public void execute() { 
 		try {
-			Page page = new Page(cmd.getOptionValue("t_url"));
+			Page page = new Page(cmd.getOptionValue("u"));
 			if (cmd.hasOption("q")) System.out.println("REQUEST_HEADER:" + page.getRequestHeader());
 			if (cmd.hasOption("s")) System.out.println("RESPONSE_HEADER:" + page.getResponseHeader());
 			if (cmd.hasOption("l")) System.out.println("SIZE:" + page.getData().length());
@@ -68,11 +67,10 @@ public class PageInfoMain extends AbtractCrawlerControler {
 				}
 			}
 			if (cmd.hasOption("N")) {
-				page.getDocument(); // サーバへのドキュメント取得のため、一時的に読み込む
-				List<jp.co.dk.morphologicalanalysis.Token> tokens = page.getNouns();
-				for (jp.co.dk.morphologicalanalysis.Token tolken : tokens) {
-					System.out.println(tolken.toString());
-				}
+				jp.co.dk.document.File file = page.getDocument();
+				jp.co.dk.document.html.HtmlDocument htmlDocument = (jp.co.dk.document.html.HtmlDocument)file;
+				List<jp.co.dk.morphologicalanalysis.Token> tokens = htmlDocument.getNounsByTitle();
+				for (jp.co.dk.morphologicalanalysis.Token tolken : tokens) System.out.println(tolken.toString());
 			}
 		} catch (PageIllegalArgumentException | PageAccessException | DocumentException e) {
 			System.err.println(e.getMessage());
@@ -88,20 +86,20 @@ public class PageInfoMain extends AbtractCrawlerControler {
 	
 	@Override
 	protected void getOptions(Options options){
-		options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("読込対象のURL").withDescription("読込対象のURL").create("t_url"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(true).withArgName("読込対象のハッシュ").withDescription("読込対象のハッシュ").create("t_hash"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("リクエストヘッダを表示").withDescription("リクエストヘッダを表示").create("q"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("レスポンスヘッダを表示").withDescription("レスポンスヘッダを表示").create("s"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("データサイズを表示").withDescription("データサイズを表示").create("l"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("アクセス日付を表示").withDescription("アクセス日付を表示").create("a"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("データハッシュを表示").withDescription("データハッシュを表示").create("h"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("データ本体を表示").withDescription("データ本体を表示").create("d"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("アンカー情報を表示").withDescription("アンカー情報を表示").create("A"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("イメージ情報を表示").withDescription("イメージ情報を表示").create("I"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("スクリプト情報を表示").withDescription("スクリプト情報を表示").create("S"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("リンク情報を表示").withDescription("リンク情報を表示").create("L"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("ページ表示情報を表示").withDescription("ページ表示情報を表示").create("C"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("ページ表示情報にある名詞を表示").withDescription("ページ表示情報にある名詞を表示").create("N"));
+		options.addOption(OptionBuilder.isRequired(true ).hasArg(true ).withArgName("読込対象のURL").withDescription("読込対象のURL").withLongOpt("target_url").create("u"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(true ).withArgName("読込対象のハッシュ").withDescription("読込対象のハッシュ").withLongOpt("target_hash").create("h"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("リクエストヘッダを表示").withDescription("リクエストヘッダを表示").withLongOpt("requestheader").create("q"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("レスポンスヘッダを表示").withDescription("レスポンスヘッダを表示").withLongOpt("responceheader").create("s"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("データサイズを表示").withDescription("データサイズを表示").withLongOpt("datasize").create("l"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("アクセス日付を表示").withDescription("アクセス日付を表示").withLongOpt("accessdate").create("a"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("データハッシュを表示").withDescription("データハッシュを表示").withLongOpt("hash").create("h"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("データ本体を表示").withDescription("データ本体を表示").withLongOpt("data").create("d"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("アンカー情報を表示").withDescription("アンカー情報を表示").withLongOpt("anchor").create("A"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("イメージ情報を表示").withDescription("イメージ情報を表示").withLongOpt("image").create("I"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("スクリプト情報を表示").withDescription("スクリプト情報を表示").withLongOpt("script").create("S"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("リンク情報を表示").withDescription("リンク情報を表示").withLongOpt("link").create("L"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("ページ表示情報を表示").withDescription("ページ表示情報を表示").withLongOpt("pageinfo").create("C"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("ページ表示情報にある名詞を表示").withDescription("ページ表示情報にある名詞を表示").withLongOpt("nouns").create("N"));
 	}
 	
 	public static void main(String[] args) {

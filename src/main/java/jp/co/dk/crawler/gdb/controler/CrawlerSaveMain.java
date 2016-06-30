@@ -13,13 +13,10 @@ import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.controler.AbtractCrawlerControler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
-import jp.co.dk.crawler.exception.CrawlerReadException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.gdb.GCrawler;
-import jp.co.dk.crawler.gdb.GUrl;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
-import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerCypherException;
 import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerException;
 import jp.co.dk.neo4jdatastoremanager.property.Neo4JDataStoreManagerProperty;
 
@@ -39,7 +36,7 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 			String startUrl      = cmd.getOptionValue("s");
 			// 走査対象のURLパターン
 			String urlPatternStr = cmd.getOptionValue("p");
-			Pattern urlPattern;
+			Pattern urlPattern = null;
 			try {
 				urlPattern = Pattern.compile(urlPatternStr);
 			} catch (PatternSyntaxException e) { 
@@ -57,61 +54,44 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 			}
 			
 			// クローラを生成する。
-			GCrawler crawler = new GCrawler(startUrl, dsm);
+			GCrawler crawler = null;
+			try {
+				crawler = new GCrawler(startUrl, dsm);
+			} catch (CrawlerInitException e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			}catch (PageIllegalArgumentException e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			} catch (PageAccessException e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			}
 			// 現在のページを保存する。
 			crawler.save();
-			
 			// 指定のパターンに合致するURLを取得する。
-			List<A> anchorList = crawler.getAnchor(urlPattern);
+			List<A> anchorList = null;
+			try {
+				anchorList = crawler.getAnchor(urlPattern);
+			} catch (PageAccessException e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			}
 			
-			do {
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				List<GUrl> wellKnownUrlList = GUrl.wellKnownUrlList(cmd.getOptionValue("u"), dsm);
-				for (GUrl url : wellKnownUrlList) {
-					System.out.println("[" + new Date() + "]:" + url.getURL());
-					
-					try {
-						GCrawler crawler = new GCrawler(url.getURL(), dsm);
-						if (isAllOption) {
-							crawler.saveAll();
-							crawler.saveAllUrl();
-						} else {
-							crawler.save();
-							crawler.saveAllUrl();
-						}
-						Thread.sleep(intervalTime * 1000);
-					} catch (PageAccessException e) {
-						System.out.println("[" + new Date() + "]:" + e.toString());
-					} 
+			for (A anchor : anchorList) {
+				try {
+					Thread.sleep(intervalTime * 1000);
+				} catch (InterruptedException e) {					
 				}
-				dsm.commit();
-			} while (isPersistent);
+				this.logger.info("[" + new Date() + "]:" + anchor.getHref());
+				this.save(crawler, anchor, urlPattern, intervalTime);
+			}
+			
 			System.exit(0);
-		} catch (CrawlerInitException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
 		} catch (Neo4JDataStoreManagerException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (CrawlerReadException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PageIllegalArgumentException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (InterruptedException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (DocumentException e) {
@@ -120,27 +100,34 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 		} catch (CrawlerSaveException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
-		} catch (Neo4JDataStoreManagerCypherException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PageRedirectException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PageMovableLimitException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			System.exit(255);
 		}
 	}
 	
-	private void save(GCrawler crawler, A anchor, Pattern p) throws PageIllegalArgumentException, PageAccessException, PageRedirectException, PageMovableLimitException, CrawlerSaveException, DocumentException {
-		crawler.move(anchor);
+	private void save(GCrawler crawler, A anchor, Pattern p, long intervalTime) throws CrawlerSaveException {
+		try {
+			Thread.sleep(intervalTime * 1000);
+		} catch (InterruptedException e) {
+		}
+		this.logger.info("[" + new Date() + "]:" + anchor.getHref());
+		try {
+			crawler.move(anchor);
+		} catch (PageIllegalArgumentException | PageAccessException	| PageRedirectException | PageMovableLimitException e) {
+			this.logger.info("[" + new Date() + "]:" + anchor.getHref() + " " + e.getMessage());
+			return;
+		}
 		crawler.save();
-		List<A> anchorList = crawler.getAnchor(p);
+		List<A> anchorList = null;
+		try {
+			anchorList = crawler.getAnchor(p);
+		} catch (PageAccessException | DocumentException e) {
+			this.logger.info("[" + new Date() + "]:" + anchor.getHref() + " " + e.getMessage());
+			return;
+		}
 		for (A nextanchor : anchorList) {
-			save(crawler, nextanchor, p);
+			save(crawler, nextanchor, p, intervalTime);
 		}
 	}
 	

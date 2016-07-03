@@ -71,6 +71,8 @@ class GCrawlerPageManager extends AbstractPageManager {
 	 */
 	GCrawlerPageManager(Neo4JDataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nestLevel, int maxNestLevel){
 		super(parentPage, page, pageRedirectHandler, pageEventHandlerList, nestLevel, maxNestLevel);
+		this.dsm = dsm;
+		((jp.co.dk.crawler.gdb.GPage)this.getPage()).setDataStoreManager(dsm);
 	}
 	
 	/**

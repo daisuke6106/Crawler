@@ -1,9 +1,6 @@
 package jp.co.dk.crawler.gdb;
 
-import java.util.List;
-
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageRedirectException;
@@ -21,6 +18,7 @@ import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
  */
 class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 	
+	/** データストアマネージャー */
 	protected Neo4JDataStoreManager dsm;
 	
 	/**
@@ -28,23 +26,10 @@ class GCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 	 * 指定のイベントハンドラ一覧を元にページリダイレクトハンドラを生成します。
 	 * 
 	 * @param dsm データストアマネージャ
-	 * @param eventHandler イベントハンドラ一覧
 	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
 	 */
-	GCrawlerPageRedirectHandler(List<PageEventHandler> eventHandler) throws CrawlerInitException {
-		super(eventHandler);
-	}
-	
-	/**
-	 * コンストラクタ<p/>
-	 * 指定のイベントハンドラ一覧を元にページリダイレクトハンドラを生成します。
-	 * 
-	 * @param dsm データストアマネージャ
-	 * @param eventHandler イベントハンドラ一覧
-	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
-	 */
-	GCrawlerPageRedirectHandler(Neo4JDataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerInitException {
-		super(eventHandler);
+	GCrawlerPageRedirectHandler(Neo4JDataStoreManager dsm) throws CrawlerInitException {
+		super();
 		this.dsm = dsm;
 	}
 	

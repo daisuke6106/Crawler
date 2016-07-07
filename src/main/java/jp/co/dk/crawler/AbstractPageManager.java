@@ -1,9 +1,6 @@
 package jp.co.dk.crawler;
 
-import java.util.List;
-
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.PageManager;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
@@ -23,12 +20,11 @@ public abstract class AbstractPageManager extends PageManager {
 	 * 
 	 * @param url URL文字列
 	 * @param pageRedirectHandler  ページリダイレクト制御オブジェクト
-	 * @param pageEventHandlerList ページイベントハンドラ一覧
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	protected AbstractPageManager(String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException, PageAccessException {
-		super(url, pageRedirectHandler, pageEventHandlerList);
+	protected AbstractPageManager(String url, PageRedirectHandler pageRedirectHandler) throws PageIllegalArgumentException, PageAccessException {
+		super(url, pageRedirectHandler);
 	}
 	
 	/**
@@ -37,13 +33,12 @@ public abstract class AbstractPageManager extends PageManager {
 	 * 
 	 * @param url URL文字列
 	 * @param pageRedirectHandler ページリダイレクト制御オブジェクト
-	 * @param pageEventHandlerList ページイベントハンドラ一覧
 	 * @param maxNestLevel ページ遷移上限数
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	protected AbstractPageManager(String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
-		super(url, pageRedirectHandler, pageEventHandlerList, maxNestLevel);
+	protected AbstractPageManager(String url, PageRedirectHandler pageRedirectHandler, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
+		super(url, pageRedirectHandler, maxNestLevel);
 	}
 	
 	/**
@@ -57,12 +52,12 @@ public abstract class AbstractPageManager extends PageManager {
 	 * @param nestLevel            現在のページ遷移数
 	 * @param maxNestLevel         ページ遷移上限数
 	 */
-	protected AbstractPageManager(PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nestLevel, int maxNestLevel){
-		super(parentPage, page, pageRedirectHandler, pageEventHandlerList, nestLevel, maxNestLevel);
+	protected AbstractPageManager(PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, int nestLevel, int maxNestLevel){
+		super(parentPage, page, pageRedirectHandler, nestLevel, maxNestLevel);
 	}
 	
 	@Override
-	protected abstract PageManager createPageManager(PageManager pageManager, Page page, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nextLevel, int maxNestLevel) ;
+	protected abstract PageManager createPageManager(PageManager pageManager, Page page, PageRedirectHandler pageRedirectHandler, int nextLevel, int maxNestLevel) ;
 	
 	@Override
 	public abstract Page createPage(String url) throws PageIllegalArgumentException, PageAccessException;

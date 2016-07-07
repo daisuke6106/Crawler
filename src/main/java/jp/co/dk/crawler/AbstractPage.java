@@ -1,13 +1,9 @@
 package jp.co.dk.crawler;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.http.header.RequestHeader;
@@ -35,7 +31,7 @@ public abstract class AbstractPage extends Page {
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
 	public AbstractPage(String url) throws PageIllegalArgumentException, PageAccessException {
-		super(url, new HashMap<String,String>(), false, new ArrayList<PageEventHandler>());
+		super(url, new HashMap<String,String>(), false);
 	}
 	
 	/**
@@ -47,11 +43,10 @@ public abstract class AbstractPage extends Page {
 	 * @param requestHeader リクエストヘッダ
 	 * @param responseHeader レスポンスヘッダ
 	 * @param data データオブジェクト
-	 * @param pageEventHandlerList イベントハンドラ
 	 * @throws PageIllegalArgumentException データが不正、もしくは不足していた場合
 	 */
-	protected AbstractPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, Date accessDate, ByteDump data, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException {
-		super(url, requestHeader, responseHeader, accessDate, data, pageEventHandlerList);
+	protected AbstractPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, Date accessDate, ByteDump data) throws PageIllegalArgumentException {
+		super(url, requestHeader, responseHeader, accessDate, data);
 	}
 
 	/** ファイルID */

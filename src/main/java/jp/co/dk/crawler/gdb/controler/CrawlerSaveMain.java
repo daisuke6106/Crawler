@@ -15,6 +15,7 @@ import jp.co.dk.crawler.controler.AbtractCrawlerControler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.gdb.GCrawler;
+import jp.co.dk.crawler.gdb.GUrl;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
 import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerException;
@@ -69,26 +70,34 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 			}
 			// 現在のページを保存する。
 			crawler.save();
+			
+			// 保存後、指定時間スリープ
+			try {
+				Thread.sleep(intervalTime * 1000);
+			} catch (InterruptedException e) {					
+			}
+			
 			// 指定のパターンに合致するURLを取得する。
 			List<A> anchorList = null;
 			try {
-				anchorList = crawler.getAnchor(urlPattern);
+				anchorList = GUrl.createUrlByAnchor(crawler.getAnchor(urlPattern), dsm);
 			} catch (PageAccessException e) {
 				System.out.println(e.getMessage());
 				System.exit(1);
 			}
 			
+			
+			
 			for (A anchor : anchorList) {
-				try {
-					Thread.sleep(intervalTime * 1000);
-				} catch (InterruptedException e) {					
-				}
 				this.logger.info("[" + new Date() + "]:" + anchor.getHref());
 				this.save(crawler, anchor, urlPattern, intervalTime);
 			}
 			
 			System.exit(0);
 		} catch (Neo4JDataStoreManagerException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		} catch (PageIllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (IOException e) {

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageHeaderImproperException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
@@ -110,8 +109,7 @@ public class GPage extends AbstractPage {
 				// データ本体を取得する
 				String dataStr = pageNode.getPropertyString("data");
 				ByteDump data = ByteDump.getByteDumpFromBase64String(dataStr);
-				List<PageEventHandler> pageEventHandlerList = new ArrayList<PageEventHandler>();
-				gpageList.add(new GPage(url, new RequestHeader(requestHeader), new ResponseHeader(responseHeaderMap), accessDate, data, pageEventHandlerList, dataStoreManager));
+				gpageList.add(new GPage(url, new RequestHeader(requestHeader), new ResponseHeader(responseHeaderMap), accessDate, data, dataStoreManager));
 			}
 		} catch (Neo4JDataStoreManagerCypherException | PageIllegalArgumentException | PageHeaderImproperException | ParseException e) {
 			throw new CrawlerReadException(FAILE_TO_READ_PAGE, url, e);
@@ -128,12 +126,11 @@ public class GPage extends AbstractPage {
 	 * @param requestHeader リクエストヘッダ
 	 * @param responseHeader レスポンスヘッダ
 	 * @param data データオブジェクト
-	 * @param pageEventHandlerList イベントハンドラ
 	 * @param dataStoreManager データストアマネージャ
 	 * @throws PageIllegalArgumentException データが不正、もしくは不足していた場合
 	 */
-	private GPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, Date accessDate, ByteDump data, List<PageEventHandler> pageEventHandlerList, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException {
-		super(url, requestHeader, responseHeader, accessDate, data, pageEventHandlerList);
+	private GPage(String url, RequestHeader requestHeader, ResponseHeader responseHeader, Date accessDate, ByteDump data, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException {
+		super(url, requestHeader, responseHeader, accessDate, data);
 		this.dataStoreManager = dataStoreManager;
 	}
 	

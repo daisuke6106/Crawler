@@ -8,6 +8,7 @@ import java.util.Map;
 
 import jp.co.dk.browzer.Parameter;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
+import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerReadException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
@@ -56,6 +57,13 @@ public class GUrl extends AbstractUrl {
 		} catch (Neo4JDataStoreManagerCypherException | PageIllegalArgumentException e) {
 			throw new CrawlerReadException(FAILE_TO_READ_URL, url,e); 
 		}
+	}
+	
+	public static List<GUrl> createUrlByAnchor(List<A> anchorList, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException {
+		List<GUrl> urlList = new ArrayList<GUrl>();
+		if (anchorList == null) return urlList;
+		for (A anchor : anchorList) urlList.add(new GUrl(anchor.getHref(), dataStoreManager));
+		return urlList;
 	}
 	
 	/**
@@ -224,4 +232,18 @@ public class GUrl extends AbstractUrl {
 			throw new CrawlerReadException(FAILE_TO_READ_URL, this.getHost(), e);
 		}
 	}
+	
+	/**
+	 * このURLのページ情報ですでに保存している件数を取得します。
+	 * 検索を行った場合、その結果はキャッシュされ、２回目以降は同じ値が返却されます。
+	 * 
+	 * @return 保存済みの件数
+	 * @throws CrawlerReadException データストアからの読み込みに失敗した場合
+	 */
+	public int getSavedCountByCache() throws CrawlerReadException {
+		if (this.savedcount >= 0) return this.savedcount;
+		this.savedcount = this.getSavedCount();
+		return this.savedcount;
+	}
+	private int savedcount = -1;
 }

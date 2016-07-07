@@ -64,7 +64,7 @@ public class RCrawler extends AbstractCrawler {
 		super(url);
 		if (dataStoreManager == null) throw new CrawlerInitException(CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET);
 		this.dsm                 = dataStoreManager;
-		this.pageRedirectHandler = new RCrawlerPageRedirectHandler(dataStoreManager, this.getPageEventHandler());
+		this.pageRedirectHandler = new RCrawlerPageRedirectHandler(dataStoreManager);
 		super.pageManager = this.createPageManager(url, this.pageRedirectHandler);
 	}
 	
@@ -146,12 +146,12 @@ public class RCrawler extends AbstractCrawler {
 
 	@Override
 	protected AbstractPageManager createPageManager(String url, PageRedirectHandler handler) throws PageIllegalArgumentException, PageAccessException {
-		return new RCrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList);
+		return new RCrawlerPageManager(this.dsm, url, handler);
 	}
 	
 	@Override
 	protected AbstractPageManager createPageManager(String url, PageRedirectHandler handler, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
-		return new RCrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList, maxNestLevel);
+		return new RCrawlerPageManager(this.dsm, url, handler, maxNestLevel);
 	}
 	
 	public DataStoreManager getDataStoreManager() {
@@ -160,7 +160,7 @@ public class RCrawler extends AbstractCrawler {
 
 	@Override
 	protected AbstractPageRedirectHandler createPageRedirectHandler() {
-		return new RCrawlerPageRedirectHandler(this.dsm, this.getPageEventHandler());
+		return new RCrawlerPageRedirectHandler(this.dsm);
 	}
 	
 }

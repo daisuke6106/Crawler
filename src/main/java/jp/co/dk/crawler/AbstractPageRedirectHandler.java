@@ -1,9 +1,6 @@
 package jp.co.dk.crawler;
 
-import java.util.List;
-
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
@@ -22,11 +19,10 @@ public abstract class AbstractPageRedirectHandler extends PageRedirectHandler {
 	 * 指定のイベントハンドラ一覧を元にページリダイレクトハンドラを生成します。
 	 * 
 	 * @param dsm データストアマネージャ
-	 * @param eventHandler イベントハンドラ一覧
 	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
 	 */
-	protected AbstractPageRedirectHandler(List<PageEventHandler> eventHandler) throws CrawlerInitException {
-		super(eventHandler);
+	protected AbstractPageRedirectHandler() throws CrawlerInitException {
+		super();
 	}	
 	
 	@Override

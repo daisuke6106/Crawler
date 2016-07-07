@@ -14,4 +14,6 @@ public abstract class CrawleScenario {
 	 * @return 開始ページ
 	 */
 	protected abstract String getStartPage();
+	
+	
 }

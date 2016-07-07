@@ -2,10 +2,7 @@ package jp.co.dk.crawler.rdb;
 
 import static jp.co.dk.crawler.message.CrawlerMessage.DATASTOREMANAGER_IS_NOT_SET;
 
-import java.util.List;
-
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageRedirectException;
@@ -30,11 +27,10 @@ class RCrawlerPageRedirectHandler extends AbstractPageRedirectHandler {
 	 * 指定のイベントハンドラ一覧を元にページリダイレクトハンドラを生成します。
 	 * 
 	 * @param dsm データストアマネージャ
-	 * @param eventHandler イベントハンドラ一覧
 	 * @throws CrawlerInitException クローラページリダイレクトハンドラの生成に失敗した場合
 	 */
-	RCrawlerPageRedirectHandler(DataStoreManager dsm, List<PageEventHandler> eventHandler) throws CrawlerInitException {
-		super(eventHandler);
+	RCrawlerPageRedirectHandler(DataStoreManager dsm) throws CrawlerInitException {
+		super();
 		if (dsm == null) throw new CrawlerInitException(DATASTOREMANAGER_IS_NOT_SET);
 		this.dsm = dsm;
 	}	

@@ -77,17 +77,17 @@ public class GCrawler extends AbstractCrawler {
 	
 	@Override
 	protected AbstractPageManager createPageManager(String url, PageRedirectHandler handler) throws PageIllegalArgumentException, PageAccessException {
-		return new GCrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList);
+		return new GCrawlerPageManager(this.dsm, url, handler);
 	}
 	
 	@Override
 	protected AbstractPageManager createPageManager(String url, PageRedirectHandler handler, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
-		return new GCrawlerPageManager(this.dsm, url, handler, this.pageEventHandlerList, maxNestLevel);
+		return new GCrawlerPageManager(this.dsm, url, handler, maxNestLevel);
 	}
 
 	@Override
 	protected AbstractPageRedirectHandler createPageRedirectHandler() {
-		return new GCrawlerPageRedirectHandler(this.dsm, this.getPageEventHandler());
+		return new GCrawlerPageRedirectHandler(this.dsm);
 	}
 	
 	/**

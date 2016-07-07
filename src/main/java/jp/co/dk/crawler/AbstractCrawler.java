@@ -1,18 +1,14 @@
 package jp.co.dk.crawler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.dk.browzer.Browzer;
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.PageRedirectHandler;
-import jp.co.dk.browzer.event.PrintPageEventHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageMovableLimitException;
 import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.eventhandler.LogPageEventHandler;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
@@ -167,13 +163,6 @@ public abstract class AbstractCrawler extends Browzer {
 		}
 	}
 	
-	@Override
-	protected List<PageEventHandler> getPageEventHandler() {
-		List<PageEventHandler> list = new ArrayList<PageEventHandler>();
-		list.add(new PrintPageEventHandler());
-		list.add(new LogPageEventHandler());
-		return list;
-	}
 }
 
 class MovableElementSelector implements ElementSelector {

@@ -1,9 +1,6 @@
 package jp.co.dk.crawler.rdb;
 
-import java.util.List;
-
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.PageEventHandler;
 import jp.co.dk.browzer.PageManager;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
@@ -29,12 +26,11 @@ class RCrawlerPageManager extends AbstractPageManager {
 	 * @param dsm データストアマネージャ
 	 * @param url URL文字列
 	 * @param pageRedirectHandler  ページリダイレクト制御オブジェクト
-	 * @param pageEventHandlerList ページイベントハンドラ一覧
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	RCrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList) throws PageIllegalArgumentException, PageAccessException {
-		super(url, pageRedirectHandler, pageEventHandlerList);
+	RCrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler) throws PageIllegalArgumentException, PageAccessException {
+		super(url, pageRedirectHandler);
 		this.dsm = dsm;
 		jp.co.dk.crawler.rdb.RPage page = (jp.co.dk.crawler.rdb.RPage)super.getPage();
 		page.dataStoreManager = dsm;
@@ -47,13 +43,12 @@ class RCrawlerPageManager extends AbstractPageManager {
 	 * @param dsm データストアマネージャ
 	 * @param url URL文字列
 	 * @param pageRedirectHandler ページリダイレクト制御オブジェクト
-	 * @param pageEventHandlerList ページイベントハンドラ一覧
 	 * @param maxNestLevel ページ遷移上限数
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	RCrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
-		super(url, pageRedirectHandler, pageEventHandlerList, maxNestLevel);
+	RCrawlerPageManager(DataStoreManager dsm, String url, PageRedirectHandler pageRedirectHandler, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException {
+		super(url, pageRedirectHandler, maxNestLevel);
 		this.dsm = dsm;
 		jp.co.dk.crawler.rdb.RPage page = (jp.co.dk.crawler.rdb.RPage)super.getPage();
 		page.dataStoreManager = dsm;
@@ -67,12 +62,11 @@ class RCrawlerPageManager extends AbstractPageManager {
 	 * @param parentPage           遷移元ページのページマネージャ
 	 * @param page                 遷移先のページオブジェクト
 	 * @param pageRedirectHandler  ページリダイレクト制御オブジェクト
-	 * @param pageEventHandlerList ページイベントハンドラ一覧
 	 * @param nestLevel            現在のページ遷移数
 	 * @param maxNestLevel         ページ遷移上限数
 	 */
-	RCrawlerPageManager(DataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nestLevel, int maxNestLevel){
-		super(parentPage, page, pageRedirectHandler, pageEventHandlerList, nestLevel, maxNestLevel);
+	RCrawlerPageManager(DataStoreManager dsm, PageManager parentPage, Page page,  PageRedirectHandler pageRedirectHandler, int nestLevel, int maxNestLevel){
+		super(parentPage, page, pageRedirectHandler, nestLevel, maxNestLevel);
 		this.dsm = dsm;
 	}
 	
@@ -82,8 +76,8 @@ class RCrawlerPageManager extends AbstractPageManager {
 	}
 	
 	@Override
-	protected PageManager createPageManager(PageManager pageManager, Page page, PageRedirectHandler pageRedirectHandler, List<PageEventHandler> pageEventHandlerList, int nextLevel, int maxNestLevel) {
-		return new RCrawlerPageManager(this.dsm, pageManager, page, pageRedirectHandler, pageEventHandlerList, nextLevel, maxNestLevel);
+	protected PageManager createPageManager(PageManager pageManager, Page page, PageRedirectHandler pageRedirectHandler, int nextLevel, int maxNestLevel) {
+		return new RCrawlerPageManager(this.dsm, pageManager, page, pageRedirectHandler, nextLevel, maxNestLevel);
 	}
 }
 

@@ -225,6 +225,17 @@ public class GPage extends AbstractPage {
 	}
 	
 	@Override
+	public jp.co.dk.document.File getDocument() throws PageAccessException, DocumentException {
+		if (this.document != null) return this.document;
+		try {
+			this.document = this.getDocument(new GCrawlerDocumentFactory(this));
+			return this.document;
+		} catch (PageAccessException e) {
+			throw e;
+		}
+	}
+	
+	@Override
 	public boolean isSaved() throws CrawlerSaveException {
 		try {
 			Neo4JDataStore dataStore = this.dataStoreManager.getDataAccessObject("PAGE");
@@ -326,6 +337,10 @@ public class GPage extends AbstractPage {
 	public void setDataStoreManager(Neo4JDataStoreManager dataStoreManager) {
 		this.dataStoreManager = dataStoreManager;
 		((GUrl)this.url).setDataStoreManager(dataStoreManager);
+	}
+	
+	public Neo4JDataStoreManager getDataStoreManager() {
+		return this.dataStoreManager;
 	}
 }
 

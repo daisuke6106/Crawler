@@ -59,13 +59,6 @@ public class GUrl extends AbstractUrl {
 		}
 	}
 	
-	public static List<GUrl> createUrlByAnchor(List<A> anchorList, Neo4JDataStoreManager dataStoreManager) throws PageIllegalArgumentException {
-		List<GUrl> urlList = new ArrayList<GUrl>();
-		if (anchorList == null) return urlList;
-		for (A anchor : anchorList) urlList.add(new GUrl(anchor.getHref(), dataStoreManager));
-		return urlList;
-	}
-	
 	/**
 	 * <p>コンストラクタ</p>
 	 * 指定のURL文字列、データストアマネージャをを基にＵＲＬを表すインスタンスを生成する。

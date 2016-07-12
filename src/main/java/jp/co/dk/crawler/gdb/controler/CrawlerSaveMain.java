@@ -38,6 +38,9 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 			// 走査開始URL
 			String startUrl      = cmd.getOptionValue("u");
 
+			// 走査開始URLを保存するか？
+			boolean saveStartUrl = cmd.hasOption("a");
+			
 			// 保存対象のURLパターン
 			String saveUrlPatternStr = cmd.getOptionValue("s");
 			Pattern saveUrlPattern = null;
@@ -57,7 +60,10 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 				System.out.println(e.getMessage());
 				System.exit(1);
 			}
-
+			
+			// 移動対象URLを保存するか？
+			boolean saveMoveUrl = cmd.hasOption("b");
+			
 			// インターバル（単位：秒）
 			long intervalTime;
 			String intervalStr = cmd.getOptionValue("i");
@@ -80,11 +86,16 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 				System.out.println(e.getMessage());
 				System.exit(1);
 			}
-			// 現在のページを保存する。
-			((_CSGCrawler)this.crawler).save();
+			// 現在のページを保存する。（オプションにより保存すると指定されていた場合）
+			if (saveStartUrl) {
+				((_CSGCrawler)this.crawler).save();
+				// 保存後、指定時間スリープ
+				((_CSGCrawler)this.crawler).sleep();
+			}
 			
-			// 保存後、指定時間スリープ
-			((_CSGCrawler)this.crawler).sleep();
+			
+			// このページに存在する移動対象のURLパターンに合致するURLリストを取得する。
+			List<A> moveAnchorList = ((_CSGCrawler)this.crawler).moveAnchorList();
 			
 			// このページにある保存対象のURLパターンに合致するページを保存する。
 			((_CSGCrawler)this.crawler).saveBySavePattern();
@@ -127,8 +138,10 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 	@SuppressWarnings("all")
 	protected void getOptions(Options options){
 		options.addOption(OptionBuilder.isRequired(true ).hasArg(true ).withArgName("URL"   ).withDescription("走査のスタートページ").withLongOpt("start_url").create("u"));
+		options.addOption(OptionBuilder.isRequired(true ).hasArg(true ).withArgName("URL"   ).withDescription("走査のスタートページを保存するか？").withLongOpt("start_url_save").create("a"));
 		options.addOption(OptionBuilder.isRequired(true ).hasArg(true ).withArgName("URL"   ).withDescription("移動先のURLパターン（正規表現にて指定）").withLongOpt("move_pattern").create("m"));
-		options.addOption(OptionBuilder.isRequired(true ).hasArg(true ).withArgName("URL"   ).withDescription("保存対象のURLパターン（正規表現にて指定）").withLongOpt("save_pattern").create("s"));
+		options.addOption(OptionBuilder.isRequired(true ).hasArg(true ).withArgName("URL"   ).withDescription("移動先ページを保存するか？").withLongOpt("move_pattern").create("b"));
+		options.addOption(OptionBuilder.isRequired(true ).hasArg(true ).withArgName("URL"   ).withDescription("保存対象のURLパターン（正規表現にて指定）").withLongOpt("move_save").create("s"));
 		options.addOption(OptionBuilder.isRequired(false).hasArg(true ).withArgName("minuts").withDescription("インターバル（単位：秒）").withLongOpt("interval").create("i"));
 	}
 	
@@ -153,7 +166,12 @@ class _CSGCrawler extends GCrawler {
 		this.intervalTime   = intervalTime;
 	}
 	
-	public List<A> unknownMoveAnchoerList() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
+	public List<A> moveAnchorList() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
+		// 移動対象のURLパターンに合致するアンカーを取得する。
+		return this.getAnchor(moveUrlPattern);
+	}
+	
+	public List<A> unknownMoveAnchorList() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
 		// 移動対象のURLパターンに合致するアンカーを取得する。
 		List<A> moveAnchorList = this.getAnchor(moveUrlPattern);
 		
@@ -166,45 +184,10 @@ class _CSGCrawler extends GCrawler {
 		return unknownMoveAnchoerList;
 	}
 	
-	public void moveByMovePattern() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException, CrawlerSaveException {
-		
-		// まだ訪れていないページの保存を開始する。
-		for (A moveAnchor : this.unknownMoveAnchoerList()) {
-			this.logger.info("[" + new Date() + "]: MOVE " + moveAnchor.getHref());
-			// ページに移動する
-			try {
-				this.move(moveAnchor);
-			} catch (PageRedirectException | PageMovableLimitException e) {
-				// エラーになった場合は無視
-				this.logger.info("[" + new Date() + "]: ERROR " + moveAnchor.getHref() + " " + e.getMessage());
-				continue;
-			}
-			
-			// このページにある保存対象のURLパターンに合致するアンカーに移動し保存する。
-			this.saveBySavePattern();
-			
-			// 保存後、指定時間スリープ
-			this.sleep();
-		}
-					
-	}
-	
-	public List<A> unknownSaveAnchoerList() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
-		// 保存対象のURLパターンに合致するアンカーを取得する。
-		List<A> saveAnchorList = this.getAnchor(this.saveUrlPattern);
-		
-		// その中からまだ訪れていないページを抽出する。
-		List<A> unknownSaveAnchoerList = new ArrayList<>();
-		for (A saveAnchor : saveAnchorList) {
-			int count = ((GCrawlerA)saveAnchor).getUrlObj().getSavedCountByCache();
-			if (count == 0) unknownSaveAnchoerList.add(saveAnchor);
-		}
-		return unknownSaveAnchoerList;
-	}
 	public void saveBySavePattern() throws DocumentException, PageIllegalArgumentException, PageAccessException, CrawlerReadException, CrawlerSaveException {
 		
 		// まだ訪れていないページの保存を開始する。
-		for (A saveAnchor : this.unknownSaveAnchoerList()) {
+		for (A saveAnchor : this.unknownSaveAnchorList()) {
 			this.logger.info("[" + new Date() + "]: SAVE " + saveAnchor.getHref());
 			// ページに移動する
 			try {
@@ -227,6 +210,19 @@ class _CSGCrawler extends GCrawler {
 		
 	}
 
+	public List<A> unknownSaveAnchorList() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
+		// 保存対象のURLパターンに合致するアンカーを取得する。
+		List<A> saveAnchorList = this.getAnchor(this.saveUrlPattern);
+		
+		// その中からまだ訪れていないページを抽出する。
+		List<A> unknownSaveAnchoerList = new ArrayList<>();
+		for (A saveAnchor : saveAnchorList) {
+			int count = ((GCrawlerA)saveAnchor).getUrlObj().getSavedCountByCache();
+			if (count == 0) unknownSaveAnchoerList.add(saveAnchor);
+		}
+		return unknownSaveAnchoerList;
+	}
+	
 	/**
 	 * 指定時間スリープする。
 	 */

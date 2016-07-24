@@ -2,22 +2,25 @@ package jp.co.dk.crawler.gdb.controler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import jp.co.dk.browzer.Browzer;
+import jp.co.dk.browzer.exception.MoveActionException;
+import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageMovableLimitException;
 import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.browzer.html.element.A;
+import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.browzer.scenario.action.MoveAction;
 import jp.co.dk.crawler.controler.AbtractCrawlerControler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerReadException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.gdb.GCrawler;
-import jp.co.dk.crawler.gdb.html.element.GCrawlerA;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStoreManager;
 import jp.co.dk.neo4jdatastoremanager.exception.Neo4JDataStoreManagerException;
@@ -43,39 +46,23 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 			
 			// 保存対象のURLパターン
 			String saveUrlPatternStr = cmd.getOptionValue("s");
-			Pattern saveUrlPattern = null;
-			try {
-				saveUrlPattern = Pattern.compile(saveUrlPatternStr);
-			} catch (PatternSyntaxException e) { 
-				System.out.println(e.getMessage());
-				System.exit(1);
-			}
+			Pattern saveUrlPattern = Pattern.compile(saveUrlPatternStr);
 
 			// 移動対象のURLパターン
 			String moveUrlPatternStr = cmd.getOptionValue("m");
-			Pattern moveUrlPattern = null;
-			try {
-				moveUrlPattern = Pattern.compile(moveUrlPatternStr);
-			} catch (PatternSyntaxException e) { 
-				System.out.println(e.getMessage());
-				System.exit(1);
-			}
+			Pattern moveUrlPattern = Pattern.compile(moveUrlPatternStr);
 			
 			// 移動対象URLを保存するか？
 			boolean saveMoveUrl = cmd.hasOption("b");
 			
 			// インターバル（単位：秒）
-			long intervalTime;
+			long intervalTime = 10;
 			String intervalStr = cmd.getOptionValue("i");
-			if (intervalStr != null) {
-				intervalTime = Long.parseLong(intervalStr);
-			} else {
-				intervalTime = 10;
-			}
+			if (intervalStr != null) intervalTime = Long.parseLong(intervalStr);
 			
 			// クローラを生成する。
 			try {
-				this.crawler = new _CSGCrawler(startUrl, saveUrlPattern, moveUrlPattern, intervalTime, dsm);
+				this.crawler = new GCrawler(startUrl, dsm);
 			} catch (CrawlerInitException e) {
 				System.out.println(e.getMessage());
 				System.exit(1);
@@ -88,30 +75,27 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 			}
 			// 現在のページを保存する。（オプションにより保存すると指定されていた場合）
 			if (saveStartUrl) {
-				((_CSGCrawler)this.crawler).save();
-				// 保存後、指定時間スリープ
-				((_CSGCrawler)this.crawler).sleep();
+				this.crawler.save();
 			}
 			
-			
 			// このページに存在する移動対象のURLパターンに合致するURLリストを取得する。
-			List<A> moveAnchorList = ((_CSGCrawler)this.crawler).moveAnchorList();
+			List<A> moveAnchorList = this.crawler.getAnchor(moveUrlPattern);
 			
-			// このページにある保存対象のURLパターンに合致するページを保存する。
-			((_CSGCrawler)this.crawler).saveBySavePattern();
 			
+			for(A moveAnchor : moveAnchorList) {
+				try {
+					this.crawler.move(moveAnchor, new MoveAction(){
+						
+					});
+				// 遷移前に遷移先のURLが「訪問済みURLの一覧」にあった場合、無視
+				} catch (MoveActionException e) {}
+			}
 			
 			System.exit(0);
-		} catch (Neo4JDataStoreManagerException e) {
+		} catch (PatternSyntaxException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
-		} catch (PageAccessException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PageIllegalArgumentException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (IOException e) {
+		} catch (PageIllegalArgumentException | PageRedirectException | PageMovableLimitException | PageAccessException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} catch (DocumentException e) {
@@ -120,10 +104,7 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 		} catch (CrawlerSaveException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
-		} catch (CrawlerReadException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		}catch (RuntimeException e) {
+		} catch (IOException | Neo4JDataStoreManagerException | RuntimeException e) {
 			e.printStackTrace();
 			System.exit(255);
 		}
@@ -151,85 +132,53 @@ public class CrawlerSaveMain extends AbtractCrawlerControler {
 	
 }
 
-class _CSGCrawler extends GCrawler {
+class CrawlerSaveMoveAction implements MoveAction {
 	
-	protected Pattern saveUrlPattern;
+	/** 移動対象URLを保存するか？ */
+	private boolean saveMoveUrl;
 	
-	protected Pattern moveUrlPattern;
+	/** 移動対象のURLパターン */
+	private Pattern moveUrlPattern;
 	
-	protected long intervalTime;
+	/** 保存対象のURLパターン */
+	private Pattern saveUrlPattern;
 	
-	public _CSGCrawler(String url, Pattern saveUrlPattern, Pattern moveUrlPattern, long intervalTime, Neo4JDataStoreManager dataStoreManager) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException {
-		super(url, dataStoreManager);
-		this.saveUrlPattern = saveUrlPattern;
+	/** 保存時のインターバル */
+	private long intervalTime;
+	
+	/** 訪問済みURLの一覧 */
+	private List<String> visitedUrlList = new ArrayList<>();
+	
+	/** 移動対象のURL一覧に合致するアンカー一覧 */
+	private List<A> moveUrlList;
+	
+	CrawlerSaveMoveAction(boolean saveMoveUrl, Pattern moveUrlPattern, Pattern saveUrlPattern, long intervalTime) {
+		this.saveMoveUrl    = saveMoveUrl;
 		this.moveUrlPattern = moveUrlPattern;
+		this.saveUrlPattern = saveUrlPattern;
 		this.intervalTime   = intervalTime;
 	}
 	
-	public List<A> moveAnchorList() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
-		// 移動対象のURLパターンに合致するアンカーを取得する。
-		return this.getAnchor(moveUrlPattern);
+	@Override
+	public void before(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
+		// 遷移前に遷移先のURLが「訪問済みURLの一覧」にあった場合
+		// 以降の処理は行わせないよう例外を送出
+		if (visitedUrlList.contains(movable.getUrl())) throw new MoveActionException(null);
 	}
 	
-	public List<A> unknownMoveAnchorList() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
-		// 移動対象のURLパターンに合致するアンカーを取得する。
-		List<A> moveAnchorList = this.getAnchor(moveUrlPattern);
-		
-		// その中からまだ訪れていないページを抽出する。
-		List<A> unknownMoveAnchoerList = new ArrayList<>();
-		for (A moveAnchor : moveAnchorList) {
-			int count = ((GCrawlerA)moveAnchor).getUrlObj().getSavedCountByCache();
-			if (count == 0) unknownMoveAnchoerList.add(moveAnchor);
-		}
-		return unknownMoveAnchoerList;
-	}
-	
-	public void saveBySavePattern() throws DocumentException, PageIllegalArgumentException, PageAccessException, CrawlerReadException, CrawlerSaveException {
-		
-		// まだ訪れていないページの保存を開始する。
-		for (A saveAnchor : this.unknownSaveAnchorList()) {
-			this.logger.info("[" + new Date() + "]: SAVE " + saveAnchor.getHref());
-			// ページに移動する
-			try {
-				this.move(saveAnchor);
-			} catch (PageRedirectException | PageMovableLimitException e) {
-				// エラーになった場合は無視
-				this.logger.info("[" + new Date() + "]: ERROR " + saveAnchor.getHref() + " " + e.getMessage());
-				continue;
-			}
-			// ページを保存する
-			this.save();
-			// 元いたページに戻る
-			this.back();
-			// 保存後、指定時間スリープ
-			this.sleep();
-		}
-		
-		// 保存がひと通り完了したら遷移先の情報をクリアする。
-		this.removeChild();
-		
-	}
-
-	public List<A> unknownSaveAnchorList() throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
-		// 保存対象のURLパターンに合致するアンカーを取得する。
-		List<A> saveAnchorList = this.getAnchor(this.saveUrlPattern);
-		
-		// その中からまだ訪れていないページを抽出する。
-		List<A> unknownSaveAnchoerList = new ArrayList<>();
-		for (A saveAnchor : saveAnchorList) {
-			int count = ((GCrawlerA)saveAnchor).getUrlObj().getSavedCountByCache();
-			if (count == 0) unknownSaveAnchoerList.add(saveAnchor);
-		}
-		return unknownSaveAnchoerList;
-	}
-	
-	/**
-	 * 指定時間スリープする。
-	 */
-	protected void sleep() {
+	@Override
+	public void after(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
 		try {
-			Thread.sleep(this.intervalTime * 1000);
-		} catch (InterruptedException e) {
+			this.moveUrlList = browzer.getAnchor(this.moveUrlPattern);
+			// 移動対象URLを保存する場合、保存を実行する。
+			if (this.saveMoveUrl) ((GCrawler)browzer).save();
+			// このページにある保存対象のURLパターンに合致するURLを保存する。
+			((GCrawler)browzer).saveBySavePattern(this.saveUrlPattern, this.intervalTime);
+			// 訪問済みURLの一覧にURLを追加する。
+			visitedUrlList.add(movable.getUrl());
+		} catch (PageIllegalArgumentException | PageAccessException | DocumentException	| CrawlerReadException | CrawlerSaveException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
 		}
 	}
 }

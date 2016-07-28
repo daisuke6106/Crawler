@@ -1,14 +1,25 @@
 package jp.co.dk.crawler.gdb;
 
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
+import jp.co.dk.browzer.exception.PageMovableLimitException;
+import jp.co.dk.browzer.exception.PageRedirectException;
+import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.AbstractPageManager;
 import jp.co.dk.crawler.AbstractPageRedirectHandler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
+import jp.co.dk.crawler.exception.CrawlerReadException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
+import jp.co.dk.crawler.gdb.html.element.GCrawlerA;
 import jp.co.dk.crawler.message.CrawlerMessage;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.neo4jdatastoremanager.Neo4JDataStore;
@@ -45,6 +56,48 @@ public class GCrawler extends AbstractCrawler {
 		((GCrawlerPageManager)this.pageManager).setDataStoreManager(dataStoreManager);
 		((GCrawlerPageRedirectHandler)this.pageRedirectHandler).setDataStoreManager(dataStoreManager);
 		
+	}
+	
+	public void saveBySavePattern(Pattern saveUrlPattern, long intervalTime) throws DocumentException, PageIllegalArgumentException, PageAccessException, CrawlerReadException, CrawlerSaveException {
+		
+		// まだ訪れていないページの保存を開始する。
+		for (A saveAnchor : this.unknownSaveAnchorList(saveUrlPattern)) {
+			this.logger.info("[" + new Date() + "]: SAVE " + saveAnchor.getHref());
+			// ページに移動する
+			try {
+				this.move(saveAnchor);
+			} catch (PageRedirectException | PageMovableLimitException e) {
+				// エラーになった場合は無視
+				this.logger.info("[" + new Date() + "]: ERROR " + saveAnchor.getHref() + " " + e.getMessage());
+				continue;
+			}
+			// ページを保存する
+			this.save();
+			// 元いたページに戻る
+			this.back();
+			// 保存後、指定時間スリープ
+			try {
+				Thread.sleep(intervalTime * 1000);
+			} catch (InterruptedException e) {
+			}
+		}
+		
+		// 保存がひと通り完了したら遷移先の情報をクリアする。
+		this.removeChild();
+		
+	}
+
+	public List<A> unknownSaveAnchorList(Pattern saveUrlPattern) throws PageAccessException, DocumentException, PageIllegalArgumentException, CrawlerReadException {
+		// 保存対象のURLパターンに合致するアンカーを取得する。
+		List<A> saveAnchorList = this.getAnchor(saveUrlPattern);
+		
+		// その中からまだ訪れていないページを抽出する。
+		List<A> unknownSaveAnchoerList = new ArrayList<>();
+		for (A saveAnchor : saveAnchorList) {
+			int count = ((GCrawlerA)saveAnchor).getUrlObj().getSavedCountByCache();
+			if (count == 0) unknownSaveAnchoerList.add(saveAnchor);
+		}
+		return unknownSaveAnchoerList;
 	}
 	
 	public void saveAllUrl() throws PageAccessException, PageIllegalArgumentException, DocumentException, CrawlerSaveException, Neo4JDataStoreManagerCypherException {

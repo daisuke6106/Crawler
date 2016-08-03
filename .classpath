@@ -46,11 +46,11 @@
 	<classpathentry kind="lib" path="lib/log5j-2.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/logger_1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/datastoremanager_1.2.2.jar"/>
-	<classpathentry kind="lib" path="/home/dk/github_workspace/Crawler/lib/browzer_0.1.5a.jar"/>
 	<classpathentry kind="lib" path="lib/neo4j_datastoremanager_0.3.0a.jar"/>
 	<classpathentry kind="lib" path="lib/document_0.2.0a.jar"/>
 	<classpathentry kind="lib" path="lib/jsoup-1.8.3.jar"/>
 	<classpathentry kind="lib" path="lib/juniversalchardet-1.0.3.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MorphologicalAnalysis"/>
+	<classpathentry kind="lib" path="lib/browzer_0.1.6a.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

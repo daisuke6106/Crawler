@@ -36,7 +36,7 @@ public abstract class AbtractCrawlerControler {
 		this.execute();
 	}
 	
-	public abstract void execute();
+	public void execute(){}
 	
 	protected abstract String getCommandName();
 	

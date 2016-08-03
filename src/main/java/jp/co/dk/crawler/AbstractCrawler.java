@@ -1,8 +1,11 @@
 package jp.co.dk.crawler;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jp.co.dk.browzer.Browzer;
+import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
@@ -25,6 +28,15 @@ import jp.co.dk.document.html.element.selector.ScriptHasSrcElementSelector;
 
 public abstract class AbstractCrawler extends Browzer {
 	
+	/** 訪問URL */
+	protected Set<String> visitedUrl = new HashSet<>();
+	
+	/** 訪問済みURL（正常） */
+	protected Set<String> visitSuccessUrl = new HashSet<>();
+	
+	/** 訪問済みURL（エラー） */
+	protected Set<String> visitErrorUrl = new HashSet<>();
+	
 	/**
 	 * コンストラクタ<p/>
 	 * 指定のＵＲＬ、クローラクラスのインスタンスを生成する。
@@ -38,23 +50,28 @@ public abstract class AbstractCrawler extends Browzer {
 		super(url);
 	}
 	
+	@Override
+	public Page move(MovableElement movable) throws PageIllegalArgumentException, PageAccessException, PageRedirectException, PageMovableLimitException {
+		this.visitedUrl.add(movable.getUrl());
+		try {
+			Page page = super.move(movable);
+			this.visitSuccessUrl.add(movable.getUrl());
+			return page;
+		} catch (PageIllegalArgumentException | PageAccessException | PageRedirectException | PageMovableLimitException e) {
+			this.visitErrorUrl.add(movable.getUrl());
+			throw e;
+		}
+	}
+	
 	/**
-	 * 現在アクティブになっているページを保存する。
+	 * このページが訪問済みかどうか判定します。
 	 * 
-	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
-	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
+	 * @param movable 遷移先要素
+	 * @return 判定結果（true=訪問済み、false=未訪問）
 	 */
-	public abstract boolean save() throws CrawlerSaveException;
-	
-	@Override
-	protected abstract AbstractPageManager createPageManager(String url, PageRedirectHandler handler) throws PageIllegalArgumentException, PageAccessException ;
-	
-	@Override
-	protected abstract AbstractPageManager createPageManager(String url, PageRedirectHandler handler, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException ;
-	
-	@Override
-	protected abstract AbstractPageRedirectHandler createPageRedirectHandler();
-	
+	public boolean isVisited(MovableElement movable) {
+		return this.visitedUrl.contains(movable.getUrl());
+	}
 	
 	/**
 	 * 現在アクティブになっているページの情報と、そのページが参照するIMG、SCRIPT、LINKタグが参照するページをデータストアへ保存します。<p/>
@@ -162,6 +179,23 @@ public abstract class AbstractCrawler extends Browzer {
 			this.back();
 		}
 	}
+
+	/**
+	 * 現在アクティブになっているページを保存する。
+	 * 
+	 * @return 保存結果（true=保存された、false=すでにデータが存在するため、保存されなかった）
+	 * @throws CrawlerException データストアの登録時に必須項目が設定されていなかった場合
+	 */
+	public abstract boolean save() throws CrawlerSaveException;
+	
+	@Override
+	protected abstract AbstractPageManager createPageManager(String url, PageRedirectHandler handler) throws PageIllegalArgumentException, PageAccessException ;
+	
+	@Override
+	protected abstract AbstractPageManager createPageManager(String url, PageRedirectHandler handler, int maxNestLevel) throws PageIllegalArgumentException, PageAccessException ;
+	
+	@Override
+	protected abstract AbstractPageRedirectHandler createPageRedirectHandler();
 	
 }
 

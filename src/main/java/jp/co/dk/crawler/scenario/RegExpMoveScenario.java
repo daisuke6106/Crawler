@@ -50,7 +50,6 @@ public class RegExpMoveScenario extends MoveScenario {
 	@Override
 	public void afterAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
 		super.afterAction(movable, browzer);
-		
 	}
 	
 	@Override

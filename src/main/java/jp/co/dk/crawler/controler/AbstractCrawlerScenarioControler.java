@@ -12,6 +12,7 @@ import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageMovableLimitException;
 import jp.co.dk.browzer.exception.PageRedirectException;
+import jp.co.dk.browzer.scenario.MoveScenario;
 import jp.co.dk.browzer.scenario.action.MoveAction;
 import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
@@ -24,7 +25,7 @@ import org.apache.commons.cli.Options;
 public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerControler {
 
 	/** 走査シナリオ */
-	protected String scenario;
+	protected String[] scenarioStrList;
 	
 	/** インターバル（単位：秒） */
 	protected long interval = 1;
@@ -45,43 +46,42 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	@Override
 	public void execute() {
 		// 走査シナリオ
-		this.scenario = cmd.getOptionValue("s");
+		this.scenarioStrList = cmd.getOptionValues("s");
 		
 		// インターバル
 		String intervalStr = cmd.getOptionValue("i");
 		if (intervalStr != null && !intervalStr.equals("")) this.interval = Long.parseLong(intervalStr);
 		
-		// すべてか、否か
-		
-		
 		// シナリオオブジェクトを生成
-		RegExpMoveScenario moveScenario = this.createScenarios(scenario);
+		List<MoveScenario> scenarioList = new ArrayList<>();
+		for (String scenarioStr : scenarioStrList) scenarioList.add(this.createScenarios(scenarioStr));
 		
-		// クローラを生成する。
-		try {
-			this.crawler = this.createBrowzer(moveScenario.getUrlPattern());
-		} catch (CrawlerInitException | PageIllegalArgumentException | PageAccessException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
+		for (MoveScenario moveScenario : scenarioList) {
+			// クローラを生成する。
+			try {
+				this.crawler = this.createBrowzer(((RegExpMoveScenario)moveScenario).getUrlPattern());
+			} catch (CrawlerInitException | PageIllegalArgumentException | PageAccessException e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			}
+			
+			// クローリング開始
+			try {
+				this.crawler.start(moveScenario.getChildScenario(), this.interval);
+			} catch (MoveActionException e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			} catch (PageIllegalArgumentException | PageRedirectException | PageMovableLimitException | PageAccessException e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			} catch (DocumentException e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			} catch (RuntimeException e) {
+				System.out.println(e.getMessage());
+				System.exit(255);
+			}
 		}
-		
-		// クローリング開始
-		try {
-			this.crawler.start(moveScenario.getChildScenario(), this.interval);
-		} catch (MoveActionException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (PageIllegalArgumentException | PageRedirectException | PageMovableLimitException | PageAccessException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (DocumentException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		} catch (RuntimeException e) {
-			System.out.println(e.getMessage());
-			System.exit(255);
-		}
-		
 		// 正常終了
 		System.exit(0);
 	}
@@ -96,7 +96,6 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		for (int i=commandList.length-1; i>=0; i--) {
 			RegExpMoveScenario scenario = createScenario(commandList[i]);
 			if (beforeScenario != null) {
-				beforeScenario.setParentScenario(scenario);
 				scenario.setChildScenario(beforeScenario);
 			}
 			beforeScenario = scenario;

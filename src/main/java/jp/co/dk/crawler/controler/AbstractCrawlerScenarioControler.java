@@ -88,7 +88,7 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	
 	private Pattern commandPattern = Pattern.compile("^(.+)@(.+)$");
 	
-	private Pattern actionPattern  = Pattern.compile("^(.+)\\(.*\\)$");
+	private Pattern actionPattern  = Pattern.compile("^(.+)\\((.*)\\)$");
 	
 	public RegExpMoveScenario createScenarios(String command) {
 		String[] commandList = command.split("->");

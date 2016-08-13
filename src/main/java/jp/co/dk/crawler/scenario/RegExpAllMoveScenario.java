@@ -26,7 +26,9 @@ public class RegExpAllMoveScenario extends RegExpMoveScenario {
 		super.afterAction(movable, browzer);
 		try {
 			List<A> hitAnchorList = browzer.getAnchor(this.urlPattern);
-			for (A anchor : hitAnchorList) this.logger.info("hit url=" + anchor.getUrl());
+			for (A anchor : hitAnchorList) {
+				
+			}
 			this.foundUrlPatternElement.addAll(hitAnchorList);
 		} catch (PageAccessException | DocumentException e) {
 		}

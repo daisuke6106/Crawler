@@ -16,6 +16,7 @@ import jp.co.dk.browzer.scenario.MoveScenario;
 import jp.co.dk.browzer.scenario.action.MoveAction;
 import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
+import jp.co.dk.crawler.scenario.RegExpAllMoveScenario;
 import jp.co.dk.crawler.scenario.RegExpMoveScenario;
 import jp.co.dk.document.exception.DocumentException;
 
@@ -147,7 +148,7 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 				
 			}
 			
-			return new RegExpMoveScenario(urlPatternStr, urlPattern, moveActionList);
+			return new RegExpAllMoveScenario(urlPatternStr, urlPattern, moveActionList);
 		} else {
 			throw new MoveActionFatalException(null);
 		}

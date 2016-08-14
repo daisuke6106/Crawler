@@ -8,7 +8,6 @@ import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
-import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.browzer.scenario.action.MoveAction;
 import jp.co.dk.document.exception.DocumentException;
@@ -25,13 +24,14 @@ public class RegExpAllMoveScenario extends RegExpMoveScenario {
 	public void afterAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
 		super.afterAction(movable, browzer);
 		try {
-			List<A> hitAnchorList = browzer.getAnchor(this.urlPattern);
-			for (A anchor : hitAnchorList) {
-				
-			}
-			this.foundUrlPatternElement.addAll(hitAnchorList);
+			this.foundUrlPatternElement.addAll(browzer.getAnchor(this.urlPattern));
 		} catch (PageAccessException | DocumentException e) {
 		}
+	}
+	
+	@Override
+	public void afterScenario(Browzer browzer)  throws MoveActionException, MoveActionFatalException {
+		
 	}
 
 }

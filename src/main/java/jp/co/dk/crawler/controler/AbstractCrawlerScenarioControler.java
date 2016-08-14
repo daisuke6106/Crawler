@@ -48,14 +48,14 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	public void execute() {
 		// 走査シナリオ
 		this.scenarioStrList = cmd.getOptionValues("s");
+
+		// シナリオオブジェクトを生成
+		List<MoveScenario> scenarioList = new ArrayList<>();
+		for (String scenarioStr : scenarioStrList) scenarioList.add(this.createScenarios(scenarioStr));
 		
 		// インターバル
 		String intervalStr = cmd.getOptionValue("i");
 		if (intervalStr != null && !intervalStr.equals("")) this.interval = Long.parseLong(intervalStr);
-		
-		// シナリオオブジェクトを生成
-		List<MoveScenario> scenarioList = new ArrayList<>();
-		for (String scenarioStr : scenarioStrList) scenarioList.add(this.createScenarios(scenarioStr));
 		
 		for (MoveScenario moveScenario : scenarioList) {
 			// クローラを生成する。
@@ -85,93 +85,6 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		}
 		// 正常終了
 		System.exit(0);
-	}
-	
-	private Pattern commandPattern = Pattern.compile("^(.+)@(.+)$");
-	
-	private Pattern actionPattern  = Pattern.compile("^(.+)\\((.*)\\)$");
-	
-	public RegExpMoveScenario createScenarios(String command) {
-		String[] commandList = command.split("->");
-		RegExpMoveScenario beforeScenario = null;
-		for (int i=commandList.length-1; i>=0; i--) {
-			RegExpMoveScenario scenario = createScenario(commandList[i]);
-			if (beforeScenario != null) {
-				scenario.setChildScenario(beforeScenario);
-			}
-			beforeScenario = scenario;
-		}
-		return beforeScenario;
-	}
-
-	protected RegExpMoveScenario createScenario(String command) throws MoveActionFatalException {
-		Matcher matcher = this.commandPattern.matcher(command);
-		if (matcher.find()) {
-			String urlPatternStr = matcher.group(1);
-			if (urlPatternStr == null || urlPatternStr.equals("")) throw new MoveActionFatalException(null);
-			String actionStr     = matcher.group(2);
-			if (actionStr     == null || actionStr.equals("")) throw new MoveActionFatalException(null);
-			Pattern urlPattern;
-			try {
-				urlPattern = Pattern.compile(urlPatternStr);
-			} catch (PatternSyntaxException e) {
-				throw new MoveActionFatalException(null);
-			}
-			List<MoveAction> moveActionList = new ArrayList<>();
-			String[] actionList = actionStr.split(";");
-			for (String action : actionList) {
-				Matcher actionMatcher = this.actionPattern.matcher(action);
-				if (actionMatcher.find()) {
-					String   commandStr   = actionMatcher.group(1);
-					String   argumentsStr = actionMatcher.group(2);
-					String[] argiments    = argumentsStr.split(",");
-					if ("none".equals(commandStr)) {
-						moveActionList.add(createNoneMoveAction(argiments));
-					} else if ("print".equals(commandStr)) {
-						moveActionList.add(createPrintMoveAction(argiments));
-					} else if ("save".equals(commandStr)) {
-						moveActionList.add(createSaveMoveAction(argiments));
-					} else {
-						moveActionList.add(createMoveActionByClassName(commandStr, argiments));
-					}
-				} else {
-					if ("none".equals(action)) {
-						moveActionList.add(createNoneMoveAction(new String[]{}));
-					} else if ("print".equals(action)) {
-						moveActionList.add(createPrintMoveAction(new String[]{}));
-					} else if ("save".equals(action)) {
-						moveActionList.add(createSaveMoveAction(new String[]{}));
-					} else {
-						moveActionList.add(createMoveActionByClassName(action, new String[]{}));
-					}
-				}
-				
-			}
-			
-			return new RegExpAllMoveScenario(urlPatternStr, urlPattern, moveActionList);
-		} else {
-			throw new MoveActionFatalException(null);
-		}
-	}
-	
-	public abstract AbstractCrawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException;
-
-	protected abstract MoveAction createNoneMoveAction(String[] arguments);
-
-	protected abstract MoveAction createPrintMoveAction(String[] arguments);
-	
-	protected abstract MoveAction createSaveMoveAction(String[] arguments);
-
-	@SuppressWarnings("all")
-	protected MoveAction createMoveActionByClassName(String className, String[] arguments) {
-		MoveAction moveAction;
-		try {
-			Class<MoveAction> actionClass = (Class<MoveAction>) Class.forName(className);
-			moveAction = actionClass.newInstance();
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			throw new MoveActionFatalException(null);
-		}
-		return moveAction;
 	}
 	
 }

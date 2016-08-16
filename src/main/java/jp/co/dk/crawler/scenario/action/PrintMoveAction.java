@@ -13,17 +13,16 @@ public class PrintMoveAction extends MoveAction {
 
 	@Override
 	public void beforeAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
-		
+		System.out.println("[BEFORE MOVE] NOW_URL=[" + browzer.getPage().getURL() + "] MOVE_TO=[" + movable.getUrl() + "]");
 	}
 	
 	@Override
 	public void afterAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
-		System.err.println("[SUCCESS]:URL=" + movable.getUrl() + ", TITLE=" + browzer.getPage().getSize());
+		System.out.println("[AFTER  MOVE] NOW_URL=[" + browzer.getPage().getURL() + "]");
 	}
 	
 	@Override
 	public void errorAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
-		System.err.println("[ ERROR ]:" + movable.getUrl());
+		System.err.println("[   ERROR   ] NOW_URL=[" + browzer.getPage().getURL() + "]");
 	}
-	
 }

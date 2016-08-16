@@ -7,6 +7,8 @@ import java.util.Set;
 import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.PageRedirectHandler;
+import jp.co.dk.browzer.exception.MoveActionException;
+import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.browzer.exception.PageMovableLimitException;
@@ -15,6 +17,9 @@ import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
+import jp.co.dk.crawler.scenario.MoveControl;
+import jp.co.dk.crawler.scenario.MoveScenario;
+import jp.co.dk.crawler.scenario.QueueTask;
 import jp.co.dk.document.Element;
 import jp.co.dk.document.ElementSelector;
 import jp.co.dk.document.File;
@@ -50,6 +55,37 @@ public abstract class AbstractCrawler extends Browzer {
 		super(url);
 	}
 	
+	public void start(MoveScenario scenario, long interval) throws MoveActionException, MoveActionFatalException, PageIllegalArgumentException, PageAccessException, PageRedirectException, PageMovableLimitException, DocumentException {
+		while(scenario.hasTask()) {
+			QueueTask queueTask = scenario.popTask();
+			queueTask.beforeScenario(this);
+			MoveControl moveControl = this.move(queueTask);
+			if (moveControl == MoveControl.Continuation) {
+				if (scenario.hasChildScenario()) this.start(scenario.getChildScenario(), interval);
+				this.back();
+			}
+			try {
+				Thread.sleep(interval * 1000);
+			} catch (InterruptedException e) {}
+			queueTask.afterScenario(this);
+		}
+	}
+	
+	protected MoveControl move(QueueTask queueTask) throws PageIllegalArgumentException, PageAccessException, PageRedirectException, PageMovableLimitException, MoveActionFatalException, MoveActionException {
+		MovableElement movableElement = queueTask.getMovableElement();
+		MoveControl control = queueTask.beforeAction(this);
+		if (control == MoveControl.Continuation) {
+			try {
+				this.move(movableElement);
+				queueTask.afterAction(this);
+			} catch (PageIllegalArgumentException | PageAccessException | PageRedirectException | PageMovableLimitException e) {
+				queueTask.errorAction(this);
+				throw e;
+			}
+		}
+		return control;
+	}
+
 	@Override
 	public Page move(MovableElement movable) throws PageIllegalArgumentException, PageAccessException, PageRedirectException, PageMovableLimitException {
 		this.visitedUrl.add(movable.getUrl());

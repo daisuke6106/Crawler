@@ -2,10 +2,10 @@ package jp.co.dk.crawler.scenario;
 
 import java.util.List;
 
-import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.logger.Loggable;
 import jp.co.dk.logger.Logger;
@@ -38,52 +38,57 @@ public class QueueTask {
 	 * ページ移動前に行う処理
 	 * 
 	 * @param movable 移動先が記載された要素
-	 * @param browzer 移動前のブラウザオブジェクト
+	 * @param crawler 移動前のブラウザオブジェクト
 	 * @throws MoveActionException 再起可能例外が発生した場合
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
-	public MoveControl beforeAction(Browzer browzer) throws MoveActionException, MoveActionFatalException {
+	public MoveControl beforeAction(AbstractCrawler crawler) throws MoveActionException, MoveActionFatalException {
 		QueueTask.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
-				return "ページ=[" +  browzer.getPage().getURL() + "]からURL=[" + movableElement.getUrl() + "]に移動します。";
+				return "ページ=[" +  crawler.getPage().getURL() + "]からURL=[" + movableElement.getUrl() + "]に移動します。";
 			}});
-		for(MoveAction moveAction : moveActionList) moveAction.beforeAction(this.movableElement, browzer);
-		return MoveControl.Transition;
+		for(MoveAction moveAction : moveActionList) moveAction.beforeAction(this.movableElement, crawler);
+		if (!crawler.isVisited(this.movableElement)) {
+			return MoveControl.Transition;
+		} else {
+			return MoveControl.NotTransition;
+		}
+		
 	}
 	
 	/**
 	 * ページ移動後に行う処理
 	 * 
 	 * @param movable 移動先が記載された要素
-	 * @param browzer 移動後のブラウザオブジェクト
+	 * @param crawler 移動後のブラウザオブジェクト
 	 * @throws MoveActionException 再起可能例外が発生した場合
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
-	public void afterAction(Browzer browzer) throws MoveActionException, MoveActionFatalException {
+	public void afterAction(AbstractCrawler crawler) throws MoveActionException, MoveActionFatalException {
 		QueueTask.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
 				return "URL=[" + movableElement.getUrl() + "]に正常に移動できました。";
 			}});
-		for(MoveAction moveAction : moveActionList) moveAction.afterAction(this.movableElement, browzer);
+		for(MoveAction moveAction : moveActionList) moveAction.afterAction(this.movableElement, crawler);
 	}
 	
 	/**
 	 * ページ移動時にエラーが発生した場合に行う処理
 	 * 
 	 * @param movable 移動先が記載された要素
-	 * @param browzer 移動後のブラウザオブジェクト
+	 * @param crawler 移動後のブラウザオブジェクト
 	 * @throws MoveActionException 再起可能例外が発生した場合
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
-	public void errorAction(Browzer browzer) throws MoveActionException, MoveActionFatalException {
+	public void errorAction(AbstractCrawler crawler) throws MoveActionException, MoveActionFatalException {
 		QueueTask.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
 				return "URL=[" + movableElement.getUrl() + "]に移動できませんでした。";
 			}});
-		for(MoveAction moveAction : moveActionList) moveAction.errorAction(this.movableElement, browzer);
+		for(MoveAction moveAction : moveActionList) moveAction.errorAction(this.movableElement, crawler);
 	}
 	
 }

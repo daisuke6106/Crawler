@@ -6,9 +6,12 @@ import java.util.Queue;
 
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
+import jp.co.dk.browzer.exception.PageAccessException;
+import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.AbstractCrawler;
+import jp.co.dk.crawler.AbstractPage;
 import jp.co.dk.crawler.scenario.action.MoveAction;
+import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
 
@@ -32,7 +35,6 @@ public abstract class MoveScenario {
 	public MoveScenario(List<MoveAction> moveActionList) {
 		this.moveActionList = moveActionList;
 	}
-
 	
 	public boolean hasParentScenario() {
 		return parentScenario != null;
@@ -59,7 +61,6 @@ public abstract class MoveScenario {
 		this.childScenario = scenario;
 	}
 
-	
 	public MoveScenario getTopScenario() {
 		MoveScenario topScenario = this;
 		while (topScenario.hasParentScenario()) topScenario = topScenario.getParentScenario();
@@ -82,7 +83,12 @@ public abstract class MoveScenario {
 		return (this.moveableQueue.size() != 0);
 	}
 	
-	public abstract void addTask(AbstractCrawler abstractCrawler) throws MoveActionException, MoveActionFatalException;
+	public void addTask(AbstractPage page) throws MoveActionException, MoveActionFatalException {
+		List<A> anchorList = (List<A>)this.getMoveableElement(page);
+		for (A anchor : anchorList) this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
+	}
+	
+	protected abstract List<A> getMoveableElement(AbstractPage page) throws MoveActionException, MoveActionFatalException ;
 	
 	/**
 	 * タスクを作成する。

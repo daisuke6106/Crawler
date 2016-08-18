@@ -146,7 +146,13 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 			}
 			return new RegExpMoveScenario(urlPatternStr, urlPattern, moveActionList);
 		} else {
-			throw new MoveActionFatalException(null);
+			try {
+				Pattern urlPattern = Pattern.compile(command);
+				return new RegExpMoveScenario(command, urlPattern, new ArrayList<>());
+			} catch (PatternSyntaxException e) {
+				throw new MoveActionFatalException(null);
+			}
+			
 		}
 	}
 	

@@ -2,9 +2,10 @@ package jp.co.dk.crawler.scenario;
 
 public enum MoveControl {
 	
-	/** 継続 */
-	Continuation,
+	/** 遷移する */
+	Transition,
 	
-	/** 中断 */
-	Interruption;
+	/** 遷移しない */
+	NotTransition,
+	
 }

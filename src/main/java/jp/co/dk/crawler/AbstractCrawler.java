@@ -18,6 +18,7 @@ import jp.co.dk.crawler.exception.CrawlerException;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.scenario.MoveControl;
+import jp.co.dk.crawler.scenario.MoveResult;
 import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.crawler.scenario.QueueTask;
 import jp.co.dk.document.Element;
@@ -56,34 +57,50 @@ public abstract class AbstractCrawler extends Browzer {
 	}
 	
 	public void start(MoveScenario scenario, long interval) throws MoveActionException, MoveActionFatalException, PageIllegalArgumentException, PageAccessException, PageRedirectException, PageMovableLimitException, DocumentException {
+		scenario.addTaskAllScenario((AbstractPage)this.getPage());
 		while(scenario.hasTask()) {
 			QueueTask queueTask = scenario.popTask();
-			queueTask.beforeScenario(this);
-			MoveControl moveControl = this.move(queueTask);
-			if (moveControl == MoveControl.Continuation) {
-				if (scenario.hasChildScenario()) this.start(scenario.getChildScenario(), interval);
-				this.back();
+			this.change(queueTask.getMovableElement().getPage());
+			MoveResult moveResult = this.move(queueTask);
+			switch (moveResult) {
+				// 遷移に成功した場合
+				case SuccessfullTransition :
+					if (scenario.hasChildScenario()) {
+						this.start(scenario.getChildScenario(), interval);
+					} else {
+						scenario.addTaskAllScenario((AbstractPage)this.getPage());
+					}
+					this.back();
+					break;
+
+				// 遷移に失敗した場合
+				case FailureToTransition :
+					break;
+					
+				// 遷移が許可されなかった場合
+				case UnAuthorizedTransition :
+					break;
 			}
 			try {
 				Thread.sleep(interval * 1000);
 			} catch (InterruptedException e) {}
-			queueTask.afterScenario(this);
 		}
 	}
 	
-	protected MoveControl move(QueueTask queueTask) throws PageIllegalArgumentException, PageAccessException, PageRedirectException, PageMovableLimitException, MoveActionFatalException, MoveActionException {
+	protected MoveResult move(QueueTask queueTask) throws PageIllegalArgumentException, PageAccessException, PageRedirectException, PageMovableLimitException, MoveActionFatalException, MoveActionException {
 		MovableElement movableElement = queueTask.getMovableElement();
-		MoveControl control = queueTask.beforeAction(this);
-		if (control == MoveControl.Continuation) {
+		if (queueTask.beforeAction(this) == MoveControl.Transition) {
 			try {
 				this.move(movableElement);
 				queueTask.afterAction(this);
+				return MoveResult.SuccessfullTransition;
 			} catch (PageIllegalArgumentException | PageAccessException | PageRedirectException | PageMovableLimitException e) {
 				queueTask.errorAction(this);
-				throw e;
+				return MoveResult.FailureToTransition;
 			}
+		} else {
+			return MoveResult.UnAuthorizedTransition;
 		}
-		return control;
 	}
 
 	@Override

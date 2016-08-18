@@ -6,12 +6,10 @@ import java.util.Queue;
 
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
-import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.AbstractPage;
 import jp.co.dk.crawler.scenario.action.MoveAction;
-import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
 
@@ -81,6 +79,15 @@ public abstract class MoveScenario {
 	 */
 	public boolean hasTask() {
 		return (this.moveableQueue.size() != 0);
+	}
+	
+	public void addTaskAllScenario(AbstractPage page) throws MoveActionException, MoveActionFatalException {
+		MoveScenario moveScenario = this.getTopScenario();
+		moveScenario.addTask(page);
+		while(moveScenario.hasChildScenario()) {
+			moveScenario = moveScenario.getChildScenario();
+			moveScenario.addTask(page);
+		}
 	}
 	
 	public void addTask(AbstractPage page) throws MoveActionException, MoveActionFatalException {

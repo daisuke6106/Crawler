@@ -7,8 +7,13 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.scenario.action.MoveAction;
+import jp.co.dk.logger.Loggable;
+import jp.co.dk.logger.Logger;
+import jp.co.dk.logger.LoggerFactory;
 
 public class QueueTask {
+	
+	protected static Logger logger = LoggerFactory.getLogger(QueueTask.class);
 	
 	/** 遷移要素 */
 	protected MovableElement movableElement;
@@ -30,15 +35,6 @@ public class QueueTask {
 	}
 	
 	/**
-	 * シナリオ実施前に行う前処理
-	 * 
-	 * @param browzer 本シナリオ実施前のブラウザオブジェクト
-	 * @throws MoveActionException 再起可能例外が発生した場合
-	 * @throws MoveActionFatalException 致命的例外が発生した場合
-	 */
-	public void beforeScenario(Browzer browzer)  throws MoveActionException, MoveActionFatalException {}
-	
-	/**
 	 * ページ移動前に行う処理
 	 * 
 	 * @param movable 移動先が記載された要素
@@ -47,8 +43,13 @@ public class QueueTask {
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
 	public MoveControl beforeAction(Browzer browzer) throws MoveActionException, MoveActionFatalException {
+		QueueTask.logger.info(new Loggable(){
+			@Override
+			public String printLog(String lineSeparator) {
+				return "ページ=[" +  browzer.getPage().getURL() + "]からURL=[" + movableElement.getUrl() + "]に移動します。";
+			}});
 		for(MoveAction moveAction : moveActionList) moveAction.beforeAction(this.movableElement, browzer);
-		return MoveControl.Continuation;
+		return MoveControl.Transition;
 	}
 	
 	/**
@@ -60,6 +61,11 @@ public class QueueTask {
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
 	public void afterAction(Browzer browzer) throws MoveActionException, MoveActionFatalException {
+		QueueTask.logger.info(new Loggable(){
+			@Override
+			public String printLog(String lineSeparator) {
+				return "URL=[" + movableElement.getUrl() + "]に正常に移動できました。";
+			}});
 		for(MoveAction moveAction : moveActionList) moveAction.afterAction(this.movableElement, browzer);
 	}
 	
@@ -72,16 +78,12 @@ public class QueueTask {
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
 	public void errorAction(Browzer browzer) throws MoveActionException, MoveActionFatalException {
+		QueueTask.logger.info(new Loggable(){
+			@Override
+			public String printLog(String lineSeparator) {
+				return "URL=[" + movableElement.getUrl() + "]に移動できませんでした。";
+			}});
 		for(MoveAction moveAction : moveActionList) moveAction.errorAction(this.movableElement, browzer);
 	}
-	
-	/**
-	 * シナリオ実施後に行う後処理
-	 * 
-	 * @param browzer 本シナリオ実施後のブラウザオブジェクト
-	 * @throws MoveActionException 再起可能例外が発生した場合
-	 * @throws MoveActionFatalException 致命的例外が発生した場合
-	 */
-	public void afterScenario(Browzer browzer)  throws MoveActionException, MoveActionFatalException {}
 	
 }

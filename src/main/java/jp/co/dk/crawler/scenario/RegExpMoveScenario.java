@@ -38,10 +38,16 @@ public class RegExpMoveScenario extends MoveScenario {
 		return this.urlPatternStr;
 	}
 
+	@Override
+	public void start(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException {
+		// 初回に限り現在のページ情報からシナリオにタスクを追加する
+		this.addTask((AbstractPage)abstractCrawler.getPage());
+		// クローリングを開始する。
+		this.crawl(abstractCrawler, interval);
+	}
+	
+	@Override
 	public void crawl(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException {
-		for (jp.co.dk.browzer.html.element.A anchor : (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement((AbstractPage)abstractCrawler.getPage())) {
-			this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
-		}
 		while(this.hasTask()) {
 			QueueTask queueTask = this.popTask();
 			abstractCrawler.change(queueTask.getMovableElement().getPage());
@@ -49,6 +55,8 @@ public class RegExpMoveScenario extends MoveScenario {
 			switch (moveResult) {
 				// 遷移に成功した場合
 				case SuccessfullTransition :
+					// 遷移のページにて本シナリオ内にある
+					this.addTask(abstractCrawler.getPage());
 					if (this.hasChildScenario()) {
 						this.getChildScenario().crawl(abstractCrawler, interval);
 					} else {

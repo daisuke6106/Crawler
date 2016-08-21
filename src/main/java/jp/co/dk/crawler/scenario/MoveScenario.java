@@ -81,7 +81,7 @@ public abstract class MoveScenario {
 		return (this.moveableQueue.size() != 0);
 	}
 	
-	/**
+	/*
 	public void addTaskAllScenario(AbstractPage page) throws MoveActionException, MoveActionFatalException {
 		MoveScenario moveScenario = this.getTopScenario();
 		moveScenario.addTask(page);
@@ -90,14 +90,24 @@ public abstract class MoveScenario {
 			moveScenario.addTask(page);
 		}
 	}
+	*/
 	
+	public abstract void start(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException ;
+	
+	protected abstract void crawl(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException ;
+	
+	/**
+	 * <p>ページから指定のタスクを追加する。</p>
+	 * 引数に指定されたページから指定の遷移要素を取得し、本シナリオ内に保持する。
+	 * 
+	 * @param page 抽出対象のページ情報
+	 * @throws MoveActionException
+	 * @throws MoveActionFatalException
+	 */
 	public void addTask(AbstractPage page) throws MoveActionException, MoveActionFatalException {
 		List<jp.co.dk.browzer.html.element.A> anchorList = (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement(page);
 		for (jp.co.dk.browzer.html.element.A anchor : anchorList) this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
 	}
-	*/
-	
-	public abstract void crawl(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException ;
 	
 	protected abstract List<jp.co.dk.browzer.html.element.A> getMoveableElement(AbstractPage page) throws MoveActionException, MoveActionFatalException ;
 	

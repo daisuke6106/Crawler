@@ -40,9 +40,7 @@ public class RegExpMoveScenario extends MoveScenario {
 
 	@Override
 	public void start(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException {
-		// 初回に限り現在のページ情報からシナリオにタスクを追加する
 		this.addTask((AbstractPage)abstractCrawler.getPage());
-		// クローリングを開始する。
 		this.crawl(abstractCrawler, interval);
 	}
 	
@@ -55,14 +53,10 @@ public class RegExpMoveScenario extends MoveScenario {
 			switch (moveResult) {
 				// 遷移に成功した場合
 				case SuccessfullTransition :
-					// 遷移のページにて本シナリオ内にある
-					this.addTask(abstractCrawler.getPage());
 					if (this.hasChildScenario()) {
+						this.addTask((AbstractPage)abstractCrawler.getPage());
+						this.getChildScenario().addTask((AbstractPage)abstractCrawler.getPage());
 						this.getChildScenario().crawl(abstractCrawler, interval);
-					} else {
-						for (jp.co.dk.browzer.html.element.A anchor : (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement((AbstractPage)abstractCrawler.getPage())) {
-							this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
-						}
 					}
 					abstractCrawler.back();
 					break;
@@ -103,17 +97,17 @@ public class RegExpMoveScenario extends MoveScenario {
 		for (jp.co.dk.document.html.element.A anchor : anchorList) {
 			A castedAnchor = (A)anchor;
 			if (this.addedQueueUrlList.contains(castedAnchor.getUrl())) {
-				this.logger.info(new Loggable(){
-					@Override
-					public String printLog(String lineSeparator) {
-						return "- キューに追加済みのため、スキップ URL[" +  castedAnchor.getUrl() + "]";
-					}});
+//				this.logger.info(new Loggable(){
+//					@Override
+//					public String printLog(String lineSeparator) {
+//						return "- キューに追加済みのため、スキップ URL[" +  castedAnchor.getUrl() + "]";
+//					}});
 			} else {
-				this.logger.info(new Loggable(){
-					@Override
-					public String printLog(String lineSeparator) {
-						return "- キューに未追加のため、追加します URL[" +  castedAnchor.getUrl() + "]。";
-					}});
+//				this.logger.info(new Loggable(){
+//					@Override
+//					public String printLog(String lineSeparator) {
+//						return "- キューに未追加のため、追加します URL[" +  castedAnchor.getUrl() + "]。";
+//					}});
 				addedQueueUrlList.add(castedAnchor.getUrl());
 				moveableElementList.add(castedAnchor);
 			}

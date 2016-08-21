@@ -71,7 +71,7 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 			// クローリング開始
 			try {
 				// クローリングを開始する。
-				moveScenario.crawl(this.crawler, this.interval);
+				moveScenario.start(this.crawler, this.interval);
 			} catch (MoveActionException e) {
 				System.out.println(e.getMessage());
 				System.exit(1);

@@ -8,6 +8,7 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
+import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.AbstractPage;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.document.exception.DocumentException;
@@ -37,6 +38,41 @@ public class RegExpMoveScenario extends MoveScenario {
 		return this.urlPatternStr;
 	}
 
+	public void crawl(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException {
+		for (jp.co.dk.browzer.html.element.A anchor : (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement((AbstractPage)abstractCrawler.getPage())) {
+			this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
+		}
+		while(this.hasTask()) {
+			QueueTask queueTask = this.popTask();
+			abstractCrawler.change(queueTask.getMovableElement().getPage());
+			MoveResult moveResult = abstractCrawler.move(queueTask);
+			switch (moveResult) {
+				// 遷移に成功した場合
+				case SuccessfullTransition :
+					if (this.hasChildScenario()) {
+						this.getChildScenario().crawl(abstractCrawler, interval);
+					} else {
+						for (jp.co.dk.browzer.html.element.A anchor : (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement((AbstractPage)abstractCrawler.getPage())) {
+							this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
+						}
+					}
+					abstractCrawler.back();
+					break;
+
+				// 遷移に失敗した場合
+				case FailureToTransition :
+					break;
+					
+				// 遷移が許可されなかった場合
+				case UnAuthorizedTransition :
+					break;
+			}
+			try {
+				Thread.sleep(interval * 1000);
+			} catch (InterruptedException e) {}
+		}
+	}
+	
 	@Override
 	protected List<A> getMoveableElement(AbstractPage page) throws MoveActionException, MoveActionFatalException {
 		this.logger.info(new Loggable(){

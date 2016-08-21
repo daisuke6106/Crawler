@@ -6,8 +6,8 @@ import java.util.Queue;
 
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
-import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.AbstractPage;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.logger.Logger;
@@ -81,6 +81,7 @@ public abstract class MoveScenario {
 		return (this.moveableQueue.size() != 0);
 	}
 	
+	/**
 	public void addTaskAllScenario(AbstractPage page) throws MoveActionException, MoveActionFatalException {
 		MoveScenario moveScenario = this.getTopScenario();
 		moveScenario.addTask(page);
@@ -91,11 +92,14 @@ public abstract class MoveScenario {
 	}
 	
 	public void addTask(AbstractPage page) throws MoveActionException, MoveActionFatalException {
-		List<A> anchorList = (List<A>)this.getMoveableElement(page);
-		for (A anchor : anchorList) this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
+		List<jp.co.dk.browzer.html.element.A> anchorList = (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement(page);
+		for (jp.co.dk.browzer.html.element.A anchor : anchorList) this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
 	}
+	*/
 	
-	protected abstract List<A> getMoveableElement(AbstractPage page) throws MoveActionException, MoveActionFatalException ;
+	public abstract void crawl(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException ;
+	
+	protected abstract List<jp.co.dk.browzer.html.element.A> getMoveableElement(AbstractPage page) throws MoveActionException, MoveActionFatalException ;
 	
 	/**
 	 * タスクを作成する。

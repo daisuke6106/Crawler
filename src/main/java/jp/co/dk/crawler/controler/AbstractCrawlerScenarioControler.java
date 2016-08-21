@@ -70,14 +70,8 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		for (MoveScenario moveScenario : scenarioList) {
 			// クローリング開始
 			try {
-				this.crawler.start(moveScenario, this.interval);
+				moveScenario.crawl(this.crawler, this.interval);
 			} catch (MoveActionException e) {
-				System.out.println(e.getMessage());
-				System.exit(1);
-			} catch (PageIllegalArgumentException | PageRedirectException | PageMovableLimitException | PageAccessException e) {
-				System.out.println(e.getMessage());
-				System.exit(1);
-			} catch (DocumentException e) {
 				System.out.println(e.getMessage());
 				System.exit(1);
 			} catch (RuntimeException e) {

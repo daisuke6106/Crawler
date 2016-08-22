@@ -15,7 +15,7 @@ import jp.co.dk.document.html.HtmlElement;
 
 public class ContentMoveAction extends MoveAction {
 
-	public ContentMoveAction(String[] args) {
+	public ContentMoveAction(String[] args) throws MoveActionFatalException {
 		super(args);
 	}
 	

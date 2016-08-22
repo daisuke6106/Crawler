@@ -1,5 +1,6 @@
 package jp.co.dk.crawler.controler;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -156,8 +157,16 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		MoveAction moveAction;
 		try {
 			Class<MoveAction> actionClass = (Class<MoveAction>) Class.forName(className);
-			moveAction = actionClass.newInstance();
+			moveAction = actionClass.getConstructor(String[].class).newInstance(arguments);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			throw new MoveActionFatalException(null);
+		} catch (IllegalArgumentException e) {
+			throw new MoveActionFatalException(null);
+		} catch (InvocationTargetException e) {
+			throw new MoveActionFatalException(null);
+		} catch (NoSuchMethodException e) {
+			throw new MoveActionFatalException(null);
+		} catch (SecurityException e) {
 			throw new MoveActionFatalException(null);
 		}
 		return moveAction;

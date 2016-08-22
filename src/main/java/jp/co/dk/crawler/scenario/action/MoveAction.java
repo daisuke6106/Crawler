@@ -19,9 +19,10 @@ public abstract class MoveAction {
 	/**
 	 * <p>コンストラクタ</p>
 	 * 遷移時実行処理の引数を元にMoveActionのインスタンスを生成します。
-	 * @param args
+	 * @param args アクション実行時引数
+	 * @throws MoveActionFatalException 引数が不正な場合
 	 */
-	public MoveAction(String args[]) {
+	public MoveAction(String args[]) throws MoveActionFatalException {
 		this.args = args;
 	}
 	

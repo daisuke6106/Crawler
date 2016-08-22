@@ -7,7 +7,7 @@ import jp.co.dk.browzer.html.element.MovableElement;
 
 public class PrintMoveAction extends MoveAction {
 
-	public PrintMoveAction(String[] args) {
+	public PrintMoveAction(String[] args) throws MoveActionFatalException {
 		super(args);
 	}
 

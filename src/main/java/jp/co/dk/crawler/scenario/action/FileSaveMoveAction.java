@@ -30,9 +30,9 @@ public class FileSaveMoveAction extends MoveAction {
 	@Override
 	public void afterAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
 		String fileName = new String(this.fileName);
-		if (fileName.contains("%D{date}")) {
+		if (fileName.contains("%{date}")) {
 			Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
 			fileName = fileName.replace("%{date}", sdf.format(date));
 		}
 		try {

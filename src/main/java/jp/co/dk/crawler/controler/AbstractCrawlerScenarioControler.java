@@ -1,5 +1,6 @@
 package jp.co.dk.crawler.controler;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,11 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
-import jp.co.dk.browzer.exception.PageMovableLimitException;
-import jp.co.dk.browzer.exception.PageRedirectException;
 import jp.co.dk.crawler.AbstractCrawler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.crawler.scenario.RegExpMoveScenario;
 import jp.co.dk.crawler.scenario.action.MoveAction;
-import jp.co.dk.document.exception.DocumentException;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -157,7 +155,8 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		MoveAction moveAction;
 		try {
 			Class<MoveAction> actionClass = (Class<MoveAction>) Class.forName(className);
-			moveAction = actionClass.getConstructor(String[].class).newInstance(arguments);
+			Constructor<MoveAction> moveActionConstructor = actionClass.getDeclaredConstructor(new Class[]{String[].class});
+			moveAction = moveActionConstructor.newInstance(new Object[]{arguments});
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			throw new MoveActionFatalException(null);
 		} catch (IllegalArgumentException e) {

@@ -6,7 +6,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
-import jp.co.dk.crawler.AbstractCrawler;
+import jp.co.dk.crawler.Crawler;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
 
@@ -19,7 +19,7 @@ public abstract class AbtractCrawlerControler {
 	
 	protected CommandLine cmd;
 	
-	protected AbstractCrawler crawler;
+	protected Crawler crawler;
 	
 	public void execute(String[] args) {
 		

@@ -7,8 +7,8 @@ import java.util.Queue;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.AbstractCrawler;
-import jp.co.dk.crawler.AbstractPage;
+import jp.co.dk.crawler.Crawler;
+import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
@@ -82,7 +82,7 @@ public abstract class MoveScenario {
 	}
 	
 	/*
-	public void addTaskAllScenario(AbstractPage page) throws MoveActionException, MoveActionFatalException {
+	public void addTaskAllScenario(Page page) throws MoveActionException, MoveActionFatalException {
 		MoveScenario moveScenario = this.getTopScenario();
 		moveScenario.addTask(page);
 		while(moveScenario.hasChildScenario()) {
@@ -92,9 +92,9 @@ public abstract class MoveScenario {
 	}
 	*/
 	
-	public abstract void start(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException ;
+	public abstract void start(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException ;
 	
-	protected abstract void crawl(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException ;
+	protected abstract void crawl(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException ;
 	
 	/**
 	 * <p>ページから指定のタスクを追加する。</p>
@@ -104,12 +104,12 @@ public abstract class MoveScenario {
 	 * @throws MoveActionException
 	 * @throws MoveActionFatalException
 	 */
-	public void addTask(AbstractPage page) throws MoveActionException, MoveActionFatalException {
+	public void addTask(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
 		List<jp.co.dk.browzer.html.element.A> anchorList = (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement(page);
 		for (jp.co.dk.browzer.html.element.A anchor : anchorList) this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
 	}
 	
-	protected abstract List<jp.co.dk.browzer.html.element.A> getMoveableElement(AbstractPage page) throws MoveActionException, MoveActionFatalException ;
+	protected abstract List<jp.co.dk.browzer.html.element.A> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException ;
 	
 	/**
 	 * タスクを作成する。

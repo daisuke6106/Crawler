@@ -12,7 +12,8 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
-import jp.co.dk.crawler.AbstractCrawler;
+import jp.co.dk.crawler.Crawler;
+import jp.co.dk.crawler.db.AbstractCrawler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.crawler.scenario.RegExpMoveScenario;
@@ -91,7 +92,7 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
-	protected abstract AbstractCrawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException;
+	protected abstract Crawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException;
 
 	// ====================================================================================================
 	private static Pattern commandPattern = Pattern.compile("^(.+)@(.*)$");

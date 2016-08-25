@@ -8,8 +8,8 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
-import jp.co.dk.crawler.AbstractCrawler;
-import jp.co.dk.crawler.AbstractPage;
+import jp.co.dk.crawler.Crawler;
+import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
@@ -39,26 +39,26 @@ public class RegExpMoveScenario extends MoveScenario {
 	}
 
 	@Override
-	public void start(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException {
-		this.addTask((AbstractPage)abstractCrawler.getPage());
-		this.crawl(abstractCrawler, interval);
+	public void start(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException {
+		this.addTask((CrawlerPage)crawler.getPage());
+		this.crawl(crawler, interval);
 	}
 	
 	@Override
-	public void crawl(AbstractCrawler abstractCrawler, long interval) throws MoveActionException, MoveActionFatalException {
+	public void crawl(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException {
 		while(this.hasTask()) {
 			QueueTask queueTask = this.popTask();
-			abstractCrawler.change(queueTask.getMovableElement().getPage());
-			MoveResult moveResult = abstractCrawler.move(queueTask);
+			crawler.change(queueTask.getMovableElement().getPage());
+			MoveResult moveResult = crawler.move(queueTask);
 			switch (moveResult) {
 				// 遷移に成功した場合
 				case SuccessfullTransition :
 					if (this.hasChildScenario()) {
-						this.addTask((AbstractPage)abstractCrawler.getPage());
-						this.getChildScenario().addTask((AbstractPage)abstractCrawler.getPage());
-						this.getChildScenario().crawl(abstractCrawler, interval);
+						this.addTask((CrawlerPage)crawler.getPage());
+						this.getChildScenario().addTask((CrawlerPage)crawler.getPage());
+						this.getChildScenario().crawl(crawler, interval);
 					}
-					abstractCrawler.back();
+					crawler.back();
 					break;
 
 				// 遷移に失敗した場合
@@ -76,7 +76,7 @@ public class RegExpMoveScenario extends MoveScenario {
 	}
 	
 	@Override
-	protected List<A> getMoveableElement(AbstractPage page) throws MoveActionException, MoveActionFatalException {
+	protected List<A> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
 		this.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
@@ -115,6 +115,4 @@ public class RegExpMoveScenario extends MoveScenario {
 		}
 		return moveableElementList;
 	}
-
-	
 }

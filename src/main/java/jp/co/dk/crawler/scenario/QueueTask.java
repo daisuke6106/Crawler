@@ -5,7 +5,7 @@ import java.util.List;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.AbstractCrawler;
+import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.logger.Loggable;
 import jp.co.dk.logger.Logger;
@@ -42,7 +42,7 @@ public class QueueTask {
 	 * @throws MoveActionException 再起可能例外が発生した場合
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
-	public MoveControl beforeAction(AbstractCrawler crawler) throws MoveActionException, MoveActionFatalException {
+	public MoveControl beforeAction(Crawler crawler) throws MoveActionException, MoveActionFatalException {
 		QueueTask.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
@@ -65,7 +65,7 @@ public class QueueTask {
 	 * @throws MoveActionException 再起可能例外が発生した場合
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
-	public void afterAction(AbstractCrawler crawler) throws MoveActionException, MoveActionFatalException {
+	public void afterAction(Crawler crawler) throws MoveActionException, MoveActionFatalException {
 		QueueTask.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
@@ -82,7 +82,7 @@ public class QueueTask {
 	 * @throws MoveActionException 再起可能例外が発生した場合
 	 * @throws MoveActionFatalException 致命的例外が発生した場合
 	 */
-	public void errorAction(AbstractCrawler crawler) throws MoveActionException, MoveActionFatalException {
+	public void errorAction(Crawler crawler) throws MoveActionException, MoveActionFatalException {
 		QueueTask.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {

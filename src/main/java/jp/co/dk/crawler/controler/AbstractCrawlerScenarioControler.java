@@ -95,9 +95,9 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	protected abstract Crawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException;
 
 	// ====================================================================================================
-	private static Pattern commandPattern = Pattern.compile("^(.+)@(.*)$");
+	private static Pattern commandPattern = Pattern.compile("^(.+?)@(.*?)$");
 	
-	private static Pattern actionPattern  = Pattern.compile("^(.+)\\((.*)\\)$");
+	private static Pattern actionPattern  = Pattern.compile("^(.+?)\\((.*)\\)$");
 	
 	public MoveScenario createScenarios(String command) {
 		String[] commandList = command.split("->");

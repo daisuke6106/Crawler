@@ -1,6 +1,6 @@
 #!/bin/sh
 CURRENT=$(cd $(dirname $0) && pwd)
-MAIN_JAR="${CURRENT}/../crawler_0.1.1a.jar"
+MAIN_JAR="${CURRENT}/../crawler_0.1.2a.jar"
 LIB_JAR="${CURRENT}/../lib/*"
 MESSAGE_DIR="${CURRENT}/../messages"
 PROPERTY_DIR="${CURRENT}/../properties"

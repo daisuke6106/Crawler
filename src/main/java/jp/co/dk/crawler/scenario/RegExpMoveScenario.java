@@ -2,7 +2,9 @@ package jp.co.dk.crawler.scenario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
@@ -10,11 +12,12 @@ import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.CrawlerPage;
-import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
 
 public class RegExpMoveScenario extends MoveScenario {
+	
+	protected Pattern scenarioPattern = Pattern.compile("^(.+?)@(.+?)$");
 	
 	protected String urlPatternStr;
 	
@@ -23,12 +26,32 @@ public class RegExpMoveScenario extends MoveScenario {
 	/** キューに追加済みのURL一覧 */
 	protected List<String> addedQueueUrlList = new ArrayList<>();
 	
-	public RegExpMoveScenario(String urlPatternStr, Pattern urlPattern, List<MoveAction> moveActionList) {
-		super(moveActionList);
-		this.urlPatternStr = urlPatternStr;
-		this.urlPattern    = urlPattern;
+	public RegExpMoveScenario(String scenarioStr) throws MoveActionFatalException {
+		super(scenarioStr);
+		Matcher scenarioMatcher = this.scenarioPattern.matcher(scenarioStr);
+		if (scenarioMatcher.find()) {
+			String urlPatternStr = scenarioMatcher.group(1);
+			if (urlPatternStr == null || urlPatternStr.equals("")) throw new MoveActionFatalException(null);
+			String actionStr     = scenarioMatcher.group(2);
+			if (actionStr     == null || actionStr.equals("")) throw new MoveActionFatalException(null);
+			try {
+				this.urlPatternStr = urlPatternStr;
+				this.urlPattern = Pattern.compile(urlPatternStr);
+			} catch (PatternSyntaxException e) {
+				throw new MoveActionFatalException(null);
+			}
+			this.moveActionList = this.createMoveActionList(actionStr);
+		} else {
+			try {
+				this.urlPatternStr = scenarioStr;
+				this.urlPattern = Pattern.compile(scenarioStr);
+				this.moveActionList = new ArrayList<>();
+			} catch (PatternSyntaxException e) {
+				throw new MoveActionFatalException(null);
+			}
+		}
 	}
-
+	
 	public String getUrlPattern() {
 		return this.urlPatternStr;
 	}

@@ -1,5 +1,10 @@
 package jp.co.dk.crawler.scenario;
 
+/**
+ * 
+ * @author dk
+ *
+ */
 public enum MoveControl {
 	
 	/** 遷移する */

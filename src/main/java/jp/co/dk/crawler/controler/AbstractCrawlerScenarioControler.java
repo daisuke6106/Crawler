@@ -84,6 +84,28 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		System.exit(0);
 	}
 	
+	public MoveScenario createScenarios(String command) {
+		String[] commandList = command.split("->");
+		MoveScenario beforeScenario = null;
+		for (int i=commandList.length-1; i>=0; i--) {
+			MoveScenario scenario = this.createScenario(commandList[i]);
+			if (beforeScenario != null) {
+				scenario.setChildScenario(beforeScenario);
+			}
+			beforeScenario = scenario;
+		}
+		return beforeScenario;
+	}
+
+	/**
+	 * シナリオインスタンスを生成し、返却します。
+	 * 
+	 * @param scenarioStr シナリオを表す文字列
+	 * @return シナリオインスタンス
+	 * @throws MoveActionFatalException シナリオの生成に失敗した場合
+	 */
+	protected abstract MoveScenario createScenario(String scenarioStr) throws MoveActionFatalException ;
+	
 	/**
 	 * 指定のＵＲＬを基にクローラクラスのインスタンスを生成する。
 	 * 
@@ -93,23 +115,5 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
 	protected abstract Crawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException;
-
-	// ====================================================================================================
-	
-	
-	private static Pattern actionPattern  = Pattern.compile("^(.+?)\\((.*)\\)$");
-	
-	public MoveScenario createScenarios(String command) {
-		String[] commandList = command.split("->");
-		MoveScenario beforeScenario = null;
-		for (int i=commandList.length-1; i>=0; i--) {
-			MoveScenario scenario = createScenario(commandList[i]);
-			if (beforeScenario != null) {
-				scenario.setChildScenario(beforeScenario);
-			}
-			beforeScenario = scenario;
-		}
-		return beforeScenario;
-	}
 
 }

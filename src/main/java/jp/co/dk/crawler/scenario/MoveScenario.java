@@ -43,8 +43,7 @@ public abstract class MoveScenario {
 	protected Queue<QueueTask> moveableQueue = new ArrayDeque<>();
 	
 	public MoveScenario(String command) {
-		Deque<Character> formatQue = new LinkedList<>();
-		for (char chara : command.toCharArray()) formatQue.offer(new Character(chara));
+		this.moveActionList = this.createMoveActionList(command);
 	}
 	
 	enum Phase {
@@ -101,7 +100,7 @@ public abstract class MoveScenario {
 					}  else if (nowPhase == Phase.ArgumentPhase) {
 						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
 					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						str.append(commandChar);
+						nowPhase = Phase.ClosedPhase;
 					} else if (nowPhase == Phase.ClosedPhase) {
 						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
 					}
@@ -122,7 +121,8 @@ public abstract class MoveScenario {
 					if (nowPhase == Phase.ClassPhase) {
 						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\",\"の位置が不正です。");
 					}  else if (nowPhase == Phase.ArgumentPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\",\"の位置が不正です。");
+						argumentList.add(str.toString());
+						str = new StringBuilder();
 					} else if (nowPhase == Phase.ArgumentParamPhase) {
 						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\",\"の位置が不正です。");
 					} else if (nowPhase == Phase.ClosedPhase) {

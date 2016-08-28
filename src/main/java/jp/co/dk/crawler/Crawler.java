@@ -19,6 +19,13 @@ import jp.co.dk.crawler.scenario.MoveControl;
 import jp.co.dk.crawler.scenario.MoveResult;
 import jp.co.dk.crawler.scenario.QueueTask;
 
+/**
+ * Crawlerは、ページの遷移を管理するクラスです。<p/>
+ * ページ訪問時のイベント制御、訪問状態の管理を行う。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public class Crawler extends Browzer {
 	
 	/** 訪問URL */
@@ -43,6 +50,15 @@ public class Crawler extends Browzer {
 		super(url);
 	}
 	
+	/**
+	 * <p>移動と処理の実施</p>
+	 * 引数に指定されたタスク（遷移先の指定、及び遷移先で行われる処理）を基に移動とそれに付随する処理を実施する。
+	 * 
+	 * @param queueTask タスク（遷移先の指定、及び遷移先で行われる処理）
+	 * @return 遷移結果
+	 * @throws MoveActionException 移動実施時に再起可能例外が発生した場合
+	 * @throws MoveActionFatalException 移動実施時に致命的例外が発生した場合
+	 */
 	public MoveResult move(QueueTask queueTask) throws MoveActionFatalException, MoveActionException {
 		MovableElement movableElement = queueTask.getMovableElement();
 		if (queueTask.beforeAction(this) == MoveControl.Transition) {

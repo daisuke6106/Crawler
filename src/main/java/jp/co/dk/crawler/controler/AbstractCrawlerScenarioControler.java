@@ -14,6 +14,12 @@ import jp.co.dk.crawler.scenario.MoveScenario;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
+/**
+ * AbstractCrawlerScenarioControlerは、遷移制御にシナリオを使用するコントローラが実装するべき基底クラスです。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerControler {
 
 	/** 走査シナリオ */
@@ -76,14 +82,20 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		System.exit(0);
 	}
 	
-	public MoveScenario createScenarios(String command) {
+	/**
+	 * <p>単一のシナリオ生成を実施する。</p>
+	 * シナリオを定義する文字列を基に単一のシナリオクラスを生成する。
+	 * 
+	 * @param command シナリオ文字列
+	 * @return シナリオオブジェクト
+	 * @throws MoveActionFatalException シナリオの生成に失敗した場合
+	 */
+	public MoveScenario createScenarios(String command) throws MoveActionFatalException {
 		String[] commandList = command.split("->");
 		MoveScenario beforeScenario = null;
 		for (int i=commandList.length-1; i>=0; i--) {
 			MoveScenario scenario = this.createScenario(commandList[i]);
-			if (beforeScenario != null) {
-				scenario.setChildScenario(beforeScenario);
-			}
+			if (beforeScenario != null) scenario.setChildScenario(beforeScenario);
 			beforeScenario = scenario;
 		}
 		return beforeScenario;

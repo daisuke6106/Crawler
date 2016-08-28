@@ -10,21 +10,34 @@ import jp.co.dk.crawler.Crawler;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
 
+/**
+ * AbtractCrawlerControlerは、クローラのコントローラが実装する基底クラスです。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public abstract class AbtractCrawlerControler {
 
 	/** ロガーインスタンス */
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	/** コマンドオプション */
 	protected Options options = new Options();
 	
+	/** コマンドラインインスタンス */
 	protected CommandLine cmd;
 	
+	/** クローラオブジェクト */
 	protected Crawler crawler;
 	
+	/**
+	 * <p>コントローラ処理実行</p>
+	 * コマンドライン引数の解析、及びコントローラのメイン処理を実施する。
+	 * 
+	 * @param args コマンドライン引数
+	 */
 	public void execute(String[] args) {
-		
 		this.getOptions(this.options);
-		
 		try {
 			this.cmd = new PosixParser().parse(options, args);
 		} catch (ParseException e) {
@@ -32,12 +45,18 @@ public abstract class AbtractCrawlerControler {
 			help.printHelp("crawler", options, true);
 			System.exit(1);
 		}
-		
 		this.execute();
 	}
 	
+	/** 
+	 * コントローラのメイン処理を実施する。
+	 */
 	public void execute(){}
 	
+	/**
+	 * コマンド名称取得
+	 * @return コマンド名称
+	 */
 	protected abstract String getCommandName();
 	
 	/**

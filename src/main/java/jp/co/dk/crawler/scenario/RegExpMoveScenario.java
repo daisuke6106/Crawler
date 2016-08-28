@@ -15,17 +15,33 @@ import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
 
+/**
+ * <p>RegExpMoveScenarioは、正規表現を基に、遷移先定義を行うシナリオクラスです。</p>
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public class RegExpMoveScenario extends MoveScenario {
 	
+	/** 遷移先、遷移先でのイベント定義 */
 	protected Pattern scenarioPattern = Pattern.compile("^(.+?)@(.+?)$");
 	
+	/** 遷移先定義（正規表現）文字列 */
 	protected String urlPatternStr;
 	
+	/** 遷移先定義（正規表現） */
 	protected Pattern urlPattern;
 	
 	/** キューに追加済みのURL一覧 */
 	protected List<String> addedQueueUrlList = new ArrayList<>();
 	
+	/**
+	 * <p>コンストラクタ</p>
+	 * シナリオを表す文字列を基に、シナリオを表すインスタンスを生成します。
+	 * 
+	 * @param scenarioStr シナリオを表す文字列
+	 * @throws MoveActionFatalException 構文解析に失敗した場合
+	 */
 	public RegExpMoveScenario(String scenarioStr) throws MoveActionFatalException {
 		super(scenarioStr);
 		Matcher scenarioMatcher = this.scenarioPattern.matcher(scenarioStr);
@@ -52,15 +68,6 @@ public class RegExpMoveScenario extends MoveScenario {
 		}
 	}
 	
-	public String getUrlPattern() {
-		return this.urlPatternStr;
-	}
-	
-	@Override
-	public String toString() {
-		return this.urlPatternStr;
-	}
-
 	@Override
 	public void start(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException {
 		this.addTask((CrawlerPage)crawler.getPage());

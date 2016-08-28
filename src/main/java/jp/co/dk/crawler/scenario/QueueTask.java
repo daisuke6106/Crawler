@@ -11,8 +11,17 @@ import jp.co.dk.logger.Loggable;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
 
+/**
+ * <p>QueueTaskは、遷移先とその遷移先で行うアクションを保持する単一のキュークラスです。</p>
+ * クローリング時に行う遷移制御は、ページからシナリオに合致する遷移先をキューイングし積み上げ、そのキューから順に遷移していきます。<br/>
+ * その単一のキューを表すクラスです。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public class QueueTask {
 	
+	/** ロガー */
 	protected static Logger logger = LoggerFactory.getLogger(QueueTask.class);
 	
 	/** 遷移要素 */
@@ -21,6 +30,13 @@ public class QueueTask {
 	/** 移動時に実行するアクション */
 	protected List<MoveAction> moveActionList;
 	
+	/**
+	 * <p>コンストラクタ</p>
+	 * 遷移要素、移動時に実行するアクションを基にキューのインスタンスを生成する。
+	 * 
+	 * @param movableElement 遷移要素
+	 * @param moveActionList 移動時に実行するアクション
+	 */
 	QueueTask(MovableElement movableElement, List<MoveAction> moveActionList) {
 		this.movableElement = movableElement;
 		this.moveActionList = moveActionList;

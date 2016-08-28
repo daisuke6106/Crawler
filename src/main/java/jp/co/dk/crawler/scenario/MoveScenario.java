@@ -19,8 +19,16 @@ import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
+/**
+ * <p>MoveScenarioは、遷移先や、遷移後に行う処理の定義を行うシナリオクラスです。</p>
+ * シナリオは親子関係を持っており、ネストさせることができます。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public abstract class MoveScenario {
 	
+	/** シナリオを表す文字列 */
 	protected String scenarioStr;
 	
 	/** ロガーインスタンス */
@@ -38,6 +46,11 @@ public abstract class MoveScenario {
 	/** 実行待ちキュー */
 	protected Queue<QueueTask> moveableQueue = new ArrayDeque<>();
 	
+	/**
+	 * 構文解析時に使用するフェーズ定数です。
+	 * @version 1.0
+	 * @author D.Kanno
+	 */
 	private enum Phase {
 		ClassPhase,
 		ArgumentPhase,
@@ -45,6 +58,12 @@ public abstract class MoveScenario {
 		ClosedPhase;
 	}
 	
+	/**
+	 * <p>コンストラクタ</p>
+	 * シナリオを表す文字列を基に、シナリオを表すインスタンスを生成します。
+	 * 
+	 * @param scenarioStr シナリオを表す文字列
+	 */
 	public MoveScenario(String scenarioStr) {
 		this.scenarioStr = scenarioStr;
 	}
@@ -201,35 +220,58 @@ public abstract class MoveScenario {
 		return moveAction;
 	}
 	
-	public MoveScenario(List<MoveAction> moveActionList) {
-		this.moveActionList = moveActionList;
-	}
-	
+	/**
+	 * 親シナリオが存在しているか判定します。
+	 * @return 判定結果(true=親シナリオが存在する、false=親シナリオが存在しない)
+	 */
 	public boolean hasParentScenario() {
 		return parentScenario != null;
 	}
 	
+	/**
+	 * 親シナリオを取得します。
+	 * @return 親シナリオ
+	 */
 	public MoveScenario getParentScenario() {
 		return this.parentScenario;
 	}
 	
+	/**
+	 * 親シナリオを設定します。
+	 * @param scenario 親シナリオ
+	 */
 	public void setParentScenario(MoveScenario scenario) {
 		this.parentScenario = scenario;
 	}
 
-	
+	/**
+	 * 子シナリオが存在しているか判定します。
+	 * @return 判定結果(true=子シナリオが存在する、false=子シナリオが存在しない)
+	 */
 	public boolean hasChildScenario() {
 		return childScenario != null;
 	}
 	
+	/**
+	 * 子シナリオを取得します。
+	 * @return 子シナリオ
+	 */
 	public MoveScenario getChildScenario() {
 		return this.childScenario;
 	}
 	
+	/**
+	 * 子シナリオを設定します。
+	 * @param scenario 子シナリオ
+	 */
 	public void setChildScenario(MoveScenario scenario) {
 		this.childScenario = scenario;
 	}
 
+	/**
+	 * 最上位シナリオを取得します。
+	 * @return 最上位シナリオ
+	 */
 	public MoveScenario getTopScenario() {
 		MoveScenario topScenario = this;
 		while (topScenario.hasParentScenario()) topScenario = topScenario.getParentScenario();
@@ -263,8 +305,22 @@ public abstract class MoveScenario {
 	}
 	*/
 	
+	/**
+	 * シナリオを開始します。
+	 * @param crawler クローラインスタンス
+	 * @param interval インターバル
+	 * @throws MoveActionException 移動実施時に再起可能例外が発生した場合
+	 * @throws MoveActionFatalException 移動実施時に致命的例外が発生した場合
+	 */
 	public abstract void start(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException ;
 	
+	/**
+	 * シナリオを開始します。
+	 * @param crawler クローラインスタンス
+	 * @param interval インターバル
+	 * @throws MoveActionException 移動実施時に再起可能例外が発生した場合
+	 * @throws MoveActionFatalException 移動実施時に致命的例外が発生した場合
+	 */
 	protected abstract void crawl(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException ;
 	
 	/**
@@ -272,14 +328,23 @@ public abstract class MoveScenario {
 	 * 引数に指定されたページから指定の遷移要素を取得し、本シナリオ内に保持する。
 	 * 
 	 * @param page 抽出対象のページ情報
-	 * @throws MoveActionException
-	 * @throws MoveActionFatalException
+	 * @throws MoveActionException タスク追加時に再起可能例外が発生した場合
+	 * @throws MoveActionFatalException タスク追加時に致命的例外が発生した場合
 	 */
 	public void addTask(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
 		List<jp.co.dk.browzer.html.element.A> anchorList = (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement(page);
 		for (jp.co.dk.browzer.html.element.A anchor : anchorList) this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
 	}
 	
+	/**
+	 * <p>遷移要素一覧を取得する。</p>
+	 * 引数に指定されたページからこのシナリオに準ずる遷移要素一覧を取得する。
+	 * 
+	 * @param page 抽出対象のページ
+	 * @return 遷移要素一覧
+	 * @throws MoveActionException タスク追加時に再起可能例外が発生した場合
+	 * @throws MoveActionFatalException タスク追加時に致命的例外が発生した場合
+	 */
 	protected abstract List<jp.co.dk.browzer.html.element.A> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException ;
 	
 	/**
@@ -294,5 +359,7 @@ public abstract class MoveScenario {
 	}
 
 	@Override
-	public abstract String toString();
+	public String toString() {
+		return this.scenarioStr;
+	}
 }

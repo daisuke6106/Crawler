@@ -132,9 +132,9 @@ public abstract class MoveScenario {
 					if (nowPhase == Phase.ClassPhase) {
 						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
 					}  else if (nowPhase == Phase.ArgumentPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
-					} else if (nowPhase == Phase.ArgumentParamPhase) {
 						nowPhase = Phase.ClosedPhase;
+					} else if (nowPhase == Phase.ArgumentParamPhase) {
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
 					} else if (nowPhase == Phase.ClosedPhase) {
 						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
 					}

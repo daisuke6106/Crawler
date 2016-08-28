@@ -4,6 +4,8 @@ import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.logger.Logger;
+import jp.co.dk.logger.LoggerFactory;
 
 /**
  * MoveActionは、ページ移動時に追加処理を行う際に実装する抽象クラスです。
@@ -12,6 +14,9 @@ import jp.co.dk.browzer.html.element.MovableElement;
  * @author D.Kanno
  */
 public abstract class MoveAction {
+	
+	/** ロガーインスタンス */
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	/** アクションクラス実行時引数 */
 	protected String[] args;

@@ -13,6 +13,7 @@ import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageSaveException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.document.exception.DocumentException;
+import jp.co.dk.logger.Loggable;
 
 /**
  * FileSaveMoveActionは、指定のページを指定されたディレクトリに指定の名称で保存します。
@@ -82,5 +83,12 @@ public class FileSaveMoveAction extends MoveAction {
 		} catch (PageAccessException | PageSaveException | DocumentException e) {
 			new RuntimeException("保存に失敗しました。", e);
 		}
+		
+		final String printFileName = fileName;
+		this.logger.info(new Loggable(){
+			@Override
+			public String printLog(String lineSeparator) {
+				return "保存が完了しました。PATH=[" + dir.toString() + "], FILENAME=[" +  printFileName + "]";
+			}});
 	}
 }

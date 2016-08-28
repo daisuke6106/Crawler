@@ -95,7 +95,7 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	protected abstract Crawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException;
 
 	// ====================================================================================================
-	private static Pattern commandPattern = Pattern.compile("^(.+?)@(.*?)$");
+	
 	
 	private static Pattern actionPattern  = Pattern.compile("^(.+?)\\((.*)\\)$");
 	
@@ -112,64 +112,4 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		return beforeScenario;
 	}
 
-	protected MoveScenario createScenario(String command) throws MoveActionFatalException {
-		Matcher matcher = this.commandPattern.matcher(command);
-		if (matcher.find()) {
-			String urlPatternStr = matcher.group(1);
-			if (urlPatternStr == null || urlPatternStr.equals("")) throw new MoveActionFatalException(null);
-			String actionStr     = matcher.group(2);
-			if (actionStr     == null || actionStr.equals("")) throw new MoveActionFatalException(null);
-			Pattern urlPattern;
-			try {
-				urlPattern = Pattern.compile(urlPatternStr);
-			} catch (PatternSyntaxException e) {
-				throw new MoveActionFatalException(null);
-			}
-			List<MoveAction> moveActionList = new ArrayList<>();
-			String[] actionList = actionStr.split(";");
-			for (String action : actionList) {
-				Matcher actionMatcher = this.actionPattern.matcher(action);
-				if (actionMatcher.find()) {
-					String   commandStr   = actionMatcher.group(1);
-					String   argumentsStr = actionMatcher.group(2);
-					String[] argiments    = argumentsStr.split(",");
-					moveActionList.add(createMoveActionByClassName(commandStr, argiments));
-				} else {
-					moveActionList.add(createMoveActionByClassName(action, new String[]{}));
-				}
-				
-			}
-			return new RegExpMoveScenario(urlPatternStr, urlPattern, moveActionList);
-		} else {
-			try {
-				Pattern urlPattern = Pattern.compile(command);
-				return new RegExpMoveScenario(command, urlPattern, new ArrayList<>());
-			} catch (PatternSyntaxException e) {
-				throw new MoveActionFatalException(null);
-			}
-			
-		}
-	}
-	
-	@SuppressWarnings("all")
-	protected MoveAction createMoveActionByClassName(String className, String[] arguments) {
-		MoveAction moveAction;
-		try {
-			Class<MoveAction> actionClass = (Class<MoveAction>) Class.forName(className);
-			Constructor<MoveAction> moveActionConstructor = actionClass.getDeclaredConstructor(new Class[]{String[].class});
-			moveAction = moveActionConstructor.newInstance(new Object[]{arguments});
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			throw new MoveActionFatalException(null);
-		} catch (IllegalArgumentException e) {
-			throw new MoveActionFatalException(null);
-		} catch (InvocationTargetException e) {
-			throw new MoveActionFatalException(null);
-		} catch (NoSuchMethodException e) {
-			throw new MoveActionFatalException(null);
-		} catch (SecurityException e) {
-			throw new MoveActionFatalException(null);
-		}
-		return moveAction;
-	}
-	
 }

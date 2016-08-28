@@ -45,6 +45,13 @@ public class CrawlerMessage extends AbstractMessage implements Serializable{
 	/** URL情報の読込に失敗しました。URL=[{0}] */
 	public static final CrawlerMessage FAILE_TO_READ_URL = new CrawlerMessage("E010");
 	
+	// ====================================================================================================
+	// シナリオ関連
+	// ====================================================================================================
+	
+	/** シナリオ生成に失敗しました。[{0}] */
+	public static final CrawlerMessage FAILE_TO_SCENARIO_GENERATION = new CrawlerMessage("E100");
+	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);
 	}

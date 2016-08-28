@@ -49,7 +49,7 @@ public class CrawlerMessage extends AbstractMessage implements Serializable{
 	// シナリオ関連
 	// ====================================================================================================
 	
-	/** シナリオ生成に失敗しました。[{0}] */
+	/** シナリオ生成に失敗しました。詳細＝[{0}] シナリオ=[{1}] */
 	public static final CrawlerMessage FAILE_TO_SCENARIO_GENERATION = new CrawlerMessage("E100");
 	
 	protected CrawlerMessage(String messageId) {

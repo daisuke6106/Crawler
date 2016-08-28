@@ -104,7 +104,7 @@ public abstract class MoveScenario {
 			switch (commandChar) {
 				case ' ':
 					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\" \"(スペース)の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\" \"(スペース)の位置が不正です。", command});
 					} else if (nowPhase == Phase.ArgumentPhase) {
 					} else if (nowPhase == Phase.ArgumentParamPhase) {
 						str.append(commandChar);
@@ -117,16 +117,16 @@ public abstract class MoveScenario {
 						className = str.toString();
 						str = new StringBuilder();
 					} else if (nowPhase == Phase.ArgumentPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\"(\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\"(\"の位置が不正です。", command});
 					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\"(\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\"(\"の位置が不正です。", command});
 					} else if (nowPhase == Phase.ClosedPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\"(\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\"(\"の位置が不正です。", command});
 					}
 					break;
 				case '\'':
 					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\'の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\'の位置が不正です。", command});
 					} else if (nowPhase == Phase.ArgumentPhase) {
 						nowPhase = Phase.ArgumentParamPhase;
 					} else if (nowPhase == Phase.ArgumentParamPhase) {
@@ -134,38 +134,38 @@ public abstract class MoveScenario {
 						argumentList.add(str.toString());
 						str = new StringBuilder();
 					} else if (nowPhase == Phase.ClosedPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\'\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\'\"の位置が不正です。", command});
 					}
 					break;
 				case ',':
 					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\",\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\",\"の位置が不正です。", command});
 					}  else if (nowPhase == Phase.ArgumentPhase) {
 					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\",\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\",\"の位置が不正です。", command});
 					} else if (nowPhase == Phase.ClosedPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\",\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\",\"の位置が不正です。", command});
 					}
 					break;
 				case ')':
 					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\")\"の位置が不正です。", command});
 					}  else if (nowPhase == Phase.ArgumentPhase) {
 						nowPhase = Phase.ClosedPhase;
 					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\")\"の位置が不正です。", command});
 					} else if (nowPhase == Phase.ClosedPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\")\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\")\"の位置が不正です。", command});
 					}
 					
 					break;
 				case ';':
 					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\";\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\";\"の位置が不正です。", command});
 					}  else if (nowPhase == Phase.ArgumentPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\";\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\";\"の位置が不正です。", command});
 					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "\";\"の位置が不正です。");
+						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\";\"の位置が不正です。", command});
 					} else if (nowPhase == Phase.ClosedPhase) {
 						nowPhase = Phase.ClassPhase;
 						moveActionList.add(createMoveActionByClassName(className, argumentList.toArray(new String[0])));
@@ -181,9 +181,9 @@ public abstract class MoveScenario {
 		if (nowPhase == Phase.ClassPhase) {
 			moveActionList.add(createMoveActionByClassName(className, new String[]{}));
 		}  else if (nowPhase == Phase.ArgumentPhase) {
-			throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "引数が完結していません。");
+			throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"引数が完結していません。", command});
 		} else if (nowPhase == Phase.ArgumentParamPhase) {
-			throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, "引数が完結していません。");
+			throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"引数が完結していません。", command});
 		} else if (nowPhase == Phase.ClosedPhase) {
 			nowPhase = Phase.ClassPhase;
 			moveActionList.add(createMoveActionByClassName(className, argumentList.toArray(new String[0])));

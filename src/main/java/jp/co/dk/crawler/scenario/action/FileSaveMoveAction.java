@@ -14,6 +14,12 @@ import jp.co.dk.browzer.exception.PageSaveException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.document.exception.DocumentException;
 
+/**
+ * FileSaveMoveActionは、指定のページを指定されたディレクトリに指定の名称で保存します。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public class FileSaveMoveAction extends MoveAction {
 	
 	/** 保存先ディレクトリ */
@@ -28,6 +34,15 @@ public class FileSaveMoveAction extends MoveAction {
 	/** 日付フォーマット */
 	private static Pattern datePattern = Pattern.compile("%date\\{(.*)\\}");
 	
+	/**
+	 * <p>コンストラクタ</p>
+	 * 遷移時アクションの実行時に使用する引数を基にインスタンスを生成します。<br/>
+	 * 引数[0]=保存先ディレクトリ<br/>
+	 * 引数[1]=ファイル名<br/>
+	 *  
+	 * @param args アクション時の引数
+	 * @throws MoveActionFatalException 引数が不正な場合
+	 */
 	public FileSaveMoveAction(String[] args) throws MoveActionFatalException {
 		super(args);
 		if (args.length != 2) throw new RuntimeException("保存先ディレクトリとファイルフォーマットが指定されていません。");

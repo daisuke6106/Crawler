@@ -13,12 +13,26 @@ import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.document.html.HtmlElement;
 
+/**
+ * ContentMoveActionは、指定のページの該当のタグの要素内容を標準出力に表示します。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public class ContentMoveAction extends MoveAction {
 
+	/**
+	 * <p>コンストラクタ</p>
+	 * 遷移時アクションの実行時に使用する引数を基にインスタンスを生成します。
+	 *  
+	 * @param args アクション時の引数
+	 * @throws MoveActionFatalException 引数が不正な場合
+	 */
 	public ContentMoveAction(String[] args) throws MoveActionFatalException {
 		super(args);
 	}
 	
+	@Override
 	public void afterAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
 		try {
 			File file = browzer.getPage().getDocument();

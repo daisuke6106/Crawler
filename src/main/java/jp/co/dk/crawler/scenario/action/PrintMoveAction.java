@@ -5,8 +5,21 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
 
+/**
+ * PrintMoveActionは、遷移時の情報を標準出力に出漁します。
+ * 
+ * @version 1.0
+ * @author D.Kanno
+ */
 public class PrintMoveAction extends MoveAction {
 
+	/**
+	 * <p>コンストラクタ</p>
+	 * 遷移時アクションの実行時に使用する引数を基にインスタンスを生成します。
+	 *  
+	 * @param args アクション時の引数
+	 * @throws MoveActionFatalException 引数が不正な場合
+	 */
 	public PrintMoveAction(String[] args) throws MoveActionFatalException {
 		super(args);
 	}

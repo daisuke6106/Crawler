@@ -207,15 +207,15 @@ public abstract class MoveScenario {
 			Constructor<MoveAction> moveActionConstructor = actionClass.getDeclaredConstructor(new Class[]{String[].class});
 			moveAction = moveActionConstructor.newInstance(new Object[]{arguments});
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			throw new MoveActionFatalException(null);
+			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
 		} catch (IllegalArgumentException e) {
-			throw new MoveActionFatalException(null);
+			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
 		} catch (InvocationTargetException e) {
-			throw new MoveActionFatalException(null);
+			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
 		} catch (NoSuchMethodException e) {
-			throw new MoveActionFatalException(null);
+			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
 		} catch (SecurityException e) {
-			throw new MoveActionFatalException(null);
+			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
 		}
 		return moveAction;
 	}

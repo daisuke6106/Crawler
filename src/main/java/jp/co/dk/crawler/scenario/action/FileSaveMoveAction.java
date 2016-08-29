@@ -15,6 +15,8 @@ import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
 
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
+
 /**
  * FileSaveMoveActionは、指定のページを指定されたディレクトリに指定の名称で保存します。
  * 
@@ -46,8 +48,10 @@ public class FileSaveMoveAction extends MoveAction {
 	 */
 	public FileSaveMoveAction(String[] args) throws MoveActionFatalException {
 		super(args);
-		if (args.length != 2) throw new RuntimeException("保存先ディレクトリとファイルフォーマットが指定されていません。");
+		if (args.length != 2) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存先ディレクトリとファイルフォーマットが指定されていません。", args.toString()});
 		this.dir      = new File(this.args[0]);
+		if (this.dir.exists()) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"ディレクトリが存在しません。", this.args[0]});
+		if (!this.dir.isDirectory()) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"ディレクトリではありません。", this.args[0]});
 		this.fileName = this.args[1];
 	}
 
@@ -81,7 +85,7 @@ public class FileSaveMoveAction extends MoveAction {
 		try {
 			browzer.save(this.dir, fileName);
 		} catch (PageAccessException | PageSaveException | DocumentException e) {
-			new RuntimeException("保存に失敗しました。", e);
+			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", fileName});
 		}
 		
 		final String printFileName = fileName;

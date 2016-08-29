@@ -37,6 +37,12 @@ public class FileSaveMoveAction extends MoveAction {
 	/** 日付フォーマット */
 	private static Pattern datePattern = Pattern.compile("%date\\{(.*)\\}");
 	
+	/** インデックスフォーマット */
+	private static Pattern indexPattern = Pattern.compile("%index\\{(.*)\\}");
+	
+	/** インデックス */
+	protected int index = 0;
+	
 	/**
 	 * <p>コンストラクタ</p>
 	 * 遷移時アクションの実行時に使用する引数を基にインスタンスを生成します。<br/>
@@ -50,7 +56,7 @@ public class FileSaveMoveAction extends MoveAction {
 		super(args);
 		if (args.length != 2) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存先ディレクトリとファイルフォーマットが指定されていません。", args.toString()});
 		this.dir      = new File(this.args[0]);
-		if (this.dir.exists()) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"ディレクトリが存在しません。", this.args[0]});
+		if (!this.dir.exists()) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"ディレクトリが存在しません。", this.args[0]});
 		if (!this.dir.isDirectory()) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"ディレクトリではありません。", this.args[0]});
 		this.fileName = this.args[1];
 	}
@@ -81,6 +87,20 @@ public class FileSaveMoveAction extends MoveAction {
 			String date = sdf.format(new Date());
 			fileName = dateMatcher.replaceAll(date);
 		}
+		
+		Matcher indexMatcher = indexPattern.matcher(fileName);
+		if (indexMatcher.find()) fileName = indexMatcher.replaceAll(String.format("%0" + indexMatcher.group(1) + "d", new Integer(++index)));
+		
+		// ファイル名のエスケープ
+		fileName = fileName.replaceAll("\\\\", "");
+		fileName = fileName.replaceAll("/"   , "");
+		fileName = fileName.replaceAll(":"   , "");
+		fileName = fileName.replaceAll("\\*" , "");
+		fileName = fileName.replaceAll("\\?" , "");
+		fileName = fileName.replaceAll("\""  , "");
+		fileName = fileName.replaceAll("<"   , "");
+		fileName = fileName.replaceAll(">"   , "");
+		fileName = fileName.replaceAll("|"   , "");
 		
 		try {
 			browzer.save(this.dir, fileName);

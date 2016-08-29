@@ -72,9 +72,11 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 				moveScenario.start(this.crawler, this.interval);
 			} catch (MoveActionException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 				System.exit(1);
 			} catch (RuntimeException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 				System.exit(255);
 			}
 		}

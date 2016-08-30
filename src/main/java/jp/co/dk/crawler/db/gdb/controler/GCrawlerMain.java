@@ -30,11 +30,6 @@ public class GCrawlerMain extends AbstractCrawlerScenarioControler {
 	public static void main(String[] args) {
 		new GCrawlerMain().execute(args);
 	}
-
-	@Override
-	protected MoveScenario createScenario(String scenarioStr) throws MoveActionFatalException {
-		return new RegExpMoveScenario(scenarioStr);
-	}
 	
 	@Override
 	public AbstractCrawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException {

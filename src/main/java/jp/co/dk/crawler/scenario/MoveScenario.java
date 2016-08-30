@@ -17,7 +17,6 @@ import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
-import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
  * <p>MoveScenarioは、遷移先や、遷移後に行う処理の定義を行うシナリオクラスです。</p>
@@ -28,8 +27,8 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  */
 public abstract class MoveScenario {
 	
-	/** シナリオを表す文字列 */
-	protected String scenarioStr;
+	/** シナリオ引数 */
+	protected String[] argumentList;
 	
 	/** ロガーインスタンス */
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -41,183 +40,19 @@ public abstract class MoveScenario {
 	protected MoveScenario childScenario;
 	
 	/** 移動時に実行するアクション */
-	protected List<MoveAction> moveActionList;
+	protected List<MoveAction> moveActionList = new ArrayList<>();
 	
 	/** 実行待ちキュー */
 	protected Queue<QueueTask> moveableQueue = new ArrayDeque<>();
 	
 	/**
-	 * 構文解析時に使用するフェーズ定数です。
-	 * @version 1.0
-	 * @author D.Kanno
-	 */
-	private enum Phase {
-		ClassPhase,
-		ArgumentPhase,
-		ArgumentParamPhase,
-		ClosedPhase;
-	}
-	
-	/**
 	 * <p>コンストラクタ</p>
 	 * シナリオを表す文字列を基に、シナリオを表すインスタンスを生成します。
 	 * 
-	 * @param scenarioStr シナリオを表す文字列
+	 * @param argumentList シナリオ引数
 	 */
-	public MoveScenario(String scenarioStr) {
-		this.scenarioStr = scenarioStr;
-	}
-	
-	/**
-	 * <p>MoveAction一覧を生成し、返却します。</p>
-	 * クラス名([引数,])の形式で記述された文字列を元に、MoveActin一覧を生成し、返却します。<br/>
-	 * 例<br/>
-	 * 単体指定の場合<br/>
-	 * jp.co.example.MoveActionXXX()<br/>
-	 * jp.co.example.MoveActionXXX('aaa','bbb')<br/>
-	 * 複数指定の場合<br/>
-	 * jp.co.example.MoveActionXXX();jp.co.example.MoveActionYYY()<br/>
-	 * jp.co.example.MoveActionXXX('aaa','bbb');jp.co.example.MoveActionYYY('aaa','bbb')<br/>
-	 * @param command クラス名([引数,])の形式で記述された文字列
-	 * @return MoveAction一覧
-	 * @throws MoveActionFatalException 構文解析に失敗した場合
-	 */
-	protected List<MoveAction> createMoveActionList(String command) throws MoveActionFatalException {
-		Deque<Character> formatQue = new LinkedList<>();
-		for (char chara : command.toCharArray()) formatQue.offer(new Character(chara));
-		List<MoveAction> moveActionList = new ArrayList<>();
-		
-		String className = "";
-		List<String> argumentList = new ArrayList<>();
-		StringBuilder str = new StringBuilder();
-		
-		Phase nowPhase = Phase.ClassPhase;
-		boolean isEscaped = false;
-		
-		while (formatQue.size() != 0) {
-			char commandChar = formatQue.poll().charValue();
-			if (isEscaped) {
-				str.append(commandChar);
-				isEscaped = false;
-				continue;
-			}
-			switch (commandChar) {
-				case ' ':
-					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\" \"(スペース)の位置が不正です。", command});
-					} else if (nowPhase == Phase.ArgumentPhase) {
-					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						str.append(commandChar);
-					} else if (nowPhase == Phase.ClosedPhase) {
-					}
-					break;	
-				case '(':
-					if (nowPhase == Phase.ClassPhase) {
-						nowPhase = Phase.ArgumentPhase;
-						className = str.toString();
-						str = new StringBuilder();
-					} else if (nowPhase == Phase.ArgumentPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\"(\"の位置が不正です。", command});
-					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\"(\"の位置が不正です。", command});
-					} else if (nowPhase == Phase.ClosedPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\"(\"の位置が不正です。", command});
-					}
-					break;
-				case '\'':
-					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\'の位置が不正です。", command});
-					} else if (nowPhase == Phase.ArgumentPhase) {
-						nowPhase = Phase.ArgumentParamPhase;
-					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						nowPhase = Phase.ArgumentPhase;
-						argumentList.add(str.toString());
-						str = new StringBuilder();
-					} else if (nowPhase == Phase.ClosedPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\'\"の位置が不正です。", command});
-					}
-					break;
-				case ',':
-					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\",\"の位置が不正です。", command});
-					}  else if (nowPhase == Phase.ArgumentPhase) {
-					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\",\"の位置が不正です。", command});
-					} else if (nowPhase == Phase.ClosedPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\",\"の位置が不正です。", command});
-					}
-					break;
-				case ')':
-					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\")\"の位置が不正です。", command});
-					}  else if (nowPhase == Phase.ArgumentPhase) {
-						nowPhase = Phase.ClosedPhase;
-					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\")\"の位置が不正です。", command});
-					} else if (nowPhase == Phase.ClosedPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\")\"の位置が不正です。", command});
-					}
-					
-					break;
-				case ';':
-					if (nowPhase == Phase.ClassPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\";\"の位置が不正です。", command});
-					}  else if (nowPhase == Phase.ArgumentPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\";\"の位置が不正です。", command});
-					} else if (nowPhase == Phase.ArgumentParamPhase) {
-						throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"\";\"の位置が不正です。", command});
-					} else if (nowPhase == Phase.ClosedPhase) {
-						nowPhase = Phase.ClassPhase;
-						moveActionList.add(createMoveActionByClassName(className, argumentList.toArray(new String[0])));
-					}
-					break;
-				case '\\':
-					isEscaped = true;
-					break;
-				default:
-					str.append(commandChar);
-			}
-		}
-		if (nowPhase == Phase.ClassPhase) {
-			moveActionList.add(createMoveActionByClassName(className, new String[]{}));
-		}  else if (nowPhase == Phase.ArgumentPhase) {
-			throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"引数が完結していません。", command});
-		} else if (nowPhase == Phase.ArgumentParamPhase) {
-			throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"引数が完結していません。", command});
-		} else if (nowPhase == Phase.ClosedPhase) {
-			nowPhase = Phase.ClassPhase;
-			moveActionList.add(createMoveActionByClassName(className, argumentList.toArray(new String[0])));
-		}
-		return moveActionList;
-	}
-	
-	/**
-	 * <p>MoveActionクラス生成</p>
-	 * 引数に指定されたクラス名と、そのクラスのコンストラクタに引き渡す引数を基にMoveActionクラスを生成し、返却します。
-	 * 
-	 * @param className クラス名
-	 * @param arguments コンストラクタに引き渡す引数
-	 * @return MoveActionインスタンス
-	 */
-	@SuppressWarnings("all")
-	protected MoveAction createMoveActionByClassName(String className, String[] arguments) {
-		MoveAction moveAction;
-		try {
-			Class<MoveAction> actionClass = (Class<MoveAction>) Class.forName(className);
-			Constructor<MoveAction> moveActionConstructor = actionClass.getDeclaredConstructor(new Class[]{String[].class});
-			moveAction = moveActionConstructor.newInstance(new Object[]{arguments});
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
-		} catch (IllegalArgumentException e) {
-			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
-		} catch (InvocationTargetException e) {
-			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
-		} catch (NoSuchMethodException e) {
-			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
-		} catch (SecurityException e) {
-			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{e.getMessage(), className}, e);
-		}
-		return moveAction;
+	public MoveScenario(String[] argumentList) {
+		this.argumentList = argumentList;
 	}
 	
 	/**
@@ -276,6 +111,10 @@ public abstract class MoveScenario {
 		MoveScenario topScenario = this;
 		while (topScenario.hasParentScenario()) topScenario = topScenario.getParentScenario();
 		return topScenario;
+	}
+	
+	public void setMoveActionList(List<MoveAction> moveActionList) {
+		this.moveActionList = moveActionList;
 	}
 	
 	/**
@@ -360,6 +199,6 @@ public abstract class MoveScenario {
 
 	@Override
 	public String toString() {
-		return this.scenarioStr;
+		return this.argumentList.toString();
 	}
 }

@@ -15,11 +15,6 @@ public class CrawlerMain extends AbstractCrawlerScenarioControler {
 	}
 
 	@Override
-	protected MoveScenario createScenario(String scenarioStr) throws MoveActionFatalException {
-		return new RegExpMoveScenario(scenarioStr);
-	}
-	
-	@Override
 	public Crawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException {
 		return new Crawler(url);
 	}

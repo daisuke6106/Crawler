@@ -1,7 +1,12 @@
 package jp.co.dk.crawler.controler;
 
+import static jp.co.dk.crawler.message.CrawlerMessage.FAILE_TO_SCENARIO_GENERATION;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
@@ -10,6 +15,7 @@ import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.scenario.MoveScenario;
+import jp.co.dk.crawler.scenario.action.MoveAction;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -22,6 +28,9 @@ import org.apache.commons.cli.Options;
  */
 public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerControler {
 
+	/** 遷移先、遷移先でのイベント定義 */
+	protected Pattern scenarioPattern = Pattern.compile("^(.+?)@(.+?)$");
+	
 	/** 走査シナリオ */
 	protected String[] scenarioStrList;
 	
@@ -110,7 +119,35 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	 * @return シナリオインスタンス
 	 * @throws MoveActionFatalException シナリオの生成に失敗した場合
 	 */
-	protected abstract MoveScenario createScenario(String scenarioStr) throws MoveActionFatalException ;
+	protected MoveScenario createScenario(String scenarioStr) throws MoveActionFatalException {
+		Matcher scenarioMatcher = this.scenarioPattern.matcher(scenarioStr);
+		if (scenarioMatcher.find()) {
+			String scenario = scenarioMatcher.group(1);
+			List<Object> scenarioInstanceList = new ClassGenerater(scenario).createObjectList();
+			if (scenarioInstanceList.size() != 1) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"シナリオが複数設定されています。", scenarioStr});
+			Object scenarioClass = scenarioInstanceList.get(0);
+			if (!(scenarioClass instanceof MoveScenario)) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"シナリオクラスではありません。", scenarioStr});
+			MoveScenario moveScenario = (MoveScenario)scenarioClass;
+			
+			String actionStr = scenarioMatcher.group(2);
+			if (actionStr == null || actionStr.equals("")) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"アクションが定義されていません。", scenarioStr});
+			List<Object> actionInstanceList = new ClassGenerater(actionStr).createObjectList();
+			List<MoveAction> moveActionList = new ArrayList<>();
+			for (Object actionClass : actionInstanceList) {
+				if (!(actionClass instanceof MoveAction)) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"アクションクラスではありません。", actionClass.getClass().toString()});
+				moveActionList.add((MoveAction)actionClass);
+			}
+			moveScenario.setMoveActionList(moveActionList);
+			return moveScenario;
+			
+		} else {
+			List<Object> instanceList = new ClassGenerater(scenarioStr).createObjectList();
+			if (instanceList.size() != 1) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"シナリオが複数設定されています。", scenarioStr});
+			Object scenarioClass = instanceList.get(0);
+			if (!(scenarioClass instanceof MoveScenario)) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"シナリオクラスではありません。", scenarioStr});
+			return (MoveScenario)scenarioClass;
+		}
+	}
 	
 	/**
 	 * 指定のＵＲＬを基にクローラクラスのインスタンスを生成する。

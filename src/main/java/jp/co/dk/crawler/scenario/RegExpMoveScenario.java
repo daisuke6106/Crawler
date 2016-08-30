@@ -2,7 +2,6 @@ package jp.co.dk.crawler.scenario;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -14,7 +13,6 @@ import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
-
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
 /**
@@ -24,9 +22,6 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @author D.Kanno
  */
 public class RegExpMoveScenario extends MoveScenario {
-	
-	/** 遷移先、遷移先でのイベント定義 */
-	protected Pattern scenarioPattern = Pattern.compile("^(.+?)@(.+?)$");
 	
 	/** 遷移先定義（正規表現）文字列 */
 	protected String urlPatternStr;
@@ -41,36 +36,17 @@ public class RegExpMoveScenario extends MoveScenario {
 	 * <p>コンストラクタ</p>
 	 * シナリオを表す文字列を基に、シナリオを表すインスタンスを生成します。
 	 * 
-	 * @param scenarioStr シナリオを表す文字列
+	 * @param argumentList シナリオ引数
 	 * @throws MoveActionFatalException 構文解析に失敗した場合
 	 */
-	public RegExpMoveScenario(String scenarioStr) throws MoveActionFatalException {
-		super(scenarioStr);
-		Matcher scenarioMatcher = this.scenarioPattern.matcher(scenarioStr);
-		if (scenarioMatcher.find()) {
-			String urlPatternStr = scenarioMatcher.group(1);
-			if (urlPatternStr == null || urlPatternStr.equals("")) {
-				throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"URL(正規表現)が定義されていません。", scenarioStr});
-			}
-			String actionStr     = scenarioMatcher.group(2);
-			if (actionStr     == null || actionStr.equals("")) {
-				throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"アクションが定義されていません。", scenarioStr});
-			}
-			try {
-				this.urlPatternStr = urlPatternStr;
-				this.urlPattern = Pattern.compile(urlPatternStr);
-			} catch (PatternSyntaxException e) {
-				throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"URL(正規表現)が不正です。", urlPatternStr});
-			}
-			this.moveActionList = this.createMoveActionList(actionStr);
-		} else {
-			try {
-				this.urlPatternStr = scenarioStr;
-				this.urlPattern = Pattern.compile(scenarioStr);
-				this.moveActionList = new ArrayList<>();
-			} catch (PatternSyntaxException e) {
-				throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"URL(正規表現)が不正です。", scenarioStr});
-			}
+	public RegExpMoveScenario(String[] argumentList) throws MoveActionFatalException {
+		super(argumentList);
+		this.urlPatternStr  = argumentList[0];
+		if (this.urlPatternStr == null || this.urlPatternStr.equals("")) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"URL(正規表現)が定義されていません。", this.urlPatternStr});
+		try {
+			this.urlPattern     = Pattern.compile(this.urlPatternStr);
+		} catch (PatternSyntaxException e) {
+			throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"URL(正規表現)が不正です。", this.urlPatternStr});
 		}
 	}
 	

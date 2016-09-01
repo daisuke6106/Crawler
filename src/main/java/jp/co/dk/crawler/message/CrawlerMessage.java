@@ -55,8 +55,14 @@ public class CrawlerMessage extends AbstractMessage implements Serializable{
 	/** シナリオ生成に失敗しました。詳細＝[{0}] シナリオ=[{1}] */
 	public static final CrawlerMessage FAILE_TO_SCENARIO_GENERATION = new CrawlerMessage("E101");
 	
+	/** シナリオ処理に失敗しました。詳細＝[{0}] シナリオ=[{1}] */
+	public static final CrawlerMessage FAILE_TO_SCENARIO_EXECUTE = new CrawlerMessage("E102");
+	
 	/** アクション生成に失敗しました。詳細＝[{0}] アクションクラス=[{1}] */
-	public static final CrawlerMessage FAILE_TO_MOVEACTION_GENERATION = new CrawlerMessage("E102");
+	public static final CrawlerMessage FAILE_TO_MOVEACTION_GENERATION = new CrawlerMessage("E103");
+
+	/** アクション処理に失敗しました。詳細＝[{0}] アクションクラス=[{1}] */
+	public static final CrawlerMessage FAILE_TO_MOVEACTION_EXECUTE = new CrawlerMessage("E104");
 	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);

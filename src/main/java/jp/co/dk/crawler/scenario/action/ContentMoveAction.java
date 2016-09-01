@@ -38,7 +38,7 @@ public class ContentMoveAction extends MoveAction {
 			File file = browzer.getPage().getDocument();
 			if (file instanceof HtmlDocument) {
 				HtmlDocument htmlDocument = (HtmlDocument)file;
-				List<Element> htmlElementList = htmlDocument.getNode(args[0]);
+				List<HtmlElement> htmlElementList = htmlDocument.getNode(args[0]);
 				for (Element element : htmlElementList) { 
 					HtmlElement htmlElement = (HtmlElement)element;
 					System.out.println(htmlElement.getContent());

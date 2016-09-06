@@ -52,9 +52,9 @@ public class DocRegExpMoveScenario extends MoveScenario {
 		this.elementSelector = argumentList[0];
 		this.urlPatternStr   = argumentList[1];
 		if (this.elementSelector == null || this.elementSelector.equals("")) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"要素指定文字列が定義されていません。", this.elementSelector});
-		if (this.urlPatternStr == null || this.urlPatternStr.equals("")) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"URL(正規表現)が定義されていません。", this.urlPatternStr});
+		if (this.urlPatternStr   == null || this.urlPatternStr.equals("")  ) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"URL(正規表現)が定義されていません。", this.urlPatternStr});
 		try {
-			this.urlPattern     = Pattern.compile(this.urlPatternStr);
+			this.urlPattern = Pattern.compile(this.urlPatternStr);
 		} catch (PatternSyntaxException e) {
 			throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"URL(正規表現)が不正です。", this.urlPatternStr});
 		}
@@ -102,16 +102,13 @@ public class DocRegExpMoveScenario extends MoveScenario {
 		this.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
-				return "ページ=[" +  page.getURL() + "]からパターン=[" + urlPatternStr + "]に合致するURLを取得します。";
+				return "ページ=[" +  page.getURL() + "]からドキュメント=[" + elementSelector + "]に存在するパターン=[" + urlPatternStr + "]に合致するURLを取得します。";
 			}});
 		
 		List<A> moveableElementList = new ArrayList<>();
-		
 		try {
 			jp.co.dk.document.File file = page.getDocument();
-			if (!(file instanceof jp.co.dk.document.html.HtmlDocument)) {
-				throw new MoveActionException(FAILE_TO_SCENARIO_EXECUTE, new String[]{"HTMLではありません。", DocRegExpMoveScenario.class.toString()});
-			}
+			if (!(file instanceof jp.co.dk.document.html.HtmlDocument)) throw new MoveActionException(FAILE_TO_SCENARIO_EXECUTE, new String[]{"HTMLではありません。", DocRegExpMoveScenario.class.toString()});
 			
 			jp.co.dk.document.html.HtmlDocument htmlDocument = (jp.co.dk.document.html.HtmlDocument)file;
 			List<HtmlElement> htmlElementList = htmlDocument.getNode(this.elementSelector);
@@ -121,13 +118,35 @@ public class DocRegExpMoveScenario extends MoveScenario {
 					@Override
 					public boolean judgment(Element element) {
 						if (element instanceof MovableElement) {
-							A anchor = (A)element;
-							return urlPattern.matcher(anchor.getUrl()).find();
+							MovableElement movableElement = (MovableElement)element;
+							return urlPattern.matcher(movableElement.getUrl()).find();
 						}
 						return false;
 					}
 				});
-				for (jp.co.dk.document.Element element : elementList) moveableElementList.add(((A)element));
+				this.logger.info(new Loggable(){
+					@Override
+					public String printLog(String lineSeparator) {
+						return "- ページ=[" +  page.getURL() + "]からドキュメント=[" + elementSelector + "]に存在するパターン=[" + urlPatternStr + "]に合致するURLを" + elementList.size() + "個取得しました。";
+					}});
+				for (jp.co.dk.document.Element element : elementList) {
+					MovableElement movableElement = (MovableElement)element;
+					if (addedQueueUrlList.contains(movableElement.getUrl())) {
+						this.logger.info(new Loggable(){
+							@Override
+							public String printLog(String lineSeparator) {
+								return "- キューに追加済みのため、スキップ URL[" +  movableElement.getUrl() + "]";
+							}});
+					} else {
+						this.logger.info(new Loggable(){
+							@Override
+							public String printLog(String lineSeparator) {
+								return "- キューに未追加のため、追加します URL[" +  movableElement.getUrl() + "]";
+							}});
+						addedQueueUrlList.add(movableElement.getUrl());
+						moveableElementList.add(((A)element));
+					}
+				}
 			}
 		} catch (PageAccessException | DocumentException e) {
 			throw new MoveActionException(FAILE_TO_SCENARIO_EXECUTE, new String[]{"ページデータの取得に失敗しました。", DocRegExpMoveScenario.class.toString()}, e);

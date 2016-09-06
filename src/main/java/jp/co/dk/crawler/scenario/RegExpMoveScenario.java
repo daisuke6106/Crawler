@@ -110,17 +110,17 @@ public class RegExpMoveScenario extends MoveScenario {
 		for (jp.co.dk.document.html.element.A anchor : anchorList) {
 			A castedAnchor = (A)anchor;
 			if (this.addedQueueUrlList.contains(castedAnchor.getUrl())) {
-//				this.logger.info(new Loggable(){
-//					@Override
-//					public String printLog(String lineSeparator) {
-//						return "- キューに追加済みのため、スキップ URL[" +  castedAnchor.getUrl() + "]";
-//					}});
+				this.logger.info(new Loggable(){
+					@Override
+					public String printLog(String lineSeparator) {
+						return "- キューに追加済みのため、スキップ URL[" +  castedAnchor.getUrl() + "]";
+					}});
 			} else {
-//				this.logger.info(new Loggable(){
-//					@Override
-//					public String printLog(String lineSeparator) {
-//						return "- キューに未追加のため、追加します URL[" +  castedAnchor.getUrl() + "]。";
-//					}});
+				this.logger.info(new Loggable(){
+					@Override
+					public String printLog(String lineSeparator) {
+						return "- キューに未追加のため、追加します URL[" +  castedAnchor.getUrl() + "]";
+					}});
 				addedQueueUrlList.add(castedAnchor.getUrl());
 				moveableElementList.add(castedAnchor);
 			}

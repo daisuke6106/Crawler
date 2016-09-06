@@ -68,7 +68,13 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 
 		// シナリオオブジェクトを生成
 		List<MoveScenario> scenarioList = new ArrayList<>();
-		for (String scenarioStr : scenarioStrList) scenarioList.add(this.createScenarios(scenarioStr));
+		try {
+			for (String scenarioStr : scenarioStrList) scenarioList.add(this.createScenarios(scenarioStr));
+		} catch (MoveActionFatalException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(1);
+		}
 		
 		// インターバル
 		String intervalStr = cmd.getOptionValue("i");

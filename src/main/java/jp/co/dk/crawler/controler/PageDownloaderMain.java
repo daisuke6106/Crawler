@@ -41,6 +41,7 @@ public class PageDownloaderMain extends AbtractCrawlerControler {
 		return "page_info";
 	}
 	
+	@SuppressWarnings("all")
 	@Override
 	protected void getOptions(Options options){
 		options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("読込対象のURL").withDescription("読込対象のURL").create("t_url"));

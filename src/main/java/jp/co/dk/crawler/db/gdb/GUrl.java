@@ -8,7 +8,6 @@ import java.util.Map;
 
 import jp.co.dk.browzer.Parameter;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
-import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.db.AbstractUrl;
 import jp.co.dk.crawler.exception.CrawlerReadException;
 import jp.co.dk.crawler.exception.CrawlerSaveException;

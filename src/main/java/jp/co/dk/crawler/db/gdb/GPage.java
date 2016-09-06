@@ -91,7 +91,7 @@ public class GPage extends AbstractPage {
 					
 					String[] splitedKey = keyWithIndex.split("\\$");
 					String   key        = splitedKey[0];
-					int      index      = Integer.parseInt(splitedKey[1]);
+					// int      index      = Integer.parseInt(splitedKey[1]);
 					
 					if (key.equals("null")) key = null;
 					

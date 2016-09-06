@@ -4,16 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.Page;
-import jp.co.dk.browzer.PageManager;
 import jp.co.dk.browzer.PageRedirectHandler;
 import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
-import jp.co.dk.browzer.exception.PageMovableLimitException;
-import jp.co.dk.browzer.exception.PageRedirectException;
-import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.db.AbstractCrawler;
 import jp.co.dk.crawler.db.AbstractPageManager;
 import jp.co.dk.crawler.db.AbstractPageRedirectHandler;
@@ -29,14 +24,7 @@ import jp.co.dk.crawler.exception.CrawlerSaveException;
 import jp.co.dk.crawler.message.CrawlerMessage;
 import jp.co.dk.datastoremanager.DataStoreManager;
 import jp.co.dk.datastoremanager.exception.DataStoreManagerException;
-import jp.co.dk.document.Element;
-import jp.co.dk.document.ElementSelector;
-import jp.co.dk.document.File;
-import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.document.exception.DocumentFatalException;
-import jp.co.dk.document.html.HtmlDocument;
-import jp.co.dk.document.html.HtmlElement;
-import jp.co.dk.document.html.constant.HtmlElementName;
 
 /**
  * Crawlerは、ネットワーク上に存在するHTML、XML、ファイルを巡回し、指定された出力先へ保存を行う処理を制御するクラス。<p/>

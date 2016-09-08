@@ -139,6 +139,18 @@ public abstract class MoveScenario {
 		}
 	}
 	*/
+
+	/**
+	 * シナリオを開始します。
+	 * @param crawler クローラインスタンス
+	 * @param interval インターバル
+	 * @throws MoveActionException 移動実施時に再起可能例外が発生した場合
+	 * @throws MoveActionFatalException 移動実施時に致命的例外が発生した場合
+	 */
+	public void start(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException {
+		this.addTask((CrawlerPage)crawler.getPage());
+		this.crawl(crawler, interval);
+	}
 	
 	/**
 	 * シナリオを開始します。
@@ -147,17 +159,35 @@ public abstract class MoveScenario {
 	 * @throws MoveActionException 移動実施時に再起可能例外が発生した場合
 	 * @throws MoveActionFatalException 移動実施時に致命的例外が発生した場合
 	 */
-	public abstract void start(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException ;
-	
-	/**
-	 * シナリオを開始します。
-	 * @param crawler クローラインスタンス
-	 * @param interval インターバル
-	 * @throws MoveActionException 移動実施時に再起可能例外が発生した場合
-	 * @throws MoveActionFatalException 移動実施時に致命的例外が発生した場合
-	 */
-	protected abstract void crawl(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException ;
-	
+	public void crawl(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException {
+		while(this.hasTask()) {
+			QueueTask queueTask = this.popTask();
+			crawler.change(queueTask.getMovableElement().getPage());
+			MoveResult moveResult = crawler.move(queueTask);
+			switch (moveResult) {
+				// 遷移に成功した場合
+				case SuccessfullTransition :
+					if (this.hasChildScenario()) {
+						this.addTask((CrawlerPage)crawler.getPage());
+						this.getChildScenario().addTask((CrawlerPage)crawler.getPage());
+						this.getChildScenario().crawl(crawler, interval);
+					}
+					crawler.back();
+					break;
+
+				// 遷移に失敗した場合
+				case FailureToTransition :
+					break;
+					
+				// 遷移が許可されなかった場合
+				case UnAuthorizedTransition :
+					break;
+			}
+			try {
+				Thread.sleep(interval * 1000);
+			} catch (InterruptedException e) {}
+		}
+	}
 	/**
 	 * <p>ページから指定のタスクを追加する。</p>
 	 * 引数に指定されたページから指定の遷移要素を取得し、本シナリオ内に保持する。

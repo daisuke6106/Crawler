@@ -52,43 +52,6 @@ public class RegExpMoveScenario extends MoveScenario {
 	}
 	
 	@Override
-	public void start(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException {
-		this.addTask((CrawlerPage)crawler.getPage());
-		this.crawl(crawler, interval);
-	}
-	
-	@Override
-	public void crawl(Crawler crawler, long interval) throws MoveActionException, MoveActionFatalException {
-		while(this.hasTask()) {
-			QueueTask queueTask = this.popTask();
-			crawler.change(queueTask.getMovableElement().getPage());
-			MoveResult moveResult = crawler.move(queueTask);
-			switch (moveResult) {
-				// 遷移に成功した場合
-				case SuccessfullTransition :
-					if (this.hasChildScenario()) {
-						this.addTask((CrawlerPage)crawler.getPage());
-						this.getChildScenario().addTask((CrawlerPage)crawler.getPage());
-						this.getChildScenario().crawl(crawler, interval);
-					}
-					crawler.back();
-					break;
-
-				// 遷移に失敗した場合
-				case FailureToTransition :
-					break;
-					
-				// 遷移が許可されなかった場合
-				case UnAuthorizedTransition :
-					break;
-			}
-			try {
-				Thread.sleep(interval * 1000);
-			} catch (InterruptedException e) {}
-		}
-	}
-	
-	@Override
 	protected List<A> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
 		this.logger.info(new Loggable(){
 			@Override

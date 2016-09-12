@@ -9,7 +9,6 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
-import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;

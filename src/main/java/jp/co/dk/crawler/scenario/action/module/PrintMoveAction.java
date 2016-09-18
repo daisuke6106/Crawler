@@ -1,9 +1,10 @@
-package jp.co.dk.crawler.scenario.action;
+package jp.co.dk.crawler.scenario.action.module;
 
 import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.crawler.scenario.action.MoveAction;
 
 /**
  * PrintMoveActionは、遷移時の情報を標準出力に出漁します。

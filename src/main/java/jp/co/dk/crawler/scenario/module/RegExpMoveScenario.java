@@ -1,4 +1,4 @@
-package jp.co.dk.crawler.scenario;
+package jp.co.dk.crawler.scenario.module;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.CrawlerPage;
+import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;

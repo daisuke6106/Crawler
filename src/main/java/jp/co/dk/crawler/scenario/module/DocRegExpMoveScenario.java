@@ -1,4 +1,4 @@
-package jp.co.dk.crawler.scenario;
+package jp.co.dk.crawler.scenario.module;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.CrawlerPage;
+import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.document.Element;
 import jp.co.dk.document.ElementSelector;
 import jp.co.dk.document.exception.DocumentException;

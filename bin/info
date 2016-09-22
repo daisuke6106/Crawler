@@ -1,0 +1,6 @@
+#!/bin/sh
+. ./env
+java -classpath \
+"${MAIN_JAR}:${LIB_JAR}:${MESSAGE_DIR}:${PROPERTY_DIR}" \
+jp.co.dk.crawler.controler.PageInfoMain $*
+

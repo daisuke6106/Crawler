@@ -10,7 +10,6 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.document.Element;

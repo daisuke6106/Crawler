@@ -8,6 +8,7 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.scenario.action.MoveAction;
+import jp.co.dk.crawler.scenario.action.MoveActionName;
 import jp.co.dk.document.Element;
 import jp.co.dk.document.File;
 import jp.co.dk.document.exception.DocumentException;
@@ -20,6 +21,7 @@ import jp.co.dk.document.html.HtmlElement;
  * @version 1.0
  * @author D.Kanno
  */
+@MoveActionName(name="content")
 public class ContentMoveAction extends MoveAction {
 
 	/**

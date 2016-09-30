@@ -5,6 +5,7 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.scenario.action.MoveAction;
+import jp.co.dk.crawler.scenario.action.MoveActionName;
 
 /**
  * PrintMoveActionは、遷移時の情報を標準出力に出漁します。
@@ -12,6 +13,7 @@ import jp.co.dk.crawler.scenario.action.MoveAction;
  * @version 1.0
  * @author D.Kanno
  */
+@MoveActionName(name="print")
 public class PrintMoveAction extends MoveAction {
 
 	/**

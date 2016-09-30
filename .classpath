@@ -52,5 +52,9 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/MorphologicalAnalysis"/>
 	<classpathentry kind="lib" path="lib/browzer_0.1.6a.jar"/>
 	<classpathentry kind="lib" path="lib/document_0.2.1a.jar"/>
+	<classpathentry kind="lib" path="lib/annotations-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/guava-15.0.jar"/>
+	<classpathentry kind="lib" path="lib/javassist-3.19.0-GA.jar"/>
+	<classpathentry kind="lib" path="lib/reflections-0.9.10.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

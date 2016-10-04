@@ -12,6 +12,7 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageSaveException;
 import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.crawler.scenario.ManualArgument;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.crawler.scenario.action.MoveActionName;
 import jp.co.dk.document.exception.DocumentException;
@@ -116,5 +117,23 @@ public class FileSaveMoveAction extends MoveAction {
 			public String printLog(String lineSeparator) {
 				return "保存が完了しました。PATH=[" + dir.toString() + "], FILENAME=[" +  printFileName + "]";
 			}});
+	}
+
+	@Override
+	public String manualTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String manualText(String lineseparater) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ManualArgument[] getManualArgument() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

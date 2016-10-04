@@ -4,6 +4,7 @@ import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
+import jp.co.dk.crawler.scenario.ManualArgument;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.crawler.scenario.action.MoveActionName;
 
@@ -40,5 +41,23 @@ public class PrintMoveAction extends MoveAction {
 	@Override
 	public void errorAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
 		System.err.println("[   ERROR   ] NOW_URL=[" + browzer.getPage().getURL() + "]");
+	}
+
+	@Override
+	public String manualTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String manualText(String lineseparater) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ManualArgument[] getManualArgument() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import org.reflections.Reflections;
 
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 
@@ -155,6 +158,15 @@ public class ClassGenerater {
 		return classInstanceList;
 	}
 	
+	@SuppressWarnings("all")
+	public static Set<Class<?>> getClassesByAnnotation(String targetPackage, Class searchAnnotation) {
+		Reflections reflections = new Reflections(targetPackage);
+		Set<Class<?>> classesWithEntity = reflections.getTypesAnnotatedWith(searchAnnotation);
+		for (Class<?> classinstance : classesWithEntity) {
+			System.out.println(classinstance.getName());
+		}
+		return classesWithEntity;
+	}
 	/**
 	 * <p>MoveScenarioクラス生成</p>
 	 * 引数に指定されたクラス名と、そのクラスのコンストラクタに引き渡す引数を基にMoveScenarioクラスを生成し、返却します。

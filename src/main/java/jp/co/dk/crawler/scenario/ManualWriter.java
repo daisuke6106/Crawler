@@ -31,5 +31,17 @@ public interface ManualWriter {
 		}
 	}
 	
+	/**
+	 * 引数の一覧を返却する。
+	 * 
+	 * @return 引数を説明する引数マニュアル一覧
+	 */
 	public ManualArgument[] getManualArgument();
+	
+	
+	public default String toString(String lineseparater) {
+		StringBuilder manual = new StringBuilder();
+		manual.append(this.manualTitle()).append(lineseparater);
+		return manual.toString();
+	}
 }

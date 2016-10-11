@@ -30,6 +30,7 @@ public abstract class AbtractCrawlerControler {
 	/** クローラオブジェクト */
 	protected Crawler crawler;
 	
+	
 	/**
 	 * <p>コントローラ処理実行</p>
 	 * コマンドライン引数の解析、及びコントローラのメイン処理を実施する。
@@ -42,7 +43,14 @@ public abstract class AbtractCrawlerControler {
 			this.cmd = new PosixParser().parse(options, args);
 		} catch (ParseException e) {
 			HelpFormatter help = new HelpFormatter();
-			help.printHelp("crawler", options, true);
+			
+			StringBuilder description = new StringBuilder();
+			description.append(System.lineSeparator());
+			description.append(this.getDescription());
+			description.append(System.lineSeparator());
+			description.append(System.lineSeparator());
+			
+			help.printHelp(this.getCommandName(), description.toString(), options, "", true);
 			System.exit(1);
 		}
 		this.execute();
@@ -58,6 +66,12 @@ public abstract class AbtractCrawlerControler {
 	 * @return コマンド名称
 	 */
 	protected abstract String getCommandName();
+	
+	/**
+	 * コマンド説明文
+	 * @return コマンド説明文
+	 */
+	protected abstract String getDescription();
 	
 	/**
 	 * ---OptionBuilder---

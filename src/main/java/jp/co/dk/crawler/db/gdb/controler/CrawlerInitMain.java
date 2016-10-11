@@ -37,7 +37,15 @@ public class CrawlerInitMain extends AbtractCrawlerControler {
 	
 	@Override
 	protected String getCommandName() {
-		return "crawler_save";
+		return "gcrawler_init";
+	}
+
+	@Override
+	protected String getDescription() {
+		StringBuilder description = new StringBuilder();
+		description.append(this.getCommandName());
+		description.append("は、Neo4Jに保存する為のIndexを生成します。").append(System.lineSeparator());
+		return description.toString();
 	}
 	
 	@Override

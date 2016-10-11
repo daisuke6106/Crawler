@@ -37,11 +37,6 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	protected long interval = 1;
 	
 	@Override
-	protected String getCommandName() {
-		return "crawler";
-	}
-
-	@Override
 	@SuppressWarnings("all")
 	protected void getOptions(Options options) {
 		options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("URL").withDescription("URL").withLongOpt("url").create("u"));

@@ -40,6 +40,14 @@ public class PageDownloaderMain extends AbtractCrawlerControler {
 	protected String getCommandName() {
 		return "page_info";
 	}
+
+	@Override
+	protected String getDescription() {
+		StringBuilder description = new StringBuilder();
+		description.append(this.getCommandName());
+		description.append("は、読込対象に指定されたURLのページを指定のパスに保存します。").append(System.lineSeparator());
+		return description.toString();
+	}
 	
 	@SuppressWarnings("all")
 	@Override
@@ -54,5 +62,6 @@ public class PageDownloaderMain extends AbtractCrawlerControler {
 		new PageDownloaderMain().execute(args);
 		System.exit(0);
 	}
+
 	
 }

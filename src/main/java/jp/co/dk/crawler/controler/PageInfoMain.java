@@ -83,6 +83,14 @@ public class PageInfoMain extends AbtractCrawlerControler {
 	protected String getCommandName() {
 		return "page_info";
 	}
+
+	@Override
+	protected String getDescription() {
+		StringBuilder description = new StringBuilder();
+		description.append(this.getCommandName());
+		description.append("は、読込対象に指定されたURLのページの各種情報を標準出力に出力します。").append(System.lineSeparator());
+		return description.toString();
+	}
 	
 	@SuppressWarnings("all")
 	@Override

@@ -111,7 +111,15 @@ public class CrawlerReadMain extends AbtractCrawlerControler {
 
 	@Override
 	protected String getCommandName() {
-		return "crawler_read";
+		return "gcrawler_read";
+	}
+
+	@Override
+	protected String getDescription() {
+		StringBuilder description = new StringBuilder();
+		description.append(this.getCommandName());
+		description.append("は、Neo4Jに保存されている指定のURLのページ情報を読み込み、標準出力に出力します。").append(System.lineSeparator());
+		return description.toString();
 	}
 	
 }

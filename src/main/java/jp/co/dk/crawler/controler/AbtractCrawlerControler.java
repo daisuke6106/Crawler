@@ -48,9 +48,7 @@ public abstract class AbtractCrawlerControler {
 			description.append(System.lineSeparator());
 			description.append(this.getDescription());
 			description.append(System.lineSeparator());
-			description.append(System.lineSeparator());
-			
-			help.printHelp(this.getCommandName(), description.toString(), options, "", true);
+			help.printHelp(this.getCommandName(), "", options,  description.toString(), true);
 			System.exit(1);
 		}
 		this.execute();

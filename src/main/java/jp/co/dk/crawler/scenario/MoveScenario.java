@@ -21,7 +21,7 @@ import jp.co.dk.logger.LoggerFactory;
  * @version 1.0
  * @author D.Kanno
  */
-public abstract class MoveScenario {
+public abstract class MoveScenario implements ManualWriter {
 	
 	/** シナリオ引数 */
 	protected String[] argumentList;

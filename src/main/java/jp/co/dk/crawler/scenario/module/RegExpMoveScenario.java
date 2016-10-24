@@ -11,6 +11,7 @@ import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.crawler.scenario.MoveScenario;
+import jp.co.dk.crawler.scenario.MoveScenarioName;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
@@ -21,6 +22,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @version 1.0
  * @author D.Kanno
  */
+@MoveScenarioName(name="reg")
 public class RegExpMoveScenario extends MoveScenario {
 	
 	/** 遷移先定義（正規表現）文字列 */

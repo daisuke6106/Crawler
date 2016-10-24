@@ -162,9 +162,6 @@ public class ClassGenerater {
 	public static Set<Class<?>> getClassesByAnnotation(String targetPackage, Class searchAnnotation) {
 		Reflections reflections = new Reflections(targetPackage);
 		Set<Class<?>> classesWithEntity = reflections.getTypesAnnotatedWith(searchAnnotation);
-		for (Class<?> classinstance : classesWithEntity) {
-			System.out.println(classinstance.getName());
-		}
 		return classesWithEntity;
 	}
 	/**

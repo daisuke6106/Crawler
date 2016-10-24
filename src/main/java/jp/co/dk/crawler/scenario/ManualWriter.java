@@ -38,7 +38,12 @@ public interface ManualWriter {
 	 */
 	public ManualArgument[] getManualArgument();
 	
-	
+	/**
+	 * <p>マニュアルを文字列として返却する。</p>
+	 * 
+	 * @param lineseparater 改行文字列
+	 * @return マニュアルを文字列
+	 */
 	public default String toString(String lineseparater) {
 		StringBuilder manual = new StringBuilder();
 		manual.append(this.manualTitle()).append(lineseparater);

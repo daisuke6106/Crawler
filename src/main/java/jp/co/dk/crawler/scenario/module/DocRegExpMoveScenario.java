@@ -11,7 +11,9 @@ import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.CrawlerPage;
+import jp.co.dk.crawler.scenario.ManualArgument;
 import jp.co.dk.crawler.scenario.MoveScenario;
+import jp.co.dk.crawler.scenario.MoveScenarioName;
 import jp.co.dk.document.Element;
 import jp.co.dk.document.ElementSelector;
 import jp.co.dk.document.exception.DocumentException;
@@ -25,6 +27,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @version 1.0
  * @author D.Kanno
  */
+@MoveScenarioName(name="docreg")
 public class DocRegExpMoveScenario extends MoveScenario {
 	
 	/** ドキュメント指定文字列 */
@@ -116,5 +119,23 @@ public class DocRegExpMoveScenario extends MoveScenario {
 			throw new MoveActionException(FAILE_TO_SCENARIO_EXECUTE, new String[]{"ページデータの取得に失敗しました。", DocRegExpMoveScenario.class.toString()}, e);
 		}
 		return moveableElementList;
+	}
+
+	@Override
+	public String manualTitle() {
+		return "";
+	}
+
+
+	@Override
+	public String manualText(String lineseparater) {
+		return "HTMLから指定の要素を選択し、その中から正規表現に合致したアンカー一覧を取得する。";
+	}
+
+
+	@Override
+	public ManualArgument[] getManualArgument() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

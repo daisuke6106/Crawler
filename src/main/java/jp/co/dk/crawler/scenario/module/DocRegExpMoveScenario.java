@@ -27,7 +27,12 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @version 1.0
  * @author D.Kanno
  */
-@MoveScenarioName(name="docreg")
+@MoveScenarioName(
+	name           = "docreg",  
+	manualTitle    = "指定要素内アンカー取得",
+	manualText     = "指定要素内から指定のURLパターンを持つアンカーを取得し、遷移先とします。URLパターンには正規表現が指定出来ます。", 
+	manualArgument = {"要素を指定する文字列（タグ、ID、クラス）", "取得対象アンカーのURLパターン（正規表現記述）"}
+)
 public class DocRegExpMoveScenario extends MoveScenario {
 	
 	/** ドキュメント指定文字列 */

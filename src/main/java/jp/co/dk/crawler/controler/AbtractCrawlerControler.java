@@ -38,20 +38,43 @@ public abstract class AbtractCrawlerControler {
 	 * @param args コマンドライン引数
 	 */
 	public void execute(String[] args) {
-		this.getOptions(this.options);
 		try {
-			this.cmd = new PosixParser().parse(options, args);
+			this.getOptions(this.options);
+			this.cmd = new PosixParser().parse(this.options, args);
 		} catch (ParseException e) {
-			HelpFormatter help = new HelpFormatter();
-			
-			StringBuilder description = new StringBuilder();
-			description.append(System.lineSeparator());
-			description.append(this.getDescription());
-			description.append(System.lineSeparator());
-			help.printHelp(this.getCommandName(), "", options,  description.toString(), true);
+			this.printUsing();
 			System.exit(1);
 		}
 		this.execute();
+	}
+	
+	protected void printUsing() {
+		HelpFormatter help = new HelpFormatter();
+		StringBuilder description = new StringBuilder();
+		description.append(System.lineSeparator());
+		description.append(this.getDescription());
+		description.append(System.lineSeparator());
+		help.printHelp(this.getCommandName(), "", options,  description.toString(), true);
+	}
+	
+	protected AbtractCrawlerControler print(Object printStr) {
+		System.out.print( printStr );
+		return this;
+	}
+	
+	protected AbtractCrawlerControler printError(Object printStr) {
+		System.err.print( printStr );
+		return this;
+	}
+	
+	protected AbtractCrawlerControler println(Object printStr) {
+		System.out.println( printStr );
+		return this;
+	}
+	
+	protected AbtractCrawlerControler printErrorLn(Object printStr) {
+		System.err.println( printStr );
+		return this;
 	}
 	
 	/** 

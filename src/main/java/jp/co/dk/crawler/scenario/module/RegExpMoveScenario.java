@@ -10,6 +10,7 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.CrawlerPage;
+import jp.co.dk.crawler.scenario.ManualArgument;
 import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.crawler.scenario.MoveScenarioName;
 import jp.co.dk.document.exception.DocumentException;
@@ -22,7 +23,12 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @version 1.0
  * @author D.Kanno
  */
-@MoveScenarioName(name="reg")
+@MoveScenarioName(
+	name           = "reg",  
+	manualTitle    = "アンカー取得",
+	manualText     = "指定のURLパターンを持つアンカーを取得し、遷移先とします。URLパターンには正規表現が指定出来ます。", 
+	manualArgument = {"取得対象アンカーのURLパターン（正規表現記述）"}
+)
 public class RegExpMoveScenario extends MoveScenario {
 	
 	/** 遷移先定義（正規表現）文字列 */
@@ -92,5 +98,23 @@ public class RegExpMoveScenario extends MoveScenario {
 			
 		}
 		return moveableElementList;
+	}
+	
+	@Override
+	public String manualTitle() {
+		return "";
+	}
+
+
+	@Override
+	public String manualText(String lineseparater) {
+		return "";
+	}
+
+
+	@Override
+	public ManualArgument[] getManualArgument() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

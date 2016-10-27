@@ -23,6 +23,8 @@ import jp.co.dk.logger.LoggerFactory;
  */
 public abstract class MoveScenario implements ManualWriter {
 	
+	public static final String MOVE_SCENARIO_PACKAGE = "jp.co.dk.crawler.scenario.module";
+	
 	/** シナリオ引数 */
 	protected String[] argumentList;
 	

@@ -25,7 +25,16 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
  * @version 1.0
  * @author D.Kanno
  */
-@MoveActionName(name="file_save")
+@MoveActionName(
+	name           = "file_save",  
+	manualTitle    = "ページデータ保存",
+	manualText     = "ページデータを指定ディレクトリに指定ファイル名で保存します。",
+	manualArgument = {
+		"ディレクトリへのパス", 
+		"ファイル名（%title=HTMLのタイトル、%date{yyyyMMddHHmmss}=日付、{X}内には日付フォーマット、%index{X}=連番、{X}内には桁数）"
+	},
+	manualExample  = {"file_save('/tmp/,'%date{yyyyMMdd_HHmmss}_%index{10}')と指定した場合、/tmp/ディレクトリに「20161201_235959_0000000010」というファイル名で保存します。"}
+)
 public class FileSaveMoveAction extends MoveAction {
 	
 	/** 保存先ディレクトリ */

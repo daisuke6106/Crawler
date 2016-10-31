@@ -26,8 +26,13 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 @MoveScenarioName(
 	name           = "reg",  
 	manualTitle    = "アンカー取得",
-	manualText     = "指定のURLパターンを持つアンカーを取得し、遷移先とします。URLパターンには正規表現が指定出来ます。", 
-	manualArgument = {"取得対象アンカーのURLパターン（正規表現記述）"}
+	manualText     = "指定のURLパターンを持つアンカーを取得し、遷移先とします。URLパターンには正規表現が指定出来ます。",
+	manualArgument = {
+		"取得対象アンカーのURLパターン（正規表現記述）"
+	},
+	manualExample  = {
+		"reg('http://example.com/.+.html')と指定した場合、ページの中に存在するアンカーの中からhrefに「http://example.com/.+.html」形式のURLを保持するアンカーを取得する。"
+	}
 )
 public class RegExpMoveScenario extends MoveScenario {
 	

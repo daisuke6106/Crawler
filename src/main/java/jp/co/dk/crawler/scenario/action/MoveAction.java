@@ -16,6 +16,8 @@ import jp.co.dk.logger.LoggerFactory;
  */
 public abstract class MoveAction implements ManualWriter {
 	
+	public static final String MOVE_ACTION_PACKAGE = "jp.co.dk.crawler.scenario.action.module";
+	
 	/** ロガーインスタンス */
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	

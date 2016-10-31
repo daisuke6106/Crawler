@@ -23,7 +23,13 @@ import jp.co.dk.document.html.HtmlElement;
  * @version 1.0
  * @author D.Kanno
  */
-@MoveActionName(name="content")
+@MoveActionName(
+	name           = "content",  
+	manualTitle    = "HTML内容出力",
+	manualText     = "HTML内の内容を標準出力に出力します。ページがHTML以外の場合、標準出力に出力しない。",
+	manualArgument = {},
+	manualExample  = {"content()"}
+)
 public class ContentMoveAction extends MoveAction {
 
 	/**

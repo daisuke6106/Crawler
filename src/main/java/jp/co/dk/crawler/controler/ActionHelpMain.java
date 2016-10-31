@@ -2,16 +2,16 @@ package jp.co.dk.crawler.controler;
 
 import java.util.Set;
 
-import jp.co.dk.crawler.scenario.MoveScenario;
-import jp.co.dk.crawler.scenario.MoveScenarioName;
+import jp.co.dk.crawler.scenario.action.MoveAction;
+import jp.co.dk.crawler.scenario.action.MoveActionName;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
-public class ScenarioHelpMain extends AbtractCrawlerControler {
+public class ActionHelpMain extends AbtractCrawlerControler {
 	
 	public static void main(String[] args) {
-		new ScenarioHelpMain().execute(args);
+		new ActionHelpMain().execute(args);
 	}
 
 	@Override
@@ -38,25 +38,25 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 	@Override
 	public void execute(){
 		if (this.cmd.hasOption("all")) {
-			Set<Class<?>> scenarioList = ClassGenerater.getClassesByAnnotation(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class);
-			for (Class<?> scenarioClass : scenarioList) {
-				MoveScenarioName moveScenarioName = scenarioClass.getAnnotationsByType(MoveScenarioName.class)[0];
-				this.print(moveScenarioName.name()).print(" : ").println(moveScenarioName.manualTitle());
+			Set<Class<?>> actionList = ClassGenerater.getClassesByAnnotation(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class);
+			for (Class<?> actionClass : actionList) {
+				MoveActionName MoveActionName = actionClass.getAnnotationsByType(MoveActionName.class)[0];
+				this.print(MoveActionName.name()).print(" : ").println(MoveActionName.manualTitle());
 			}
 			System.exit(0);
-		} else if (this.cmd.hasOption("scenario")) {
-			String[] scenarioNames = this.cmd.getArgs();
-			Set<Class<?>> scenarioList = ClassGenerater.getClassesByAnnotation(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class);
+		} else if (this.cmd.hasOption("action")) {
+			String[] actionNames = this.cmd.getArgs();
+			Set<Class<?>> actionList = ClassGenerater.getClassesByAnnotation(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class);
 			
-			for (String scenarioName : scenarioNames) {
-				for (Class<?> scenarioClass : scenarioList) {
-					MoveScenarioName moveScenarioName = scenarioClass.getAnnotationsByType(MoveScenarioName.class)[0];
+			for (String actionName : actionNames) {
+				for (Class<?> actionClass : actionList) {
+					MoveActionName MoveActionName = actionClass.getAnnotationsByType(MoveActionName.class)[0];
 					
-					if (scenarioName.equals(moveScenarioName.name())) {
-						this.print("       [name] : ").println(moveScenarioName.name());
-						this.print("      [title] : ").println(moveScenarioName.manualTitle());
-						this.print("[description] : ").println(moveScenarioName.manualText());
-						String[] manualArguments = moveScenarioName.manualArgument();
+					if (actionName.equals(MoveActionName.name())) {
+						this.print("       [name] : ").println(MoveActionName.name());
+						this.print("      [title] : ").println(MoveActionName.manualTitle());
+						this.print("[description] : ").println(MoveActionName.manualText());
+						String[] manualArguments = MoveActionName.manualArgument();
 						if (manualArguments == null || manualArguments.length == 0) {
 							this.print("   [argument] : nothing.");
 						} else {
@@ -69,7 +69,7 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 								}
 							}
 						}
-						String[] manualExample = moveScenarioName.manualExample();
+						String[] manualExample = MoveActionName.manualExample();
 						if (manualExample == null || manualExample.length == 0) {
 							this.print("    [example] : nothing.");
 						} else {

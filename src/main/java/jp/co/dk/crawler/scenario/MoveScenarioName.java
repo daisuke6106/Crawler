@@ -11,5 +11,6 @@ public @interface MoveScenarioName {
 	String name();
 	String manualTitle();
 	String manualText();
+	String[] manualExample();
 	String[] manualArgument();
 }

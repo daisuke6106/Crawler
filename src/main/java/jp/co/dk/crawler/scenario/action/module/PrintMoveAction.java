@@ -9,12 +9,18 @@ import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.crawler.scenario.action.MoveActionName;
 
 /**
- * PrintMoveActionは、遷移時の情報を標準出力に出漁します。
+ * PrintMoveActionは、遷移時の情報を標準出力に出力します。
  * 
  * @version 1.0
  * @author D.Kanno
  */
-@MoveActionName(name="print")
+@MoveActionName(
+	name           = "print",  
+	manualTitle    = "状態出力",
+	manualText     = "クローラの現在の状態を標準出力に出力します。",
+	manualArgument = {},
+	manualExample  = {"print()"}
+)
 public class PrintMoveAction extends MoveAction {
 
 	/**

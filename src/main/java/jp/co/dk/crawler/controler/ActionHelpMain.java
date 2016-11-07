@@ -16,23 +16,23 @@ public class ActionHelpMain extends AbtractCrawlerControler {
 
 	@Override
 	protected String getCommandName() {
-		return "scenario_help";
+		return "action_help";
 	}
 
 	@Override
 	protected String getDescription() {
 		StringBuilder description = new StringBuilder();
 		description.append(this.getCommandName());
-		description.append("は、開始URLのページからシナリオに指定された通りにページを巡回し、シナリオに紐付くアクションを行うコマンドです。").append(System.lineSeparator());
-		description.append("オプションのURL(--url)に開始地点となるページのURL、オプションのシナリオ(--scenario)に巡回する際のシナリオとページを訪れた際に行うアクションを指定します。").append(System.lineSeparator());
-		description.append("シナリオは「シナリオ@アクション」の形式で記述し、複数のシナリオはアロー(->)でつなげます。").append(System.lineSeparator());
+		description.append("は、ページを訪れた際に行うアクションのマニュアルを参照するコマンドです。").append(System.lineSeparator());
+		description.append("オプションのすべて(--all)を指定した場合、使用できるアクションを一覧で表示します。").append(System.lineSeparator());
+		description.append("オプションの情報（--info）を指定した場合、指定のアクションの詳細ばマニュアルを表示します。").append(System.lineSeparator());
 		return description.toString();
 	}
 
 	@Override
 	protected void getOptions(Options options) {
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("すべて").withLongOpt("all").create("a"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("scenario").withDescription("シナリオ名称").withLongOpt("scenario").create("s"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("info").withDescription("シナリオ名称").withLongOpt("info").create("i"));
 	}
 
 	@Override

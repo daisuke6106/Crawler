@@ -24,27 +24,25 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 		StringBuilder description = new StringBuilder();
 		description.append(this.getCommandName());
 		description.append("は、ページの巡回方法を指定するシナリオのマニュアルを参照するコマンドです。").append(System.lineSeparator());
-		description.append("オプションのすべて(--all)を指定した場合、使用できるアクションを一覧で表示します。").append(System.lineSeparator());
-		description.append("オプションの情報（--info）を指定した場合、指定のアクションの詳細ばマニュアルを表示します。").append(System.lineSeparator());
 		return description.toString();
 	}
 
 	@Override
 	protected void getOptions(Options options) {
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("すべて").withLongOpt("all").create("a"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("info").withDescription("シナリオ名称").withLongOpt("info").create("i"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("使用できるシナリオを一覧で表示します。").withLongOpt("list").create("l"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("info").withDescription("指定のシナリオの詳細を表示します。").withLongOpt("info").create("i"));
 	}
 
 	@Override
 	public void execute(){
-		if (this.cmd.hasOption("all")) {
+		if (this.cmd.hasOption("list")) {
 			Set<Class<?>> scenarioList = ClassGenerater.getClassesByAnnotation(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class);
 			for (Class<?> scenarioClass : scenarioList) {
 				MoveScenarioName moveScenarioName = scenarioClass.getAnnotationsByType(MoveScenarioName.class)[0];
 				this.print(moveScenarioName.name()).print(" : ").println(moveScenarioName.manualTitle());
 			}
 			System.exit(0);
-		} else if (this.cmd.hasOption("scenario")) {
+		} else if (this.cmd.hasOption("info")) {
 			String[] scenarioNames = this.cmd.getArgs();
 			Set<Class<?>> scenarioList = ClassGenerater.getClassesByAnnotation(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class);
 			
@@ -58,7 +56,7 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 						this.print("[description] : ").println(moveScenarioName.manualText());
 						String[] manualArguments = moveScenarioName.manualArgument();
 						if (manualArguments == null || manualArguments.length == 0) {
-							this.print("   [argument] : nothing.");
+							this.println("   [argument] : nothing.");
 						} else {
 							this.print("   [argument] : ");
 							for (int i=0; i<manualArguments.length; i++) {
@@ -71,7 +69,7 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 						}
 						String[] manualExample = moveScenarioName.manualExample();
 						if (manualExample == null || manualExample.length == 0) {
-							this.print("    [example] : nothing.");
+							this.println("    [example] : nothing.");
 						} else {
 							this.print("    [example] : ");
 							for (int i=0; i<manualExample.length; i++) {

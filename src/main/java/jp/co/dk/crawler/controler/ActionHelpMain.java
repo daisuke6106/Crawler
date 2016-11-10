@@ -24,27 +24,25 @@ public class ActionHelpMain extends AbtractCrawlerControler {
 		StringBuilder description = new StringBuilder();
 		description.append(this.getCommandName());
 		description.append("は、ページを訪れた際に行うアクションのマニュアルを参照するコマンドです。").append(System.lineSeparator());
-		description.append("オプションのすべて(--all)を指定した場合、使用できるアクションを一覧で表示します。").append(System.lineSeparator());
-		description.append("オプションの情報（--info）を指定した場合、指定のアクションの詳細ばマニュアルを表示します。").append(System.lineSeparator());
 		return description.toString();
 	}
 
 	@Override
 	protected void getOptions(Options options) {
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("すべて").withLongOpt("all").create("a"));
-		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("info").withDescription("シナリオ名称").withLongOpt("info").create("i"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("使用できるアクションを一覧で表示します。").withLongOpt("list").create("l"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withArgName("info").withDescription("指定のアクションの詳細を表示します。").withLongOpt("info").create("i"));
 	}
 
 	@Override
 	public void execute(){
-		if (this.cmd.hasOption("all")) {
+		if (this.cmd.hasOption("list")) {
 			Set<Class<?>> actionList = ClassGenerater.getClassesByAnnotation(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class);
 			for (Class<?> actionClass : actionList) {
 				MoveActionName MoveActionName = actionClass.getAnnotationsByType(MoveActionName.class)[0];
 				this.print(MoveActionName.name()).print(" : ").println(MoveActionName.manualTitle());
 			}
 			System.exit(0);
-		} else if (this.cmd.hasOption("action")) {
+		} else if (this.cmd.hasOption("info")) {
 			String[] actionNames = this.cmd.getArgs();
 			Set<Class<?>> actionList = ClassGenerater.getClassesByAnnotation(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class);
 			
@@ -58,7 +56,7 @@ public class ActionHelpMain extends AbtractCrawlerControler {
 						this.print("[description] : ").println(MoveActionName.manualText());
 						String[] manualArguments = MoveActionName.manualArgument();
 						if (manualArguments == null || manualArguments.length == 0) {
-							this.print("   [argument] : nothing.");
+							this.println("   [argument] : nothing.");
 						} else {
 							this.print("   [argument] : ");
 							for (int i=0; i<manualArguments.length; i++) {
@@ -71,7 +69,7 @@ public class ActionHelpMain extends AbtractCrawlerControler {
 						}
 						String[] manualExample = MoveActionName.manualExample();
 						if (manualExample == null || manualExample.length == 0) {
-							this.print("    [example] : nothing.");
+							this.println("    [example] : nothing.");
 						} else {
 							this.print("    [example] : ");
 							for (int i=0; i<manualExample.length; i++) {

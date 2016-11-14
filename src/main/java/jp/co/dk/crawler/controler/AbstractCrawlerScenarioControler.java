@@ -1,9 +1,11 @@
 package jp.co.dk.crawler.controler;
 
-import static jp.co.dk.crawler.message.CrawlerMessage.FAILE_TO_SCENARIO_GENERATION;
+import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +16,9 @@ import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.Crawler;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.scenario.MoveScenario;
+import jp.co.dk.crawler.scenario.MoveScenarioName;
 import jp.co.dk.crawler.scenario.action.MoveAction;
+import jp.co.dk.crawler.scenario.action.MoveActionName;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -123,25 +127,37 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		Matcher scenarioMatcher = this.scenarioPattern.matcher(scenarioStr);
 		if (scenarioMatcher.find()) {
 			String scenario = scenarioMatcher.group(1);
-			List<Object> scenarioInstanceList = new ClassGenerater(scenario).createObjectList();
+			List<Object> scenarioInstanceList = new AnnotationClassGenerater(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class, scenario){
+				@Override
+				protected <A extends Annotation> String getName(A annotationClass) {
+					return ((MoveScenarioName)annotationClass).name();
+				}}.createObjectList();
 			if (scenarioInstanceList.size() != 1) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"シナリオが複数設定されています。", scenarioStr});
 			Object scenarioClass = scenarioInstanceList.get(0);
 			if (!(scenarioClass instanceof MoveScenario)) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"シナリオクラスではありません。", scenarioStr});
 			MoveScenario moveScenario = (MoveScenario)scenarioClass;
 			
 			String actionStr = scenarioMatcher.group(2);
-			if (actionStr == null || actionStr.equals("")) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"アクションが定義されていません。", scenarioStr});
-			List<Object> actionInstanceList = new ClassGenerater(actionStr).createObjectList();
+			if (actionStr == null || actionStr.equals("")) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"アクションが定義されていません。", scenarioStr});
+			List<Object> actionInstanceList = new AnnotationClassGenerater(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class, actionStr){
+				@Override
+				protected <A extends Annotation> String getName(A annotationClass) {
+					return ((MoveActionName)annotationClass).name();
+				}}.createObjectList();
 			List<MoveAction> moveActionList = new ArrayList<>();
 			for (Object actionClass : actionInstanceList) {
-				if (!(actionClass instanceof MoveAction)) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"アクションクラスではありません。", actionClass.getClass().toString()});
+				if (!(actionClass instanceof MoveAction)) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"アクションクラスではありません。", actionClass.getClass().toString()});
 				moveActionList.add((MoveAction)actionClass);
 			}
 			moveScenario.setMoveActionList(moveActionList);
 			return moveScenario;
 			
 		} else {
-			List<Object> instanceList = new ClassGenerater(scenarioStr).createObjectList();
+			List<Object> instanceList = new AnnotationClassGenerater(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class, scenarioStr){
+				@Override
+				protected <A extends Annotation> String getName(A annotationClass) {
+					return ((MoveScenarioName)annotationClass).name();
+				}}.createObjectList();
 			if (instanceList.size() != 1) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"シナリオが複数設定されています。", scenarioStr});
 			Object scenarioClass = instanceList.get(0);
 			if (!(scenarioClass instanceof MoveScenario)) throw new MoveActionFatalException(FAILE_TO_SCENARIO_GENERATION, new String[]{"シナリオクラスではありません。", scenarioStr});
@@ -154,7 +170,7 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	 * 
 	 * @param url 接続先URL
 	 * @throws CrawlerInitException クローラの初期化処理に失敗した場合
-	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合
+	 * @throws PageIllegalArgumentException URLが指定されていない、不正なURLが指定されていた場合	
 	 * @throws PageAccessException ページにアクセスした際にサーバが存在しない、ヘッダが不正、データの取得に失敗した場合
 	 */
 	protected abstract Crawler createBrowzer(String url) throws CrawlerInitException, PageIllegalArgumentException, PageAccessException;

@@ -36,7 +36,7 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 	@Override
 	public void execute(){
 		if (this.cmd.hasOption("list")) {
-			Set<Class<?>> scenarioList = ClassGenerater.getClassesByAnnotation(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class);
+			Set<Class<?>> scenarioList = AnnotationClassGenerater.getClassesByAnnotation(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class);
 			for (Class<?> scenarioClass : scenarioList) {
 				MoveScenarioName moveScenarioName = scenarioClass.getAnnotationsByType(MoveScenarioName.class)[0];
 				this.print(moveScenarioName.name()).print(" : ").println(moveScenarioName.manualTitle());
@@ -44,7 +44,7 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 			System.exit(0);
 		} else if (this.cmd.hasOption("info")) {
 			String[] scenarioNames = this.cmd.getArgs();
-			Set<Class<?>> scenarioList = ClassGenerater.getClassesByAnnotation(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class);
+			Set<Class<?>> scenarioList = AnnotationClassGenerater.getClassesByAnnotation(MoveScenario.MOVE_SCENARIO_PACKAGE, MoveScenarioName.class);
 			
 			for (String scenarioName : scenarioNames) {
 				for (Class<?> scenarioClass : scenarioList) {

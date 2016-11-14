@@ -36,7 +36,7 @@ public class ActionHelpMain extends AbtractCrawlerControler {
 	@Override
 	public void execute(){
 		if (this.cmd.hasOption("list")) {
-			Set<Class<?>> actionList = ClassGenerater.getClassesByAnnotation(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class);
+			Set<Class<?>> actionList = AnnotationClassGenerater.getClassesByAnnotation(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class);
 			for (Class<?> actionClass : actionList) {
 				MoveActionName MoveActionName = actionClass.getAnnotationsByType(MoveActionName.class)[0];
 				this.print(MoveActionName.name()).print(" : ").println(MoveActionName.manualTitle());
@@ -44,7 +44,7 @@ public class ActionHelpMain extends AbtractCrawlerControler {
 			System.exit(0);
 		} else if (this.cmd.hasOption("info")) {
 			String[] actionNames = this.cmd.getArgs();
-			Set<Class<?>> actionList = ClassGenerater.getClassesByAnnotation(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class);
+			Set<Class<?>> actionList = AnnotationClassGenerater.getClassesByAnnotation(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class);
 			
 			for (String actionName : actionNames) {
 				for (Class<?> actionClass : actionList) {

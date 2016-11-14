@@ -1,5 +1,5 @@
-#!/bin/sh
-. ./env
+#!/bin/bash
+source `dirname $0`/env
 java -classpath \
 "${MAIN_JAR}:${LIB_JAR}:${MESSAGE_DIR}:${PROPERTY_DIR}" \
 jp.co.dk.crawler.controler.CrawlerMain "$@"

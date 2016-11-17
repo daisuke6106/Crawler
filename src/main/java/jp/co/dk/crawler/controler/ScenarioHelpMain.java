@@ -27,6 +27,7 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 		return description.toString();
 	}
 
+	@SuppressWarnings("all")
 	@Override
 	protected void getOptions(Options options) {
 		options.addOption(OptionBuilder.isRequired(false).hasArg(false).withDescription("使用できるシナリオを一覧で表示します。").withLongOpt("list").create("l"));
@@ -83,7 +84,6 @@ public class ScenarioHelpMain extends AbtractCrawlerControler {
 					}
 				}
 			}
-			
 			
 			System.exit(0);
 		} else {

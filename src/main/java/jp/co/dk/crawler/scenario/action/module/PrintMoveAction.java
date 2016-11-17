@@ -36,7 +36,12 @@ public class PrintMoveAction extends MoveAction {
 
 	@Override
 	public void beforeAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
-		System.out.println("[BEFORE MOVE] NOW_URL=[" + browzer.getPage().getURL() + "] MOVE_TO=[" + movable.getUrl() + "]");
+		if (movable == null) {
+			System.out.println("[BEFORE MOVE] NOW_URL=[" + browzer.getPage().getURL() + "]");
+		} else {
+			System.out.println("[BEFORE MOVE] NOW_URL=[" + browzer.getPage().getURL() + "] MOVE_TO=[" + movable.getUrl() + "]");
+		}
+		
 	}
 	
 	@Override

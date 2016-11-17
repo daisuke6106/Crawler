@@ -5,7 +5,6 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,8 +43,8 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 	@SuppressWarnings("all")
 	protected void getOptions(Options options) {
 		options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("URL").withDescription("URL").withLongOpt("url").create("u"));
-		options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("URL").withDescription("走査シナリオ").withLongOpt("scenario").create("s"));
-		options.addOption(OptionBuilder.isRequired(true).hasArg(true).withArgName("minuts").withDescription("インターバル（単位：秒）").withLongOpt("interval").create("i"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(true).withArgName("URL").withDescription("走査シナリオ").withLongOpt("scenario").create("s"));
+		options.addOption(OptionBuilder.isRequired(false).hasArg(true).withArgName("minuts").withDescription("インターバル（単位：秒）").withLongOpt("interval").create("i"));
 		
 	}
 
@@ -55,42 +54,65 @@ public abstract class AbstractCrawlerScenarioControler extends AbtractCrawlerCon
 		String url = cmd.getOptionValue("u");
 		// クローラを生成する。
 		try {
-			this.crawler = this.createBrowzer(url);
-		} catch (CrawlerInitException | PageIllegalArgumentException | PageAccessException e) {
+			Matcher scenarioMatcher = scenarioPattern.matcher(url);
+			if (scenarioMatcher.find()) {
+				
+				String actionStr = scenarioMatcher.group(2);
+				if (actionStr == null || actionStr.equals("")) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"アクションが定義されていません。", url});
+				List<Object> actionInstanceList = new AnnotationClassGenerater(MoveAction.MOVE_ACTION_PACKAGE, MoveActionName.class, actionStr){
+					@Override
+					protected <A extends Annotation> String getName(A annotationClass) {
+						return ((MoveActionName)annotationClass).name();
+					}}.createObjectList();
+				List<MoveAction> moveActionList = new ArrayList<>();
+				for (Object actionClass : actionInstanceList) {
+					if (!(actionClass instanceof MoveAction)) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"アクションクラスではありません。", actionClass.getClass().toString()});
+					moveActionList.add((MoveAction)actionClass);
+				}
+				
+				for (MoveAction moveAction : moveActionList) moveAction.beforeAction(null, this.crawler);
+				this.crawler = this.createBrowzer(scenarioMatcher.group(1));
+				for (MoveAction moveAction : moveActionList) moveAction.afterAction(null, this.crawler);
+			} else {
+				this.crawler = this.createBrowzer(url);
+			}
+		} catch (CrawlerInitException | PageIllegalArgumentException | PageAccessException | MoveActionFatalException | MoveActionException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
 		
 		// 走査シナリオ
-		this.scenarioStrList = cmd.getOptionValues("s");
-
-		// シナリオオブジェクトを生成
-		List<MoveScenario> scenarioList = new ArrayList<>();
-		try {
-			for (String scenarioStr : scenarioStrList) scenarioList.add(this.createScenarios(scenarioStr));
-		} catch (MoveActionFatalException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			System.exit(1);
-		}
-		
-		// インターバル
-		String intervalStr = cmd.getOptionValue("i");
-		if (intervalStr != null && !intervalStr.equals("")) this.interval = Long.parseLong(intervalStr);
-		
-		for (MoveScenario moveScenario : scenarioList) {
-			// クローリング開始
+		if (cmd.hasOption("s")) {
+			this.scenarioStrList = cmd.getOptionValues("s");
+	
+			// シナリオオブジェクトを生成
+			List<MoveScenario> scenarioList = new ArrayList<>();
 			try {
-				// クローリングを開始する。
-				moveScenario.start(this.crawler, this.interval);
-			} catch (MoveActionException e) {
+				for (String scenarioStr : scenarioStrList) scenarioList.add(this.createScenarios(scenarioStr));
+			} catch (MoveActionFatalException e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 				System.exit(1);
-			} catch (RuntimeException e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-				System.exit(255);
+			}
+			
+			// インターバル
+			String intervalStr = cmd.getOptionValue("i");
+			if (intervalStr != null && !intervalStr.equals("")) this.interval = Long.parseLong(intervalStr);
+			
+			for (MoveScenario moveScenario : scenarioList) {
+				// クローリング開始
+				try {
+					// クローリングを開始する。
+					moveScenario.start(this.crawler, this.interval);
+				} catch (MoveActionException e) {
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+					System.exit(1);
+				} catch (RuntimeException e) {
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+					System.exit(255);
+				}
 			}
 		}
 		// 正常終了

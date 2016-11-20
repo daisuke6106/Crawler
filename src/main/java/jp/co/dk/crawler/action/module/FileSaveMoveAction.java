@@ -1,4 +1,4 @@
-package jp.co.dk.crawler.scenario.action.module;
+package jp.co.dk.crawler.action.module;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -12,8 +12,8 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageSaveException;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.scenario.action.MoveAction;
-import jp.co.dk.crawler.scenario.action.MoveActionName;
+import jp.co.dk.crawler.action.MoveAction;
+import jp.co.dk.crawler.action.MoveActionName;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;

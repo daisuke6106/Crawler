@@ -1,4 +1,4 @@
-package jp.co.dk.crawler.scenario.action;
+package jp.co.dk.crawler.action;
 
 import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.exception.MoveActionException;

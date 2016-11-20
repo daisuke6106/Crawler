@@ -1,4 +1,4 @@
-package jp.co.dk.crawler.scenario.action;
+package jp.co.dk.crawler.action;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

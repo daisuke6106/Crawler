@@ -2,8 +2,8 @@ package jp.co.dk.crawler.controler;
 
 import java.util.Set;
 
-import jp.co.dk.crawler.scenario.action.MoveAction;
-import jp.co.dk.crawler.scenario.action.MoveActionName;
+import jp.co.dk.crawler.action.MoveAction;
+import jp.co.dk.crawler.action.MoveActionName;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;

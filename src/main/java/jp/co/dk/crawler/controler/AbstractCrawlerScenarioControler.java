@@ -13,11 +13,11 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageIllegalArgumentException;
 import jp.co.dk.crawler.Crawler;
+import jp.co.dk.crawler.action.MoveAction;
+import jp.co.dk.crawler.action.MoveActionName;
 import jp.co.dk.crawler.exception.CrawlerInitException;
 import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.crawler.scenario.MoveScenarioName;
-import jp.co.dk.crawler.scenario.action.MoveAction;
-import jp.co.dk.crawler.scenario.action.MoveActionName;
 
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;

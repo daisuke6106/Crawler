@@ -4,7 +4,6 @@ import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.scenario.ManualWriter;
 import jp.co.dk.logger.Logger;
 import jp.co.dk.logger.LoggerFactory;
 
@@ -14,7 +13,7 @@ import jp.co.dk.logger.LoggerFactory;
  * @version 1.0
  * @author D.Kanno
  */
-public abstract class MoveAction implements ManualWriter {
+public abstract class MoveAction {
 	
 	public static final String MOVE_ACTION_PACKAGE = "jp.co.dk.crawler.scenario.action.module";
 	

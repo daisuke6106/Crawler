@@ -21,7 +21,7 @@ import jp.co.dk.logger.LoggerFactory;
  * @version 1.0
  * @author D.Kanno
  */
-public abstract class MoveScenario implements ManualWriter {
+public abstract class MoveScenario {
 	
 	public static final String MOVE_SCENARIO_PACKAGE = "jp.co.dk.crawler.scenario.module";
 	

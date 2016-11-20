@@ -10,7 +10,6 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
 import jp.co.dk.crawler.CrawlerPage;
-import jp.co.dk.crawler.scenario.ManualArgument;
 import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.crawler.scenario.MoveScenarioName;
 import jp.co.dk.document.exception.DocumentException;
@@ -103,23 +102,5 @@ public class RegExpMoveScenario extends MoveScenario {
 			
 		}
 		return moveableElementList;
-	}
-	
-	@Override
-	public String manualTitle() {
-		return "";
-	}
-
-
-	@Override
-	public String manualText(String lineseparater) {
-		return "";
-	}
-
-
-	@Override
-	public ManualArgument[] getManualArgument() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

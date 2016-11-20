@@ -7,8 +7,6 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.scenario.ManualArgument;
-import jp.co.dk.crawler.scenario.ManualArgumentType;
 import jp.co.dk.crawler.scenario.action.MoveAction;
 import jp.co.dk.crawler.scenario.action.MoveActionName;
 import jp.co.dk.document.Element;
@@ -59,22 +57,5 @@ public class ContentMoveAction extends MoveAction {
 		} catch (PageAccessException | DocumentException e) {
 			
 		}
-	}
-
-	@Override
-	public String manualTitle() {
-		return "指定要素出力";
-	}
-
-	@Override
-	public String manualText(String lineseparater) {
-		return "ページの該当のタグの要素内容を標準出力に表示します。";
-	}
-
-	@Override
-	public ManualArgument[] getManualArgument() {
-		return new ManualArgument[]{
-			new ManualArgument("タグ指定文字", ManualArgumentType.STRING, true)
-		};
 	}
 }

@@ -2,6 +2,7 @@ package jp.co.dk.crawler.message;
 
 import java.io.Serializable;
 
+import jp.co.dk.document.message.DocumentMessage;
 import jp.co.dk.message.AbstractMessage;
 
 /**
@@ -63,6 +64,15 @@ public class CrawlerMessage extends AbstractMessage implements Serializable{
 
 	/** アクション処理に失敗しました。詳細＝[{0}] アクションクラス=[{1}] */
 	public static final CrawlerMessage FAILE_TO_MOVEACTION_EXECUTE = new CrawlerMessage("E104");
+	
+	/** 指定のパスにすでにファイルが存在します。PATH=[{0}] */
+	public static final CrawlerMessage ERROR_FILE_APLREADY_EXISTS_IN_THE_SPECIFIED_PATH = new CrawlerMessage("E105");
+
+	/** 指定のパスへのディレクトリ作成に失敗しました。PATH=[{0}] */
+	public static final CrawlerMessage ERROR_FAILE_TO_CREATE_DIR = new CrawlerMessage("E106");
+	
+	/** ファイルの保存に失敗しました。PATH=[{0}] */
+	public static final CrawlerMessage ERROR_FAILED_TO_SAVE_FILE = new CrawlerMessage("E107");
 	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);

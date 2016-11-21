@@ -1,10 +1,7 @@
 package jp.co.dk.crawler.action.module;
 
+
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.exception.MoveActionException;
@@ -12,7 +9,6 @@ import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.exception.PageSaveException;
 import jp.co.dk.browzer.html.element.MovableElement;
-import jp.co.dk.crawler.action.MoveAction;
 import jp.co.dk.crawler.action.MoveActionName;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.logger.Loggable;
@@ -34,25 +30,7 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	},
 	manualExample  = {"file_save('/tmp/,'%date{yyyyMMdd_HHmmss}_%index{10}')と指定した場合、/tmp/ディレクトリに「20161201_235959_0000000010」というファイル名で保存します。"}
 )
-public class FileSaveMoveAction extends MoveAction {
-	
-	/** 保存先ディレクトリ */
-	protected File dir;
-	
-	/**  ファイル名 */
-	protected String fileName;
-	
-	/** タイトルフォーマット */
-	private static Pattern titlePattern = Pattern.compile("%title");
-	
-	/** 日付フォーマット */
-	private static Pattern datePattern = Pattern.compile("%date\\{(.*)\\}");
-	
-	/** インデックスフォーマット */
-	private static Pattern indexPattern = Pattern.compile("%index\\{(.*)\\}");
-	
-	/** インデックス */
-	protected int index = 0;
+public class FileSaveMoveAction extends AbstractFileSaveMoveAction {
 	
 	/**
 	 * <p>コンストラクタ</p>
@@ -66,64 +44,26 @@ public class FileSaveMoveAction extends MoveAction {
 	public FileSaveMoveAction(String[] args) throws MoveActionFatalException {
 		super(args);
 		if (args.length != 2) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存先ディレクトリとファイルフォーマットが指定されていません。", args.toString()});
-		this.dir      = new File(this.args[0]);
-		if (!this.dir.exists()) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"ディレクトリが存在しません。", this.args[0]});
-		if (!this.dir.isDirectory()) throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"ディレクトリではありません。", this.args[0]});
-		this.fileName = this.args[1];
+		this.setDir(args[0]);
+		this.setFileName(args[1]);
 	}
-
+	
 	@Override
-	public void afterAction(MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
-		String fileName = new String(this.fileName);
-		
-		Matcher titleMatcher = titlePattern.matcher(fileName);
-		if (titleMatcher.find()) {
-			try {
-				jp.co.dk.document.File file = browzer.getPage().getDocument();
-				if (file instanceof jp.co.dk.document.html.HtmlDocument) {
-					jp.co.dk.document.html.HtmlDocument htmlDocument = (jp.co.dk.document.html.HtmlDocument)file;
-					String title = htmlDocument.getTitle();
-					fileName = titleMatcher.replaceAll(title);
-				} else {
-					fileName = titleMatcher.replaceAll("");
-				}
-			} catch (PageAccessException | DocumentException e) {
-				fileName = titleMatcher.replaceAll("");
-			}
-		}
-		
-		Matcher dateMatcher = datePattern.matcher(fileName);
-		if (dateMatcher.find()) {
-			SimpleDateFormat sdf = new SimpleDateFormat(dateMatcher.group(1));
-			String date = sdf.format(new Date());
-			fileName = dateMatcher.replaceAll(date);
-		}
-		
-		Matcher indexMatcher = indexPattern.matcher(fileName);
-		if (indexMatcher.find()) fileName = indexMatcher.replaceAll(String.format("%0" + indexMatcher.group(1) + "d", new Integer(++index)));
-		
-		// ファイル名のエスケープ
-		fileName = fileName.replaceAll("\\\\", "");
-		fileName = fileName.replaceAll("/"   , "");
-		fileName = fileName.replaceAll(":"   , "");
-		fileName = fileName.replaceAll("\\*" , "");
-		fileName = fileName.replaceAll("\\?" , "");
-		fileName = fileName.replaceAll("\""  , "");
-		fileName = fileName.replaceAll("<"   , "");
-		fileName = fileName.replaceAll(">"   , "");
-		fileName = fileName.replaceAll("|"   , "");
-		
+	protected void save(File dir, String fileName, MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
 		try {
-			browzer.save(this.dir, fileName);
+			browzer.save(dir, fileName);
 		} catch (PageAccessException | PageSaveException | DocumentException e) {
-			throw new MoveActionFatalException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", fileName});
+			throw new MoveActionException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", fileName});
 		}
-		
+
+		// ログに出力する。
 		final String printFileName = fileName;
 		this.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
 				return "保存が完了しました。PATH=[" + dir.toString() + "], FILENAME=[" +  printFileName + "]";
-			}});
+			}}
+		);
+		
 	}
 }

@@ -2,7 +2,6 @@ package jp.co.dk.crawler.message;
 
 import java.io.Serializable;
 
-import jp.co.dk.document.message.DocumentMessage;
 import jp.co.dk.message.AbstractMessage;
 
 /**

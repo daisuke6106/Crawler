@@ -2,6 +2,8 @@ package jp.co.dk.crawler.action.module;
 
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import jp.co.dk.browzer.Browzer;
 import jp.co.dk.browzer.Url;
@@ -12,7 +14,10 @@ import jp.co.dk.browzer.exception.PageSaveException;
 import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.action.MoveActionName;
 import jp.co.dk.crawler.message.CrawlerMessage;
+import jp.co.dk.document.Element;
+import jp.co.dk.document.ElementSelector;
 import jp.co.dk.document.exception.DocumentException;
+import jp.co.dk.document.html.HtmlDocument;
 import jp.co.dk.logger.Loggable;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
@@ -78,6 +83,23 @@ public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 			throw new MoveActionException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", "data"});
 		}
 
+		// リンク一覧
+		try {
+			if (browzer.getPage().getDocument() instanceof HtmlDocument) {
+				HtmlDocument htmlDocument = (HtmlDocument) browzer.getPage().getDocument();
+				Set<String> anchorList = new HashSet<String>();
+				htmlDocument.getElement(new ElementSelector() {
+					@Override
+					public boolean judgment(Element element) {
+						// TODO Auto-generated method stub
+						return false;
+					}
+				});
+			}
+		} catch (PageAccessException | DocumentException e) {
+			throw new MoveActionException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", "anchor"});
+		}
+		
 		// ログに出力する。
 		final String printDirName = dir;
 		this.logger.info(new Loggable(){

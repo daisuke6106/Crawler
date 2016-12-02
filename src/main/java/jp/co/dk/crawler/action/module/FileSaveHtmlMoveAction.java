@@ -81,18 +81,25 @@ public class FileSaveHtmlMoveAction extends AbstractFileSaveMoveAction {
 						throw new MoveActionException(DocumentMessage.ERROR_FAILED_TO_SAVE_FILE, path.getPath(), e);
 					}
 				}
-				
+				// ログに出力する。
+				final String printFileName = fileName;
+				this.logger.info(new Loggable(){
+					@Override
+					public String printLog(String lineSeparator) {
+						return "保存が完了しました。PATH=[" + dir.toString() + "], FILENAME=[" +  printFileName + "]";
+					}}
+				);
 			} else {
-				browzer.save(dir, fileName);
+				// ログに出力する。
+				final String printFileName = fileName;
+				this.logger.info(new Loggable(){
+					@Override
+					public String printLog(String lineSeparator) {
+						return "ページがHTMLではないため保存されませんでした。";
+					}}
+				);
 			}
-			// ログに出力する。
-			final String printFileName = fileName;
-			this.logger.info(new Loggable(){
-				@Override
-				public String printLog(String lineSeparator) {
-					return "保存が完了しました。PATH=[" + dir.toString() + "], FILENAME=[" +  printFileName + "]";
-				}}
-			);
+			
 		} catch (PageAccessException | DocumentException | PageSaveException e) {
 			throw new MoveActionException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", fileName}, e);
 		}

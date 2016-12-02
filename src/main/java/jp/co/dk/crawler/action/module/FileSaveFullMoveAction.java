@@ -3,6 +3,7 @@ package jp.co.dk.crawler.action.module;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jp.co.dk.browzer.Browzer;
@@ -18,6 +19,8 @@ import jp.co.dk.document.Element;
 import jp.co.dk.document.ElementSelector;
 import jp.co.dk.document.exception.DocumentException;
 import jp.co.dk.document.html.HtmlDocument;
+import jp.co.dk.document.html.HtmlElement;
+import jp.co.dk.document.html.constant.HtmlElementName;
 import jp.co.dk.logger.Loggable;
 import static jp.co.dk.crawler.message.CrawlerMessage.*;
 
@@ -60,7 +63,7 @@ public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 		
 		java.io.File path = new java.io.File(new StringBuilder(dirbase.getAbsolutePath()).append('/').append(dir).toString());
 		if (path.exists()) throw new MoveActionException(CrawlerMessage.ERROR_FILE_APLREADY_EXISTS_IN_THE_SPECIFIED_PATH, path.getAbsolutePath());
-		if (!path.mkdir()) throw new MoveActionException(CrawlerMessage.ERROR_FAILE_TO_CREATE_DIR, path.getAbsolutePath());
+		if (!path.mkdirs()) throw new MoveActionException(CrawlerMessage.ERROR_FAILE_TO_CREATE_DIR, path.getAbsolutePath());
 		
 		// URLを保存
 		this.save(path, "url", browzer.getPage().getUrl().toString().getBytes());
@@ -83,18 +86,27 @@ public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 			throw new MoveActionException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", "data"});
 		}
 
-		// リンク一覧
+		// リンク一覧を保存
 		try {
 			if (browzer.getPage().getDocument() instanceof HtmlDocument) {
 				HtmlDocument htmlDocument = (HtmlDocument) browzer.getPage().getDocument();
 				Set<String> anchorList = new HashSet<String>();
-				htmlDocument.getElement(new ElementSelector() {
+				List<Element> anchorElementList = htmlDocument.getElement(new ElementSelector() {
 					@Override
 					public boolean judgment(Element element) {
-						// TODO Auto-generated method stub
+						if (!(element instanceof HtmlElement)) return false;
+						HtmlElement htmlElement = (HtmlElement)element;
+						if (htmlElement.getElementType() == HtmlElementName.A && htmlElement.hasAttribute("href") && !htmlElement.getAttribute("href").equals("")) return true;
 						return false;
 					}
 				});
+				for (Element anchorElement : anchorElementList) {
+					HtmlElement anchorHtmlElement = (HtmlElement)anchorElement;
+					anchorList.add(anchorHtmlElement.getAttribute("href"));
+				}
+				StringBuilder linkList = new StringBuilder();
+				for (String url : anchorList) linkList.append(url).append(System.lineSeparator());
+				this.save(path, "link", linkList.toString().getBytes());
 			}
 		} catch (PageAccessException | DocumentException e) {
 			throw new MoveActionException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", "anchor"});

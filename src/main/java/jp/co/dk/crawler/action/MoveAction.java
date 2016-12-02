@@ -73,6 +73,21 @@ public abstract class MoveAction {
 	/** インデックス */
 	protected int index = 0;
 
+	/** プロトコルパターン */
+	private static Pattern protocolPattern = Pattern.compile("%protocol");
+	
+	/** ホストパターン */
+	private static Pattern hostPattern = Pattern.compile("%host");
+	
+	/** パスパターン */
+	private static Pattern pathPattern = Pattern.compile("%path");
+	
+	/** ファイル名パターン */
+	private static Pattern filenamePattern = Pattern.compile("%filename");
+	
+	/** パラメータハッシュフォーマット */
+	private static Pattern paramHashPattern = Pattern.compile("%paramhash");
+	
 	/** URLハッシュフォーマット */
 	private static Pattern urlHashPattern = Pattern.compile("%urlhash");
 	
@@ -89,6 +104,21 @@ public abstract class MoveAction {
 	protected String replaceFormat(MovableElement movable, Browzer browzer, String formatBase) {
 		String format = new String(formatBase);
 
+		Matcher protocolMatcher = protocolPattern.matcher(format);
+		if (protocolMatcher.find()) format = protocolMatcher.replaceAll(browzer.getPage().getProtocol());
+		
+		Matcher hostMatcher = hostPattern.matcher(format);
+		if (hostMatcher.find()) format = hostMatcher.replaceAll(browzer.getPage().getHost());
+		
+		Matcher pathMatcher = pathPattern.matcher(format);
+		if (pathMatcher.find()) format = pathMatcher.replaceAll(browzer.getPage().getPath());
+		
+		Matcher fileNameMatcher = filenamePattern.matcher(format);
+		if (fileNameMatcher.find()) format = fileNameMatcher.replaceAll(browzer.getPage().getFileName());
+		
+		Matcher paramHashMatcher = paramHashPattern.matcher(format);
+		if (paramHashMatcher.find()) format = paramHashMatcher.replaceAll(Integer.toString(browzer.getPage().getParameter().hashCode()));
+		
 		Matcher urlHashMatcher = urlHashPattern.matcher(format);
 		if (urlHashMatcher.find()) format = urlHashMatcher.replaceAll(Integer.toString(browzer.getPage().getURL().hashCode()));
 		
@@ -120,7 +150,7 @@ public abstract class MoveAction {
 		
 		// ファイル名のエスケープ
 		format = format.replaceAll("\\\\", "");
-		format = format.replaceAll("/"   , "");
+		// format = format.replaceAll("/"   , "");
 		format = format.replaceAll(":"   , "");
 		format = format.replaceAll("\\*" , "");
 		format = format.replaceAll("\\?" , "");

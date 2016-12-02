@@ -100,7 +100,7 @@ public class FileSaveHtmlMoveAction extends AbstractFileSaveMoveAction {
 				);
 			}
 			
-		} catch (PageAccessException | DocumentException | PageSaveException e) {
+		} catch (PageAccessException | DocumentException e) {
 			throw new MoveActionException(FAILE_TO_MOVEACTION_GENERATION, new String[]{"保存に失敗しました。", fileName}, e);
 		}
 		

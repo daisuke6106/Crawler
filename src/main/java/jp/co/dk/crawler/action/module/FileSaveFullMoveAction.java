@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import jp.co.dk.browzer.Browzer;
+import jp.co.dk.browzer.Page;
 import jp.co.dk.browzer.Url;
 import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
@@ -65,8 +66,18 @@ public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 		if (path.exists()) throw new MoveActionException(CrawlerMessage.ERROR_FILE_APLREADY_EXISTS_IN_THE_SPECIFIED_PATH, path.getAbsolutePath());
 		if (!path.mkdirs()) throw new MoveActionException(CrawlerMessage.ERROR_FAILE_TO_CREATE_DIR, path.getAbsolutePath());
 		
+		// ページオブジェクトを取得
+		Page page = browzer.getPage();
+		
 		// URLを保存
-		this.save(path, "url", browzer.getPage().getUrl().toString().getBytes());
+		StringBuilder urlData = new StringBuilder();
+		urlData.append("URL=").append(page.getUrl().toString()).append(System.lineSeparator());
+		urlData.append("PROTOCOL=").append(page.getProtocol().toString()).append(System.lineSeparator());
+		urlData.append("HOST=").append(page.getHost().toString()).append(System.lineSeparator());
+		urlData.append("PATH=").append(page.getPath().toString()).append(System.lineSeparator());
+		urlData.append("FILENAME=").append(page.getFileName().toString()).append(System.lineSeparator());
+		urlData.append("PARAMETER=").append(page.getParameter().toString()).append(System.lineSeparator());
+		this.save(path, "url", urlData.toString().getBytes());
 		
 		// ヒストリーを保存
 		StringBuilder historyUrlList = new StringBuilder();

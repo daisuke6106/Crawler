@@ -71,7 +71,8 @@ public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 		
 		// URLを保存
 		StringBuilder urlData = new StringBuilder();
-		urlData.append("URL=").append(page.getUrl().toString()).append(System.lineSeparator());
+		urlData.append("URL=").append(page.getURL()).append(System.lineSeparator());
+		urlData.append("URL_HASH=").append(page.getURL().hashCode()).append(System.lineSeparator());
 		urlData.append("PROTOCOL=").append(page.getProtocol().toString()).append(System.lineSeparator());
 		urlData.append("HOST=").append(page.getHost().toString()).append(System.lineSeparator());
 		urlData.append("PATH=").append(page.getPath().toString()).append(System.lineSeparator());

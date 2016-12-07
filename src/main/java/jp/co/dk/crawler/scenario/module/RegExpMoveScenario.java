@@ -9,6 +9,7 @@ import jp.co.dk.browzer.exception.MoveActionException;
 import jp.co.dk.browzer.exception.MoveActionFatalException;
 import jp.co.dk.browzer.exception.PageAccessException;
 import jp.co.dk.browzer.html.element.A;
+import jp.co.dk.browzer.html.element.MovableElement;
 import jp.co.dk.crawler.CrawlerPage;
 import jp.co.dk.crawler.scenario.MoveScenario;
 import jp.co.dk.crawler.scenario.MoveScenarioName;
@@ -64,13 +65,13 @@ public class RegExpMoveScenario extends MoveScenario {
 	}
 	
 	@Override
-	protected List<A> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
+	protected List<MovableElement> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
 		this.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
 				return "ページ=[" +  page.getURL() + "]からパターン=[" + urlPatternStr + "]に合致するURLを取得します。";
 			}});
-		List<A> moveableElementList = new ArrayList<>();
+		List<MovableElement> moveableElementList = new ArrayList<>();
 		List<jp.co.dk.document.html.element.A> anchorList;
 		try {
 			anchorList = page.getAnchor(this.urlPattern);

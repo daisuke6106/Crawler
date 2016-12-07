@@ -125,13 +125,14 @@ public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 		}
 		
 		// ログに出力する。
-		final String printDirName = dir;
 		this.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
-				return "保存が完了しました。PATH=[" + dir.toString() + "], DIRNAME=[" +  printDirName + "]";
+				return "保存が完了しました。PATH=[" + dir.toString() + "]";
 			}}
 		);
 		
+		// ページ保存が完了した為、メモリからその情報をクリアします。
+		page.clearData();
 	}
 }

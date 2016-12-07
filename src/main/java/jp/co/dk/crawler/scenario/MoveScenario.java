@@ -199,8 +199,8 @@ public abstract class MoveScenario {
 	 * @throws MoveActionFatalException タスク追加時に致命的例外が発生した場合
 	 */
 	public void addTask(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
-		List<jp.co.dk.browzer.html.element.A> anchorList = (List<jp.co.dk.browzer.html.element.A>)this.getMoveableElement(page);
-		for (jp.co.dk.browzer.html.element.A anchor : anchorList) this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
+		List<jp.co.dk.browzer.html.element.MovableElement> anchorList = (List<jp.co.dk.browzer.html.element.MovableElement>)this.getMoveableElement(page);
+		for (jp.co.dk.browzer.html.element.MovableElement anchor : anchorList) this.moveableQueue.add(this.createTask(anchor, this.moveActionList));
 	}
 	
 	/**
@@ -212,7 +212,7 @@ public abstract class MoveScenario {
 	 * @throws MoveActionException タスク追加時に再起可能例外が発生した場合
 	 * @throws MoveActionFatalException タスク追加時に致命的例外が発生した場合
 	 */
-	protected abstract List<jp.co.dk.browzer.html.element.A> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException ;
+	protected abstract List<jp.co.dk.browzer.html.element.MovableElement> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException ;
 	
 	/**
 	 * タスクを作成する。

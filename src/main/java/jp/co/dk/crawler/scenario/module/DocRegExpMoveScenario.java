@@ -74,14 +74,14 @@ public class DocRegExpMoveScenario extends MoveScenario {
 	
 	
 	@Override
-	protected List<A> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
+	protected List<MovableElement> getMoveableElement(CrawlerPage page) throws MoveActionException, MoveActionFatalException {
 		this.logger.info(new Loggable(){
 			@Override
 			public String printLog(String lineSeparator) {
 				return "ページ=[" +  page.getURL() + "]からドキュメント=[" + elementSelector + "]に存在するパターン=[" + urlPatternStr + "]に合致するURLを取得します。";
 			}});
 		
-		List<A> moveableElementList = new ArrayList<>();
+		List<MovableElement> moveableElementList = new ArrayList<>();
 		try {
 			jp.co.dk.document.File file = page.getDocument();
 			if (!(file instanceof jp.co.dk.document.html.HtmlDocument)) throw new MoveActionException(FAILE_TO_SCENARIO_EXECUTE, new String[]{"HTMLではありません。", DocRegExpMoveScenario.class.toString()});
@@ -120,7 +120,7 @@ public class DocRegExpMoveScenario extends MoveScenario {
 								return "- キューに未追加のため、追加します URL[" +  movableElement.getUrl() + "]";
 							}});
 						addedQueueUrlList.add(movableElement.getUrl());
-						moveableElementList.add(((A)element));
+						moveableElementList.add((MovableElement)element);
 					}
 				}
 			}

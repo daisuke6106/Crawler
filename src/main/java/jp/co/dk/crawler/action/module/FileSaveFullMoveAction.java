@@ -43,6 +43,8 @@ import static jp.co.dk.crawler.message.CrawlerMessage.*;
 	)
 public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 	
+	private boolean isOverride = true;
+	
 	/**
 	 * <p>コンストラクタ</p>
 	 * 遷移時アクションの実行時に使用する引数を基にインスタンスを生成します。<br/>
@@ -61,9 +63,16 @@ public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 	
 	@Override
 	protected void save(File dirbase, String dir, MovableElement movable, Browzer browzer) throws MoveActionException, MoveActionFatalException {
-		
 		java.io.File path = new java.io.File(new StringBuilder(dirbase.getAbsolutePath()).append('/').append(dir).toString());
-		if (path.exists()) throw new MoveActionException(CrawlerMessage.ERROR_FILE_APLREADY_EXISTS_IN_THE_SPECIFIED_PATH, path.getAbsolutePath());
+		if (path.exists()) {
+			this.logger.warn(new Loggable() {
+				@Override
+				public String printLog(String lineSeparator) {
+					return CrawlerMessage.ERROR_FILE_APLREADY_EXISTS_IN_THE_SPECIFIED_PATH.getMessage(path.getAbsolutePath());
+				}
+			});
+			return;
+		}
 		if (!path.mkdirs()) throw new MoveActionException(CrawlerMessage.ERROR_FAILE_TO_CREATE_DIR, path.getAbsolutePath());
 		
 		// ページオブジェクトを取得
@@ -125,12 +134,12 @@ public class FileSaveFullMoveAction extends AbstractFileSaveFullMoveAction {
 		}
 		
 		// ログに出力する。
-		this.logger.info(new Loggable(){
+		this.logger.info(new Loggable() {
 			@Override
 			public String printLog(String lineSeparator) {
-				return "保存が完了しました。PATH=[" + dir.toString() + "]";
-			}}
-		);
+				return CrawlerMessage.SUCCESS_TO_SAVE_FILE.getMessage(path.getAbsolutePath());
+			}
+		});
 		
 		// ページ保存が完了した為、メモリからその情報をクリアします。
 		page.clearData();

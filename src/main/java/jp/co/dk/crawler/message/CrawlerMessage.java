@@ -73,6 +73,9 @@ public class CrawlerMessage extends AbstractMessage implements Serializable{
 	/** ファイルの保存に失敗しました。PATH=[{0}] */
 	public static final CrawlerMessage ERROR_FAILED_TO_SAVE_FILE = new CrawlerMessage("E107");
 	
+	/** ファイルの保存が完了しました。PATH=[{0}] */
+	public static final CrawlerMessage SUCCESS_TO_SAVE_FILE = new CrawlerMessage("I100");
+	
 	protected CrawlerMessage(String messageId) {
 		super(messageId);
 	}
